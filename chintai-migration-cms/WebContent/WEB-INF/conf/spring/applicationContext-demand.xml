@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+  <!-- DAO Definitions -->
+  <!-- ■共通：都道府県名称を取得 -->
+  <bean id="prefNameSearchDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.PrefNameSearchDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 共通：支社名称を取得 -->
+  <bean id="shisyaNameSearchDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.ShisyaNameSearchDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 共通：物件枠情報を取得 -->
+  <bean id="torihikisakiWakuInfoDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiWakuInfoDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- ■店舗コード紐付 -->
+  <bean id="shopBindSearchDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.ShopBindSearchDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 店舗情報詳細 -->
+  <bean id="shopBindUpdatePageDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.ShopBindUpdatePageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 店舗情報詳細更新 -->
+  <bean id="shopBindUpdateCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.ShopBindUpdateCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先検索(紐付用) -->
+  <bean id="torihikisakiSearchForBindDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiSearchForBindDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先詳細(紐付用) -->
+  <bean id="torihikisakiInfoForBindDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiInfoForBindDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+
+
+  <!-- ■取引先一覧 -->
+  <bean id="torihikisakiListDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiListDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- ■不動産会社メンテナンス -->
+  <bean id="fudousanSearchDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.FudousanSearchDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 不動産会社新規登録確認 -->
+  <bean id="fudousanRegisterConfirmDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.FudousanRegisterConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 不動産会社新規登録 -->
+  <bean id="fudousanRegisterCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.FudousanRegisterCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 不動産会社詳細 -->
+  <bean id="fudousanInfoDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.FudousanInfoDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 不動産会社更新画面 -->
+  <bean id="fudousanUpdatePageDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.FudousanUpdatePageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 不動産会社更新確認 -->
+  <bean id="fudousanUpdateConfirmDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.FudousanUpdateConfirmServiceDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <bean id="fudousanUpdateCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.FudousanUpdateCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <bean id="fudousanDeleteConfirmDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.FudousanDeleteConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <bean id="fudousanDeleteCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.FudousanDeleteCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- ■取引先メンテナンス -->
+  <bean id="torihikisakiSearchDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiSearchDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先新規登録 -->
+  <bean id="torihikisakiRegisterCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiRegisterCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先詳細 -->
+  <bean id="torihikisakiInfoDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiInfoDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先情報更新ページ -->
+  <bean id="torihikisakiUpdatePageDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiUpdatePageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先情報更新 -->
+  <bean id="torihikisakiUpdateCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiUpdateCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先削除確認 -->
+  <bean id="torihikisakiDeleteConfirmDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiDeleteConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先削除処理 -->
+  <bean id="torihikisakiDeleteCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiDeleteCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報登録確認 -->
+  <bean id="torihikisakiWakuInfoAddConfirmDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiWakuInfoAddConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報登録 -->
+  <bean id="torihikisakiWakuInfoAddCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiWakuInfoAddCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報更新ページへ -->
+  <bean id="torihikisakiWakuInfoUpdatePageDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiWakuInfoUpdatePageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報更新 -->
+  <bean id="torihikisakiWakuInfoUpdateCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiWakuInfoUpdateCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報削除確認 -->
+  <bean id="torihikisakiWakuInfoDeleteConfirmDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiWakuInfoDeleteConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報削除 -->
+  <bean id="torihikisakiWakuInfoDeleteCommitDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.TorihikisakiWakuInfoDeleteCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 物件枠・リスティング枠メンテナンス -->
+  <bean id="contractAmountMaintenanceDao"
+        class="net.chintai.backend.sysadmin.demand.dao.impl.ContractAmountMaintenanceDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+
+  <!-- Service Definecions -->
+  <!-- Service クラスのマッピング情報を記述します -->
+  <!-- ■共通：都道府県名称を取得 -->
+  <bean id="prefNameSearchService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.PrefNameSearchServiceImpl">
+    <property name="prefNameSearchDao"><ref local="prefNameSearchDao"/></property>
+  </bean>
+
+  <!-- 共通：支社名称を取得 -->
+  <bean id="shisyaNameSearchService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.ShisyaNameSearchServiceImpl">
+    <property name="shisyaNameSearchDao"><ref local="shisyaNameSearchDao"/></property>
+  </bean>
+
+  <!-- 共通：支社名称を取得 -->
+  <bean id="torihikisakiWakuInfoService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiWakuInfoServiceImpl">
+    <property name="torihikisakiWakuInfoDao"><ref local="torihikisakiWakuInfoDao"/></property>
+  </bean>
+
+  <!-- ■店舗コード紐付 -->
+  <bean id="shopBindSearchService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.ShopBindSearchServiceImpl">
+    <property name="shopBindSearchDao"><ref local="shopBindSearchDao"/></property>
+  </bean>
+
+  <!-- 店舗情報詳細 -->
+  <bean id="shopBindUpdatePageService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.ShopBindUpdatePageServiceImpl">
+    <property name="shopBindUpdatePageDao"><ref local="shopBindUpdatePageDao"/></property>
+  </bean>
+
+  <!-- 店舗情報詳細更新 -->
+  <bean id="shopBindUpdateCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.demand.service.impl.ShopBindUpdateCommitServiceImpl">
+    <property name="shopBindUpdateCommitDao"><ref local="shopBindUpdateCommitDao"/></property>
+  </bean>
+  <bean id="shopBindUpdateCommitService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="shopBindUpdateCommitServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="update*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- 取引先検索(紐付用) -->
+  <bean id="torihikisakiSearchForBindService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiSearchForBindServiceImpl">
+    <property name="torihikisakiSearchForBindDao"><ref local="torihikisakiSearchForBindDao"/></property>
+  </bean>
+
+  <!-- 取引先詳細(紐付用) -->
+  <bean id="torihikisakiInfoForBindService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiInfoForBindServiceImpl">
+    <property name="torihikisakiInfoForBindDao"><ref local="torihikisakiInfoForBindDao"/></property>
+  </bean>
+
+
+  <!-- ■取引先一覧 -->
+  <bean id="torihikisakiListService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiListServiceImpl">
+    <property name="torihikisakiListDao"><ref local="torihikisakiListDao"/></property>
+  </bean>
+
+  <!-- ■不動産会社メンテナンス -->
+  <bean id="fudousanSearchService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.FudousanSearchServiceImpl">
+    <property name="fudousanSearchDao"><ref local="fudousanSearchDao"/></property>
+  </bean>
+
+  <!-- 不動産会社新規登録確認 -->
+  <bean id="fudousanRegisterConfirmService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.FudousanRegisterConfirmServiceImpl">
+    <property name="fudousanRegisterConfirmDao"><ref local="fudousanRegisterConfirmDao"/></property>
+  </bean>
+
+  <!-- 不動産会社新規登録 -->
+  <bean id="fudousanRegisterCommitService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.FudousanRegisterCommitServiceImpl">
+    <property name="fudousanRegisterCommitDao"><ref local="fudousanRegisterCommitDao"/></property>
+  </bean>
+
+  <!-- 不動産会社詳細 -->
+  <bean id="fudousanInfoService" class="net.chintai.backend.sysadmin.demand.service.impl.FudousanInfoServiceImpl">
+  <property name="fudousanInfoDao"><ref local="fudousanInfoDao"/></property>
+  </bean>
+
+  <!-- 不動産会社更新 -->
+  <bean id="fudousanUpdatePageService" class="net.chintai.backend.sysadmin.demand.service.impl.FudousanUpdatePageServiceImpl">
+  <property name="fudousanUpdatePageDao"><ref local="fudousanUpdatePageDao"/></property>
+  </bean>
+
+  <!-- 不動産会社更新確認 -->
+  <bean id="fudousanUpdateConfirmService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.FudousanUpdateConfirmServiceImpl">
+    <property name="fudousanUpdateConfirmDao"><ref local="fudousanUpdateConfirmDao"/></property>
+  </bean>
+  <bean id="fudousanUpdateCommitService" class="net.chintai.backend.sysadmin.demand.service.impl.FudousanUpdateCommitServiceImpl">
+    <property name="fudousanUpdateCommitDao"><ref local="fudousanUpdateCommitDao"/></property>
+  </bean>
+
+
+  <!-- 不動産会社削除確認 -->
+  <bean id="fudousanDeleteConfirmService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.FudousanDeleteConfirmServiceImpl">
+    <property name="fudousanDeleteConfirmDao"><ref local="fudousanDeleteConfirmDao"/></property>
+  </bean>
+
+  <!-- 不動産会社削除 -->
+  <bean id="fudousanDeleteCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.demand.service.impl.FudousanDeleteCommitServiceImpl">
+    <property name="fudousanDeleteCommitDao"><ref local="fudousanDeleteCommitDao"/></property>
+  </bean>
+  <bean id="fudousanDelteCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="fudousanDeleteCommitServiceTarget"/></property>
+    <property name="transactionAttributes">
+    <props><prop key="fudousanDelete*">PROPAGATION_REQUIRED,-java.lang.Exception</prop></props>
+    </property>
+  </bean>
+
+  <!-- ■取引先メンテナンス -->
+  <bean id="torihikisakiSearchService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiSearchServiceImpl">
+    <property name="torihikisakiSearchDao"><ref local="torihikisakiSearchDao"/></property>
+  </bean>
+
+  <!-- 取引先新規登録 -->
+  <bean id="torihikisakiRegisterCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiRegisterCommitServiceImpl">
+    <property name="torihikisakiRegisterCommitDao"><ref local="torihikisakiRegisterCommitDao"/></property>
+  </bean>
+  <bean id="torihikisakiRegisterCommitService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="torihikisakiRegisterCommitServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="insert*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- 取引先詳細 -->
+  <bean id="torihikisakiInfoService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiInfoServiceImpl">
+    <property name="torihikisakiInfoDao"><ref local="torihikisakiInfoDao"/></property>
+  </bean>
+
+  <!-- 取引先情報更新ページへ -->
+  <bean id="torihikisakiUpdatePageService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiUpdatePageServiceImpl">
+    <property name="torihikisakiUpdatePageDao"><ref local="torihikisakiUpdatePageDao"/></property>
+  </bean>
+
+  <!-- 取引先情報更新 -->
+  <bean id="torihikisakiUpdateCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiUpdateCommitServiceImpl">
+    <property name="torihikisakiUpdateCommitDao"><ref local="torihikisakiUpdateCommitDao"/></property>
+  </bean>
+    <bean id="torihikisakiUpdateCommitService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="torihikisakiUpdateCommitServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="insert*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+
+  <!-- 取引先削除確認 -->
+  <bean id="torihikisakiDeleteConfirmService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiDeleteConfirmServiceImpl">
+    <property name="torihikisakiDeleteConfirmDao"><ref local="torihikisakiDeleteConfirmDao"/></property>
+  </bean>
+
+  <!-- 取引先削除処理 -->
+  <bean id="torihikisakiDeleteCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiDeleteCommitServiceImpl">
+    <property name="torihikisakiDeleteCommitDao"><ref local="torihikisakiDeleteCommitDao"/></property>
+  </bean>
+  <bean id="torihikisakiDeleteCommitService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="torihikisakiDeleteCommitServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="invalidate*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報登録確認 -->
+  <bean id="torihikisakiWakuInfoAddConfirmService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiWakuInfoAddConfirmServiceImpl">
+    <property name="torihikisakiWakuInfoAddConfirmDao"><ref local="torihikisakiWakuInfoAddConfirmDao"/></property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報登録 -->
+  <bean id="torihikisakiWakuInfoAddCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiWakuInfoAddCommitServiceImpl">
+    <property name="torihikisakiWakuInfoAddCommitDao"><ref local="torihikisakiWakuInfoAddCommitDao"/></property>
+  </bean>
+  <bean id="torihikisakiWakuInfoAddCommitService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="torihikisakiWakuInfoAddCommitServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報更新ページへ -->
+  <bean id="torihikisakiWakuInfoUpdatePageService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiWakuInfoUpdatePageServiceImpl">
+    <property name="torihikisakiWakuInfoUpdatePageDao"><ref local="torihikisakiWakuInfoUpdatePageDao"/></property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報更新 -->
+  <bean id="torihikisakiWakuInfoUpdateCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiWakuInfoUpdateCommitServiceImpl">
+    <property name="torihikisakiWakuInfoUpdateCommitDao"><ref local="torihikisakiWakuInfoUpdateCommitDao"/></property>
+  </bean>
+  <bean id="torihikisakiWakuInfoUpdateCommitService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="torihikisakiWakuInfoUpdateCommitServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報削除確認 -->
+  <bean id="torihikisakiWakuInfoDeleteConfirmService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiWakuInfoDeleteConfirmServiceImpl">
+    <property name="torihikisakiWakuInfoDeleteConfirmDao"><ref local="torihikisakiWakuInfoDeleteConfirmDao"/></property>
+  </bean>
+
+  <!-- 取引先物件枠設定情報削除処理 -->
+  <bean id="torihikisakiWakuInfoDeleteCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.demand.service.impl.TorihikisakiWakuInfoDeleteCommitServiceImpl">
+    <property name="torihikisakiWakuInfoDeleteCommitDao"><ref local="torihikisakiWakuInfoDeleteCommitDao"/></property>
+  </bean>
+  <bean id="torihikisakiWakuInfoDeleteCommitService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="torihikisakiWakuInfoDeleteCommitServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- 物件枠・リスティング枠メンテナンスダウンロード -->
+  <bean id="ContractAmountMaintenanceDownloadService"
+        class="net.chintai.backend.sysadmin.demand.service.impl.ContractAmountMaintenanceDownloadServiceImpl">
+    <property name="contractAmountMaintenanceDao"><ref local="contractAmountMaintenanceDao"/></property>
+  </bean>
+
+  <!-- 物件枠・リスティング枠メンテナンスアップロード -->
+  <bean id="ContractAmountMaintenanceUploadService"
+      class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager">
+      <ref bean="transactionManager" />
+    </property>
+    <property name="target">
+      <ref local="ContractAmountMaintenanceUploadServiceTarget" />
+    </property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+    <bean id="ContractAmountMaintenanceUploadServiceTarget"
+        class="net.chintai.backend.sysadmin.demand.service.impl.ContractAmountMaintenanceUploadServiceImpl">
+    <property name="contractAmountMaintenanceDao"><ref local="contractAmountMaintenanceDao"/></property>
+  </bean>
+
+
+</beans>

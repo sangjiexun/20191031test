@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+    <global>
+      <constant>
+        <constant-name>halfSizeAlnum</constant-name>
+        <constant-value>^[0-9a-zA-Z]*$</constant-value>
+      </constant>
+      <constant>
+        <constant-name>figure</constant-name>
+        <constant-value>^[0-9]*$</constant-value>
+      </constant>
+    </global>
+    <!-- ■店舗検索 -->
+    <formset>
+      <form name="KeiyakuShopSearchForm">
+        <field property="shopCd" depends="mask,maxlength,scripting">
+          <msg name="mask"      key="WARN.MSG.0007"/>
+          <msg name="maxlength" key="WARN.MSG.0007"/>
+          <arg name="mask" key="shop_listing.shopCd" position="0"/>
+          <arg name="mask" key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>9</var-value>
+          </var>
+        </field>
+        <field property="companyBumon" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.companyBumon"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- ■出稿情報登録 -->
+    <formset>
+      <form name="MediaInfoRegisterForm">
+        <field property="catchPhrase" depends="required,scripting">
+          <msg name="required" key="WARN.MSG.0001"/>
+          <arg name="required" key="shop_listing.catchPhrase"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.catchPhrase"/>
+        </field>
+
+        <field property="chkCatchphrase" depends="maxlength">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.catchPhrase" position="0"/>
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>20</var-value>
+          </var>
+        </field>
+
+        <field property="appealComment" depends="required,scripting">
+          <msg name="required" key="WARN.MSG.0001"/>
+          <arg name="required" key="shop_listing.appealComment"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.appealComment"/>
+        </field>
+
+        <field property="picFlg" depends="required">
+          <msg name="required" key="WARN.MSG.0010"/>
+          <arg name="required" key="shop_listing.shopImg"/>
+        </field>
+
+        <field property="chkAppealComment" depends="maxlength">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.appealComment" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>200</var-value>
+          </var>
+        </field>
+
+        <field property="couponComment1" depends="maxlength,scripting">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.couponComment1" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.couponComment1"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+          </var>
+        </field>
+
+        <field property="couponComment2" depends="maxlength,scripting">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.couponComment2" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.couponComment2"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+          </var>
+        </field>
+
+        <field property="couponComment3" depends="maxlength,scripting">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.couponComment3" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.couponComment3"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+          </var>
+        </field>
+
+        <field property="note" depends="maxlength,scripting">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.note" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.note"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>2000</var-value>
+          </var>
+        </field>
+
+        <field property="chkListingCnt" depends="validwhen">
+          <msg name="validwhen" key="WARN.MSG.0051"/>
+          <arg name="validwhen" key="shop_listing.selectedListing" position="0" />
+          <arg name="validwhen" key="shop_listing.icon" position="1" />
+          <arg name="validwhen" key="shop_listing.maxListing" position="2" />
+          <var>
+            <var-name>test</var-name>
+            <var-value>(3 > *this*)</var-value>
+          </var>
+        </field>
+
+      </form>
+    </formset>
+
+
+    <!-- ■出稿情報更新 -->
+    <formset>
+      <form name="MediaInfoUpdateForm">
+        <field property="catchPhrase" depends="required,scripting">
+          <msg name="required" key="WARN.MSG.0001"/>
+          <arg name="required" key="shop_listing.catchPhrase"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.catchPhrase"/>
+        </field>
+
+        <field property="chkCatchphrase" depends="maxlength">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.catchPhrase" position="0"/>
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>20</var-value>
+          </var>
+        </field>
+
+        <field property="picFlg" depends="required">
+          <msg name="required" key="WARN.MSG.0010"/>
+          <arg name="required" key="shop_listing.shopImg"/>
+        </field>
+
+        <field property="appealComment" depends="required,scripting">
+          <msg name="required" key="WARN.MSG.0001"/>
+          <arg name="required" key="shop_listing.appealComment"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.appealComment"/>
+        </field>
+
+        <field property="chkAppealComment" depends="maxlength">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.appealComment" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>200</var-value>
+          </var>
+        </field>
+
+        <field property="couponComment1" depends="maxlength,scripting">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.couponComment1" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.couponComment1"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+          </var>
+        </field>
+
+        <field property="couponComment2" depends="maxlength,scripting">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.couponComment2" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.couponComment2"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+          </var>
+        </field>
+
+        <field property="couponComment3" depends="maxlength,scripting">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.couponComment3" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.couponComment3"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+          </var>
+        </field>
+
+        <field property="note" depends="maxlength,scripting">
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="maxlength" key="shop_listing.note" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.note"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>2000</var-value>
+          </var>
+        </field>
+
+        <field property="chkListingCnt" depends="validwhen">
+          <msg name="validwhen" key="WARN.MSG.0051"/>
+          <arg name="validwhen" key="shop_listing.selectedListing" position="0" />
+          <arg name="validwhen" key="shop_listing.icon" position="1" />
+          <arg name="validwhen" key="shop_listing.maxListing" position="2" />
+          <var>
+            <var-name>test</var-name>
+            <var-value>(3 > *this*)</var-value>
+          </var>
+        </field>
+
+      </form>
+    </formset>
+
+
+    <!--■契約情報登録
+    - 2009/07/06  BGT)李昊燮 エイブルリニューアル検討支援対応でコメント処理 アクションクラスでチェック
+    <formset>
+      <form name="KeiyakuInfoRegisterForm">
+        <field property="keiyakuStartYm" depends="required,date">
+          <msg name="required" key="WARN.MSG.0010"/>
+          <arg name="required" key="shop_listing.keiyakuStartYm"/>
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.keiyakuStartYm"/>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+
+        <field property="keiyakuEndYm" depends="date,dateCompare">
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.keiyakuEndYm"/>
+          <msg name="dateCompare" key="WARN.MSG.0009"/>
+          <arg name="dateCompare" key="shop_listing.keiyakuYm"/>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+          <var>
+            <var-name>startDate</var-name>
+            <var-value>keiyakuStartYm</var-value>
+          </var>
+          <var>
+            <var-name>endDate</var-name>
+            <var-value>keiyakuEndYm</var-value>
+          </var>
+        </field>
+
+        <field property="couponStartYm" depends="validwhen,date">
+          <msg name="validwhen" key="WARN.MSG.0010"/>
+          <arg name="validwhen" key="shop_listing.couponStartYm"/>
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.couponStartYm"/>
+          <var>
+            <var-name>test</var-name>
+            <var-value>(((couponKeiyakuFlg == '1') and (*this* != null)) or (couponKeiyakuFlg=='0'))</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+
+        <field property="couponEndYm" depends="date">
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.couponEndYm"/>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+        <field property="couponStartYm" depends="validwhen,dateCompare">
+          <msg name="validwhen"   key="WARN.MSG.0053"/>
+          <arg name="validwhen"   key="shop_listing.couponStartEndYm" position="0" />
+          <arg name="validwhen"   key="shop_listing.couponStartEndYm" position="1" />
+          <arg name="validwhen"   key="shop_listing.keiyakuYm" position="2" />
+          <msg name="dateCompare" key="WARN.MSG.0009"/>
+          <arg name="dateCompare" key="shop_listing.couponYm"/>
+          <var>
+            <var-name>test</var-name>
+            <var-value>(((couponKeiyakuFlg == '0') or (kihonKeiyakuFlg == '0')) or ((couponStartYm >= keiyakuStartYm) and (((keiyakuEndYm >= couponEndYm) and (couponEndYm != null)) or (keiyakuEndYm == null))))</var-value>
+          </var>
+          <var>
+            <var-name>startDate</var-name>
+            <var-value>couponStartYm</var-value>
+          </var>
+          <var>
+            <var-name>endDate</var-name>
+            <var-value>couponEndYm</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+
+        <field property="linkStartYm" depends="validwhen,date">
+          <msg name="validwhen" key="WARN.MSG.0010"/>
+          <arg name="validwhen" key="shop_listing.linkStartYm"/>
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.linkStartYm"/>
+          <var>
+            <var-name>test</var-name>
+            <var-value>(((linkKeiyakuFlg == '1') and (*this* != null)) or (linkKeiyakuFlg=='0'))</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+
+        <field property="linkEndYm" depends="validwhen,date,dateCompare">
+          <msg name="validwhen"   key="WARN.MSG.0053"/>
+          <arg name="validwhen"   key="shop_listing.linkStartEndYm" position="0" />
+          <arg name="validwhen"   key="shop_listing.linkStartEndYm" position="1" />
+          <arg name="validwhen"   key="shop_listing.keiyakuYm" position="2" />
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.linkEndYm"/>
+          <msg name="dateCompare" key="WARN.MSG.0009"/>
+          <arg name="dateCompare" key="shop_listing.linkYm"/>
+          <var>
+            <var-name>test</var-name>
+            <var-value>(((linkKeiyakuFlg == '0') or (kihonKeiyakuFlg == '0')) or ((linkStartYm >= keiyakuStartYm) and (((keiyakuEndYm >= linkEndYm) and (linkEndYm != null)) or (keiyakuEndYm == null))))</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+          <var>
+            <var-name>startDate</var-name>
+            <var-value>linkStartYm</var-value>
+          </var>
+          <var>
+            <var-name>endDate</var-name>
+            <var-value>linkEndYm</var-value>
+          </var>
+        </field>
+
+        <field property="note" depends="scripting,maxlength">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.note"/>
+          <arg name="maxlength" key="shop_listing.note" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>2000</var-value>
+          </var>
+        </field>
+      </form>
+    </formset>
+    -->
+
+    <!-- ■契約情報更新
+    - 2009/07/06  BGT)李昊燮 エイブルリニューアル検討支援対応でコメント処理 アクションクラスでチェック
+    <formset>
+      <form name="KeiyakuInfoUpdateForm">
+        <field property="keiyakuStartYm" depends="validwhen,date,dateCompare">
+          <msg name="validwhen" key="WARN.MSG.0010"/>
+          <arg name="validwhen" key="shop_listing.keiyakuStartYm"/>
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.keiyakuStartYm"/>
+          <msg name="dateCompare" key="WARN.MSG.0009"/>
+          <arg name="dateCompare" key="shop_listing.keiyakuYm"/>
+          <var>
+            <var-name>test</var-name>
+            <var-value>((kihonKeiyakuFlg == 0) or ( keiyakuStartYm != null))</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+          <var>
+            <var-name>startDate</var-name>
+            <var-value>keiyakuStartYm</var-value>
+          </var>
+          <var>
+            <var-name>endDate</var-name>
+            <var-value>keiyakuEndYm</var-value>
+          </var>
+        </field>
+
+        <field property="keiyakuEndYm" depends="date">
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.keiyakuEndYm"/>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+
+        <field property="couponStartYm" depends="validwhen,date">
+          <msg name="validwhen" key="WARN.MSG.0010"/>
+          <arg name="validwhen" key="shop_listing.couponStartYm"/>
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.couponStartYm"/>
+          <var>
+            <var-name>test</var-name>
+            <var-value>(((couponKeiyakuFlg == '0') or (kihonKeiyakuFlg == '0')) or (*this* != null))</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+
+        <field property="couponEndYm" depends="date,dateCompare,validwhen">
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.couponEndYm"/>
+          <msg name="dateCompare" key="WARN.MSG.0009"/>
+          <arg name="dateCompare" key="shop_listing.couponYm"/>
+          <msg name="validwhen"   key="WARN.MSG.0053"/>
+          <arg name="validwhen"   key="shop_listing.couponStartEndYm" position="0" />
+          <arg name="validwhen"   key="shop_listing.couponStartEndYm" position="1" />
+          <arg name="validwhen"   key="shop_listing.keiyakuYm" position="2" />
+          <var>
+            <var-name>startDate</var-name>
+            <var-value>couponStartYm</var-value>
+          </var>
+          <var>
+            <var-name>endDate</var-name>
+            <var-value>couponEndYm</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+          <var>
+            <var-name>test</var-name>
+            <var-value>(((couponKeiyakuFlg == '0') or (kihonKeiyakuFlg == '0')) or ((couponStartYm >= keiyakuStartYm) and (((keiyakuEndYm >= couponEndYm) and (couponEndYm != null)) or (keiyakuEndYm == null))))</var-value>
+          </var>
+        </field>
+
+        <field property="linkStartYm" depends="validwhen,date">
+          <msg name="validwhen" key="WARN.MSG.0010"/>
+          <arg name="validwhen" key="shop_listing.linkStartYm"/>
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.linkStartYm"/>
+          <var>
+            <var-name>test</var-name>
+            <var-value>(((linkKeiyakuFlg == '0') or (kihonKeiyakuFlg == '0')) or (*this* != null))</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+
+        <field property="linkEndYm" depends="date,dateCompare,validwhen">
+          <msg name="date" key="WARN.MSG.0027"/>
+          <arg name="date" key="shop_listing.linkEndYm"/>
+          <msg name="dateCompare" key="WARN.MSG.0009"/>
+          <arg name="dateCompare" key="shop_listing.linkYm"/>
+          <msg name="validwhen"   key="WARN.MSG.0053"/>
+          <arg name="validwhen"   key="shop_listing.linkStartEndYm" position="0" />
+          <arg name="validwhen"   key="shop_listing.linkStartEndYm" position="1" />
+          <arg name="validwhen"   key="shop_listing.keiyakuYm" position="2" />
+          <var>
+            <var-name>startDate</var-name>
+            <var-value>couponStartYm</var-value>
+          </var>
+          <var>
+            <var-name>endDate</var-name>
+            <var-value>couponEndYm</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+          <var>
+            <var-name>test</var-name>
+            <var-value>(((linkKeiyakuFlg == '0') or (kihonKeiyakuFlg == '0')) or ((linkStartYm >= keiyakuStartYm) and (((keiyakuEndYm >= linkEndYm) and (linkEndYm != null)) or (keiyakuEndYm == null))))</var-value>
+          </var>
+        </field>
+
+        <field property="note" depends="scripting,maxlength">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="shop_listing.note"/>
+          <arg name="maxlength" key="shop_listing.note" position="0" />
+          <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>2000</var-value>
+          </var>
+        </field>
+      </form>
+    </formset>
+    -->
+</form-validation>

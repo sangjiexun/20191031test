@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="addressEnsen">
+
+	<!-- Result Map -->
+	<!-- エリア -->
+	<resultMap id="area" class="net.chintai.backend.sysadmin.common.dwr.domain.Area">
+		<result property="areaCode" column="AREACD"/>
+		<result property="areaName" column="AREANAME"/>
+	</resultMap>
+
+	<!-- 都道府県 -->
+	<resultMap id="pref" class="net.chintai.backend.sysadmin.common.dwr.domain.Pref">
+		<result property="prefCode" column="PREFCD"/>
+		<result property="prefName" column="PREFNAME"/>
+	</resultMap>
+
+	<!-- 市区町村 -->
+	<resultMap id="city" class="net.chintai.backend.sysadmin.common.dwr.domain.City">
+		<result property="cityCode" column="CITYCD"/>
+		<result property="cityName" column="CITYNAME"/>
+	</resultMap>
+
+	<!-- 沿線 -->
+	<resultMap id="ensen" class="net.chintai.backend.sysadmin.common.dwr.domain.Ensen">
+		<result property="ensenCode" column="ENSENCD"/>
+		<result property="ensenName" column="ENSENNAME"/>
+	</resultMap>
+
+	<!-- 駅 -->
+	<resultMap id="eki" class="net.chintai.backend.sysadmin.common.dwr.domain.Eki">
+		<result property="ekiCode" column="EKICD"/>
+		<result property="ekiName" column="EKINAME"/>
+	</resultMap>
+
+	<!-- 市区町村以下の町域名 -->
+	<resultMap id="address" class="net.chintai.backend.sysadmin.common.dwr.domain.Address">
+		<result property="zipCode" column="ZIPCD"/>
+		<result property="address" column="ADDRESS"/>
+	</resultMap>
+
+	<!-- エリアリスト取得 -->
+	<select id="selectAreaList" resultMap="area">
+		SELECT
+			AREACD,
+			AREANAME
+		FROM
+			MST_AREA
+		ORDER BY
+			SORT_KEY
+	</select>
+
+	<!-- 都道府県リスト取得 -->
+	<select id="selectPrefList" resultMap="pref" parameterClass="java.lang.String">
+		SELECT
+			PREFCD,
+			PREFNAME
+		FROM
+			MST_PREF
+		WHERE
+			AREACD = #value#
+		ORDER BY
+			SORT_KEY
+	</select>
+
+	<!-- 市区町村リスト取得 -->
+	<select id="selectCityList" resultMap="city" parameterClass="java.lang.String">
+		SELECT
+			CITYCD,
+			CITYNAME
+		FROM
+			MST_CITY
+		WHERE
+			PREFCD = #value#
+			AND
+			DEL_KBN = '0'
+		ORDER BY
+			CITYCD
+	</select>
+
+	<!-- 沿線リスト取得 -->
+	<select id="selectEnsenList" resultMap="ensen"
+			parameterClass="net.chintai.backend.sysadmin.common.dwr.dao.EnsenListParamBean">
+		SELECT
+			ENSENCD,
+			ENSENNAME
+		FROM
+			MST_ENSEN
+		WHERE
+			AREACD = #areaCode#
+			AND
+			ENSENTYPE = #ensenType#
+			AND
+			DEL_KBN = '0'
+		ORDER BY
+			SORT_KEY
+	</select>
+
+	<!-- 駅リスト取得 -->
+	<select id="selectEkiList" resultMap="eki" parameterClass="java.lang.String">
+		SELECT
+			EKICD,
+			EKINAME
+		FROM
+			MST_EKI
+		WHERE
+			ENSENCD = #value#
+			AND
+			DEL_KBN = '0'
+		ORDER BY
+			SORT_KEY
+	</select>
+
+	<!-- 市区町村以下の町域名リスト取得 -->
+	<select id="selectAddressList" resultMap="address" parameterClass="java.lang.String">
+		SELECT
+			ZIPCD,
+			ADDRESS
+		FROM
+			MST_ZIPCODE
+		WHERE
+			CITYCD = #value#
+			AND
+			DEL_KBN = '0'
+		ORDER BY
+			SORT_KEY
+	</select>
+</sqlMap>

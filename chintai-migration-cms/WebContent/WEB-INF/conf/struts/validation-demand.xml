@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+    <global>
+      <constant>
+        <constant-name>halfSizeAlnum</constant-name>
+        <constant-value>^[0-9a-zA-Z]*$</constant-value>
+      </constant>
+      <constant>
+        <constant-name>figure</constant-name>
+        <constant-value>^[0-9]*$</constant-value>
+      </constant>
+      <constant>
+        <constant-name>telFax</constant-name>
+        <constant-value>^[0-9/-]*$</constant-value>
+      </constant>
+    </global>
+    <!-- ■店舗コード紐付:検索 -->
+    <formset>
+      <form name="ShopBindSearchForm">
+        <field property="shopCd" depends="mask,maxlength">
+          <msg name="mask"      key="WARN.MSG.0007"/>
+          <msg name="maxlength" key="WARN.MSG.0007"/>
+          <arg key="demand.shopCd" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>9</var-value>
+          </var>
+        </field>
+        <field property="company" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="demand.company"/>
+        </field>
+        <field property="bumon" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="demand.bumon"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- ■取引先一覧:検索 -->
+    <formset>
+      <form name="TorihikisakiListForm">
+        <field property="torihikisakiCd1" depends="mask,maxlength,minlength">
+          <msg name="mask"      key="WARN.MSG.0020"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="minlength" key="WARN.MSG.0020"/>
+          <arg key="demand.torihikisakiCd1" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>5</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>5</var-value>
+          </var>
+        </field>
+        <field property="torihikisakiCd2" depends="mask,maxlength,minlength">
+          <msg name="mask"      key="WARN.MSG.0020"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="minlength" key="WARN.MSG.0020"/>
+          <arg key="demand.torihikisakiCd2" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>4</var-value>
+          </var>
+        </field>
+        <field property="fudousanName" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="demand.fudousanName"/>
+        </field>
+        <field property="torihikisakiName" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="demand.torihikisakiName"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- ■不動産会社メンテナンス：検索 -->
+    <formset>
+      <form name="FudousanSearchForm">
+        <field property="fudousanCd" depends="mask,maxlength,minlength">
+          <msg name="mask"      key="WARN.MSG.0020"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="minlength" key="WARN.MSG.0020"/>
+          <arg key="demand.torihikisakiCd" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>5</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>5</var-value>
+          </var>
+        </field>
+        <field property="fudousanName" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="demand.fudousanName"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- 不動産会社削除 -->
+    <formset>
+      <form name="FudousanDeleteForm">
+        <field property="fudousanCd" depends="required">
+          <msg name="required" key="WARN.MSG.0010" />
+          <arg name="required" key="demand.delFudousan" position="0" />
+        </field>
+      </form>
+    </formset>
+
+    <!-- 不動産会社登録 -->
+    <formset>
+      <form name="FudousanRegisterForm">
+        <field property="fudousanName" depends="required,maxlength,scripting">
+          <msg name="required"  key="WARN.MSG.0001"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg key="demand.fudousanName" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+          </var>
+        </field>
+        <field property="zipCode1" depends="requiredif,mask,minlength,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0036"/>
+          <msg  name="mask"       key="WARN.MSG.0036"/>
+          <msg  name="minlength"  key="WARN.MSG.0036"/>
+          <msg  name="maxlength"  key="WARN.MSG.0036"/>
+          <arg  key="demand.zipCodeTitle" position="0"/>
+          <arg1 key="demand.zipCode"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${figure}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>3</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>3</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>zipCode2</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>NOTNULL</var-value>
+          </var>
+        </field>
+        <field property="zipCode2" depends="requiredif,mask,minlength,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0036"/>
+          <msg  name="mask"       key="WARN.MSG.0036"/>
+          <msg  name="minlength"  key="WARN.MSG.0036"/>
+          <msg  name="maxlength"  key="WARN.MSG.0036"/>
+          <arg  key="demand.zipCodeTitle" position="0"/>
+          <arg1 key="demand.zipCode"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${figure}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>zipCode1</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>NOTNULL</var-value>
+          </var>
+        </field>
+        <field property="address1" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.address1" position="0"/>
+        </field>
+        <field property="address2" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.address2" position="0"/>
+        </field>
+        <field property="tel" depends="mask">
+          <msg  name="mask"  key="WARN.MSG.0036"/>
+          <arg  key="demand.tel" position="0"/>
+          <arg1 key="demand.tel"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${telFax}</var-value>
+          </var>
+        </field>
+        <field property="fax" depends="mask">
+          <msg  name="mask"  key="WARN.MSG.0036"/>
+          <arg  key="demand.fax" position="0"/>
+          <arg1 key="demand.fax"/>
+        <var>
+            <var-name>mask</var-name>
+            <var-value>${telFax}</var-value>
+          </var>
+        </field>
+        <field property="tantou" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- 不動産会社更新 -->
+    <formset>
+      <form name="FudousanUpdateForm">
+        <field property="fudousanName" depends="required,maxlength,scripting">
+          <msg name="required"  key="WARN.MSG.0001"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg key="demand.fudousanName" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+          </var>
+        </field>
+        <field property="zipCode1" depends="requiredif,mask,minlength,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0036"/>
+          <msg  name="mask"       key="WARN.MSG.0036"/>
+          <msg  name="minlength" key="WARN.MSG.0036"/>
+          <msg  name="maxlength"  key="WARN.MSG.0036"/>
+          <arg  key="demand.zipCodeTitle" position="0"/>
+          <arg1 key="demand.zipCode"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${figure}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>3</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>3</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>zipCode2</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>NOTNULL</var-value>
+          </var>
+        </field>
+        <field property="zipCode2" depends="requiredif,mask,minlength,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0036"/>
+          <msg  name="mask"       key="WARN.MSG.0036"/>
+          <msg  name="minlength"  key="WARN.MSG.0036"/>
+          <msg  name="maxlength"  key="WARN.MSG.0036"/>
+          <arg  key="demand.zipCodeTitle" position="0"/>
+          <arg1 key="demand.zipCode"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${figure}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>zipCode1</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>NOTNULL</var-value>
+          </var>
+        </field>
+        <field property="address1" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.address1" position="0"/>
+        </field>
+        <field property="address2" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.address2" position="0"/>
+        </field>
+        <field property="tel" depends="mask">
+          <msg  name="mask"  key="WARN.MSG.0036"/>
+          <arg  key="demand.tel" position="0"/>
+          <arg1 key="demand.tel"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${telFax}</var-value>
+          </var>
+        </field>
+        <field property="fax" depends="mask">
+          <msg  name="mask"  key="WARN.MSG.0036"/>
+          <arg  key="demand.fax" position="0"/>
+          <arg1 key="demand.fax"/>
+        <var>
+            <var-name>mask</var-name>
+            <var-value>${telFax}</var-value>
+          </var>
+        </field>
+        <field property="tantou" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- ■取引先メンテナンス：検索 -->
+    <formset>
+      <form name="TorihikisakiSearchForm">
+        <field property="torihikisakiCd1" depends="mask,maxlength,minlength">
+          <msg name="mask"      key="WARN.MSG.0020"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="minlength" key="WARN.MSG.0020"/>
+          <arg key="demand.torihikisakiCd1" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>5</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>5</var-value>
+          </var>
+        </field>
+        <field property="torihikisakiCd2" depends="mask,maxlength,minlength">
+          <msg name="mask"      key="WARN.MSG.0020"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="minlength" key="WARN.MSG.0020"/>
+          <arg key="demand.torihikisakiCd2" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>4</var-value>
+          </var>
+        </field>
+        <field property="fudousanName" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="demand.fudousanName"/>
+        </field>
+        <field property="torihikisakiName" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="demand.torihikisakiName"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- 取引先新規登録 -->
+    <formset>
+      <form name="TorihikisakiRegisterForm">
+        <field property="fudousanName" depends="required,scripting">
+          <msg name="required"  key="WARN.MSG.0010"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg key="demand.selectFudousanName" position="0"/>
+        </field>
+        <field property="torihikisakiName" depends="required,maxlength,scripting">
+          <msg name="required"  key="WARN.MSG.0001"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg key="demand.torihikisakiName" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>60</var-value>
+          </var>
+        </field>
+        <field property="zipCd1" depends="requiredif,mask,minlength,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0036"/>
+          <msg  name="mask"       key="WARN.MSG.0036"/>
+          <msg  name="minlength" key="WARN.MSG.0036"/>
+          <msg  name="maxlength"  key="WARN.MSG.0036"/>
+          <arg  key="demand.zipCodeTitle" position="0"/>
+          <arg1 key="demand.zipCode"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${figure}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>3</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>3</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>zipCd2</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>NOTNULL</var-value>
+          </var>
+        </field>
+        <field property="zipCd2" depends="requiredif,mask,minlength,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0036"/>
+          <msg  name="mask"       key="WARN.MSG.0036"/>
+          <msg  name="minlength"  key="WARN.MSG.0036"/>
+          <msg  name="maxlength"  key="WARN.MSG.0036"/>
+          <arg  key="demand.zipCodeTitle" position="0"/>
+          <arg1 key="demand.zipCode"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${figure}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>zipCd1</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>NOTNULL</var-value>
+          </var>
+        </field>
+        <field property="prefCd" depends="required">
+          <msg name="required" key="WARN.MSG.0010"/>
+          <arg key="demand.addressPref"/>
+        </field>
+        <field property="address1" depends="required,scripting">
+          <msg name="required"  key="WARN.MSG.0001"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.address1" position="0"/>
+        </field>
+        <field property="address2" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.address2" position="0"/>
+        </field>
+        <field property="tel" depends="mask">
+          <msg  name="mask"  key="WARN.MSG.0036"/>
+          <arg  key="demand.tel" position="0"/>
+          <arg1 key="demand.tel"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${telFax}</var-value>
+          </var>
+        </field>
+        <field property="fax" depends="mask">
+          <msg  name="mask"  key="WARN.MSG.0036"/>
+          <arg  key="demand.fax" position="0"/>
+          <arg1 key="demand.fax"/>
+        <var>
+            <var-name>mask</var-name>
+            <var-value>${telFax}</var-value>
+          </var>
+        </field>
+        <field property="tantou" depends="maxlength,scripting">
+          <msg  name="maxlength" key="WARN.MSG.0004"/>
+          <msg  name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.tantou" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>25</var-value>
+          </var>
+        </field>
+        <field property="shisyaCd" depends="required">
+          <msg name="required"  key="WARN.MSG.0010"/>
+          <arg key="demand.tantouShisya"/>
+        </field>
+        <field property="applyYear" depends="required">
+          <msg name="required"  key="WARN.MSG.0010"/>
+          <arg key="demand.applyYear"/>
+        </field>
+        <field property="applyMonth" depends="required">
+          <msg name="required"  key="WARN.MSG.0010"/>
+          <arg key="demand.applyMonth"/>
+        </field>
+        <field property="bukkenCntNote" depends="requiredif,validwhen,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0001"/>
+          <msg  name="validwhen"  key="WARN.MSG.0008"/>
+          <msg  name="maxlength"  key="WARN.MSG.0008"/>
+          <arg  name="requiredif" key="demand.bukkenCntNote"/>
+          <arg  key="demand.bukkenCnt"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>test</var-name>
+            <var-value>((bukkenCntChecker == "true")or(bukkenCnt != "999999"))</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>bukkenCnt</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>EQUAL</var-value>
+          </var>
+          <var>
+            <var-name>fieldValue[0]</var-name>
+            <var-value>999999</var-value>
+          </var>
+        </field>
+        <field property="tokusenCntNote" depends="requiredif,validwhen,maxlength">
+          <msg name="requiredif" key="WARN.MSG.0001"/>
+          <msg  name="validwhen"  key="WARN.MSG.0008"/>
+          <msg  name="maxlength"  key="WARN.MSG.0008"/>
+          <arg  name="requiredif" key="demand.tokusenCntNote"/>
+          <arg  key="demand.tokusenCnt"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>test</var-name>
+            <var-value>((tokusenCntChecker == "true")or(tokusenCnt != "999999"))</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>tokusenCnt</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>EQUAL</var-value>
+          </var>
+          <var>
+            <var-name>fieldValue[0]</var-name>
+            <var-value>999999</var-value>
+          </var>
+        </field>
+        <field property="inputDate" depends="dateCompare">
+          <msg  name="dateCompare" key="WARN.MSG.0041"/>
+          <arg  name="dateCompare" key="demand.applyYm"/>
+          <arg1 name="dateCompare" key="demand.nowMonth"/>
+          <var>
+            <var-name>startDate</var-name>
+            <var-value>nowDate</var-value>
+          </var>
+          <var>
+            <var-name>endDate</var-name>
+            <var-value>inputDate</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+      </form>
+    </formset>
+
+    <!-- 取引先新規更新 -->
+    <formset>
+      <form name="TorihikisakiUpdateForm">
+        <field property="fudousanName" depends="required,scripting">
+          <msg name="required"  key="WARN.MSG.0010"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg key="demand.selectFudousanName" position="0"/>
+        </field>
+        <field property="torihikisakiName" depends="required,maxlength,scripting">
+          <msg name="required"  key="WARN.MSG.0001"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg key="demand.torihikisakiName" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>60</var-value>
+          </var>
+        </field>
+        <field property="zipCd1" depends="requiredif,mask,minlength,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0036"/>
+          <msg  name="mask"       key="WARN.MSG.0036"/>
+          <msg  name="minlength"  key="WARN.MSG.0036"/>
+          <msg  name="maxlength"  key="WARN.MSG.0036"/>
+          <arg  key="demand.zipCodeTitle" position="0"/>
+          <arg1 key="demand.zipCode"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${figure}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>3</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>3</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>zipCd2</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>NOTNULL</var-value>
+          </var>
+        </field>
+        <field property="zipCd2" depends="requiredif,mask,minlength,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0036"/>
+          <msg  name="mask"       key="WARN.MSG.0036"/>
+          <msg  name="minlength"  key="WARN.MSG.0036"/>
+          <msg  name="maxlength"  key="WARN.MSG.0036"/>
+          <arg  key="demand.zipCodeTitle" position="0"/>
+          <arg1 key="demand.zipCode"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${figure}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>zipCd1</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>NOTNULL</var-value>
+          </var>
+        </field>
+        <field property="prefCd" depends="required">
+          <msg name="required" key="WARN.MSG.0010"/>
+          <arg key="demand.addressPref"/>
+        </field>
+        <field property="address1" depends="required,scripting">
+          <msg name="required"  key="WARN.MSG.0001"/>
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.address1" position="0"/>
+        </field>
+        <field property="address2" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.address2" position="0"/>
+        </field>
+        <field property="tel" depends="mask">
+          <msg  name="mask"  key="WARN.MSG.0036"/>
+          <arg  key="demand.tel" position="0"/>
+          <arg1 key="demand.tel"/>
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${telFax}</var-value>
+          </var>
+        </field>
+        <field property="fax" depends="mask">
+          <msg  name="mask"  key="WARN.MSG.0036"/>
+          <arg  key="demand.fax" position="0"/>
+          <arg1 key="demand.fax"/>
+        <var>
+            <var-name>mask</var-name>
+            <var-value>${telFax}</var-value>
+          </var>
+        </field>
+        <field property="tantou" depends="maxlength,scripting">
+          <msg  name="maxlength" key="WARN.MSG.0004"/>
+          <msg  name="scripting" key="WARN.MSG.0030"/>
+          <arg  key="demand.tantou" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>25</var-value>
+          </var>
+        </field>
+        <field property="shisyaCd" depends="required">
+          <msg name="required"  key="WARN.MSG.0010"/>
+          <arg key="demand.tantouShisya"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- 取引先削除 -->
+    <formset>
+      <form name="TorihikisakiDeleteForm">
+        <field property="delFlgList" depends="required">
+          <msg name="required" key="WARN.MSG.0010"/>
+          <arg key="demand.delTorihikisaki"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- 取引先物件枠設定情報登録 -->
+    <formset>
+      <form name="TorihikisakiWakuInfoAddForm">
+        <field property="applyYear" depends="required">
+          <msg name="required"  key="WARN.MSG.0010"/>
+          <arg key="demand.applyYear"/>
+        </field>
+        <field property="applyMonth" depends="required">
+          <msg name="required"  key="WARN.MSG.0010"/>
+          <arg key="demand.applyMonth"/>
+        </field>
+        <field property="bukkenCntNote" depends="requiredif,validwhen,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0001"/>
+          <msg  name="validwhen"  key="WARN.MSG.0008"/>
+          <msg  name="maxlength"  key="WARN.MSG.0008"/>
+          <arg  name="requiredif" key="demand.bukkenCntNote"/>
+          <arg  key="demand.bukkenCnt"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>test</var-name>
+            <var-value>((bukkenCntChecker == "true")or(bukkenCnt != "999999"))</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>bukkenCnt</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>EQUAL</var-value>
+          </var>
+          <var>
+            <var-name>fieldValue[0]</var-name>
+            <var-value>999999</var-value>
+          </var>
+        </field>
+        <field property="tokusenCntNote" depends="requiredif,validwhen,maxlength">
+          <msg name="requiredif" key="WARN.MSG.0001"/>
+          <msg  name="validwhen"  key="WARN.MSG.0008"/>
+          <msg  name="maxlength"  key="WARN.MSG.0008"/>
+          <arg  name="requiredif" key="demand.tokusenCntNote"/>
+          <arg  key="demand.tokusenCnt"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>test</var-name>
+            <var-value>((tokusenCntChecker == "true")or(tokusenCnt != "999999"))</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>tokusenCnt</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>EQUAL</var-value>
+          </var>
+          <var>
+            <var-name>fieldValue[0]</var-name>
+            <var-value>999999</var-value>
+          </var>
+        </field>
+        <field property="inputDate" depends="dateCompare">
+          <msg  name="dateCompare" key="WARN.MSG.0041"/>
+          <arg  name="dateCompare" key="demand.applyYm"/>
+          <arg1 name="dateCompare" key="demand.nowMonth"/>
+          <var>
+            <var-name>startDate</var-name>
+            <var-value>nowDate</var-value>
+          </var>
+          <var>
+            <var-name>endDate</var-name>
+            <var-value>inputDate</var-value>
+          </var>
+          <var>
+            <var-name>datePattern</var-name>
+            <var-value>yyyyMM</var-value>
+          </var>
+        </field>
+      </form>
+    </formset>
+
+    <!-- 取引先物件枠設定情報更新 -->
+    <formset>
+      <form name="TorihikisakiWakuInfoUpdateForm">
+        <field property="bukkenCntNote" depends="requiredif,validwhen,maxlength">
+          <msg  name="requiredif" key="WARN.MSG.0001"/>
+          <msg  name="validwhen"  key="WARN.MSG.0008"/>
+          <msg  name="maxlength"  key="WARN.MSG.0008"/>
+          <arg  name="requiredif" key="demand.bukkenCntNote"/>
+          <arg  key="demand.bukkenCnt"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>test</var-name>
+            <var-value>((bukkenCntChecker == "true")or(bukkenCnt != "999999"))</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>bukkenCnt</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>EQUAL</var-value>
+          </var>
+          <var>
+            <var-name>fieldValue[0]</var-name>
+            <var-value>999999</var-value>
+          </var>
+        </field>
+        <field property="tokusenCntNote" depends="requiredif,validwhen,maxlength">
+          <msg name="requiredif" key="WARN.MSG.0001"/>
+          <msg  name="validwhen"  key="WARN.MSG.0008"/>
+          <msg  name="maxlength"  key="WARN.MSG.0008"/>
+          <arg  name="requiredif" key="demand.tokusenCntNote"/>
+          <arg  key="demand.tokusenCnt"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>test</var-name>
+            <var-value>((tokusenCntChecker == "true")or(tokusenCnt != "999999"))</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>field[0]</var-name>
+            <var-value>tokusenCnt</var-value>
+          </var>
+          <var>
+            <var-name>fieldTest[0]</var-name>
+            <var-value>EQUAL</var-value>
+          </var>
+          <var>
+            <var-name>fieldValue[0]</var-name>
+            <var-value>999999</var-value>
+          </var>
+        </field>
+      </form>
+    </formset>
+
+    <!-- 取引先物件枠設定削除 -->
+    <formset>
+      <form name="TorihikisakiWakuInfoDeleteForm">
+        <field property="delFlgList" depends="required">
+          <msg name="required" key="WARN.MSG.0010"/>
+          <arg key="demand.delWakuInfo"/>
+        </field>
+      </form>
+    </formset>
+
+    <!-- 物件枠・リスティング枠メンテナンス -->
+    <formset>
+      <form name="torihikisakiWakuMaintenanceUploadForm">
+        <!-- アップロード -->
+          <field property="uploadFile" depends="required">
+            <msg name="required" key="WARN.MSG.0011" />
+            <arg name="required" key="demand.upload" position="0" />
+          </field>
+      </form>
+    </formset>
+
+    <formset>
+      <form name="torihikisakiWakuMaintenanceDownloadForm">
+        <field property="torihikisakiCd1" depends="mask,maxlength,minlength">
+          <msg name="mask"      key="WARN.MSG.0020"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="minlength" key="WARN.MSG.0020"/>
+          <arg key="demand.torihikisakiCd1" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>5</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>5</var-value>
+          </var>
+        </field>
+        <field property="torihikisakiCd2" depends="mask,maxlength,minlength">
+          <msg name="mask"      key="WARN.MSG.0020"/>
+          <msg name="maxlength" key="WARN.MSG.0020"/>
+          <msg name="minlength" key="WARN.MSG.0020"/>
+          <arg key="demand.torihikisakiCd2" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>4</var-value>
+          </var>
+          <var>
+            <var-name>minlength</var-name>
+            <var-value>4</var-value>
+          </var>
+        </field>
+        <field property="fudousanName" depends="scripting,maxlength">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <msg name="maxlength" key="WARN.MSG.0004"/>
+          <arg name="scripting" key="demand.fudousanName"/>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+          </var>
+
+        </field>
+      </form>
+    </formset>
+
+    <formset>
+      <form name="contractAmountMaintenanceDownloadForm">
+        <field property="shopCd" depends="mask">
+          <msg name="mask"       key="WARN.MSG.0020"/>
+          <arg key="demand.shopCd" position="0"/>
+          <arg1 key="${var:maxlength}" resource="false" />
+          <var>
+            <var-name>mask</var-name>
+            <var-value>${halfSizeAlnum}</var-value>
+          </var>
+          <var>
+            <var-name>maxlength</var-name>
+            <var-value>9</var-value>
+          </var>
+        </field>
+        <field property="kaishaMeiBushoMei" depends="scripting">
+          <msg name="scripting" key="WARN.MSG.0030"/>
+          <arg name="scripting" key="demand.kaishaMeiBushoMei"/>
+        </field>
+      </form>
+    </formset>
+</form-validation>

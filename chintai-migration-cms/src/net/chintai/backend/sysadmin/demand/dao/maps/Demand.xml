@@ -1,0 +1,1775 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="demand">
+
+	<resultMap id="fudousanDeleteConfirmList"
+		class="net.chintai.backend.sysadmin.demand.domain.FudousanDomain">
+		<result property="fudousanCd" column="FUDOUSAN_KAISYA_CD" />
+		<result property="fudousanName" column="FUDOUSAN_KAISYA_NAME" />
+		<result property="prefName" column="PREFNAME" />
+		<result property="address1" column="ADDRESS_1" />
+		<result property="address2" column="ADDRESS_2" />
+		<result property="updDt" column="UPD_DT" />
+	</resultMap>
+
+	<resultMap id="fudousanCd"
+		class="net.chintai.backend.sysadmin.demand.domain.FudousanDomain">
+		<result property="fudousanCd" column="FUDOUSAN_KAISYA_CD" />
+	</resultMap>
+
+    <!-- 物件枠数・物件リスティング枠数のCSVダウンロード・アップロード対応にて追加 2013/10/8 -->
+    <resultMap id="torihikisakiWakuMaintenanceList"
+        class="net.chintai.backend.sysadmin.demand.domain.TorihikisakiWakuMaintenanceDownloadDomain" >
+        <result property="torihikisakiSeq" column="TORIHIKISAKI_SEQ"/>
+        <result property="torihikisakiCd" column="TORIHIKISAKI_CD"/>
+        <result property="fudousanKaisyaName" column="FUDOUSAN_KAISYA_NAME"/>
+        <result property="torihikisakiName" column="TORIHIKISAKI_NAME"/>
+        <result property="startYm" column="START_YM"/>
+        <result property="bukkenCount" column="BUKKEN_COUNT"/>
+        <result property="tokusenCount" column="TOKUSEN_COUNT"/>
+    </resultMap>
+
+    <resultMap id="TorihikisakiWakuMaintenanceUploadList"
+        class="net.chintai.backend.sysadmin.demand.domain.TorihikisakiWakuMaintenanceUploadDomain" >
+        <result property="torihikisakiSeq" column="TORIHIKISAKI_SEQ"/>
+    </resultMap>
+
+    <resultMap id="TorihikisakiWakuMaintenanceDelKbnUploadList"
+        class="net.chintai.backend.sysadmin.demand.domain.TorihikisakiWakuMaintenanceUploadDomain" >
+        <result property="updDt" column="UPD_DT"/>
+    </resultMap>
+    <!-- 物件枠数・物件リスティング枠数のCSVダウンロード・アップロード対応にて追加 2013/10/8 end -->
+
+    <resultMap id="contractAmountMaintenanceList"
+        class="net.chintai.backend.sysadmin.demand.domain.ContractAmountMaintenanceDownloadDomain" >
+        <result property="keiyakuNo" column="KEIYAKU_NO"/>
+        <result property="shopCd" column="SHOPCD"/>
+        <result property="companyMei" column="COMPANY"/>
+        <result property="bumonMei" column="BUMON"/>
+        <result property="keiyakuName" column="KEIYAKU_NAME"/>
+        <result property="keiyakuCd" column="KEIYAKU_CD"/>
+        <result property="keiyakuSubCd" column="KEIYAKU_SUB_CD"/>
+        <result property="keiyakuStartDt" column="KEIYAKU_START_DT"/>
+        <result property="keiyakuEndDt" column="KEIYAKU_END_DT"/>
+        <result property="keiyakuAmount" column="KEIYAKU_AMOUNT"/>
+    </resultMap>
+
+    <resultMap id="ContractAmountMaintenanceDelKbnUploadList"
+        class="net.chintai.backend.sysadmin.demand.domain.ContractAmountMaintenanceUploadDomain" >
+        <result property="shopCd" column="SHOPCD"/>
+        <result property="keiyakuCd" column="KEIYAKU_CD"/>
+        <result property="keiyakuSubCd" column="KEIYAKU_SUB_CD"/>
+        <result property="keiyakuStartDt" column="KEIYAKU_START_DT"/>
+        <result property="keiyakuAmount" column="KEIYAKU_AMOUNT"/>
+    </resultMap>
+
+    <resultMap id="ContractAmountMaintenanceShopList"
+        class="net.chintai.backend.sysadmin.demand.domain.ContractAmountMaintenanceShopDomain" >
+        <result property="shopCd" column="SHOPCD"/>
+        <result property="shopKanriUpdDt" column="UPD_DT"/>
+    </resultMap>
+
+
+  <!-- ■共通(都道府県名称取得) -->
+  <select id="selectPrefName"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.PrefNameSearchParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.PrefNameSearchDomain">
+    SELECT
+      PREFNAME
+    FROM
+      MST_PREF
+    WHERE
+      PREFCD = #prefCd#
+  </select>
+
+  <!-- ■共通(支社名称取得) -->
+  <select id="selectShisyaName"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ShisyaNameSearchParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.ShisyaNameSearchDomain">
+    SELECT
+      CT_SHISYA_NAME AS shisyaName
+    FROM
+      USK_MST_CT_SHISYA
+    WHERE
+      CT_SHISYA_CD = #shisyaCd#
+  </select>
+
+  <!-- ■共通:取引先の新規登録及び更新時、取引先コードを生成、取得 -->
+  <select id="selectNewTorhikisakiCd"
+          parameterClass="java.lang.String"
+          resultClass="java.lang.String">
+    SELECT
+      LPAD(NVL(MAX(TORIHIKISAKI_CD),0)+1,4,'0')
+    FROM
+      USK_TORIHIKISAKI
+    WHERE
+      FUDOUSAN_KAISYA_CD = #fudousanCd#
+  </select>
+
+  <select id="fudousanExistCheck"
+          parameterClass="java.lang.String"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    FROM
+      USK_FUDOUSAN_KAISYA
+    WHERE
+      FUDOUSAN_KAISYA_CD = #fudousanCd# AND
+      DEL_KBN = 0
+  </select>
+
+  <!-- 物件枠情報検索(共用) -->
+  <select id="selectTorihikisakiWakuInfo"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiWakuInfoDomain">
+    SELECT
+      START_YM AS startYm,
+      BUKKEN_COUNT AS bukkenCnt,
+      TOKUSEN_COUNT AS tokusenCnt,
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt
+    FROM
+      USK_TORIHIKISAKI_RYOUKIN
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq#
+    ORDER BY
+      START_YM desc
+  </select>
+
+  <!-- ■店舗コード紐付 -->
+  <!-- 店舗コード紐付検索共通 -->
+  <sql id="shopBindSearchCommon">
+    FROM
+      SHOP_KANRI SK
+    INNER JOIN
+      SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LASTCOMP
+    INNER JOIN
+      USK_TORIHIKISAKI UT ON UT.SHOPCD = SK.SHOPCD
+    INNER JOIN
+      USK_FUDOUSAN_KAISYA FK ON FK.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+    WHERE
+      UT.DEL_KBN=0 AND
+      FK.DEL_KBN=0
+    <isNotEmpty property="shopCd" prepend="AND">
+      SK.SHOPCD LIKE'%'||#shopCd#||'%'
+    </isNotEmpty>
+    <isNotEmpty property="company" prepend="AND">
+      SR.COMPANY LIKE'%'||#company#||'%'
+    </isNotEmpty>
+    <isNotEmpty property="bumon" prepend="AND">
+      SR.BUMON LIKE'%'||#bumon#||'%'
+    </isNotEmpty>
+    ORDER BY SK.SHOPCD
+  </sql>
+
+  <!-- 店舗コード紐付検索(総件数) -->
+  <select id="selectShopBindTotalCnt"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ShopBindSearchParamBean"
+          resultClass="int">
+    SELECT
+      count(SK.SHOPCD)
+    <include refid="shopBindSearchCommon"></include>
+  </select>
+
+  <!-- 店舗コード紐付検索(一覧) -->
+  <select id="selectShopBind"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ShopBindSearchParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.ShopBindSearchDomain">
+    SELECT
+      SK.SHOPCD,
+      SR.COMPANY,
+      SR.BUMON,
+      UT.FUDOUSAN_KAISYA_CD AS FUDOUSANCD,
+      UT.TORIHIKISAKI_CD AS TORIHIKISAKICD,
+      FK.FUDOUSAN_KAISYA_NAME AS FUDOUSANNAME,
+      UT.TORIHIKISAKI_NAME AS TORIHIKISAKINAME
+    <include refid="shopBindSearchCommon"></include>
+  </select>
+
+  <!-- 店舗情報詳細画面情報取得 -->
+  <select id="selectShopInfoDetail"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ShopBindUpdatePageParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.ShopBindUpdateDomain">
+    SELECT
+      SK.SHOPCD,
+      SR.AREACD,
+      SR.COMPANY,
+      SR.BUMON,
+
+      <!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+      SK.ZIP,
+      SK.ADDRESS_1 AS address1,
+      SK.ADDRESS_2 AS address2,
+      SK.TEL,
+      SK.FAX,
+      SK.EMAIL,
+
+      SR.TANTOU,
+      UT.FUDOUSAN_KAISYA_CD AS fudousanCd,
+      UT.TORIHIKISAKI_CD AS torihikisakiCd,
+      FK.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      UT.TORIHIKISAKI_NAME AS torihikisakiName,
+      TO_CHAR(SK.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt,
+      UT.TORIHIKISAKI_SEQ AS torihikisakiSeq
+    FROM
+      SHOP_KANRI SK
+    INNER JOIN
+      SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LASTCOMP
+    INNER JOIN
+      USK_TORIHIKISAKI UT ON UT.SHOPCD = SK.SHOPCD
+    INNER JOIN
+      USK_FUDOUSAN_KAISYA FK ON FK.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+    WHERE
+      SK.SHOPCD = #shopCd#
+  </select>
+
+  <!-- 店舗詳細情報更新(1/3-紐付設定処理)(全3件のSQLトランザクション処理) -->
+  <update id="updateShopBindInfo"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ShopBindUpdateCommitParamBean">
+    UPDATE
+      USK_TORIHIKISAKI
+    SET
+      SHOPCD = #shopCd#,
+      UPD_DT = SYSTIMESTAMP,
+      UPD_PG = #updPg#,
+      UPD_ID = #updId#
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      DEL_KBN = '0' AND
+      (SHOPCD IS NULL or SHOPCD = #shopCd#)
+  </update>
+
+  <!-- 店舗詳細情報更新(2/3-旧紐付内容初期化)(全3件のSQLトランザクション処理) -->
+  <update id="updateShopBindInfo2"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ShopBindUpdateCommitParamBean">
+    UPDATE
+      USK_TORIHIKISAKI
+    SET
+      SHOPCD = NULL,
+      UPD_DT = SYSTIMESTAMP,
+      UPD_PG = #updPg#,
+      UPD_ID = #updId#
+    WHERE
+      SHOPCD = #shopCd# AND
+      DEL_KBN = '0' AND
+      TORIHIKISAKI_SEQ != #torihikisakiSeq#
+  </update>
+
+  <!-- 店舗詳細情報更新(3/3-店舗管理の最終更新日更新)(全3件のSQLトランザクション処理) -->
+  <update id="updateLastUpdateTime"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ShopBindUpdateCommitParamBean">
+    UPDATE
+      SHOP_KANRI
+    SET
+      ADMIN_UPD_DT = SYSDATE,
+      UPD_DT       = SYSTIMESTAMP,
+      UPD_PG       = #updPg#,
+      UPD_ID       = #updId#
+    WHERE
+      SHOPCD = #shopCd# AND
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+
+
+  <!-- 取引先検索(紐付用)共通 -->
+  <sql id="torihikisakiSearchForBindCommon">
+    FROM
+      USK_TORIHIKISAKI UT
+    INNER JOIN
+      USK_FUDOUSAN_KAISYA FK ON FK.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+    LEFT JOIN
+      MST_PREF MP ON MP.PREFCD = UT.PREFCD
+    WHERE
+      UT.DEL_KBN = 0 AND
+      FK.DEL_KBN = 0 AND
+      UT.SHOPCD IS NULL
+      <isNotEmpty prepend="AND" property="shisyaCd">
+        UT.CT_SHISYA_CD = #shisyaCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiCd1">
+        UT.FUDOUSAN_KAISYA_CD = #torihikisakiCd1#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiCd2">
+        UT.TORIHIKISAKI_CD = #torihikisakiCd2#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="fudousanName">
+        FK.FUDOUSAN_KAISYA_NAME LIKE'%'||#fudousanName#||'%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiName">
+        UT.TORIHIKISAKI_NAME LIKE'%'||#torihikisakiName#||'%'
+      </isNotEmpty>
+    ORDER BY UT.FUDOUSAN_KAISYA_CD, UT.TORIHIKISAKI_CD
+  </sql>
+
+  <!-- 取引先検索(紐付用):総件数 -->
+  <select id="selectTorihikisakiSearchForBindTotalCnt"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiSearchForBindParamBean"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    <include refid="torihikisakiSearchForBindCommon"/>
+  </select>
+
+  <!-- 取引先検索(紐付用) -->
+  <select id="selectTorihikisakiSearchForBind"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiSearchForBindParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiSearchForBindDomain">
+    SELECT
+      UT.FUDOUSAN_KAISYA_CD AS torihikisakiCd1,
+      UT.TORIHIKISAKI_CD AS torihikisakiCd2,
+      FK.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      UT.TORIHIKISAKI_NAME AS torihikisakiName,
+      MP.PREFNAME,
+      UT.ADDRESS_1 AS address1,
+      UT.ADDRESS_2 AS address2,
+      TO_CHAR(UT.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt,
+      UT.TORIHIKISAKI_SEQ AS torihikisakiSeq
+    <include refid="torihikisakiSearchForBindCommon"/>
+  </select>
+
+  <!-- 取引先詳細検索(紐付用) -->
+  <select id="selectTorihikisakiInfoForBind"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiInfoForBindParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiInfoForBindDomain">
+    SELECT
+      FK.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      FK.FUDOUSAN_KAISYA_CD AS fudousanCd,
+      UT.TORIHIKISAKI_NAME AS torihikisakiName,
+      FK.FUDOUSAN_KAISYA_CD AS fudousanCd,
+      UT.TORIHIKISAKI_CD AS torihikisakiCd,
+      UT.TORIHIKISAKI_SEQ AS torihikisakiSeq,
+      UT.ZIPCD,
+      MP.PREFNAME,
+      UT.ADDRESS_1 AS address1,
+      UT.ADDRESS_2 AS address2,
+      UT.TEL AS tel,
+      UT.FAX AS fax,
+      UT.TORIHIKISAKI_TANTOU AS tantou,
+      CS.CT_SHISYA_NAME AS shisya,
+      TO_CHAR(UT.INS_DT, 'YYYY/MM/DD HH24:MI:SS') AS insDt,
+      TO_CHAR(UT.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt
+    FROM
+      USK_TORIHIKISAKI UT
+    INNER JOIN
+      USK_FUDOUSAN_KAISYA FK ON FK.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+    INNER JOIN
+      USK_MST_CT_SHISYA CS ON CS.CT_SHISYA_CD = UT.CT_SHISYA_CD
+    LEFT OUTER JOIN
+      MST_PREF MP ON MP.PREFCD = UT.PREFCD
+    WHERE
+      UT.DEL_KBN = 0 AND
+      FK.DEL_KBN = 0 AND
+      CS.DEL_KBN = 0 AND
+      CS.SHISYA_KBN = 0 AND
+      UT.TORIHIKISAKI_SEQ = #torihikisakiSeq#
+  </select>
+
+  <!-- ■取引先一覧 -->
+  <!-- 取引先一覧共用 -->
+  <sql id="torihikisakiListCommon">
+    FROM
+      USK_TORIHIKISAKI UT
+    INNER JOIN
+      USK_FUDOUSAN_KAISYA UF ON UF.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+    LEFT JOIN
+      MST_PREF MP1 ON MP1.PREFCD = UF.PREFCD
+    LEFT JOIN
+      MST_PREF MP2 ON MP2.PREFCD = UT.PREFCD
+    INNER JOIN
+      USK_MST_CT_SHISYA MCS ON MCS.CT_SHISYA_CD = UT.CT_SHISYA_CD
+    LEFT JOIN
+      (Select
+         UT2.TORIHIKISAKI_SEQ,
+         UTR2.TOKUSEN_COUNT,
+         UTR2.BUKKEN_COUNT,
+         UTR2.START_YM
+       FROM
+         USK_TORIHIKISAKI UT2
+       INNER JOIN
+         USK_TORIHIKISAKI_RYOUKIN UTR2 ON UTR2.TORIHIKISAKI_SEQ = UT2.TORIHIKISAKI_SEQ
+       WHERE
+       <![CDATA[
+         EXISTS(SELECT
+                  *
+                FROM
+                  USK_TORIHIKISAKI_RYOUKIN UTR3
+                WHERE
+                  UTR3.START_YM <= TO_CHAR(SYSDATE,'YYYYMM') AND
+                  UTR3.TORIHIKISAKI_SEQ = UTR2.TORIHIKISAKI_SEQ
+                HAVING
+                  MAX(UTR3.START_YM)=UTR2.START_YM
+               )
+       ]]>
+      ) UTR ON UTR.TORIHIKISAKI_SEQ = UT.TORIHIKISAKI_SEQ
+    WHERE
+      UT.DEL_KBN='0' And
+      UF.DEL_KBN='0'
+      <isNotEmpty prepend="AND" property="shisyaCd">
+        UT.CT_SHISYA_CD = #shisyaCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiCd1">
+        UT.FUDOUSAN_KAISYA_CD = #torihikisakiCd1#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiCd2">
+        UT.TORIHIKISAKI_CD = #torihikisakiCd2#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="fudousanName">
+        UF.FUDOUSAN_KAISYA_NAME LIKE'%'||#fudousanName#||'%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiName">
+        UT.TORIHIKISAKI_NAME LIKE'%'||#torihikisakiName#||'%'
+      </isNotEmpty>
+    ORDER BY UT.FUDOUSAN_KAISYA_CD, UT.TORIHIKISAKI_CD
+  </sql>
+  <!-- 取引先一覧総件数取得 -->
+  <select id="selectTotalCount"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiListParamBean"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    <include refid="torihikisakiListCommon"/>
+  </select>
+
+  <!-- 取引先一覧検索 -->
+  <select id="selectTorihikisakiList"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiListParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiListDomain">
+    SELECT
+      UT.FUDOUSAN_KAISYA_CD AS fudousanCd,
+      UT.TORIHIKISAKI_CD AS torihikisakiCd,
+      UF.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      UT.TORIHIKISAKI_NAME AS torihikisakiName,
+      UT.ZIPCD AS tZipcd,
+      MP2.PREFNAME AS tPrefName,
+      UT.ADDRESS_1 AS tAddress1,
+      UT.ADDRESS_2 AS tAddress2,
+      UT.TORIHIKISAKI_SEQ AS torihikisakiSeq
+    <include refid="torihikisakiListCommon"/>
+  </select>
+
+  <!-- 取引先一覧検索CSV出力用 -->
+  <select id="selectTorihikisakiListForCSV"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiListParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiListDomain">
+    SELECT
+      UT.FUDOUSAN_KAISYA_CD AS fudousanCd,
+      UT.TORIHIKISAKI_CD AS torihikisakiCd,
+      UF.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      UF.ZIPCD AS fZipcd,
+      MP1.PREFNAME AS fPrefName,
+      UF.ADDRESS_1 AS fAddress1,
+      UF.ADDRESS_2 AS fAddress2,
+      UF.TEL AS fTel,
+      UF.FAX AS fFax,
+      UF.FUDOUSAN_KAISYA_TANTOU AS fTantou,
+      UT.TORIHIKISAKI_NAME AS torihikisakiName,
+      UT.ZIPCD AS tZipcd,
+      MP2.PREFNAME AS tPrefName,
+      UT.ADDRESS_1 AS tAddress1,
+      UT.ADDRESS_2 AS tAddress2,
+      UT.TEL AS tTel,
+      UT.FAX AS tFax,
+      UT.TORIHIKISAKI_TANTOU AS tTantou,
+      UT.CT_SHISYA_CD AS shisyaCd,
+      MCS.CT_SHISYA_NAME AS shisyaName,
+      SUBSTR(UTR.START_YM,1,4) AS startYear,
+      SUBSTR(UTR.START_YM,5,2) AS startMonth,
+      UTR.BUKKEN_COUNT AS bukkenCnt,
+      UTR.TOKUSEN_COUNT AS tokusenCnt
+    <include refid="torihikisakiListCommon"/>
+  </select>
+
+  <!-- ■不動産メンテナンス -->
+  <sql id="fudousanSearchCommon">
+    FROM
+      USK_FUDOUSAN_KAISYA FK
+    LEFT JOIN
+      MST_PREF MP ON MP.PREFCD = FK.PREFCD
+    LEFT JOIN
+      (SELECT DISTINCT
+         FUDOUSAN_KAISYA_CD
+       FROM
+         USK_TORIHIKISAKI UT2
+       WHERE
+         EXISTS (
+                 SELECT
+                   'X'
+                 FROM
+                   USK_FUDOUSAN_KAISYA FK2
+                 WHERE
+                   FK2.FUDOUSAN_KAISYA_CD=UT2.FUDOUSAN_KAISYA_CD AND
+                   UT2.DEL_KBN = '0'
+                )
+      ) UT ON FK.FUDOUSAN_KAISYA_CD=UT.FUDOUSAN_KAISYA_CD
+    WHERE
+      FK.DEL_KBN='0'
+      <isNotEmpty property="fudousanCd" prepend="AND">
+        FK.FUDOUSAN_KAISYA_CD = #fudousanCd#
+      </isNotEmpty>
+      <isNotEmpty property="fudousanName" prepend="AND">
+        FK.FUDOUSAN_KAISYA_NAME LIKE'%'||#fudousanName#||'%'
+      </isNotEmpty>
+    ORDER BY
+      FK.FUDOUSAN_KAISYA_CD
+  </sql>
+
+  <!-- 不動産メンテナンス検索(一覧) -->
+  <select id="selectFudousan"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.FudousanSearchParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.FudousanSearchDomain">
+    SELECT
+      FK.FUDOUSAN_KAISYA_CD AS fudousanCd,
+      FK.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      MP.PREFNAME,
+      FK.ADDRESS_1 AS address1,
+      FK.ADDRESS_2 AS address2,
+      CASE WHEN UT.FUDOUSAN_KAISYA_CD IS NULL THEN '0' Else '1' End AS delFlg
+    <include refid="fudousanSearchCommon"/>
+  </select>
+
+  <!-- 不動産メンテナンス検索(総件数) -->
+  <select id="selectFudousanTotalCnt"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.FudousanSearchParamBean"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    <include refid="fudousanSearchCommon"/>
+  </select>
+
+  <!-- 不動産新規登録確認 -->
+  <select id="confirmCompanyInfo"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.FudousanConfirmCompanyInfoParamBean"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    FROM
+      USK_FUDOUSAN_KAISYA FK
+    WHERE
+      DEL_KBN = '0' And
+      (
+       FK.FUDOUSAN_KAISYA_NAME = #fudousanName#
+      <isNotEmpty property="tel" prepend="OR">
+        FK.TEL = #tel#
+      </isNotEmpty>
+      )
+      <isNotEmpty property="fudousanCd" prepend="AND">
+        Not Exists
+          (
+           SELECT
+             *
+           FROM
+             USK_FUDOUSAN_KAISYA
+           WHERE
+             FUDOUSAN_KAISYA_CD = #fudousanCd# AND
+             FK.FUDOUSAN_KAISYA_CD = FUDOUSAN_KAISYA_CD
+          )
+      </isNotEmpty>
+  </select>
+
+  <select id="getNextFudousanCd" resultMap="fudousanCd">
+    <![CDATA[
+		SELECT
+			SUBSTR('00000' || TO_CHAR(SEQ_FUDOUSAN_KAISYA_CD.nextVal),-5) as FUDOUSAN_KAISYA_CD
+		FROM
+			DUAL
+	]]>
+  </select>
+
+  <!-- 不動産新規登録 -->
+  <insert id="insertFudousanInfo"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.FudousanRegisterCommitParamBean">
+    INSERT INTO
+      USK_FUDOUSAN_KAISYA(
+        FUDOUSAN_KAISYA_CD,
+        FUDOUSAN_KAISYA_NAME,
+        ZIPCD,
+        PREFCD,
+        ADDRESS_1,
+        ADDRESS_2,
+        TEL,
+        FAX,
+        FUDOUSAN_KAISYA_TANTOU,
+        DEL_KBN,
+        INS_DT,
+        INS_PG,
+        INS_ID,
+        UPD_DT,
+        UPD_PG,
+        UPD_ID
+    ) VALUES (
+       #fudousanCd#,
+       #fudousanName#,
+       #zipCode1#||#zipCode2#,
+       #prefCd#,
+       #address1#,
+       #address2#,
+       #tel#,
+       #fax#,
+       #tantou#,
+       0,
+       SYSTIMESTAMP,
+       #insPg#,
+       #updId#,
+       SYSTIMESTAMP,
+       #updPg#,
+       #updId# )
+  </insert>
+
+  <!-- 不動産会社詳細 -->
+  <select id="fudousanInfo"
+      parameterClass="net.chintai.backend.sysadmin.demand.dao.FudousanInfoParamBean"
+      resultClass="net.chintai.backend.sysadmin.demand.domain.FudousanDomain">
+    SELECT
+      FK.FUDOUSAN_KAISYA_CD fudousanCd,
+      FK.FUDOUSAN_KAISYA_NAME fudousanName,
+      SUBSTR(FK.ZIPCD,1,3) zipCode1,
+      SUBSTR(FK.ZIPCD,4,4) zipCode2,
+      MP.PREFNAME prefName,
+      FK.ADDRESS_1 address1,
+      FK.ADDRESS_2 address2,
+      FK.TEL tel,
+      FK.FAX fax,
+      FK.FUDOUSAN_KAISYA_TANTOU tantou,
+      TO_CHAR(FK.INS_DT, 'YYYY/MM/DD HH24:MI:SS') insDt,
+      TO_CHAR(FK.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') updDt
+    FROM
+      USK_FUDOUSAN_KAISYA FK
+    LEFT JOIN
+      MST_PREF MP ON FK.PREFCD = MP.PREFCD
+    WHERE
+      DEL_KBN = '0' AND
+      FUDOUSAN_KAISYA_CD = #fudousanCd#
+  </select>
+
+  <!-- 不動産会社更新画面 -->
+  <select id="fudousanUpdate"
+      parameterClass="net.chintai.backend.sysadmin.demand.dao.FudousanUpdatePageParamBean"
+      resultClass="net.chintai.backend.sysadmin.demand.domain.FudousanDomain">
+    SELECT
+      FK.FUDOUSAN_KAISYA_CD fudousanCd,
+      FK.FUDOUSAN_KAISYA_NAME fudousanName,
+      SUBSTR(FK.ZIPCD,1,3) zipCode1,
+      SUBSTR(FK.ZIPCD,4,4) zipCode2,
+      FK.PREFCD prefCd,
+      MP.PREFNAME prefName,
+      FK.ADDRESS_1 address1,
+      FK.ADDRESS_2 address2,
+      FK.TEL tel,
+      FK.FAX fax,
+      FK.FUDOUSAN_KAISYA_TANTOU tantou,
+      TO_CHAR(FK.INS_DT, 'YYYY/MM/DD HH24:MI:SS') insDt,
+      TO_CHAR(FK.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') updDt
+    FROM
+      USK_FUDOUSAN_KAISYA FK
+    LEFT JOIN
+      MST_PREF MP ON FK.PREFCD = MP.PREFCD
+    WHERE
+      DEL_KBN = '0' AND
+      FUDOUSAN_KAISYA_CD = #fudousanCd#
+  </select>
+
+  <!-- 不動産会社更新 -->
+  <update id="updateFudousan"
+      parameterClass="net.chintai.backend.sysadmin.demand.dao.FudousanUpdateCommitParamBean">
+      <![CDATA[
+		UPDATE
+			USK_FUDOUSAN_KAISYA
+		SET
+			FUDOUSAN_KAISYA_NAME   = #fudousanName#,
+			ZIPCD                  = #zipCode1#||#zipCode2#,
+			PREFCD                 = #prefCd#,
+			ADDRESS_1              = #address1#,
+			ADDRESS_2              = #address2#,
+			TEL                    = #tel#,
+			FAX                    = #fax#,
+			FUDOUSAN_KAISYA_TANTOU = #tantou#,
+			UPD_DT                 = SYSTIMESTAMP,
+			UPD_PG                 = #updPg#,
+			UPD_ID                 = #updId#
+		WHERE
+			FUDOUSAN_KAISYA_CD = #fudousanCd# AND
+			TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+	]]>
+  </update>
+
+  <!-- 不動産会社削除確認 -->
+  <select id="fudousanDeleteConfirm"
+        parameterClass="net.chintai.backend.sysadmin.demand.dao.FudousanDeleteConfirmParamBean"
+        resultMap="fudousanDeleteConfirmList">
+		SELECT
+			FK.FUDOUSAN_KAISYA_CD FUDOUSAN_KAISYA_CD,
+			FK.FUDOUSAN_KAISYA_NAME FUDOUSAN_KAISYA_NAME,
+			MP.PREFNAME PREFNAME,
+			FK.ADDRESS_1 ADDRESS_1,
+			FK.ADDRESS_2 ADDRESS_2,
+			TO_CHAR(FK.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') UPD_DT
+		FROM
+			USK_FUDOUSAN_KAISYA FK
+		LEFT JOIN
+		    MST_PREF MP ON FK.PREFCD = MP.PREFCD
+		WHERE
+			DEL_KBN = '0' AND
+		<iterate property="fudousanCd" open=" FUDOUSAN_KAISYA_CD IN ( " close=" ) " conjunction=" , ">
+			#fudousanCd[]#
+		</iterate>
+  </select>
+
+  <!-- 不動産会社削除 -->
+  <update id="fudousanDeleteCommit"
+        parameterClass="net.chintai.backend.sysadmin.demand.dao.FudousanDeleteCommitParamBean">
+        UPDATE
+			USK_FUDOUSAN_KAISYA
+		SET
+			DEL_KBN = '1',
+			UPD_DT = SYSTIMESTAMP,
+			UPD_ID = #updId#,
+			UPD_PG = #updPg#
+		WHERE
+			FUDOUSAN_KAISYA_CD = #fudousanCd# AND
+			TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+	</update>
+
+  <!-- ■取引先メンテナンス -->
+  <!-- 取引先検索共通 -->
+  <sql id="torihikisakiSearchCommon">
+    FROM
+      USK_TORIHIKISAKI UT
+    INNER JOIN
+      USK_FUDOUSAN_KAISYA FK ON FK.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+    LEFT JOIN
+      MST_PREF MP ON MP.PREFCD = UT.PREFCD
+    WHERE
+      UT.DEL_KBN = 0 AND
+      FK.DEL_KBN = 0
+      <isNotEmpty prepend="AND" property="shisyaCd">
+        UT.CT_SHISYA_CD = #shisyaCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiCd1">
+        UT.FUDOUSAN_KAISYA_CD = #torihikisakiCd1#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiCd2">
+        UT.TORIHIKISAKI_CD = #torihikisakiCd2#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="fudousanName">
+        FK.FUDOUSAN_KAISYA_NAME LIKE'%'||#fudousanName#||'%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiName">
+        UT.TORIHIKISAKI_NAME LIKE'%'||#torihikisakiName#||'%'
+      </isNotEmpty>
+    ORDER BY UT.FUDOUSAN_KAISYA_CD, UT.TORIHIKISAKI_CD
+  </sql>
+
+  <!-- 取引先検索:総件数 -->
+  <select id="selectTorihikisakiTotalCnt"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiSearchParamBean"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    <include refid="torihikisakiSearchCommon"/>
+  </select>
+
+  <!-- 取引先検索 -->
+  <select id="selectTorihikisaki"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiSearchParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiSearchDomain">
+    SELECT
+      UT.FUDOUSAN_KAISYA_CD AS torihikisakiCd1,
+      UT.TORIHIKISAKI_CD AS torihikisakiCd2,
+      FK.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      UT.TORIHIKISAKI_NAME AS torihikisakiName,
+      MP.PREFNAME,
+      UT.ADDRESS_1 AS address1,
+      UT.ADDRESS_2 AS address2,
+      TO_CHAR(UT.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt,
+      UT.TORIHIKISAKI_SEQ AS torihikisakiSeq,
+      UT.SHOPCD
+    <include refid="torihikisakiSearchCommon"/>
+  </select>
+
+  <!-- 取引先詳細検索 -->
+  <select id="selectTorihikisakiInfo"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiInfoParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiInfoDomain">
+    SELECT
+      FK.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      FK.FUDOUSAN_KAISYA_CD AS fudousanCd,
+      UT.TORIHIKISAKI_NAME AS torihikisakiName,
+      UT.TORIHIKISAKI_CD AS torihikisakiCd,
+      UT.TORIHIKISAKI_SEQ AS torihikisakiSeq,
+      UT.ZIPCD,
+      MP.PREFNAME,
+      UT.ADDRESS_1 AS address1,
+      UT.ADDRESS_2 AS address2,
+      UT.TEL AS tel,
+      UT.FAX AS fax,
+      UT.TORIHIKISAKI_TANTOU AS tantou,
+      CS.CT_SHISYA_NAME AS shisya,
+      TO_CHAR(UT.INS_DT, 'YYYY/MM/DD HH24:MI:SS') AS insDt,
+      TO_CHAR(UT.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt
+    FROM
+      USK_TORIHIKISAKI UT
+    INNER JOIN
+      USK_FUDOUSAN_KAISYA FK ON FK.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+    INNER JOIN
+      USK_MST_CT_SHISYA CS ON CS.CT_SHISYA_CD = UT.CT_SHISYA_CD
+    LEFT OUTER JOIN
+      MST_PREF MP ON MP.PREFCD = UT.PREFCD
+    WHERE
+      UT.DEL_KBN = 0 AND
+      FK.DEL_KBN = 0 AND
+      CS.DEL_KBN = 0 AND
+      CS.SHISYA_KBN = 0 AND
+      UT.TORIHIKISAKI_SEQ = #torihikisakiSeq#
+  </select>
+
+  <!-- 取引先登録 -->
+  <insert id="insertTorihikisaki"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiRegisterCommitParamBean">
+    <selectKey keyProperty="torihikisakiSeq" resultClass="int">
+      SELECT
+        SEQ_TORIHIKISAKI_SEQ.nextVal
+      FROM
+        DUAL
+    </selectKey>
+    INSERT INTO
+      USK_TORIHIKISAKI(
+        TORIHIKISAKI_SEQ,
+        FUDOUSAN_KAISYA_CD,
+        TORIHIKISAKI_CD,
+        TORIHIKISAKI_NAME,
+        <isNotEmpty property="zipCd1">
+        ZIPCD,
+        </isNotEmpty>
+        PREFCD,
+        ADDRESS_1,
+        <isNotEmpty property="address2">
+        ADDRESS_2,
+        </isNotEmpty>
+        TEL,
+        <isNotEmpty property="fax">
+        FAX,
+        </isNotEmpty>
+        <isNotEmpty property="tantou">
+        TORIHIKISAKI_TANTOU,
+        </isNotEmpty>
+        CT_SHISYA_CD,
+        DEL_KBN,
+        INS_DT,
+        INS_PG,
+        INS_ID,
+        UPD_DT,
+        UPD_PG,
+        UPD_ID
+      ) VALUES (
+        #torihikisakiSeq#,
+        #fudousanCd#,
+        #torihikisakiCd#,
+        #torihikisakiName#,
+        <isNotEmpty property="zipCd1">
+          #zipCd1#||#zipCd2#,
+        </isNotEmpty>
+        #prefCd#,
+        #address1#,
+        <isNotEmpty property="address2">
+          #address2#,
+        </isNotEmpty>
+        #tel#,
+        <isNotEmpty property="fax">
+        #fax#,
+        </isNotEmpty>
+        <isNotEmpty property="tantou">
+        #tantou#,
+        </isNotEmpty>
+        #shisyaCd#,
+        '0',
+        SYSTIMESTAMP,
+        #pgName#,
+        #userId#,
+        SYSTIMESTAMP,
+        #pgName#,
+        #userId#
+      )
+
+  </insert>
+
+  <!-- 取引先料金テーブル登録 -->
+  <insert id="insertTorihikisakiRyoukin"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiRegisterCommitParamBean">
+    INSERT INTO
+      USK_TORIHIKISAKI_RYOUKIN(
+        TORIHIKISAKI_SEQ,
+        START_YM,
+        BUKKEN_COUNT,
+        TOKUSEN_COUNT,
+        INS_DT,
+        INS_PG,
+        INS_ID,
+        UPD_DT,
+        UPD_PG,
+        UPD_ID
+      ) VALUES (
+        #torihikisakiSeq#,
+        #applyYear#||#applyMonth#,
+        <isNotEqual property="bukkenCnt" compareValue="999999">
+          #bukkenCnt#,
+        </isNotEqual>
+        <isEqual property="bukkenCnt" compareValue="999999">
+          #bukkenCntNote#,
+        </isEqual>
+        <isNotEqual property="tokusenCnt" compareValue="999999">
+          #tokusenCnt#,
+        </isNotEqual>
+        <isEqual property="tokusenCnt" compareValue="999999">
+          #tokusenCntNote#,
+        </isEqual>
+        SYSTIMESTAMP,
+        #pgName#,
+        #userId#,
+        SYSTIMESTAMP,
+        #pgName#,
+        #userId#
+      )
+  </insert>
+
+  <!-- 取引先詳細情報更新ページ -->
+  <select id="selectTorihikisakiInfoForUpdate"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiUpdatePageParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiUpdatePageDomain">
+    SELECT
+      UF.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      UT.FUDOUSAN_KAISYA_CD AS fudousanCd,
+      UT.TORIHIKISAKI_NAME AS torihikisakiName,
+      UT.TORIHIKISAKI_SEQ AS torihikisakiSeq,
+      UT.TORIHIKISAKI_CD AS torihikisakiCd,
+      SUBSTR(UT.ZIPCD,1,3) AS zipCd1,
+      SUBSTR(UT.ZIPCD,4,7) AS zipCd2,
+      UT.PREFCD AS prefCd,
+      UT.ADDRESS_1 AS address1,
+      UT.ADDRESS_2 AS address2,
+      UT.TEL,
+      UT.FAX,
+      UT.TORIHIKISAKI_TANTOU AS tantou,
+      UT.CT_SHISYA_CD AS shisyaCd,
+      TO_CHAR(UT.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt
+    FROM
+      USK_TORIHIKISAKI UT
+    INNER JOIN
+      USK_FUDOUSAN_KAISYA UF ON UF.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+    INNER JOIN
+      USK_MST_CT_SHISYA CS ON CS.CT_SHISYA_CD = UT.CT_SHISYA_CD
+    WHERE
+      UT.DEL_KBN=0 AND
+      UF.DEL_KBN=0 AND
+      CS.DEL_KBN=0 AND
+      CS.SHISYA_KBN=0 AND
+      UT.TORIHIKISAKI_SEQ = #torihikisakiSeq#
+    ORDER BY UT.FUDOUSAN_KAISYA_CD, UT.TORIHIKISAKI_CD
+  </select>
+
+  <!-- 取引先情報を更新 -->
+  <update id="updateTorihikisakiInfo"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiUpdateCommitParamBean">
+    UPDATE
+      USK_TORIHIKISAKI
+    SET
+      <isNotEmpty property="torihikisakiCd">
+      FUDOUSAN_KAISYA_CD  = #fudousanCd#,
+      TORIHIKISAKI_CD     = #torihikisakiCd#,
+      </isNotEmpty>
+      TORIHIKISAKI_NAME   = #torihikisakiName#,
+      ZIPCD               = #zipCd1# || #zipCd2#,
+      PREFCD              = #prefCd#,
+      ADDRESS_1           = #address1#,
+      ADDRESS_2           = #address2#,
+      TEL                 = #tel#,
+      FAX                 = #fax#,
+      TORIHIKISAKI_TANTOU = #tantou#,
+      CT_SHISYA_CD        = #shisyaCd#,
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      TORIHIKISAKI_SEQ    = #torihikisakiSeq# AND
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+
+  <!-- 取引先削除確認 -->
+  <select id="selectTorihikisakiInfoForDel"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiDeleteConfirmParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiDeleteConfirmDomain">
+    SELECT
+      FK.FUDOUSAN_KAISYA_NAME AS fudousanName,
+      FK.FUDOUSAN_KAISYA_CD AS fudousanCd,
+      UT.TORIHIKISAKI_NAME AS torihikisakiName,
+      UT.TORIHIKISAKI_CD AS torihikisakiCd,
+      UT.TORIHIKISAKI_SEQ AS torihikisakiSeq,
+      UT.ZIPCD,
+      MP.PREFNAME,
+      UT.ADDRESS_1 AS address1,
+      UT.ADDRESS_2 AS address2,
+      TO_CHAR(UT.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt
+    FROM
+      USK_TORIHIKISAKI UT
+    INNER JOIN
+      USK_FUDOUSAN_KAISYA FK ON FK.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+    INNER JOIN
+      USK_MST_CT_SHISYA CS ON CS.CT_SHISYA_CD = UT.CT_SHISYA_CD
+    LEFT OUTER JOIN
+      MST_PREF MP ON MP.PREFCD = UT.PREFCD
+    WHERE
+      <iterate property="delFlgList" open=" TORIHIKISAKI_SEQ IN ( " close=" ) " conjunction=" , ">
+        #delFlgList[]#
+      </iterate>
+    ORDER BY FK.FUDOUSAN_KAISYA_CD,UT.TORIHIKISAKI_CD
+  </select>
+
+  <!-- 取引先削除処理 -->
+  <update id="deleteTorihikisaki"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiDeleteCommitParamBean">
+    UPDATE
+      USK_TORIHIKISAKI
+    SET
+      DEL_KBN = '1',
+      UPD_DT = SYSTIMESTAMP,
+      UPD_ID = #updId#,
+      UPD_PG = #updPg#
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+
+
+  <!-- 取引先先物件枠設定情報新規登録確認 -->
+  <select id="demand.countApplyYm"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoAddConfirmParamBean"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    FROM
+      USK_TORIHIKISAKI_RYOUKIN
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      START_YM = #applyYear#||#applyMonth#
+  </select>
+
+  <!-- 取引先物件枠設定情報登録 -->
+    <insert id="insertTorihikisakiWakuInfo"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoAddCommitParamBean">
+    INSERT INTO
+      USK_TORIHIKISAKI_RYOUKIN(
+        TORIHIKISAKI_SEQ,
+        START_YM,
+        BUKKEN_COUNT,
+        TOKUSEN_COUNT,
+        INS_DT,
+        INS_PG,
+        INS_ID,
+        UPD_DT,
+        UPD_PG,
+        UPD_ID
+      ) VALUES (
+        #torihikisakiSeq#,
+        #applyYear#||#applyMonth#,
+        <isNotEqual property="bukkenCnt" compareValue="999999">
+          #bukkenCnt#,
+        </isNotEqual>
+        <isEqual property="bukkenCnt" compareValue="999999">
+          #bukkenCntNote#,
+        </isEqual>
+        <isNotEqual property="tokusenCnt" compareValue="999999">
+          #tokusenCnt#,
+        </isNotEqual>
+        <isEqual property="tokusenCnt" compareValue="999999">
+          #tokusenCntNote#,
+        </isEqual>
+        SYSTIMESTAMP,
+        #pgName#,
+        #userId#,
+        SYSTIMESTAMP,
+        #pgName#,
+        #userId#
+      )
+  </insert>
+  <!-- 取引先テーブル更新(物件枠設定情報登録後の処理) -->
+  <update id="updateTorihikisakiUpdDtByWakuInfoAdd"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoAddCommitParamBean">
+    UPDATE
+      USK_TORIHIKISAKI
+    SET
+      UPD_DT = SYSTIMESTAMP,
+      UPD_ID = #userId#,
+      UPD_PG = #pgName#
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') = #torihikisakiUpdDt#
+  </update>
+
+  <!-- 取引先物件枠設定情報照会(更新画面用) -->
+  <select id="selectTorihikisakiWakuInfoForUpdate"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoUpdatePageParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiWakuInfoDomain">
+    SELECT
+      BUKKEN_COUNT AS bukkenCnt,
+      TOKUSEN_COUNT AS tokusenCnt,
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') AS updDt
+    FROM
+      USK_TORIHIKISAKI_RYOUKIN
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      START_YM = #startYm#
+  </select>
+
+  <!-- 取引先物件枠設定更新 -->
+  <update id="updateTorihikisakiWakuInfo"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoUpdateCommitParamBean">
+    UPDATE
+      USK_TORIHIKISAKI_RYOUKIN
+    SET
+      <isNotEqual property="bukkenCnt" compareValue="999999">
+        BUKKEN_COUNT = #bukkenCnt#,
+      </isNotEqual>
+      <isEqual property="bukkenCnt" compareValue="999999">
+        BUKKEN_COUNT = #bukkenCntNote#,
+      </isEqual>
+      <isNotEqual property="tokusenCnt" compareValue="999999">
+        TOKUSEN_COUNT = #tokusenCnt#,
+      </isNotEqual>
+      <isEqual property="tokusenCnt" compareValue="999999">
+        TOKUSEN_COUNT = #tokusenCntNote#,
+      </isEqual>
+      UPD_DT = SYSTIMESTAMP,
+      UPD_ID = #updId#,
+      UPD_PG = #updPg#
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      START_YM = #startYm#
+  </update>
+  <!-- 取引先テーブル更新(物件枠設定情報更新後の処理) -->
+  <update id="updateTorihikisakiUpdDtByWakuInfoUpdate"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoUpdateCommitParamBean">
+    UPDATE
+      USK_TORIHIKISAKI
+    SET
+      UPD_DT = SYSTIMESTAMP,
+      UPD_ID = #updId#,
+      UPD_PG = #updPg#
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') = #torihikisakiUpdDt#
+  </update>
+
+
+  <!-- 取引先物件枠設定情報確認 -->
+  <select id="selectTorihikisakiWakuInfoForDelete"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoDeleteConfirmParamBean"
+          resultClass="net.chintai.backend.sysadmin.demand.domain.TorihikisakiWakuInfoDomain">
+    SELECT
+      START_YM AS startYm,
+      BUKKEN_COUNT AS bukkenCnt,
+      TOKUSEN_COUNT AS tokusenCnt,
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDT
+    FROM
+      USK_TORIHIKISAKI_RYOUKIN
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      <iterate property="delFlgList" open=" START_YM IN ( " close=" ) " conjunction=" , ">
+        #delFlgList[]#
+      </iterate>
+    ORDER BY START_YM DESC
+  </select>
+
+  <!-- 取引先物件枠設定情報削除処理 -->
+  <delete id="deleteWakuInfo"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoDeleteCommitParamBean">
+    DELETE
+      USK_TORIHIKISAKI_RYOUKIN
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      START_YM = #delFlg#
+  </delete>
+  <!-- 取引先テーブル更新(物件枠設定情報削除後の処理) -->
+  <update id="updateTorihikisakiUpdDtByWakuInfoDelete"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuInfoDeleteCommitParamBean">
+    UPDATE
+      USK_TORIHIKISAKI
+    SET
+      UPD_DT = SYSTIMESTAMP,
+      UPD_ID = #updId#,
+      UPD_PG = #updPg#
+    WHERE
+      TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') = #torihikisakiUpdDt#
+  </update>
+
+
+  <!-- 物件枠数・物件リスティング枠数のCSVダウンロード・アップロード対応にて追加 2013/10/8 -->
+  <!-- ■物件枠・リスティング枠メンテナンス -->
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイル情報取得 -->
+  <select id="torihikisakiWakuMaintenanceSelect"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuMaintenanceDownloadParamBean"
+          resultMap="torihikisakiWakuMaintenanceList">
+
+    <![CDATA[
+    SELECT
+      UT.TORIHIKISAKI_SEQ                              AS TORIHIKISAKI_SEQ,
+      UT.FUDOUSAN_KAISYA_CD ||'-'|| UT.TORIHIKISAKI_CD AS TORIHIKISAKI_CD,
+      FK.FUDOUSAN_KAISYA_NAME                          AS FUDOUSAN_KAISYA_NAME,
+      UT.TORIHIKISAKI_NAME                             AS TORIHIKISAKI_NAME,
+      CASE
+        WHEN TR.START_YM < TO_CHAR(SYSDATE , 'YYYYMM') OR
+             TR.START_YM IS NULL
+        THEN TO_CHAR(SYSDATE , 'YYYYMM')
+        ELSE TR.START_YM                           END AS START_YM,
+      TR.BUKKEN_COUNT                                  AS BUKKEN_COUNT,
+      TR.TOKUSEN_COUNT                                 AS TOKUSEN_COUNT
+    FROM
+      USK_TORIHIKISAKI UT
+        INNER JOIN USK_FUDOUSAN_KAISYA FK ON FK.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+        LEFT JOIN
+          (SELECT *
+          FROM USK_TORIHIKISAKI_RYOUKIN T1
+          WHERE T1.START_YM >=
+            (SELECT NVL(MAX(START_YM),TO_CHAR(SYSDATE , 'YYYYMM'))
+            FROM USK_TORIHIKISAKI_RYOUKIN
+            WHERE T1.TORIHIKISAKI_SEQ = TORIHIKISAKI_SEQ AND START_YM <= TO_CHAR(SYSDATE , 'YYYYMM'))) TR
+        ON TR.TORIHIKISAKI_SEQ = UT.TORIHIKISAKI_SEQ
+    WHERE
+      UT.DEL_KBN = 0 AND
+      FK.DEL_KBN = 0
+      ]]>
+      <isNotEmpty prepend="AND" property="shisyaCd">
+        UT.CT_SHISYA_CD = #shisyaCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiCd1">
+        UT.FUDOUSAN_KAISYA_CD = #torihikisakiCd1#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="torihikisakiCd2">
+        UT.TORIHIKISAKI_CD = #torihikisakiCd2#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="fudousanName">
+        FK.FUDOUSAN_KAISYA_NAME LIKE'%'||#fudousanName#||'%'
+      </isNotEmpty>
+    ORDER BY UT.FUDOUSAN_KAISYA_CD, UT.TORIHIKISAKI_CD, UT.TORIHIKISAKI_SEQ, TR.START_YM
+  </select>
+
+
+  <!-- 2014/06 kashiyama add start -->
+  <!-- ■物件枠・リスティング枠メンテナンス -->
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイル情報取得 -->
+  <select id="contractAmountMaintenanceSelect"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceDownloadParamBean"
+          resultMap="contractAmountMaintenanceList">
+<!--
+    <![CDATA[
+    SELECT
+        SK.SHOPCD,
+        SR.COMPANY,
+        SR.BUMON,
+        MSKK.KEIYAKU_NAME,
+        VSKK.KEIYAKU_CD,
+        VSKK.KEIYAKU_SUB_CD,
+        TO_CHAR(TO_DATE(SKD.APP_START_DT,'YYYYMMDDHH24MISS'),'YYYYMMDDHH24') AS APP_START_DT,
+        SKD.KEIYAKU_AMOUNT
+    FROM
+        SHOP_KANRI SK
+            JOIN SHOP_RIREKI SR
+                ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+            JOIN V_SHOP_KEIYAKU_KANRI VSKK
+                ON SK.SHOPCD = VSKK.SHOPCD
+            JOIN SHOP_KEIYAKU_DETAIL SKD
+                ON SKD.SHOPCD = VSKK.SHOPCD
+                AND SKD.KEIYAKU_CD = VSKK.KEIYAKU_CD
+                AND SKD.KEIYAKU_SUB_CD = VSKK.KEIYAKU_SUB_CD
+            LEFT JOIN (
+                SELECT
+                        SHOPCD
+                        ,KEIYAKU_CD
+                        ,KEIYAKU_SUB_CD
+                        ,MAX(APP_START_DT) AS APP_START_DT
+                    FROM
+                        SHOP_KEIYAKU_DETAIL
+                    WHERE
+                        APP_START_DT < TO_CHAR(trunc(SYSDATE+1), 'YYYYMMDDHH24MISS')
+                    GROUP BY
+                        SHOPCD
+                        ,KEIYAKU_CD
+                        ,KEIYAKU_SUB_CD
+            ) SKDV
+                ON SKD.SHOPCD = SKDV.SHOPCD
+                AND SKD.KEIYAKU_CD = SKDV.KEIYAKU_CD
+                AND SKD.KEIYAKU_SUB_CD = SKDV.KEIYAKU_SUB_CD
+            JOIN MST_SHOP_KEIYAKU_KANRI MSKK
+                ON MSKK.KEIYAKU_CD = VSKK.KEIYAKU_CD
+                AND MSKK.KEIYAKU_SUB_CD = VSKK.KEIYAKU_SUB_CD
+    WHERE
+        (
+            SKD.APP_START_DT >= SKDV.APP_START_DT
+            OR SKDV.APP_START_DT IS NULL
+        )
+        AND SKD.KEIYAKU_CD || SKD.KEIYAKU_SUB_CD IN (
+            '00001000'
+            ,'00002000'
+        )
+	      ]]>
+-->
+
+	<![CDATA[
+    SELECT
+        SKK.KEIYAKU_NO,
+        SK.SHOPCD,
+        SR.COMPANY,
+        SR.BUMON,
+        MSKK.KEIYAKU_NAME,
+        MSKK.KEIYAKU_CD,
+        MSKK.KEIYAKU_SUB_CD,
+        SKK.KEIYAKU_START_DT,
+        CASE WHEN SKK.KEIYAKU_END_DT = '99991231235959' THEN NULL ELSE SKK.KEIYAKU_END_DT END AS KEIYAKU_END_DT,
+        SKK.KEIYAKU_AMOUNT
+    FROM
+		SHOP_KANRI SK
+	JOIN SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+	CROSS JOIN MST_SHOP_KEIYAKU_KANRI MSKK
+	LEFT OUTER JOIN
+	    (
+	        SELECT
+	             SKK.*
+	        FROM
+	            SHOP_KEIYAKU_KANRI SKK
+	            INNER JOIN
+	            (
+	                SELECT
+	                     SKK.SHOPCD
+	                    ,SKK.KEIYAKU_CD
+	                    ,SKK.KEIYAKU_SUB_CD
+	                    ,MAX(SKK.KEIYAKU_START_DT) KEIYAKU_START_DT
+	                FROM
+	                    SHOP_KEIYAKU_KANRI SKK
+	                WHERE
+	                     SKK.KEIYAKU_START_DT <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+	                GROUP BY
+	                     SKK.SHOPCD
+	                    ,SKK.KEIYAKU_CD
+	                    ,SKK.KEIYAKU_SUB_CD
+	            ) SKK2
+	            ON
+	                    SKK.SHOPCD           = SKK2.SHOPCD
+	                AND SKK.KEIYAKU_CD       = SKK2.KEIYAKU_CD
+	                AND SKK.KEIYAKU_SUB_CD   = SKK2.KEIYAKU_SUB_CD
+	                AND SKK.KEIYAKU_START_DT = SKK2.KEIYAKU_START_DT
+	     ) SKK
+	     ON
+	            SKK.SHOPCD         = SK.SHOPCD
+	        AND SKK.KEIYAKU_CD     = MSKK.KEIYAKU_CD
+	        AND SKK.KEIYAKU_SUB_CD = MSKK.KEIYAKU_SUB_CD
+    WHERE
+        SKK.KEIYAKU_CD || SKK.KEIYAKU_SUB_CD IN (
+            '00001000'
+            ,'00002000'
+            ,'00013000'
+            ,'00014000'
+        )
+         ]]>
+      <isNotEmpty prepend="AND" property="shopCd">
+       SK.SHOPCD = #shopCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="shisyaCd">
+        SR.CT_SHISYA_CD=#shisyaCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="kaishaMeiBushoMei">
+        SR.COMPANY || SR.BUMON Like '%' || #kaishaMeiBushoMei# || '%'
+      </isNotEmpty>
+    ORDER BY SK.SHOPCD,
+             MSKK.KEIYAKU_CD,
+             MSKK.KEIYAKU_SUB_CD,
+             SKK.KEIYAKU_START_DT
+   </select>
+  <!-- 2014/06 kashiyama add end -->
+
+  <!-- Csvファイル取引先シーケンスチェックSELECTSQL -->
+  <select id="torihikisakiSeqSelect"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuMaintenanceUploadParamBean"
+          resultMap="TorihikisakiWakuMaintenanceUploadList">
+    SELECT
+      UT.TORIHIKISAKI_SEQ      AS TORIHIKISAKI_SEQ
+    FROM
+      USK_TORIHIKISAKI UT
+    WHERE
+      UT.TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      UT.DEL_KBN = 0
+  </select>
+
+  <!-- Csvファイル削除フラグデータ存在チェックSELECTSQL -->
+  <!-- 2014/06 kashiyama mod start -->
+  <!--
+  <select id="getExistDataSql"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuMaintenanceUploadParamBean"
+          resultMap="TorihikisakiWakuMaintenanceDelKbnUploadList">
+    SELECT
+      TR.UPD_DT                AS UPD_DT
+    FROM
+      USK_TORIHIKISAKI_RYOUKIN TR
+    WHERE
+      TR.TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      TR.START_YM         = #startYm#
+  </select>
+   -->
+  <select id="getExistDataSql"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceUploadParamBean"
+          resultMap="ContractAmountMaintenanceDelKbnUploadList">
+    SELECT
+        SHOPCD,
+        KEIYAKU_CD,
+        KEIYAKU_SUB_CD,
+        KEIYAKU_START_DT,
+        KEIYAKU_AMOUNT
+    FROM
+      SHOP_KEIYAKU_KANRI
+    WHERE
+      SHOPCD         = #shopCd# AND
+      KEIYAKU_CD     = #keiyakuCd# AND
+      KEIYAKU_SUB_CD = #keiyakuSubCd# AND
+      KEIYAKU_START_DT   = #keiyakuStartDt# AND
+      KEIYAKU_NO = #keiyakuNo#
+  </select>
+  <!-- 2014/06 kashiyama mod end -->
+
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイルINSERTSQL -->
+  <insert id="torihikisakiWakuMaintenanceInsert"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuMaintenanceUploadParamBean">
+    INSERT INTO
+      USK_TORIHIKISAKI_RYOUKIN (
+        TORIHIKISAKI_SEQ,
+        START_YM,
+        BUKKEN_COUNT,
+        TOKUSEN_COUNT,
+        INS_DT,
+        INS_PG,
+        INS_ID,
+        UPD_DT,
+        UPD_PG,
+        UPD_ID
+      )
+      VALUES (
+        #torihikisakiSeq#,
+        #startYm#,
+        #bukkenCount#,
+        #tokusenCount#,
+        SYSTIMESTAMP,
+        #pgName#,
+        #operUserId#,
+        SYSTIMESTAMP,
+        #pgName#,
+        #operUserId#
+      )
+
+  </insert>
+
+  <!-- Csvファイル情報取得共通 -->
+  <sql id="torihikisakiWakuMaintenanceCommon">
+    WHERE
+      TR.TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+      TR.START_YM         = #startYm# AND
+      TR.UPD_DT           = #updDt#
+  </sql>
+
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイルUPDATESQL -->
+  <update id="torihikisakiWakuMaintenanceUpdate"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuMaintenanceUploadParamBean">
+    UPDATE
+      USK_TORIHIKISAKI_RYOUKIN TR
+    SET
+      TR.BUKKEN_COUNT     = #bukkenCount#,
+      TR.TOKUSEN_COUNT    = #tokusenCount#,
+      TR.UPD_DT           = SYSTIMESTAMP,
+      TR.UPD_PG           = #pgName#,
+      TR.UPD_ID           = #operUserId#
+    <include refid="torihikisakiWakuMaintenanceCommon"/>
+
+  </update>
+
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイルINSERTSQL -->
+  <delete id="torihikisakiWakuMaintenanceDelete"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.TorihikisakiWakuMaintenanceUploadParamBean">
+    DELETE FROM
+      USK_TORIHIKISAKI_RYOUKIN TR
+    <include refid="torihikisakiWakuMaintenanceCommon"/>
+
+  </delete>
+  <!-- 物件枠数・物件リスティング枠数のCSVダウンロード・アップロード対応にて追加 2013/10/8 end -->
+
+
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイルINSERTSQL -->
+  <!-- 2014/06 kashiyama add start -->
+  <select id="existsKeiyakuKanri" parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceUploadParamBean"
+        resultClass="int">
+    SELECT
+      count(*)
+    FROM
+      SHOP_KEIYAKU_KANRI
+    WHERE
+      SHOPCD         = #shopCd# AND
+      KEIYAKU_CD     = #keiyakuCd# AND
+      KEIYAKU_SUB_CD = #keiyakuSubCd# AND
+      TO_CHAR(SYSTIMESTAMP,'YYYYMMDDHH24MISS') BETWEEN KEIYAKU_START_DT AND KEIYAKU_END_DT
+  </select>
+  <!-- 2014/06 kashiyama add end -->
+
+  <!-- 2014/06 kashiyama add start -->
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイルINSERTSQL -->
+  <insert id="contractAmountMaintenanceHeaderInsert"
+            parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceUploadParamBean">
+        INSERT INTO SHOP_KEIYAKU_KANRI (
+            KEIYAKU_NO,
+            SHOPCD,
+            KEIYAKU_CD,
+            KEIYAKU_SUB_CD,
+            KEIYAKU_START_DT,
+            KEIYAKU_END_DT,
+            KEIYAKU_AMOUNT,
+            KEIYAKU_NOTE,
+            RESERVE_KBN,
+            INS_DT,
+            INS_PG,
+            INS_ID,
+            UPD_DT,
+            UPD_PG,
+            UPD_ID
+        ) VALUES (
+            SEQ_KEIYAKU_NO.nextval,
+            #shopCd#,
+            #keiyakuCd#,
+            #keiyakuSubCd#,
+            #keiyakuStartDt#,
+            CASE WHEN #keiyakuEndDt# IS NULL THEN '99991231235959' ELSE #keiyakuEndDt# END,
+            #keiyakuAmount#,
+            null,
+            '2',
+            SYSTIMESTAMP,
+            #pgName#,
+            #operUserId#,
+            SYSTIMESTAMP,
+            #pgName#,
+            #operUserId#
+        )
+  </insert>
+  <!-- 2014/06 kashiyama add end -->
+
+  <!-- 2014/06 kashiyama add start -->
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイルINSERTSQL -->
+  <insert id="contractAmountMaintenanceInsert"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceUploadParamBean">
+          <!--
+    INSERT INTO
+      SHOP_KEIYAKU_DETAIL(
+        SHOPCD,
+        KEIYAKU_CD,
+        KEIYAKU_SUB_CD,
+        KEIYAKU_START_DT,
+        KEIYAKU_AMOUNT,
+        INS_DT,
+        INS_PG,
+        INS_ID,
+        UPD_DT,
+        UPD_PG,
+        UPD_ID
+    ) VALUES (
+        #shopCd#,
+        #keiyakuCd#,
+        #keiyakuSubCd#,
+        #keiyakuStartDt#||'0000',
+        #keiyakuAmount#,
+        SYSTIMESTAMP,
+        #pgName#,
+        #operUserId#,
+        SYSTIMESTAMP,
+        #pgName#,
+        #operUserId#
+        )
+         -->
+  </insert>
+  <!-- 2014/06 kashiyama add end -->
+
+  <!-- 2014/06 kashiyama add start -->
+  <!-- Csvファイル情報取得共通 -->
+  <sql id="contractAmountMaintenanceCommon">
+    WHERE
+      SHOPCD         = #shopCd# AND
+      KEIYAKU_CD     = #keiyakuCd# AND
+      KEIYAKU_SUB_CD = #keiyakuSubCd# AND
+      KEIYAKU_START_DT   = #keiyakuStartDt# AND
+      KEIYAKU_NO = #keiyakuNo#
+  </sql>
+  <!-- 2014/06 kashiyama add end -->
+
+  <!-- 2014/06 kashiyama add start -->
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイルUPDATESQL -->
+  <update id="contractAmountMaintenanceUpdate"
+           parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceUploadParamBean">
+           <!--
+     UPDATE
+      SHOP_KEIYAKU_DETAIL
+    SET
+      KEIYAKU_AMOUNT   = #keiyakuAmount#,
+      UPD_DT           = SYSTIMESTAMP,
+      UPD_PG           = #pgName#,
+      UPD_ID           = #operUserId#
+      		 -->
+     UPDATE
+		SHOP_KEIYAKU_KANRI
+	SET
+		KEIYAKU_START_DT = #keiyakuStartDt#
+		,KEIYAKU_END_DT =  CASE WHEN #keiyakuEndDt# IS NULL THEN '99991231235959' ELSE #keiyakuEndDt# END
+		,KEIYAKU_AMOUNT = #keiyakuAmount#
+		,UPD_DT = SYSTIMESTAMP
+		,UPD_PG = #pgName#
+		,UPD_ID = #operUserId#
+    <include refid="contractAmountMaintenanceCommon"/>
+  </update>
+  <!-- 2014/06 kashiyama add end -->
+
+  <!-- 2014/06 kashiyama add start -->
+  <!-- 物件枠・リスティング枠メンテナンスCsvファイルINSERTSQL -->
+  <delete id="contractAmountMaintenanceDelete"
+          parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceUploadParamBean">
+    DELETE FROM
+      SHOP_KEIYAKU_KANRI
+    <include refid="contractAmountMaintenanceCommon"/>
+  </delete>
+  <!-- 2014/06 kashiyama add end -->
+
+  <!-- 2014/06 kashiyama add start -->
+  <select id="getMstShopKeiyakuKanri"
+    resultClass="java.util.HashMap">
+    SELECT KEIYAKU_CD
+            ,KEIYAKU_SUB_CD
+            ,KEIYAKU_NAME
+            ,KEIYAKU_AMOUNT_LENGTH
+    FROM MST_SHOP_KEIYAKU_KANRI
+    WHERE KEIYAKU_CD || KEIYAKU_SUB_CD IN ('00001000','00002000','00013000','00014000')
+      AND DEL_KBN = '0'
+    ORDER BY KEIYAKU_CD,KEIYAKU_SUB_CD
+  </select>
+  <!-- 2014/06 kashiyama add end -->
+
+  <!-- 2014/06 kashiyama add start -->
+  <select id="getShopKanri"  parameterClass="java.util.HashMap"
+    resultMap="ContractAmountMaintenanceShopList">
+    SELECT SHOPCD
+           ,TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS.ff3')  as UPD_DT
+    FROM SHOP_KANRI
+    WHERE
+    <iterate property="arrayShopCd" open=" ( " close=" ) " conjunction=" OR " prepend="">
+      SHOPCD = #arrayShopCd[]#
+    </iterate>
+    ORDER BY SHOPCD
+  </select>
+  <!-- 2014/06 kashiyama add end -->
+
+  <update id="shopKanriUpdateCommit" parameterClass="java.util.HashMap">
+     UPDATE SHOP_KANRI
+     SET ADMIN_UPD_DT = SYSTIMESTAMP
+     WHERE
+     <iterate property="arrayShopCd" open=" ( " close=" ) " conjunction=" OR " prepend="">
+       SHOPCD = #arrayShopCd[]#
+     </iterate>
+  </update>
+
+  	<!-- 日付重複チェック -->
+	<select id="contractAmountMaintenanceChkKeiyakuEndDt"
+		parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceUploadParamBean"
+		resultClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceKikanChkBean">
+		<!--
+	SELECT
+		SHOPCD as shopCd,
+		KEIYAKU_CD as keiyakuCd,
+		KEIYAKU_SUB_CD as keiyakuSubCd,
+		KEIYAKU_END_DT as keiyakuEndDt,
+		KEIYAKU_NO as keiyakuNo
+	FROM
+		SHOP_KEIYAKU_KANRI
+	WHERE
+			SHOPCD = #shopCd#
+		AND
+			KEIYAKU_CD = #keiyakuCd#
+		AND
+			KEIYAKU_SUB_CD = #keiyakuSubCd#
+			<isNotEmpty prepend="AND" property="keiyakuNo">
+			KEIYAKU_NO != #keiyakuNo#
+			</isNotEmpty>
+		-->
+	SELECT
+		SHOPCD as shopCd,
+		KEIYAKU_CD as keiyakuCd,
+		KEIYAKU_SUB_CD as keiyakuSubCd,
+		KEIYAKU_START_DT as keiyakuStartDt,
+		KEIYAKU_END_DT as keiyakuEndDt,
+		KEIYAKU_NO as keiyakuNo
+	FROM
+		SHOP_KEIYAKU_KANRI
+	WHERE
+			SHOPCD = #shopCd#
+		AND
+			KEIYAKU_CD = #keiyakuCd#
+		AND
+			KEIYAKU_SUB_CD = #keiyakuSubCd#
+		<isNotEmpty prepend="AND" property="keiyakuNo">
+			KEIYAKU_NO != #keiyakuNo#
+		</isNotEmpty>
+	ORDER BY KEIYAKU_START_DT DESC
+	</select>
+
+	<select id="viewCheck"
+		parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceUploadParamBean"
+		resultClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceKikanChkBean">
+	SELECT
+		SHOPCD as shopCd,
+		KEIYAKU_CD as keiyakuCd,
+		KEIYAKU_SUB_CD as keiyakuSubCd,
+		KEIYAKU_START_DT as keiyakuStartDt,
+		KEIYAKU_END_DT as keiyakuEndDt,
+		KEIYAKU_NO as keiyakuNo
+	FROM
+		V_SHOP_KEIYAKU_KANRI
+	WHERE
+			SHOPCD = #shopCd#
+		AND
+			KEIYAKU_CD = #keiyakuCd#
+		AND
+			KEIYAKU_SUB_CD = #keiyakuSubCd#
+		<isNotEmpty prepend="AND" property="keiyakuNo">
+			KEIYAKU_NO != #keiyakuNo#
+		</isNotEmpty>
+	</select>
+
+	<!-- 日付重複チェック -->
+	<select id="contractAmountMaintenanceCountApplyYmdh"
+		parameterClass="net.chintai.backend.sysadmin.demand.dao.ContractAmountMaintenanceKikanChkBean"
+		resultClass="int">
+	SELECT
+		COUNT(*)
+	FROM
+		SHOP_KEIYAKU_KANRI
+	WHERE
+			KEIYAKU_NO = #keiyakuNo#
+		<isNotEmpty property="keiyakuEndYMDH">
+			<isNotEqual property="keiyakuEndDt" compareValue="99991231235959">
+			AND KEIYAKU_END_DT <![CDATA[ >= ]]> #keiyakuStartYMDH#
+			AND KEIYAKU_START_DT <![CDATA[<=]]> #keiyakuEndYMDH#
+			</isNotEqual>
+			<isEqual property="keiyakuEndDt" compareValue="99991231235959">
+			AND KEIYAKU_START_DT = #keiyakuStartYMDH#
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty property="keiyakuEndYMDH">
+			<isNotEqual property="keiyakuEndDt" compareValue="99991231235959">
+			AND KEIYAKU_END_DT <![CDATA[ >= ]]> #keiyakuStartYMDH#
+			AND KEIYAKU_START_DT <![CDATA[<=]]> #keiyakuStartYMDH#
+			</isNotEqual>
+			<isEqual property="keiyakuEndDt" compareValue="99991231235959">
+			AND KEIYAKU_START_DT = #keiyakuStartYMDH#
+			</isEqual>
+		</isEmpty>
+	</select>
+</sqlMap>

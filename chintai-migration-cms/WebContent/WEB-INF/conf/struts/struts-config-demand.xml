@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+    PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions ================================== -->
+  <form-beans>
+
+    <!-- ■店舗コード紐付：検索 -->
+    <form-bean name="ShopBindSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"   type="java.lang.String" />
+      <form-property name="company"  type="java.lang.String" />
+      <form-property name="bumon"    type="java.lang.String" />
+      <form-property name="offSet"   type="java.lang.Integer" />
+    </form-bean>
+
+    <form-bean name="ShopBindSearchPageForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"   type="java.lang.String" />
+      <form-property name="company"  type="java.lang.String" />
+      <form-property name="bumon"    type="java.lang.String" />
+      <form-property name="offSet"   type="java.lang.Integer" />
+    </form-bean>
+
+    <!-- 店舗コード紐付：店舗情報詳細 -->
+    <form-bean name="ShopBindUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"           type="java.lang.String" />
+      <form-property name="updDt"            type="java.lang.String" />
+      <form-property name="torihikisakiSeq"  type="java.lang.String" />
+      <form-property name="torihikisakiCd"   type="java.lang.String" />
+      <form-property name="torihikisakiName" type="java.lang.String" />
+    </form-bean>
+
+    <!-- ■取引先一覧：検索 -->
+    <form-bean name="TorihikisakiListForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shisyaCd"         type="java.lang.String" />
+      <form-property name="torihikisakiCd1"  type="java.lang.String" />
+      <form-property name="torihikisakiCd2"  type="java.lang.String" />
+      <form-property name="torihikisakiSeq"  type="java.lang.String" />
+      <form-property name="fudousanName"     type="java.lang.String" />
+      <form-property name="torihikisakiName" type="java.lang.String" />
+      <form-property name="outPut"           type="java.lang.String" />
+      <form-property name="offSet"           type="java.lang.Integer" />
+    </form-bean>
+
+    <!-- ■不動産会社メンテナンス：検索 -->
+    <form-bean name="FudousanSearchPageForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="fudousanName" type="java.lang.String" />
+      <form-property name="fudousanCd"   type="java.lang.String" />
+      <form-property name="offSet"       type="java.lang.Integer" />
+    </form-bean>
+    <form-bean name="FudousanSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="fudousanName" type="java.lang.String" />
+      <form-property name="fudousanCd"   type="java.lang.String" />
+      <form-property name="offSet"       type="java.lang.Integer" />
+    </form-bean>
+
+    <!-- 不動産削除確認 -->
+    <form-bean name="FudousanDeleteForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="fudousanCd"      type="java.lang.String[]" />
+    </form-bean>
+
+    <!-- 不動産削除 -->
+    <form-bean name="FudousanDeleteCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="fudousanCd"      type="java.lang.String[]" />
+      <form-property name="updDt"           type="java.lang.String[]" />
+    </form-bean>
+
+    <!-- 不動産会社登録 -->
+    <form-bean name="FudousanRegisterForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="fudousanName"   type="java.lang.String" />
+      <form-property name="fudousanCd"     type="java.lang.String" />
+      <form-property name="zipCode1"       type="java.lang.String" />
+      <form-property name="zipCode2"       type="java.lang.String" />
+      <form-property name="prefCd"         type="java.lang.String" />
+      <form-property name="address1"       type="java.lang.String" />
+      <form-property name="address2"       type="java.lang.String" />
+      <form-property name="tel"            type="java.lang.String" />
+      <form-property name="fax"            type="java.lang.String" />
+      <form-property name="tantou"         type="java.lang.String" />
+    </form-bean>
+
+    <!-- 不動産会社更新 -->
+    <form-bean name="FudousanUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="fudousanName"   type="java.lang.String" />
+      <form-property name="fudousanCd"     type="java.lang.String" />
+      <form-property name="zipCode1"       type="java.lang.String" />
+      <form-property name="zipCode2"       type="java.lang.String" />
+      <form-property name="prefCd"         type="java.lang.String" />
+      <form-property name="prefName"         type="java.lang.String" />
+      <form-property name="address1"       type="java.lang.String" />
+      <form-property name="address2"       type="java.lang.String" />
+      <form-property name="tel"            type="java.lang.String" />
+      <form-property name="fax"            type="java.lang.String" />
+      <form-property name="tantou"         type="java.lang.String" />
+      <form-property name="insDt"         type="java.lang.String" />
+      <form-property name="updDt"         type="java.lang.String" />
+      <form-property name="updId"         type="java.lang.String" />
+      <form-property name="updPg"         type="java.lang.String" />
+      <form-property name="offSet"         type="java.lang.Integer" />
+    </form-bean>
+
+    <!-- ■取引先メンテナンス：検索ページ -->
+    <form-bean name="TorihikisakiSearchPageForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"           type="java.lang.String" />
+      <form-property name="shisyaCd"         type="java.lang.String" />
+      <form-property name="torihikisakiCd1"  type="java.lang.String" />
+      <form-property name="torihikisakiCd2"  type="java.lang.String" />
+      <form-property name="fudousanName"     type="java.lang.String" />
+      <form-property name="torihikisakiName" type="java.lang.String" />
+      <form-property name="offSet"           type="java.lang.Integer" />
+    </form-bean>
+
+    <!-- 取引先メンテナンス：検索 -->
+    <form-bean name="TorihikisakiSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"           type="java.lang.String" />
+      <form-property name="shisyaCd"         type="java.lang.String" />
+      <form-property name="torihikisakiCd1"  type="java.lang.String" />
+      <form-property name="torihikisakiCd2"  type="java.lang.String" />
+      <form-property name="fudousanName"     type="java.lang.String" />
+      <form-property name="torihikisakiName" type="java.lang.String" />
+      <form-property name="offSet"           type="java.lang.Integer" />
+    </form-bean>
+
+    <!-- 取引先新規登録 -->
+    <form-bean name="TorihikisakiRegisterForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="fudousanName"     type="java.lang.String" />
+      <form-property name="fudousanCd"       type="java.lang.String" />
+      <form-property name="torihikisakiName" type="java.lang.String" />
+      <form-property name="zipCd1"           type="java.lang.String" />
+      <form-property name="zipCd2"           type="java.lang.String" />
+      <form-property name="prefCd"           type="java.lang.String" />
+      <form-property name="address1"         type="java.lang.String" />
+      <form-property name="address2"         type="java.lang.String" />
+      <form-property name="tel"              type="java.lang.String" />
+      <form-property name="fax"              type="java.lang.String" />
+      <form-property name="tantou"           type="java.lang.String" />
+      <form-property name="shisyaCd"         type="java.lang.String" />
+      <form-property name="applyYear"        type="java.lang.String" />
+      <form-property name="applyMonth"       type="java.lang.String" />
+      <form-property name="bukkenCnt"        type="java.lang.String" />
+      <form-property name="bukkenCntNote"    type="java.lang.String" />
+      <form-property name="bukkenCntChecker" type="java.lang.String" />
+      <form-property name="tokusenCnt"       type="java.lang.String" />
+      <form-property name="tokusenCntNote"   type="java.lang.String" />
+      <form-property name="tokusenCntChecker" type="java.lang.String" />
+      <form-property name="nowDate"          type="java.lang.String" />
+      <form-property name="inputDate"        type="java.lang.String" />
+    </form-bean>
+
+  <!-- 取引先情報更新 -->
+    <form-bean name="TorihikisakiUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="fudousanName"     type="java.lang.String" />
+      <form-property name="fudousanCd"       type="java.lang.String" />
+      <form-property name="oldFudousanCd"    type="java.lang.String" />
+      <form-property name="torihikisakiName" type="java.lang.String" />
+      <form-property name="torihikisakiCd"   type="java.lang.String" />
+      <form-property name="torihikisakiSeq"  type="java.lang.String" />
+      <form-property name="zipCd1"           type="java.lang.String" />
+      <form-property name="zipCd2"           type="java.lang.String" />
+      <form-property name="prefCd"           type="java.lang.String" />
+      <form-property name="address1"         type="java.lang.String" />
+      <form-property name="address2"         type="java.lang.String" />
+      <form-property name="tel"              type="java.lang.String" />
+      <form-property name="fax"              type="java.lang.String" />
+      <form-property name="tantou"           type="java.lang.String" />
+      <form-property name="shisyaCd"         type="java.lang.String" />
+      <form-property name="updDt"            type="java.lang.String" />
+    </form-bean>
+
+    <!-- 取引先削除 -->
+    <form-bean name="TorihikisakiDeleteForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="delFlgList" type="java.lang.String[]"/>
+      <form-property name="updDt"      type="java.lang.String[]" />
+    </form-bean>
+
+    <!-- 取引先物件枠情報登録 -->
+    <form-bean name="TorihikisakiWakuInfoAddForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="torihikisakiSeq"   type="java.lang.String" />
+      <form-property name="applyYear"         type="java.lang.String" />
+      <form-property name="applyMonth"        type="java.lang.String" />
+      <form-property name="bukkenCnt"         type="java.lang.String" />
+      <form-property name="bukkenCntChecker"  type="java.lang.String" />
+      <form-property name="bukkenCntNote"     type="java.lang.String" />
+      <form-property name="tokusenCnt"        type="java.lang.String" />
+      <form-property name="tokusenCntNote"    type="java.lang.String" />
+      <form-property name="tokusenCntChecker" type="java.lang.String" />
+      <form-property name="nowDate"           type="java.lang.String" />
+      <form-property name="inputDate"         type="java.lang.String" />
+      <form-property name="torihikisakiUpdDt" type="java.lang.String" />
+    </form-bean>
+
+    <!-- 取引先物件枠情報更新 -->
+    <form-bean name="TorihikisakiWakuInfoUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="torihikisakiSeq"   type="java.lang.String" />
+      <form-property name="startYmForDisplay" type="java.lang.String" />
+      <form-property name="startYm"           type="java.lang.String" />
+      <form-property name="bukkenCnt"         type="java.lang.String" />
+      <form-property name="bukkenCntChecker"  type="java.lang.String" />
+      <form-property name="bukkenCntNote"     type="java.lang.String" />
+      <form-property name="tokusenCnt"        type="java.lang.String" />
+      <form-property name="tokusenCntChecker" type="java.lang.String" />
+      <form-property name="tokusenCntNote"    type="java.lang.String" />
+      <form-property name="torihikisakiUpdDt" type="java.lang.String" />
+    </form-bean>
+
+    <!-- 取引先物件枠情報削除 -->
+    <form-bean name="TorihikisakiWakuInfoDeleteForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="torihikisakiSeq"  type="java.lang.String" />
+      <form-property name="torihikisakiUpdDt" type="java.lang.String" />
+      <form-property name="delFlgList"       type="java.lang.String[]"/>
+      <form-property name="updDt"            type="java.lang.String[]" />
+    </form-bean>
+
+    <!-- 物件枠・リスティング枠メンテナンスダウンロード用フォーム -->
+    <form-bean name="torihikisakiWakuMaintenanceDownloadForm" type="org.apache.struts.validator.DynaValidatorForm">
+        <form-property name="shopCd"           type="java.lang.String" />
+        <form-property name="shisyaCd"         type="java.lang.String" />
+        <form-property name="torihikisakiCd1"  type="java.lang.String" />
+        <form-property name="torihikisakiCd2"  type="java.lang.String" />
+        <form-property name="fudousanName"     type="java.lang.String" />
+
+    </form-bean>
+
+
+    <!-- 物件枠・リスティング枠メンテナンスアップロード用フォーム -->
+    <form-bean name="torihikisakiWakuMaintenanceUploadForm" type="org.apache.struts.validator.DynaValidatorForm">
+           <form-property name="uploadFile" type="org.apache.struts.upload.FormFile" />
+   </form-bean>
+
+    <!-- 物件枠・リスティング枠メンテナンスダウンロード用フォーム -->
+    <form-bean name="contractAmountMaintenanceDownloadForm" type="org.apache.struts.validator.DynaValidatorForm">
+        <form-property name="shopCd"             type="java.lang.String" />
+        <form-property name="shisyaCd"           type="java.lang.String" />
+        <form-property name="kaishaMeiBushoMei"  type="java.lang.String" />
+   </form-bean>
+
+    <!-- 物件枠・リスティング枠メンテナンスアップロード用フォーム -->
+    <form-bean name="contractAmountMaintenanceUploadForm" type="org.apache.struts.validator.DynaValidatorForm">
+           <form-property name="uploadFile" type="org.apache.struts.upload.FormFile" />
+   </form-bean>
+
+  </form-beans>
+
+  <!-- ========== Action Mapping Definitions ============================= -->
+  <action-mappings>
+    <!-- ■店舗コード紐付 -->
+    <action path="/demand/ShopBindSearchPage"
+            type="net.chintai.backend.sysadmin.demand.action.ShopBindSearchPageAction"
+            name="ShopBindSearchPageForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/ShopBindSearch.jsp" />
+    </action>
+
+    <!-- 店舗コード紐付:検索 -->
+    <action path="/demand/ShopBindSearch"
+            type="net.chintai.backend.sysadmin.demand.action.ShopBindSearchAction"
+            scope="request"
+            name="ShopBindSearchForm"
+            validate="true"
+            input="/demand/ShopBindSearchPage.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/ShopBindSearch.jsp" />
+    </action>
+
+    <!-- 店舗コード紐付:ページング -->
+    <action path="/demand/ShopBindSearchPaging"
+            type="net.chintai.backend.sysadmin.demand.action.ShopBindSearchPagingAction"
+            scope="request"
+            name="ShopBindSearchForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/ShopBindSearch.jsp" />
+    </action>
+
+
+    <!-- 店舗コード紐付:店舗情報詳細 -->
+    <action path="/demand/ShopBindUpdatePage"
+            type="net.chintai.backend.sysadmin.demand.action.ShopBindUpdatePageAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/ShopBindUpdate.jsp" />
+    </action>
+
+    <!-- 店舗コード紐付:店舗情報詳細確認 -->
+    <action path="/demand/ShopBindUpdateConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.ShopBindUpdateConfirmAction"
+            scope="request"
+            name="ShopBindUpdateForm">
+      <forward name="success" path="/WEB-INF/jsp/demand/ShopBindUpdateConfirm.jsp" />
+    </action>
+
+    <!-- 店舗コード紐付:店舗情報詳細確認ページの戻るボタン -->
+    <action path="/demand/ShopBindUpdatePageBack"
+            type="net.chintai.backend.sysadmin.demand.action.ShopBindUpdatePageBackAction"
+            scope="request"
+            name="ShopBindUpdateForm">
+      <forward name="success" path="/WEB-INF/jsp/demand/ShopBindUpdate.jsp" />
+    </action>
+
+    <!-- 店舗コード紐付:店舗情報詳細更新 -->
+    <action path="/demand/ShopBindUpdateCommit"
+            type="net.chintai.backend.sysadmin.demand.action.ShopBindUpdateCommitAction"
+            scope="request"
+            name="ShopBindUpdateForm">
+      <forward name="fail" path="/demand/ShopBindUpdateConfirm.do" />
+      <forward name="success" path="/WEB-INF/jsp/demand/ShopBindUpdateComplete.jsp" />
+    </action>
+
+
+    <!-- 取引先検索ページ(Popup)へ -->
+    <action path="/demand/TorihikisakiSearchForBindPage"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiSearchForBindPageAction"
+            scope="request"
+            name="TorihikisakiSearchPageForm">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiSearchForBind.jsp" />
+    </action>
+
+    <!-- 取引先検索(Popup) -->
+    <action path="/demand/TorihikisakiSearchForBind"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiSearchForBindAction"
+            scope="request"
+            name="TorihikisakiSearchForm"
+            validate="true"
+            input="/demand/TorihikisakiSearchForBindPage.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiSearchForBind.jsp" />
+    </action>
+
+    <!-- 取引先詳細 -->
+    <action path="/demand/TorihikisakiInfoForBind"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiInfoForBindAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiInfoForBind.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- 取引先詳細から検索画面に戻る(パンくずも含む) -->
+    <action path="/demand/TorihikisakiSearchForBindPaging"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiSearchForBindPagingAction"
+            scope="request"
+            name="TorihikisakiSearchForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiSearchForBind.jsp" />
+    </action>
+
+
+    <!-- ■取引先一覧 -->
+    <action path="/demand/TorihikisakiListPage"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiListPageAction"
+            scope="request"
+            name="TorihikisakiListForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiList.jsp" />
+    </action>
+
+    <!-- 取引先一覧:検索 -->
+    <action path="/demand/TorihikisakiList"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiListAction"
+            scope="request"
+            name="TorihikisakiListForm"
+            validate="true"
+            input="/demand/TorihikisakiListPage.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiList.jsp" />
+    </action>
+
+    <!-- 取引先一覧:検索(Paging) -->
+    <action path="/demand/TorihikisakiListPaging"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiListPagingAction"
+            scope="request"
+            name="TorihikisakiListForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiList.jsp" />
+    </action>
+
+    <!-- 取引先詳細画面 -->
+    <action path="/demand/TorihikisakiInfoForList"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiInfoForListAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiInfoForList.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- ■不動産会社メンテナンス -->
+    <action path="/demand/FudousanSearchPage"
+            name="FudousanSearchPageForm"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanSearchPageAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanSearch.jsp" />
+    </action>
+
+    <!-- 不動産会社メンテナンス:検索 -->
+    <action path="/demand/FudousanSearch"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanSearchAction"
+            scope="request"
+            name="FudousanSearchForm"
+            validate="true"
+            input="/demand/FudousanSearchPage.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanSearch.jsp" />
+    </action>
+
+    <!-- 不動産会社メンテナンス:検索結果画面に戻る -->
+    <action path="/demand/FudousanSearchPaging"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanSearchPagingAction"
+            name="FudousanSearchForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanSearch.jsp" />
+    </action>
+
+    <!-- 不動産会社登録ページへ -->
+    <action path="/demand/FudousanRegisterPage"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanRegisterPageAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanRegister.jsp" />
+    </action>
+
+    <!-- 不動産会社削除確認ページへ -->
+    <action path="/demand/FudousanDeleteConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanDeleteConfirmAction"
+            name="FudousanDeleteForm"
+            scope="request"
+            validate="true"
+            input="/demand/FudousanSearchPaging.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanDeleteConfirm.jsp" />
+      <forward name="fail" path="/demand/FudousanSearchPaging.do" />
+    </action>
+
+    <!-- 不動産会社削除 -->
+    <action path="/demand/FudousanDeleteCommit"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanDeleteCommitAction"
+            name="FudousanDeleteCommitForm"
+            scope="request"
+			validate="false">
+      <forward name="success" path="/demand/FudousanSearchPaging.do" />
+      <forward name="fail" path="/WEB-INF/jsp/demand/FudousanSearch.jsp" />
+    </action>
+
+    <!-- 不動産会社削除ページの戻るボタン -->
+    <action path="/demand/FudousanDeleteBack"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanDeleteBackAction"
+            scope="request"
+            name="FudousanDeleteForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanSearch.jsp"/>
+    </action>
+
+    <!-- 不動産会社登録確認ページへ -->
+    <action path="/demand/FudousanRegisterConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanRegisterConfirmAction"
+            scope="request"
+            name="FudousanRegisterForm"
+            validate="true"
+            input="/WEB-INF/jsp/demand/FudousanRegister.jsp">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanRegisterConfirm.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/demand/FudousanRegister.jsp" />
+    </action>
+
+    <!-- 不動産会社登録 -->
+    <action path="/demand/FudousanRegisterCommit"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanRegisterCommitAction"
+            scope="request"
+            name="FudousanRegisterForm">
+      <forward name="success" path="/demand/FudousanSearchPaging.do" />
+    </action>
+
+    <!-- 不動産会社登録ページへ戻る -->
+    <action path="/demand/FudousanRegisterPageBack"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanRegisterPageBackAction"
+            scope="request"
+            name="FudousanRegisterForm">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanRegister.jsp" />
+    </action>
+
+    <!-- 不動産会社詳細ページへ -->
+    <action path="/demand/FudousanInfoPage"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanInfoAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanInfo.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+    <action path="/demand/FudousanInfoPaging"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanInfoPagingAction"
+            name="FudousanSearchForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanInfo.jsp" />
+    </action>
+
+    <!-- 不動産会社更新ページ -->
+    <action path="/demand/FudousanUpdatePage"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanUpdatePageAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanUpdate.jsp" />
+    </action>
+
+    <!-- 不動産会社更新確認ページ -->
+    <action path="/demand/FudousanUpdateConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanUpdateConfirmAction"
+            name="FudousanUpdateForm"
+            scope="request"
+            validate="true"
+            input="/demand/FudousanUpdatePageBackAction.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanUpdateConfirm.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/demand/FudousanUpdate.jsp" />
+    </action>
+
+    <!-- 不動産会社更新ページへ戻る -->
+    <action path="/demand/FudousanUpdatePageBackAction"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanUpdatePageBackAction"
+            scope="request"
+            name="FudousanUpdateForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanUpdate.jsp" />
+    </action>
+
+    <!-- 不動産会社更新 -->
+    <action path="/demand/FudousanUpdateCommit"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanUpdateCommitAction"
+            scope="request"
+            name="FudousanUpdateForm">
+      <forward name="success" path="/demand/FudousanInfoPaging.do" />
+    </action>
+
+    <!-- ■取引先メンテナンス -->
+    <action path="/demand/TorihikisakiSearchPage"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiSearchPageAction"
+            scope="request"
+            name="TorihikisakiSearchForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiSearch.jsp" />
+    </action>
+
+    <!-- 取引先メンテナンス:検索 -->
+    <action path="/demand/TorihikisakiSearch"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiSearchAction"
+            scope="request"
+            name="TorihikisakiSearchForm"
+            validate="true"
+            input="/demand/TorihikisakiSearchPage.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiSearch.jsp" />
+    </action>
+
+    <!-- 取引先メンテナンス:ページング -->
+    <action path="/demand/TorihikisakiSearchPaging"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiSearchPagingAction"
+            scope="request"
+            name="TorihikisakiSearchForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiSearch.jsp" />
+    </action>
+
+    <!-- 取引先削除ページへ -->
+    <action path="/demand/TorihikisakiDeleteConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiDeleteConfirmAction"
+            scope="request"
+            name="TorihikisakiDeleteForm"
+            validate="true"
+            input="/demand/TorihikisakiDeleteBack.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiDeleteConfirm.jsp"/>
+    </action>
+
+    <!-- 取引先削除ページの戻るボタン(削除時Validationに引っ掛かった場合も含む) -->
+    <action path="/demand/TorihikisakiDeleteBack"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiDeleteBackAction"
+            scope="request"
+            name="TorihikisakiDeleteForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiSearch.jsp"/>
+    </action>
+
+    <!-- 取引先削除 -->
+    <action path="/demand/TorihikisakiDeleteCommit"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiDeleteCommitAction"
+            scope="request"
+            name="TorihikisakiDeleteForm"
+            validate="false">
+      <forward name="success" path="/demand/TorihikisakiDeleteBack.do"/>
+      <forward name="fail" path="/WEB-INF/jsp/demand/TorihikisakiSearch.jsp" />
+    </action>
+
+
+    <!-- 新規登録ページへ -->
+    <action path="/demand/TorihikisakiRegisterPage"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiRegisterPageAction"
+            name="TorihikisakiRegisterForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiRegister.jsp" />
+    </action>
+
+    <!-- 登録確認ページへ -->
+    <action path="/demand/TorihikisakiRegisterConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiRegisterConfirmAction"
+            name="TorihikisakiRegisterForm"
+            scope="request"
+            validate="true"
+            input="/demand/TorihikisakiRegisterPage.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiRegisterConfirm.jsp" />
+    </action>
+
+    <!-- 新規登録ページへ戻る -->
+    <action path="/demand/TorihikisakiRegisterPageBack"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiRegisterPageBackAction"
+            name="TorihikisakiRegisterForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiRegister.jsp" />
+    </action>
+
+    <!-- 登録確認コミット -->
+    <action path="/demand/TorihikisakiRegisterCommit"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiRegisterCommitAction"
+            name="TorihikisakiRegisterForm"
+            scope="request"
+            validate="false">
+      <forward name="success" path="/demand/TorihikisakiSearchPaging.do" />
+      <forward name="fail" path="/demand/TorihikisakiRegisterConfirm.do" />
+    </action>
+
+    <!-- 不動産会社検索ページへ(取引先登録画面の参照ボタン押下時) -->
+    <action path="/demand/FudousanSearchForRefPage"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanSearchForRefPageAction"
+            scope="request"
+            name="FudousanSearchForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanSearchForRef.jsp" />
+    </action>
+
+    <!-- 不動産会社検索(取引先登録画面用) -->
+    <action path="/demand/FudousanSearchForRef"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanSearchForRefAction"
+            scope="request"
+            name="FudousanSearchForm"
+            validate="true"
+            input="/demand/FudousanSearchForRefPage.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanSearchForRef.jsp" />
+    </action>
+
+    <!-- 不動産会社検索(取引先登録画面用)ページング -->
+    <action path="/demand/FudousanSearchForRefPaging"
+            type="net.chintai.backend.sysadmin.demand.action.FudousanSearchForRefPagingAction"
+            scope="request"
+            name="FudousanSearchForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/FudousanSearchForRef.jsp" />
+    </action>
+
+    <!-- 取引先詳細画面 -->
+    <action path="/demand/TorihikisakiInfo"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiInfoAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiInfo.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- 取引先情報更新ページ -->
+    <action path="/demand/TorihikisakiUpdatePage"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiUpdatePageAction"
+            scope="request"
+            name="TorihikisakiUpdateForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiUpdate.jsp"></forward>
+      <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- 取引先情報更新ページに戻る -->
+    <action path="/demand/TorihikisakiUpdatePageBack"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiUpdatePageBackAction"
+            scope="request"
+            name="TorihikisakiUpdateForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiUpdate.jsp"></forward>
+      <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- 取引先情報更新確認 -->
+    <action path="/demand/TorihikisakiUpdateConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiUpdateConfirmAction"
+            scope="request"
+            name="TorihikisakiUpdateForm"
+            validate="true"
+            input="/demand/TorihikisakiUpdatePageBack.do">
+      <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiUpdateConfirm.jsp"></forward>
+    </action>
+
+    <!-- 取引先情報更新 -->
+    <action path="/demand/TorihikisakiUpdateCommit"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiUpdateCommitAction"
+            scope="request"
+            name="TorihikisakiUpdateForm"
+            validate="false">
+      <forward name="success" path="/demand/TorihikisakiInfo.do"></forward>
+      <forward name="fail" path="/demand/TorihikisakiUpdateConfirm.do"></forward>
+    </action>
+
+    <!-- 物件枠情報登録ページへ -->
+    <action path="/demand/TorihikisakiWakuInfoAddPage"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoAddPageAction"
+            scope="request"
+            name="TorihikisakiWakuInfoAddForm"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiWakuInfoAdd.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- 物件枠情報登録確認 -->
+    <action path="/demand/TorihikisakiWakuInfoAddConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoAddConfirmAction"
+            scope="request"
+            name="TorihikisakiWakuInfoAddForm"
+            validate="true"
+            input="/demand/TorihikisakiWakuInfoAddPage.do">
+        <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiWakuInfoAddConfirm.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/demand/TorihikisakiWakuInfoAdd.jsp"></forward>
+    </action>
+
+    <!-- 物件枠情報登録 -->
+    <action path="/demand/TorihikisakiWakuInfoAddCommit"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoAddCommitAction"
+            scope="request"
+            name="TorihikisakiWakuInfoAddForm"
+            validate="false">
+        <forward name="success" path="/demand/TorihikisakiInfo.do"></forward>
+    </action>
+
+    <!-- 物件枠情報更新ページへ -->
+    <action path="/demand/TorihikisakiWakuInfoUpdatePage"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoUpdatePageAction"
+            scope="request">
+        <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiWakuInfoUpdate.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- 物件枠情報更新確認 -->
+    <action path="/demand/TorihikisakiWakuInfoUpdateConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoUpdateConfirmAction"
+            scope="request"
+            name="TorihikisakiWakuInfoUpdateForm"
+            validate="true"
+            input="/demand/TorihikisakiWakuInfoUpdatePageBack.do">
+        <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiWakuInfoUpdateConfirm.jsp"></forward>
+    </action>
+
+    <!-- 物件枠情報更新 -->
+    <action path="/demand/TorihikisakiWakuInfoUpdateCommit"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoUpdateCommitAction"
+            scope="request"
+            name="TorihikisakiWakuInfoUpdateForm"
+            validate="false">
+        <forward name="success" path="/demand/TorihikisakiInfo.do"></forward>
+    </action>
+
+    <!-- 物件枠情報更新ページへ -->
+    <action path="/demand/TorihikisakiWakuInfoUpdatePageBack"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoUpdatePageBackAction"
+            scope="request"
+            name="TorihikisakiWakuInfoUpdateForm"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiWakuInfoUpdate.jsp"></forward>
+    </action>
+
+    <!-- 物件枠情報削除確認ページへ -->
+    <action path="/demand/TorihikisakiWakuInfoDeleteConfirm"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoDeleteConfirmAction"
+            scope="request"
+            name="TorihikisakiWakuInfoDeleteForm"
+            validate="true"
+            input="/demand/TorihikisakiInfo.do">
+        <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiWakuInfoDeleteConfirm.jsp"></forward>
+        <forward name="fail" path="/demand/TorihikisakiInfo.do"></forward>
+    </action>
+
+    <!-- 物件枠情報削除画面から詳細画面へ戻る -->
+    <action path="/demand/TorihikisakiWakuInfoDeleteBack"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoDeleteBackAction"
+            scope="request"
+            name="TorihikisakiWakuInfoDeleteForm"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiInfo.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- 物件枠情報削除 -->
+    <action path="/demand/TorihikisakiWakuInfoDeleteCommit"
+            type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuInfoDeleteCommitAction"
+            scope="request"
+            name="TorihikisakiWakuInfoDeleteForm"
+            validate="false">
+        <forward name="success" path="/demand/TorihikisakiInfo.do"></forward>
+    </action>
+
+    <!-- 物件枠・リスティング枠メンテナンス ページアクション-->
+    <action path="/demand/TorihikisakiWakuMaintenancePage"
+        type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuMaintenancePageAction"
+        name="torihikisakiWakuMaintenanceDownloadForm"
+        scope="request"
+        validate="false">
+        <forward name="success" path="/WEB-INF/jsp/demand/TorihikisakiWakuMaintenancePage.jsp" />
+    </action>
+
+    <!-- 物件枠・リスティング枠メンテナンス CSVDownLoad アクション-->
+    <action path="/demand/TorihikisakiWakuMaintenanceDownload"
+        type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuMaintenanceDownloadAction"
+        name="torihikisakiWakuMaintenanceDownloadForm"
+        scope="request"
+        validate="true"
+        input="/demand/TorihikisakiWakuMaintenancePage.do">
+        <forward name="success" path="/demand/TorihikisakiWakuMaintenancePage.do" />
+        <forward name="failure" path="/demand/TorihikisakiWakuMaintenancePage.do" />
+    </action>
+
+    <!-- 物件枠・リスティング枠メンテナンス CSVUpload アクション-->
+    <action path="/demand/TorihikisakiWakuMaintenanceUpload"
+        type="net.chintai.backend.sysadmin.demand.action.TorihikisakiWakuMaintenanceUploadAction"
+        name="torihikisakiWakuMaintenanceUploadForm"
+        scope="request"
+        validate="true"
+        input="/demand/TorihikisakiWakuMaintenancePage.do">
+        <forward name="success" path="/demand/TorihikisakiWakuMaintenancePage.do" />
+        <forward name="failure" path="/demand/TorihikisakiWakuMaintenancePage.do" />
+    </action>
+
+   <!-- 物件枠・リスティング枠メンテナンス ページアクション-->
+    <action path="/demand/ContractAmountMaintenancePage"
+        type="net.chintai.backend.sysadmin.demand.action.ContractAmountMaintenancePageAction"
+        name="contractAmountMaintenanceDownloadForm"
+        scope="request"
+        validate="false">
+        <forward name="success" path="/WEB-INF/jsp/demand/ContractAmountMaintenancePage.jsp" />
+    </action>
+
+    <!-- 物件枠・リスティング枠メンテナンス CSVDownLoad アクション-->
+    <action path="/demand/ContractAmountMaintenanceDownload"
+        type="net.chintai.backend.sysadmin.demand.action.ContractAmountMaintenanceDownloadAction"
+        name="contractAmountMaintenanceDownloadForm"
+        scope="request"
+        validate="true"
+        input="/demand/ContractAmountMaintenancePage.do">
+        <forward name="success" path="/demand/ContractAmountMaintenancePage.do" />
+        <forward name="failure" path="/demand/ContractAmountMaintenancePage.do" />
+    </action>
+
+    <!-- 物件枠・リスティング枠メンテナンス CSVUpload アクション-->
+    <action path="/demand/ContractAmountMaintenanceUpload"
+        type="net.chintai.backend.sysadmin.demand.action.ContractAmountMaintenanceUploadAction"
+        name="contractAmountMaintenanceUploadForm"
+        scope="request"
+        validate="true"
+        input="/demand/ContractAmountMaintenancePage.do">
+        <forward name="success" path="/demand/ContractAmountMaintenancePage.do" />
+        <forward name="failure" path="/demand/ContractAmountMaintenancePage.do" />
+    </action>
+
+  </action-mappings>
+</struts-config>

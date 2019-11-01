@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="cjnInquiryTypeListDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryTypeListDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="cjnInquiryTypeAddCommitDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryTypeAddCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="cjnInquiryTypeInfoDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryTypeInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="cjnInquiryTypeUpdatePageDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryTypeUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="cjnInquiryTypeUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryTypeUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="cjnUserAvailabilityUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnUserAvailabilityUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="cjnLogOperationSearchDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnLogOperationSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquirySearchDisposeCountDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquirySearchDisposeCountDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquirySearchDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquirySearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquiryInfoDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquiryInfoReadingLoggingDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryInfoReadingLoggingDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquiryStatusUpdatePageDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryStatusUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquiryStatusUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryStatusUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserListDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnUserListDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserInfoDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnUserInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserUpdatePageDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnUserUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnUserUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserAuthorityUpdatePageDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnUserAuthorityUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserAuthorityUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnUserAuthorityUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="cjnInquiryAccessControlDao"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.dao.impl.CjnInquiryAccessControlDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- Service Definitions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="cjnInquiryTypeListService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryTypeListServiceImpl">
+		<property name="cjnInquiryTypeListDao">
+			<ref bean="cjnInquiryTypeListDao" />
+		</property>
+	</bean>
+
+	<bean id="cjnInquiryTypeAddCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="cjnInquiryTypeAddCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="select*">PROPAGATION_REQUIRED, readOnly</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="cjnInquiryTypeAddCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryTypeAddCommitServiceImpl">
+		<property name="cjnInquiryTypeAddCommitDao">
+			<ref bean="cjnInquiryTypeAddCommitDao" />
+		</property>
+	</bean>
+
+	<bean id="cjnInquiryTypeInfoService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryTypeInfoServiceImpl">
+		<property name="cjnInquiryTypeInfoDao">
+			<ref bean="cjnInquiryTypeInfoDao" />
+		</property>
+	</bean>
+
+	<bean id="cjnInquiryTypeUpdatePageService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryTypeUpdatePageServiceImpl">
+		<property name="cjnInquiryTypeUpdatePageDao">
+			<ref bean="cjnInquiryTypeUpdatePageDao" />
+		</property>
+	</bean>
+
+	<bean id="cjnInquiryTypeUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="cjnInquiryTypeUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="select*">PROPAGATION_REQUIRED, readOnly</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="cjnInquiryTypeUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryTypeUpdateCommitServiceImpl">
+		<property name="cjnInquiryTypeUpdateCommitDao">
+			<ref bean="cjnInquiryTypeUpdateCommitDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserAvailabilityUpdatePageService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnUserAvailabilityUpdatePageServiceImpl">
+		<property name="cjnInquiryTypeInfoDao">
+			<ref bean="cjnInquiryTypeInfoDao" />
+		</property>
+	</bean>
+
+	<bean id="cjnUserAvailabilityUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="cjnUserAvailabilityUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="select*">PROPAGATION_REQUIRED, readOnly</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException</prop>
+				<prop key="update*">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="cjnUserAvailabilityUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnUserAvailabilityUpdateCommitServiceImpl">
+		<property name="cjnUserAvailabilityUpdateCommitDao">
+			<ref bean="cjnUserAvailabilityUpdateCommitDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnLogOperationSearchService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnLogOperationSearchServiceImpl">
+		<property name="cjnLogOperationSearchDao">
+			<ref bean="cjnLogOperationSearchDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquirySearchDisposeCountService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquirySearchDisposeCountServiceImpl">
+		<property name="cjnInquirySearchDisposeCountDao">
+			<ref bean="cjnInquirySearchDisposeCountDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquirySearchService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquirySearchServiceImpl">
+		<property name="cjnInquirySearchDao">
+			<ref bean="cjnInquirySearchDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquiryInfoService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryInfoServiceImpl">
+		<property name="cjnInquiryInfoDao">
+			<ref bean="cjnInquiryInfoDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquiryStatusUpdatePageService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryStatusUpdatePageServiceImpl">
+		<property name="cjnInquiryStatusUpdatePageDao">
+			<ref bean="cjnInquiryStatusUpdatePageDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquiryStatusUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="cjnInquiryStatusUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="cjnInquiryStatusUpdateCommit">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="cjnInquiryStatusUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryStatusUpdateCommitServiceImpl">
+		<property name="cjnInquiryStatusUpdateCommitDao">
+			<ref bean="cjnInquiryStatusUpdateCommitDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserListService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnUserListServiceImpl">
+		<property name="cjnUserListDao">
+			<ref bean="cjnUserListDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserInfoService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnUserInfoServiceImpl">
+		<property name="cjnUserInfoDao">
+			<ref bean="cjnUserInfoDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquiryInfoReadingLoggingService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryInfoReadingLoggingServiceImpl">
+		<property name="cjnInquiryInfoReadingLoggingDao">
+			<ref bean="cjnInquiryInfoReadingLoggingDao" />
+		</property>
+	</bean>
+
+	<bean id="cjnUserUpdatePageService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnUserUpdatePageServiceImpl">
+		<property name="cjnUserUpdatePageDao">
+			<ref bean="cjnUserUpdatePageDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="cjnUserUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="cjnUserUpdateCommit">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="cjnUserUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnUserUpdateCommitServiceImpl">
+		<property name="cjnUserUpdateCommitDao">
+			<ref bean="cjnUserUpdateCommitDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserAuthorityUpdatePageService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnUserAuthorityUpdatePageServiceImpl">
+		<property name="cjnUserAuthorityUpdatePageDao">
+			<ref bean="cjnUserAuthorityUpdatePageDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnUserAuthorityUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="cjnUserAuthorityUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="update*">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="cjnUserAuthorityUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnUserAuthorityUpdateCommitServiceImpl">
+		<property name="cjnUserAuthorityUpdateCommitDao">
+			<ref bean="cjnUserAuthorityUpdateCommitDao" />
+		</property>
+	</bean>
+	
+	<bean id="cjnInquiryAccessControlService"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.service.impl.CjnInquiryAccessControlServiceImpl">
+		<property name="cjnInquiryAccessControlDao">
+			<ref bean="cjnInquiryAccessControlDao" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+	<formset>
+		<!-- 適用するアクション・フォームBeanを論理名で指定 -->
+
+		<!-- 物件検索画面(店舗管理コードで検索) -->
+		<form name="bukkenCodeSearchForm">
+
+			<!-- 店舗コード -->
+			<field property="shopCd"
+				depends="minlength, maxlength, mask,validwhen">
+				<msg name="minlength" key="WARN.MSG.0013" />
+				<arg name="minlength" key="bukken.shopCd" position="0" />
+				<arg name="minlength" key="${var:minlength}"
+					resource="false" position="1" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>9</var-value>
+				</var>
+				<msg name="maxlength" key="WARN.MSG.0013" />
+				<arg name="maxlength" key="bukken.shopCd" position="0" />
+				<arg name="maxlength" key="${var:maxlength}"
+					resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>9</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0013" />
+				<arg name="mask" key="bukken.shopCd" position="0" />
+				<arg name="mask" key="${var:maxlength}" resource="false"
+					position="1" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z0-9]*$</var-value>
+				</var>
+				<msg name="validwhen" key="WARN.MSG.0001" />
+				<arg name="validwhen" key="bukken.izureka" position="0"/>
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						(((((shopCd != null) or (bkCd != null)) or (bkKanri != null)) or (uketukeCd != null)) or (bkName != null))
+					</var-value>
+				</var>
+			</field>
+
+			<!-- 物件コード -->
+			<field property="bkCd"
+				depends="maxlength, mask">
+				<msg name="maxlength" key="WARN.MSG.0020" />
+				<arg name="maxlength" key="bukken.bkCd" position="0" />
+				<arg name="maxlength" key="${var:maxlength}"
+					resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>15</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0020" />
+				<arg name="mask" key="bukken.bkCd" position="0" />
+				<arg name="mask" key="${var:maxlength}" resource="false"
+					position="1" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9]*$</var-value>
+				</var>
+			</field>
+
+			<!-- 部屋番号 -->
+			<field property="roomNo"
+				depends="maxlength, mask">
+				<msg name="maxlength" key="WARN.MSG.0020" />
+				<arg name="maxlength" key="bukken.roomNo" position="0" />
+				<arg name="maxlength" key="${var:maxlength}"
+					resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>4</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0020" />
+				<arg name="mask" key="bukken.roomNo" position="0" />
+				<arg name="mask" key="${var:maxlength}" resource="false"
+					position="1" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9]*$</var-value>
+				</var>
+			</field>
+
+			<field property="bkKanri" depends="mask">
+	          <msg name="mask" key="WARN.MSG.0036"/>
+	          <arg key="bukken.bukkenAdminCode" position="0"/>
+	          <arg key="bukken.bukkenAdminCode" position="1"/>
+	          <var>
+	            <var-name>mask</var-name>
+	            <var-value>^[a-zA-Z0-9]{9}-[a-zA-Z0-9]{15}-[a-zA-Z0-9]{4}$</var-value>
+	          </var>
+	        </field>
+
+			<field property="bkName" depends="validwhen, scripting">
+				<msg name="validwhen" key="WARN.MSG.0001" />
+				<arg name="validwhen" key="bukken.shopCdAndbkName" position="0"/>
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						((bkName == null) or (shopCd != null))
+					</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+        		<arg name="scripting" key="bukken.bkName" position="0" />
+			</field>
+
+			<field property="roomCd" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+        		<arg name="scripting" key="bukken.roomCd" position="0" />
+			</field>
+
+			<field property="uketukeCd" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+        		<arg name="scripting" key="bukken.inqCd" position="0" />
+			</field>
+
+		</form>
+
+		<!-- 物件検索画面(問い合せ番号で検索) -->
+		<form name="bukkenQueryIdSearchForm">
+
+			<!-- 問い合せ番号 -->
+			<field property="uketukeCd"
+				depends="required, maxlength, scripting">
+				<msg name="required" key="WARN.MSG.0001" />
+				<arg name="required" key="bukken.inqCd" position="0" />
+				<msg name="maxlength" key="WARN.MSG.0007" />
+				<arg name="maxlength" key="bukken.inqCd" position="0" />
+				<arg name="maxlength" key="${var:maxlength}"
+					resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>40</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="bukken.inqCd" position="0" />
+			</field>
+		</form>
+
+	</formset>
+</form-validation>

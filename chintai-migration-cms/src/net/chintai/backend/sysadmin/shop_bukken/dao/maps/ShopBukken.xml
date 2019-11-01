@@ -1,0 +1,4332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="shopBukken">
+
+	<!-- Result Map -->
+	<!-- 店舗検索 -->
+	<resultMap id="shopSearchInfo"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.ShopSearchInfo">
+		<result property="company" column="COMPANY" nullValue=""/>
+		<result property="bumon" column="BUMON" nullValue=""/>
+		<result property="shopCd" column="SHOPCD" nullValue=""/>
+		<result property="password" column="PASSWORD" nullValue=""/>
+		<result property="dantai" column="DANTAI" nullValue=""/>
+		<result property="licTrust" column="LIC_TRUST" nullValue=""/>
+		<result property="groupName" column="GROUPNAME" nullValue=""/>
+		<result property="zip" column="ZIP" nullValue=""/>
+		<result property="address1" column="ADDRESS_1" nullValue=""/>
+		<result property="address2" column="ADDRESS_2" nullValue=""/>
+		<result property="tel" column="TEL" nullValue=""/>
+		<result property="fax" column="FAX" nullValue=""/>
+		<result property="areaCd" column="AREACD" nullValue=""/>
+		<result property="areaName" column="AREANAME" nullValue=""/>
+		<result property="prefCd" column="PREFCD" nullValue=""/>
+		<result property="prefName" column="PREFNAME" nullValue=""/>
+		<result property="cityCd" column="CITYCD" nullValue=""/>
+		<result property="cityName" column="CITYNAME" nullValue=""/>
+		<result property="ensenType" column="ENSENTYPE" nullValue=""/>
+		<result property="ensenCd" column="ENSENCD" nullValue=""/>
+		<result property="ensenName" column="ENSENNAME" nullValue=""/>
+		<result property="ekiCd" column="EKICD" nullValue=""/>
+		<result property="ekiName" column="EKINAME" nullValue=""/>
+		<result property="licNum" column="LIC_NUM" nullValue=""/>
+		<result property="licEntry" column="LIC_ENTRY" nullValue=""/>
+		<result property="licValid" column="LIC_VALID" nullValue=""/>
+		<result property="licChief" column="LIC_CHIEF" nullValue=""/>
+		<result property="tantou" column="TANTOU" nullValue=""/>
+		<result property="hpName" column="HP_NAME_1" nullValue=""/>
+		<result property="hpUrl" column="HP_URL_1" nullValue=""/>
+		<result property="email1" column="EMAIL_1"/>
+		<result property="email2" column="EMAIL_2"/>
+		<result property="email3" column="EMAIL_3"/>
+		<result property="email4" column="EMAIL_4"/>
+		<result property="email5" column="EMAIL_5"/>
+		<result property="fmKbn" column="FM_KBN" nullValue=""/>
+		<result property="lastLoginDt" column="LASTLOGIN_DT" nullValue=""/>
+		<result property="shopUpdDt" column="SR_UPD_DT" nullValue=""/>
+		<result property="certifyFlg" column="CERTIFY_FLG" nullValue=""/>
+		<result property="shopStatus" column="SHOP_STATUS" nullValue=""/>
+		<result property="ctKeisaiFlg" column="CT_KEISAI_FLG"/>
+		<result property="ablKeisaiFlg" column="ABL_KEISAI_FLG"/>
+
+		<result property="ctFlg" column="CT_STATUS"/>
+		<result property="ablFlg" column="ABL_STATUS"/>
+
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE" nullValue=""/>
+		<result property="adminNote" column="ADMIN_NOTE" nullValue=""/>
+		<result property="adminUpdDt" column="ADMIN_UPD_DT" nullValue=""/>
+		<result property="pickUpCnt" column="PICKUP_CNT" nullValue=""/>
+		<result property="aspCnt" column="ASP_CNT" nullValue=""/>
+		<result property="adparkSendFlg" column="ADPARK_SEND_FLG" nullValue=""/>
+		<result property="webLogFlg" column="WEB_LOG_FLG" nullValue=""/>
+		<result property="shopMapPctFlg" column="SHOP_MAP_PCT_FLG" nullValue=""/>
+		<result property="shopPhoto1Flg" column="SHOP_PHOTO_1_FLG" nullValue=""/>
+		<result property="shopPhoto2Flg" column="SHOP_PHOTO_2_FLG" nullValue=""/>
+		<result property="bumonKana" column="BUMONKANA" nullValue=""/>
+		<result property="chintaiBukkenCount" column="CT_BUKKEN_CNT" nullValue="0"/>
+		<result property="ableBukkenCount" column="ABL_BUKKEN_CNT" nullValue="0"/>
+		<result property="updDt" column="SK_UPD_DT" nullValue=""/>
+    	<result column="RENDO_CD" property="rendoCd" jdbcType="VARCHAR"  nullValue=""/>
+    	<result column="RENDO_NAME" property="rendoName" jdbcType="VARCHAR"  nullValue=""/>
+	</resultMap>
+
+	<!-- 登録されている不動産ASP設定情報(エリア)の件数 -->
+	<resultMap id="shopSearchCount" class="java.lang.Integer">
+		<result property="shopSearchCount" column="ROW_COUNT"/>
+	</resultMap>
+
+	<!-- 店舗詳細 -->
+	<resultMap id="shopDetailInfo"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.ShopDetailInfo">
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="dantai" column="DANTAI"/>
+		<result property="licTrust" column="LIC_TRUST"/>
+		<result property="groupName" column="GROUPNAME"/>
+		<result property="zipCd" column="ZIP"/>
+		<result property="address1" column="ADDRESS_1"/>
+		<result property="address2" column="ADDRESS_2"/>
+		<result property="tel" column="TEL"/>
+
+		<!-- 2013/07/25 店舗電話番号変更対応２次リリース分 ３項目追加 -->
+		<result property="shopTelFree" column="SHOP_TEL_FREE" nullValue=""/>
+		<result property="shopTelKbn" column="SHOP_TEL_KBN" nullValue="0"/>
+		<result property="shopTelMagazine" column="SHOP_TEL_MAGAZINE" nullValue=""/>
+		<!-- 2013/7/25 end -->
+
+		<result property="fax" column="FAX"/>
+		<result property="areaCd" column="AREACD"/>
+		<result property="areaName" column="AREANAME"/>
+		<result property="prefCd" column="PREFCD"/>
+		<result property="prefName" column="PREFNAME"/>
+		<result property="cityCd" column="CITYCD"/>
+		<result property="cityName" column="CITYNAME"/>
+		<result property="ensenAreaCd" column="ENSENAREACD" /><!-- 2009/06 李昊燮追加 -->
+		<result property="ensenType" column="ENSENTYPE"/>
+		<result property="ensenCd" column="ENSENCD"/>
+		<result property="ensenName" column="ENSENNAME"/>
+		<result property="ekiCd" column="EKICD"/>
+		<result property="ekiName" column="EKINAME"/>
+		<result property="licNum" column="LIC_NUM"/>
+		<result property="licEntry" column="LIC_ENTRY"/>
+		<result property="licValid" column="LIC_VALID"/>
+		<result property="licChief" column="LIC_CHIEF"/>
+		<result property="tantou" column="TANTOU"/>
+		<result property="hpName" column="HP_NAME_1"/>
+		<result property="hpUrl" column="HP_URL_1"/>
+		<result property="email" column="EMAIL_1"/>
+		<result property="fmKbn" column="FM_KBN"/>
+		<result property="lastLoginDt" column="LASTLOGIN_DT"/>
+		<result property="shopUpdDt" column="SR_UPD_DT"/>
+		<result property="certifyFlg" column="CERTIFY_FLG"/>
+		<result property="shopStatus" column="SHOP_STATUS"/>
+		<result property="ctFlg" column="CT_KEISAI_FLG"/>
+		<result property="ablFlg" column="ABL_KEISAI_FLG"/>
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+		<result property="adminNote" column="ADMIN_NOTE"/>
+		<result property="adminUpdDt" column="ADMIN_UPD_DT"/>
+		<result property="pickUpCnt" column="PICKUP_CNT"/>
+		<result property="aspCnt" column="ASP_CNT"/>
+		<result property="adparkSendFlg" column="ADPARK_SEND_FLG"/>
+		<result property="webLogFlg" column="WEB_LOG_FLG"/>
+		<result property="shopMapPctFlgOrg" column="SHOP_MAP_PCT_FLG"/>
+		<result property="shopPhoto1FlgOrg" column="SHOP_PHOTO_1_FLG"/>
+		<result property="shopPhoto2FlgOrg" column="SHOP_PHOTO_2_FLG"/>
+		<result property="bumonKana" column="BUMONKANA"/>
+		<!-- result property="shopIconDelFlg" column="SHOP_ICON_DEL_FLG" nullValue="0"/ -->
+		<!-- 2009/03/23 李昊燮 「地図上の店舗アイコン表示状態」コメント処理 -->
+		<result property="chintaiBukkenCount" column="CT_BUKKEN_CNT" nullValue="0"/>
+		<result property="ableBukkenCount" column="ABL_BUKKEN_CNT" nullValue="0"/>
+		<result property="updDt" column="SK_UPD_DT" nullValue=""/>
+		<!-- 2009/05/22 李昊燮 追加開始 -->
+		<result property="shopPhoto3FlgOrg" column="SHOP_PHOTO_3_FLG"/>
+		<result property="shopPhoto4FlgOrg" column="SHOP_PHOTO_4_FLG"/>
+		<result property="shopMapPctComment" column="SHOP_MAP_PCT_COMMENT"/>
+		<result property="shopPhoto1Comment" column="SHOP_PHOTO_1_COMMENT"/>
+		<result property="shopPhoto2Comment" column="SHOP_PHOTO_2_COMMENT"/>
+		<result property="shopPhoto3Comment" column="SHOP_PHOTO_3_COMMENT"/>
+		<result property="shopPhoto4Comment" column="SHOP_PHOTO_4_COMMENT"/>
+		<result property="businessHours" column="BUSINESS_HOURS" nullValue=""/>
+		<result property="holiday"       column="HOLIDAY" nullValue=""/>
+		<result property="busyComment"    column="BUSY_COMMENT" nullValue=""/>
+		<!-- 2009/05/22 李昊燮 追加終了 -->
+		<result column="PK_SHOP_RIREKI" property="pkShopRireki" jdbcType="DECIMAL" />
+		<result property="rendoCd" column="RENDO_CD"/>
+		<result property="certifyChkFlg" column="CERTIFY_CHK_FLG"/>
+		<result property="ctShisyaCd" column="CT_SHISYA_CD"/>
+		<result property="inqMngEmail" column="INQ_MNG_EMAIL"/>
+		<result property="noticeEmail" column="NOTICE_EMAIL"/>
+		<result property="locationX" column="LOCATION_X"/>
+		<result property="locationY" column="LOCATION_Y"/>
+		<!-- 2015/12/10 櫻庭哲史 店舗LINE＠ID追加 -->
+		<result property="lineAccount" column="LINE_ACCOUNT"/>
+	</resultMap>
+
+	<!-- 登録状況更新ページへ -->
+	<resultMap id="shopRegistrationStautsUpdatePage"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.ShopRegistrationStauts">
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="certifyFlg" column="CERTIFY_FLG"/>
+		<result property="shopStatus" column="SHOP_STATUS"/>
+		<result property="ctFlg" column="CT_FLG"/>
+		<result property="ablFlg" column="ABL_FLG"/>
+		<result property="clientSystemType" column="CLIENTSYSTEM_TYPE"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="torihikisakiCd" column="TORIHIKISAKI_CD"/>
+		<result property="torihikisakiName" column="TORIHIKISAKI_NAME"/>
+		<result property="fudousanCd" column="FUDOUSAN_CD"/>
+		<result property="fudousanName" column="FUDOUSAN_NAME"/>
+		<result property="adminNote" column="ADMIN_NOTE"/>
+		<result property="bumonKana" column="BUMONKANA"/>
+		<!-- result property="shopIconDelFlg" column="SHOP_ICON_DEL_FLG"/ -->
+		<!-- 2009/03/23 李昊燮 「地図上の店舗アイコン表示状態」コメント処理 -->
+	</resultMap>
+
+	<!-- 不動産ASP設定情報,登録,完了で使用する店舗基本情報用 -->
+	<resultMap id="aspShopInfo"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.AspShopInfo">
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="shopKanriUpdDt" column="UPD_DT"/>
+	</resultMap>
+
+	<!-- 不動産ASP設定で使用するエリアと都道府県用 -->
+	<resultMap id="aspAreaPrefInfo"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.AspAreaPrefInfo">
+		<result property="areaCd" column="AREACD"/>
+		<result property="areaName" column="AREANAME"/>
+		<result property="prefCd" column="PREFCD"/>
+		<result property="prefName" column="PREFNAME"/>
+		<result property="prefCodeName" column="PREFCODENAME"/>
+	</resultMap>
+
+	<!-- 不動産ASP設定で使用する都道府県用 -->
+	<resultMap id="aspPrefInfo"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.AspPrefInfo">
+		<result property="prefCd" column="PREFCD"/>
+		<result property="prefName" column="PREFNAME"/>
+		<result property="sortKey" column="SORT_KEY"/>
+		<result property="updDt" column="UPD_DT"/>
+	</resultMap>
+
+	<!-- 不動産ASP設定を登録された結果 -->
+	<resultMap id="aspInfo" class="net.chintai.backend.sysadmin.shop_bukken.domain.AspInfo">
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="title" column="DISP_COMPANYNM"/>
+		<result property="layout" column="DISP_LAYOUT"/>
+		<result property="selectBoxType" column="BOX_TYPE"/>
+		<result property="templateColor" column="COLORKEY"/>
+		<result property="searchItem1" column="SEARCH_ITEM1"/>
+		<result property="searchItem2" column="SEARCH_ITEM2"/>
+		<result property="logoFlg" column="LOGO_FLG"/>
+		<result property="logoImageType" column="LOGO_TYPE"/>
+		<result property="policyFlg" column="POLICY_FLG"/>
+		<result property="policyUrl" column="POLICY_URL"/>
+		<result property="aspShopStatus" column="ASP_SHOP_STATUS"/>
+		<result property="ensenType1" column="ENSENTYPE_1"/>
+		<result property="ensenType2" column="ENSENTYPE_2"/>
+		<result property="ensenType3" column="ENSENTYPE_3"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="insDt" column="INS_DT" />
+		<result property="aspShopSeq" column="ASP_SHOP_SEQ" />
+		<result property="shopKanriUpdDt" column="SHOP_KANRI_UPD_DT" />
+	</resultMap>
+
+	<!-- 登録されている不動産ASP設定情報(エリア)の件数 -->
+	<resultMap id="aspPrefCount" class="java.lang.Integer">
+		<result property="aspPrefCount" column="ASP_PREF_COUNT"/>
+	</resultMap>
+
+	<!-- 登録されている不動産ASP設定情報(エリア)の最終更新日付 -->
+	<resultMap id="aspPrefUpdDt" class="java.lang.String">
+		<result property="aspPrefUpdDt" column="UPD_DT"/>
+	</resultMap>
+
+	<!-- 契約明細更新画面に遷移 -->
+	<resultMap id="contractNormalUpdatePageMap" class="net.chintai.backend.sysadmin.shop_bukken.domain.ContractNormal">
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="keiyakuName" column="KEIYAKU_NAME"/>
+		<result property="keiyakuComment" column="KEIYAKU_COMMENT"/>
+		<result property="keiyakuCd" column="KEIYAKU_CD"/>
+		<result property="keiyakuFlag" column="KEIYAKU_FLG"/>
+		<result property="keiyakuSubCd" column="KEIYAKU_SUB_CD"/>
+		<result property="shopKanriUpdDt" column="UPD_DT"/>
+	</resultMap>
+
+	<!-- 店舗画像情報 -->
+	<resultMap id="shopImageInfo" class="net.chintai.backend.sysadmin.shop_bukken.domain.ShopImageInfo">
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="shopMapPctFlgOrg" column="SHOP_MAP_PCT_FLG"/>
+		<result property="shopPhoto1FlgOrg" column="SHOP_PHOTO_1_FLG"/>
+		<result property="shopPhoto2FlgOrg" column="SHOP_PHOTO_2_FLG"/>
+		<!-- 2009/06 李昊燮追加開始 -->
+		<result property="shopPhoto3FlgOrg" column="SHOP_PHOTO_3_FLG"/>
+		<result property="shopPhoto4FlgOrg" column="SHOP_PHOTO_4_FLG"/>
+		<result property="shopMapPctComment" column="SHOP_MAP_PCT_COMMENT"/>
+		<result property="shopPhoto1Comment" column="SHOP_PHOTO_1_COMMENT"/>
+		<result property="shopPhoto2Comment" column="SHOP_PHOTO_2_COMMENT"/>
+		<result property="shopPhoto3Comment" column="SHOP_PHOTO_3_COMMENT"/>
+		<result property="shopPhoto4Comment" column="SHOP_PHOTO_4_COMMENT"/>
+		<!-- 2009/06 李昊燮追加終了 -->
+		<result property="updDt" column="UPD_DT"/>
+		<result property="updPg" column="UPD_PG"/>
+		<result property="updId" column="UPD_ID"/>
+	</resultMap>
+
+	<!-- Webログ利用可否画面に遷移 -->
+	<resultMap id="webLogUpdatePageMap" class="net.chintai.backend.sysadmin.shop_bukken.domain.ShopDetailInfo">
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="webLogFlg" column="WEB_LOG_FLG"/>
+		<result property="updDt" column="UPD_DT"/>
+	</resultMap>
+
+	<!-- 物件検索 -->
+	<resultMap id="bukkenListMap" class="net.chintai.backend.sysadmin.shop_bukken.domain.Bukken">
+		<result property="uketukeCd" column="UKETSUKECD"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="bkCd" column="BKCD"/>
+		<result property="roomNo" column="ROOMNO"/>
+		<result property="bkName" column="BKNAME"/>
+		<result property="bkKana" column="BKKANA"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="email1" column="EMAIL_1"/>
+		<result property="email2" column="EMAIL_2"/>
+		<result property="email3" column="EMAIL_3"/>
+		<result property="email4" column="EMAIL_4"/>
+		<result property="email5" column="EMAIL_5"/>
+		<result property="emailUseKbn1" column="EMAIL_USE_KBN_1" />
+		<result property="emailUseKbn2" column="EMAIL_USE_KBN_2" />
+		<result property="emailUseKbn3" column="EMAIL_USE_KBN_3" />
+		<result property="emailUseKbn4" column="EMAIL_USE_KBN_4" />
+		<result property="emailUseKbn5" column="EMAIL_USE_KBN_5" />
+		<result property="bukkenAdminUpdDt" column="ADMIN_UPD_DT"/>
+		<result property="insKbn" column="INS_KBN"/>
+		<result property="insDt" column="INS_DT"/>
+		<result property="pkBukkenRirekiLast" column="PK_BUKKEN_RIREKI_LAST"/>
+		<result property="ctStopDt" column="CT_STOP_DT"/>
+		<result property="ablStopDt" column="ABL_STOP_DT"/>
+		<result property="recSendStatus" column="REC_SEND_STATUS"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="roomKey" column="ROOM_KEY"/>
+	</resultMap>
+
+	<!-- 物件詳細情報 -->
+	<resultMap id="bukkenInfoMap" class="net.chintai.backend.sysadmin.shop_bukken.domain.Bukken">
+		<result property="roomKey" column="ROOM_KEY"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="bkCd" column="BKCD"/>
+		<result property="roomNo" column="ROOMNO"/>
+		<result property="bkName" column="BKNAME"/>
+		<result property="bkKana" column="BKKANA"/>
+		<result property="bukkenAdminUpdDt" column="BUKKEN_ADMIN_UPD_DT"/>
+		<result property="shopAdminUpdDt" column="SHOP_ADMIN_UPD_DT"/>
+		<result property="insKbn" column="INS_KBN"/>
+		<result property="insDt" column="INS_DT"/>
+		<result property="pkBukkenRirekiLast" column="PK_BUKKEN_RIREKI_LAST"/>
+		<result property="ctStartDt" column="CT_START_DT"/>
+		<result property="ablStartDt" column="ABL_START_DT"/>
+		<result property="mappingFlg" column="MAPPING_FLG"/>
+		<result property="locationUpd" column="LOCATION_UPD"/>
+		<result property="ensenName" column="ENSENNAME"/>
+		<result property="ekiName" column="EKINAME"/>
+		<result property="shozaichi" column="SHOZAICHI_DETAIL"/>
+		<result property="ekiToho" column="EKI_TOHO"/>
+		<result property="bus" column="BUS"/>
+		<result property="busTei" column="BUSTEI"/>
+		<result property="busTeiho" column="BUS_TEIHO"/>
+		<result property="car" column="CAR"/>
+		<result property="carKyori" column="CAR_KYORI"/>
+		<result property="chinryo" column="CHINRYO"/>
+		<result property="kanriKin" column="KANRI_KIN"/>
+		<result property="reiKin" column="REI_KIN"/>
+		<result property="shikiKin" column="SHIKI_KIN"/>
+		<result property="hoshoKin" column="HOSHO_KIN"/>
+		<result property="kaiyakuKin" column="KAIYAKU_KIN"/>
+
+		<result property="reiTan" column="REI_TAN"/>
+		<result property="shikiTan" column="SHIKI_TAN"/>
+		<result property="hoshoTan" column="HOSHO_TAN"/>
+		<result property="kaiyakuTan" column="KAIYAKU_TAN"/>
+		<result property="shoukyakuTan" column="SHOUKYAKU_TAN"/>
+		<result property="shoukyakuKin" column="SHOUKYAKU_KIN"/>
+
+		<result property="prefKey" column="PREFKEY"/>
+		<result property="areaCd" column="AREACD"/>
+		<result property="madori" column="MADORI"/>
+		<result property="senMenseki" column="SEN_MENSEKI"/>
+		<result property="shubetsu" column="SHUBETSU"/>
+		<result property="shubetsuCd" column="SHUBETSUCD"/>
+		<result property="kouzou" column="KOUZOU"/>
+		<result property="chikunen" column="CHIKUNEN"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="certifyFlg" column="CERTIFY_FLG"/>
+		<result property="shopStatus" column="SHOP_STATUS"/>
+		<result property="adminNote" column="ADMIN_NOTE"/>
+		<result property="skUpdDt" column="UPD_DT"/>
+		<result property="ctLocationFlg" column="LOCATION_FLG_CT"/>
+		<result property="ablLocationFlg" column="LOCATION_FLG_ABL"/>
+		<result property="insDt" column="INS_DT"/>
+		<result property="heyadomeKbn" column="HEYADOME_KBN"/>
+
+		<result property="ctStopDt" column="CT_STOP_DT"/>
+		<result property="ablStopDt" column="ABL_STOP_DT"/>
+		<result property="recSendStatus" column="REC_SEND_STATUS"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="funcId" column="FUNC_ID"/>
+		<result property="ctEndDtFlg" column="CT_END_DT_FLG"/>
+		<result property="ablEndDtFlg" column="ABL_END_DT_FLG"/>
+		<result property="bkAdr1" column="BK_ADR_1"/>
+		<result property="bkAdr2" column="BK_ADR_2"/>
+		<result property="bkAdr3" column="BK_ADR_3"/>
+		<result property="keiyakuKbn" column="KEIYAKU_KBN"/>
+
+		<result property="ckbShopcd" column="CKB_SHOPCD"/>
+		<result property="akbShopcd" column="AKB_SHOPCD"/>
+
+		<result property="roomKey" column="ROOM_KEY"/>
+		<result property="bukkenKanriLastUpdate" column="BUKKEN_KANRI_LAST_UPDATE"/>
+		<result property="changeSourceKbn" column="CHANGE_SOURCE_KBN"/>
+
+		<result property="ensencd" column="ENSENCD"/>
+		<result property="otherTransName" column="OTHER_TRANS_NAME"/>
+		<result property="otherTransPlatform" column="OTHER_TRANS_PLATFORM"/>
+
+	</resultMap>
+
+	<!-- 物件更新画面に遷移 -->
+	<!-- 物件詳細情報 -->
+	<resultMap id="bukkenUpdateMap" class="net.chintai.backend.sysadmin.shop_bukken.domain.Bukken">
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="bkCd" column="BKCD"/>
+		<result property="roomNo" column="ROOMNO"/>
+		<result property="bkName" column="BKNAME"/>
+		<result property="bkKana" column="BKKANA"/>
+		<result property="bukkenAdminUpdDt" column="ADMIN_UPD_DT"/>
+		<result property="insKbn" column="INS_KBN"/>
+		<result property="insDt" column="INS_DT"/>
+		<result property="pkBukkenRirekiLast" column="PK_BUKKEN_RIREKI_LAST"/>
+		<result property="ctStartDt" column="CT_START_DT"/>
+		<result property="ablStartDt" column="ABL_START_DT"/>
+		<result property="mappingFlg" column="MAPPING_FLG"/>
+		<result property="locationUpd" column="LOCATION_UPD"/>
+		<result property="ensenName" column="ENSENNAME"/>
+		<result property="ekiName" column="EKINAME"/>
+		<result property="shozaichi" column="SHOZAICHI_DETAIL"/>
+		<result property="ekiToho" column="EKI_TOHO"/>
+		<result property="bus" column="BUS"/>
+		<result property="busTei" column="BUSTEI"/>
+		<result property="busTeiho" column="BUS_TEIHO"/>
+		<result property="car" column="CAR"/>
+		<result property="carKyori" column="CAR_KYORI"/>
+		<result property="chinryo" column="CHINRYO"/>
+		<result property="kanriKin" column="KANRI_KIN"/>
+		<result property="reiKin" column="REI_KIN"/>
+		<result property="shikiKin" column="SHIKI_KIN"/>
+		<result property="hoshoKin" column="HOSHO_KIN"/>
+		<result property="kaiyakuKin" column="KAIYAKU_KIN"/>
+
+		<result property="reiTan" column="REI_TAN"/>
+		<result property="shikiTan" column="SHIKI_TAN"/>
+		<result property="hoshoTan" column="HOSHO_TAN"/>
+		<result property="kaiyakuTan" column="KAIYAKU_TAN"/>
+		<result property="shoukyakuTan" column="SHOUKYAKU_TAN"/>
+		<result property="shoukyakuKin" column="SHOUKYAKU_KIN"/>
+
+		<result property="madori" column="MADORI"/>
+		<result property="senMenseki" column="SEN_MENSEKI"/>
+		<result property="shubetsu" column="SHUBETSU"/>
+		<result property="kouzou" column="KOUZOU"/>
+		<result property="chikunen" column="CHIKUNEN"/>
+		<result property="ctLocationFlg" column="LOCATION_FLG_CT"/>
+		<result property="ablLocationFlg" column="LOCATION_FLG_ABL"/>
+		<result property="insDt" column="INS_DT"/>
+		<result property="heyadomeKbn" column="HEYADOME_KBN"/>
+
+		<result property="ctStopDt" column="CT_STOP_DT"/>
+		<result property="ablStopDt" column="ABL_STOP_DT"/>
+		<result property="recSendStatus" column="REC_SEND_STATUS"/>
+		<result property="updDt" column="UPD_DT"/>
+	</resultMap>
+
+	<!-- 不動産ASPグループ店舗 -->
+	<resultMap id="groupShopSearchInfo"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.AspGroupInfo">
+		<result property="groupshopCd" column="SHOPCD"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="email" column="EMAIL_1"/>
+		<result property="licTrust" column="LIC_TRUST"/>
+		<result property="shopTel" column="TEL"/>
+		<result property="shopFax" column="FAX"/>
+		<result property="certifyFlg" column="CERTIFY_FLG"/>
+		<result property="shopStatus" column="SHOP_STATUS"/>
+		<result property="ctFlg" column="CT_FLG" />
+		<result property="ablFlg" column="ABL_FLG"/>
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+		<result property="aspFlg" column="ASP_FLG"/>
+		<result property="adparkSendFlg" column="ADPARK_SEND_FLG"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="aspShopSeq" column="ASP_SHOP_SEQ"/>
+		<result property="rendoName" column="RENDO_NAME"/>
+
+	</resultMap>
+
+	<!-- 不動産ASPグループ店舗登録時 -->
+	<resultMap id="groupShopAddInfo" extends="groupShopSearchInfo"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.AspGroupInfo">
+		<result property="bukkenCnt" column="CT_BUKKEN_CNT" nullValue="0"/>
+	</resultMap>
+
+	<!-- 不動産ASPグループ更新・削除 -->
+	<resultMap id="groupShopUpdate"
+		class="net.chintai.backend.sysadmin.shop_bukken.domain.AspGroupInfo">
+		<result property="groupshopCd" column="SHOPCD"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="shopStatus" column="SHOP_STATUS"/>
+		<result property="aspFlg" column="ASP_FLG"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="aspShopSeq" column="ASP_SHOP_SEQ"/>
+		<result property="shopKanriUpdDt" column="SHOP_KANRI_UPD_DT"/>
+	</resultMap>
+
+	<!-- 免許有効期限切れ一覧検索 -->
+	<resultMap id="licenseExpireShopMap"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.ShopSearchInfo">
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="email1" column="EMAIL_1"/>
+		<result property="email2" column="EMAIL_2"/>
+		<result property="email3" column="EMAIL_3"/>
+		<result property="email4" column="EMAIL_4"/>
+		<result property="email5" column="EMAIL_5"/>
+		<result property="licTrust" column="LIC_TRUST"/>
+		<result property="tel" column="TEL"/>
+		<result property="fax" column="FAX"/>
+		<result property="certifyFlg" column="CERTIFY_FLG"/>
+		<result property="shopStatus" column="SHOP_STATUS"/>
+		<result property="ctKeisaiFlg" column="CT_KEISAI_FLG"/>
+		<result property="ablKeisaiFlg" column="ABL_KEISAI_FLG"/>
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+		<result property="licValid" column="LIC_VALID"/>
+		<result property="rendoName" column="RENDO_NAME" />
+	</resultMap>
+
+	<!-- 名寄せ処理対象外店舗一覧 -->
+	<resultMap id="nayoseSkipShopMap"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.NayoseSkipShopDomain">
+		<result property="shopcd" column="SHOPCD"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="insDt" column="INS_DT"/>
+	</resultMap>
+
+	<!-- 物件詳細 担当店取得 -->
+	<resultMap id="tantouShopListMap"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.TantouShop">
+		<result property="shopcd" column="SHOPCD"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+	</resultMap>
+
+	<!-- 店舗リスティング契約情報 -->
+	<resultMap id="shopListingContract"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.ShopListingInfoDomain">
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="keiyakuCd" column="KEIYAKU_CD"/>
+		<result property="keiyakuSubCd" column="KEIYAKU_SUB_CD"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="password" column="PASSWORD_ENC"/>
+		<result property="keiyakuName" column="KEIYAKU_NAME"/>
+		<result property="keiyakuCommnet" column="KEIYAKU_COMMENT"/>
+		<result property="shopKanriUpdDt" column="UPD_DT"/>
+
+		<!-- <result property="keiyakuFlg" column="KEIYAKU_FLG"/> -->
+		<result property="keiyakuStartDt" column="KEIYAKU_START_DT"/>
+		<result property="keiyakuEndDt" column="KEIYAKU_END_DT"/>
+		<result property="strAmountList" column="KEIYAKU_AMOUNT_VAL_LIST"/>
+		<result property="amountLenth" column="KEIYAKU_AMOUNT_LENGTH"/>
+	</resultMap>
+	<!-- 店舗リスティング詳細 -->
+	<resultMap id="shopListingDetail"
+			class="net.chintai.backend.sysadmin.shop_bukken.domain.ShopListingDetailDomain">
+		<result property="keiyakuNo" column="KEIYAKU_NO"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="keiyakuCd" column="KEIYAKU_CD"/>
+		<result property="keiyakuSubCd" column="KEIYAKU_SUB_CD"/>
+		<result property="keiyakuNote" column="KEIYAKU_NOTE"/>
+		<result property="keiyakuStartDt" column="KEIYAKU_START_DT"/>
+		<result property="keiyakuEndDt" column="KEIYAKU_END_DT"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="reserveKbn" column="RESERVE_KBN"/>
+		<result property="wakuCnt" column="KEIYAKU_AMOUNT"/>
+	</resultMap>
+
+	<!-- 店舗ダウンロード -->
+	<resultMap id="shopDownload"
+			class="net.chintai.backend.sysadmin.shop_bukken.service.bean.ShopDownloadOutServiceBean">
+		<result property="reserveNo" column="RESERVE_NO"/>
+		<result property="reserveKbn" column="RESERVE_KBN"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="prefName" column="PREFNAME"/>
+		<result property="cityName" column="CITYNAME"/>
+		<result property="address1" column="ADDRESS_1"/>
+		<result property="businessHours" column="BUSINESS_HOURS"/>
+		<result property="holiday"       column="HOLIDAY"/>
+		<result property="certifyFlg" column="CERTIFY_FLG"/>
+		<result property="ctStatus" column="CT_STATUS"/>
+		<result property="ablStatus" column="ABL_STATUS"/>
+		<result property="shopStatus" column="SHOP_STATUS"/>
+		<result property="applyDt" column="APPLY_DT"/>
+		<result property="rendoCd" column="RENDO_CD"/>
+	</resultMap>
+
+	<!-- Statements -->
+
+	<!-- 店舗予約ダウンロード -->
+	<select id="selectShopReserveForDownload"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.ShopDownloadInServiceBean"
+			resultMap="shopDownload">
+		SELECT
+			SRS.RESERVE_NO,
+			SRS.RESERVE_KBN,
+			SK.SHOPCD,
+			SR.CLIENTSYSTEM_TYPE,
+			SR.COMPANY,
+			SR.BUMON,
+			MP.PREFNAME,
+			MC.CITYNAME,
+			SR.ADDRESS_1,
+			SRS.APPLY_DT,
+			SRS.BUSINESS_HOURS,
+			SRS.HOLIDAY,
+			SRS.CERTIFY_FLG,
+			SRS.CT_STATUS,
+			SRS.ABL_STATUS,
+			SRS.SHOP_STATUS,
+			SRS.RENDO_CD
+		FROM
+			SHOP_KANRI SK
+			INNER JOIN
+				SHOP_RIREKI SR
+				ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+			INNER JOIN
+				SHOP_RESERVE SRS
+				ON SRS.SHOPCD = SK.SHOPCD
+			LEFT JOIN
+				MST_PREF MP
+				ON MP.PREFCD = SR.PREFCD
+			LEFT JOIN
+				MST_CITY MC
+				ON MC.PREFCD = SR.PREFCD AND MC.CITYCD = SR.CITYCD
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="shopCd">
+			  SK.SHOPCD = #shopCd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="applyFrom">
+				<![CDATA[
+				SRS.APPLY_DT >= #applyFrom#
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="applyTo">
+				<![CDATA[
+				SRS.APPLY_DT <= #applyTo#
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="reserveFrom">
+				<![CDATA[
+				SRS.RESERVE_START_DT >= #reserveFrom#
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="reserveTo">
+				<![CDATA[
+				SRS.RESERVE_START_DT <= #reserveTo#
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="reserveKbn">
+			  SRS.RESERVE_KBN = #reserveKbn#
+			</isNotEmpty>
+      	</dynamic>
+      	ORDER BY SRS.APPLY_DT, SK.SHOPCD, SRS.RESERVE_NO
+	</select>
+
+	<!-- 店舗ダウンロード -->
+	<select id="selectShopForDownload"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.ShopDownloadInServiceBean"
+			resultMap="shopDownload">
+		SELECT
+			NULL AS RESERVE_NO,
+			NULL AS RESERVE_KBN,
+			SK.SHOPCD,
+			SR.CLIENTSYSTEM_TYPE,
+			SR.COMPANY,
+			SR.BUMON,
+			MP.PREFNAME,
+			MC.CITYNAME,
+			SR.ADDRESS_1,
+			NULL AS APPLY_DT,
+			SR.BUSINESS_HOURS,
+			SR.HOLIDAY,
+			SR.CERTIFY_FLG,
+			SR.CT_STATUS,
+			SR.ABL_STATUS,
+			SR.SHOP_STATUS,
+			SR.RENDO_CD
+		FROM
+			SHOP_KANRI SK
+			INNER JOIN
+				SHOP_RIREKI SR
+				ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+			LEFT JOIN
+				MST_PREF MP
+				ON MP.PREFCD = SR.PREFCD
+			LEFT JOIN
+				MST_CITY MC
+				ON MC.PREFCD = SR.PREFCD AND MC.CITYCD = SR.CITYCD
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="shopCd">
+			  SK.SHOPCD = #shopCd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="kaishaMeiBushoMei">
+			  SR.COMPANY || SR.BUMON Like '%' || #kaishaMeiBushoMei# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rendoCd">
+			  SR.RENDO_CD = #rendoCd#
+			</isNotEmpty>
+      	</dynamic>
+      	ORDER BY SR.RENDO_CD, SK.SHOPCD
+	</select>
+
+
+	<!-- 店舗検索の共通 SELECT SQL -->
+	<sql id="shopSearchSelectCommonStatement">
+		select
+			SK.SHOPCD as SHOPCD,
+			SR.PASSWORD_ENC as PASSWORD,
+			SR.COMPANY as COMPANY,
+			SR.BUMON as BUMON,
+			SR.DANTAI as DANTAI,
+			SR.LIC_TRUST as LIC_TRUST,
+			SR.GROUPNAME as GROUPNAME,
+			SR.ZIP as ZIP,
+			SR.ADDRESS_1 as ADDRESS_1,
+			SR.ADDRESS_2 as ADDRESS_2,
+			SR.TEL as TEL,
+			SR.FAX as FAX,
+			SR.AREACD as AREACD,
+			MA.AREANAME as AREANAME,
+			SR.PREFCD as PREFCD,
+			MP.PREFNAME as PREFNAME,
+			SR.CITYCD as CITYCD,
+			MC.CITYNAME as CITYNAME,
+			MES.ENSENTYPE as ENSENTYPE,
+			<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+			MES.ENSENCD as ENSENCD,
+
+			MES.ENSENNAME as ENSENNAME,
+			<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+			MEK.EKICD as EKICD,
+
+			MEK.EKINAME as EKINAME,
+			SR.LIC_NUM as LIC_NUM,
+			SR.LIC_ENTRY as LIC_ENTRY,
+			SR.LIC_VALID as LIC_VALID,
+			SR.LIC_CHIEF as LIC_CHIEF,
+			SR.TANTOU as TANTOU,
+			SR.HP_NAME_1,
+			SR.HP_URL_1,
+			SR.HP_NAME_2,
+			SR.HP_URL_2,
+			SR.HP_NAME_3,
+			SR.HP_URL_3,
+			SR.HP_NAME_4,
+			SR.HP_URL_4,
+			SR.HP_NAME_5,
+			SR.HP_URL_5,
+			SR.EMAIL_1,
+			SR.EMAIL_2,
+			SR.EMAIL_3,
+			SR.EMAIL_4,
+			SR.EMAIL_5,
+			SR.FM_KBN as FM_KBN,
+			null as LASTLOGIN_DT,
+			to_char(SR.UPD_DT, 'yy/mm/dd hh24:mi:ss') as SR_UPD_DT,
+			to_char(SR.UPD_DT, 'yy/mm/dd hh24:mi:ss') as SK_UPD_DT,
+			SR.CERTIFY_FLG as CERTIFY_FLG,
+			SR.SHOP_STATUS as SHOP_STATUS,
+			SK.CT_KEISAI_FLG,
+			SK.ABL_KEISAI_FLG,
+			SR.CLIENTSYSTEM_TYPE as CLIENTSYSTEM_TYPE,
+			null as ADMIN_NOTE,
+			null as ADMIN_UPD_DT,
+			SR.BUMONKANA as BUMONKANA,
+			null as SHOP_ICON_DEL_FLG,
+			'' as PICKUP_CNT, <!-- (select count(*) from SHOP_PICKUP SP where SP.SHOPCD = SR.SHOPCD and DEL_KBN = '0') PICKUP_CNT, -->
+			(select count(*) from ASP_SHOP ASP where ASP.SHOPCD = SR.SHOPCD) ASP_CNT,
+			null as ADPARK_SEND_FLG,
+			null as WEB_LOG_FLG,
+			null as CT_BUKKEN_CNT, <!-- (select BUKKEN_CNT from $chintaiBukkenCountTableName$ where SHOPCD = SR.SHOPCD) CT_BUKKEN_CNT, -->
+			null as ABL_BUKKEN_CNT, <!-- (select BUKKEN_CNT from $ableBukkenCountTableName$ where SHOPCD = SR.SHOPCD) ABL_BUKKEN_CNT, -->
+			null as SHOP_MAP_PCT_FLG,
+			null as SHOP_PHOTO_1_FLG,
+			null as SHOP_PHOTO_2_FLG,
+			MR.RENDO_CD,
+			MR.RENDO_NAME,
+			SR.CT_STATUS,
+			SR.ABL_STATUS
+	</sql>
+
+	<!-- 店舗検索(店舗情報から検索)の共通 FROM SQL -->
+	<sql id="shopSearchFromCommonStatement">
+		FROM
+			SHOP_KANRI SK
+			INNER JOIN
+				SHOP_RIREKI SR
+				ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+			INNER JOIN
+				SHOP_RIREKI_EKI SRE
+				ON SRE.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST and SRE.ENTRY_NO = 1
+			LEFT JOIN
+				MST_AREA MA
+				ON MA.AREACD = SR.AREACD
+			LEFT JOIN
+				MST_PREF MP
+				ON MP.PREFCD = SR.PREFCD
+			LEFT JOIN
+				MST_CITY MC
+				ON MC.PREFCD = SR.PREFCD AND MC.CITYCD = SR.CITYCD
+
+			LEFT JOIN
+				MST_ENSEN MES
+				ON MES.ENSENCD = SRE.ENSENCD
+			LEFT JOIN
+				MST_EKI MEK
+				ON MEK.ENSENCD = SRE.ENSENCD AND MEK.EKICD = SRE.EKICD
+
+			LEFT JOIN
+				MST_RENDO MR
+				ON MR.RENDO_CD = SR.RENDO_CD
+
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="certifyFlg">
+				SR.CERTIFY_FLG = #certifyFlg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="clientSystemType">
+				<isNotEqual property="clientSystemType" compareValue="0">
+					SR.CLIENTSYSTEM_TYPE = #clientSystemType#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="shopTelFax">
+				(
+					SR.TEL LIKE '%'||#shopTelFax#||'%' OR
+					SR.FAX LIKE '%'||#shopTelFax#||'%'
+				)
+			</isNotEmpty>
+			<isNotEmpty	 prepend="AND" property="companyBumonName">
+				<isEqual compareValue="0" property="andOrmode">
+					<iterate property="keywordList" open="(" close=")" conjunction="AND">
+						SR.COMPANY || SR.BUMON LIKE '%'||#keywordList[]#||'%'
+					</iterate>
+				</isEqual>
+				<isEqual compareValue="1" property="andOrmode">
+					<iterate property="keywordList" open="(" close=")" conjunction="OR">
+						SR.COMPANY || SR.BUMON LIKE '%'||#keywordList[]#||'%'
+					</iterate>
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="shopCd">
+				SK.SHOPCD LIKE '%'||#shopCd#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="shopEmail">
+				(
+					SR.EMAIL_1 LIKE '%'||#shopEmail#||'%' or
+					SR.EMAIL_2 LIKE '%'||#shopEmail#||'%' or
+					SR.EMAIL_3 LIKE '%'||#shopEmail#||'%' or
+					SR.EMAIL_4 LIKE '%'||#shopEmail#||'%' or
+					SR.EMAIL_5 LIKE '%'||#shopEmail#||'%'
+				)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="licTrustName">
+				SR.LIC_TRUST LIKE '%'||#licTrustName#||'%'
+			</isNotEmpty>
+
+
+			<isNotEmpty prepend="AND" property="noBukkenShop">
+				NOT EXISTS (
+					SELECT CKB.SHOPCD
+					FROM CT_KEISAI_BUKKEN CKB,BUKKEN_RIREKI_SHOP BRS
+					WHERE BRS.AGENCY_SHOPCD = SK.SHOPCD
+					AND	  CKB.PK_BUKKEN_RIREKI = BRS.PK_BUKKEN_RIREKI
+				)
+				AND
+				NOT EXISTS (
+					SELECT CKB.SHOPCD
+					FROM CT_KEISAI_BUKKEN CKB
+					WHERE CKB.SHOPCD = SK.SHOPCD
+				)
+				AND
+				NOT EXISTS (
+					SELECT CKB.SHOPCD
+					FROM ABL_KEISAI_BUKKEN CKB,BUKKEN_RIREKI_SHOP BRS
+					WHERE BRS.AGENCY_SHOPCD = SK.SHOPCD
+					AND	  CKB.PK_BUKKEN_RIREKI = BRS.PK_BUKKEN_RIREKI
+				)
+				AND
+				NOT EXISTS (
+					SELECT CKB.SHOPCD
+					FROM ABL_KEISAI_BUKKEN CKB
+					WHERE CKB.SHOPCD = SK.SHOPCD
+				)
+			</isNotEmpty>
+
+
+			<isNotEmpty prepend="AND" property="updateFrom">
+				<![CDATA[
+				SK.UPD_DT >= to_date(#updateFrom#,'YYYYMMDDHH24')
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="updateTo">
+				<![CDATA[
+				SK.UPD_DT <= to_date(#updateTo#,'YYYYMMDDHH24')
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="shopStatus">
+				SR.SHOP_STATUS = #shopStatus#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctFlg">
+				SR.CT_STATUS = #ctFlg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ablFlg">
+				SR.ABL_STATUS = #ablFlg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="aspFlg">
+				(SELECT COUNT(*)
+					FROM ASP_SHOP
+					WHERE SHOPCD = SK.SHOPCD
+				) = #aspFlg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="adparkFlg">
+				SR.ADPARK_SEND_FLG = #adparkFlg#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="area">
+				SR.AREACD = #area#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pref">
+				SR.PREFCD = #pref#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="city">
+				SR.CITYCD = #city#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="ensenType">
+				exists (
+					select * from  MST_ENSEN
+					where ENSENTYPE = #ensenType#
+					and	ENSENCD in (
+									select ENSENCD
+									from SHOP_RIREKI_EKI
+									where PK_SHOP_RIREKI = SR.PK_SHOP_RIREKI
+									<isNotEmpty prepend="AND" property="ensen">
+										ENSENCD = #ensen#
+									</isNotEmpty>
+									<isNotEmpty prepend="AND" property="eki">
+										EKICD = #eki#
+									</isNotEmpty>
+									)
+				)
+			</isNotEmpty>
+
+<!--
+契約
+（不動産ASP、アドパーク送信、WEBログ利用、店舗リスティング・・・等）
+ -->
+ 			<iterate property="shopKeiyakusEntries">
+ 				<isNotEmpty property="shopKeiyakusEntries[].value" prepend="and">
+					<isEqual property="shopKeiyakusEntries[].value" compareValue="0">
+	 					not
+	 				</isEqual>
+ 					exists (select * from V_SHOP_KEIYAKU_KANRI where SHOPCD = SK.SHOPCD
+ 							and KEIYAKU_CD = #shopKeiyakusEntries[].key.keiyakuCd#
+ 							and KEIYAKU_SUB_CD = #shopKeiyakusEntries[].key.keiyakuSubCd#
+ 						)
+ 				</isNotEmpty>
+ 			</iterate>
+			<isNotEmpty prepend="AND" property="rendoCd">
+				SR.RENDO_CD = #rendoCd#
+			</isNotEmpty>
+
+		</dynamic>
+	</sql>
+
+	<!-- 有効物件数カウントテーブル名取得PL/SQL -->
+	<select id="chintaiBukkenCountTable" resultClass="java.lang.String">
+		SELECT * /*PKG_COMMON_FUNCTION_CMS.GET_BUKKEN_COUNT_TABLE_NAME*/ FROM DUAL
+	</select>
+	<select id="ableBukkenCountTable" resultClass="java.lang.String">
+		SELECT * /*PKG_COMMON_FUNCTION_CMS.GET_ABL_BUKKEN_COUNT_TAB_NAME*/ FROM DUAL
+	</select>
+
+	<!-- 店舗検索の共通ソートSQL文 -->
+	<sql id="shopSearchCommonOrderByStatement">
+		<isNotEmpty prepend="ORDER BY" property="sortKey">
+			<isEqual property="sortKey" compareValue="1">
+				SK.SHOPCD
+			</isEqual>
+			<isEqual property="sortKey" compareValue="2">
+				SR.COMPANY
+			</isEqual>
+			<isEqual property="sortKey" compareValue="3">
+				SR.BUMON
+			</isEqual>
+			<isEqual property="sortKey" compareValue="4">
+				SR.EMAIL
+			</isEqual>
+			<isEqual property="sortKey" compareValue="5">
+				SR.LIC_TRUST
+			</isEqual>
+			<isEqual property="sortKey" compareValue="6">
+				SR.TEL
+			</isEqual>
+			<isEqual property="sortKey" compareValue="7">
+				SR.FAX
+			</isEqual>
+			<isEqual property="sortKey" compareValue="8">
+				SR.CERTIFY_FLG
+			</isEqual>
+			<isEqual property="sortKey" compareValue="9">
+				SR.SHOP_STATUS
+			</isEqual>
+			<isEqual property="sortKey" compareValue="10">
+				SR.CT_STATUS
+			</isEqual>
+			<isEqual property="sortKey" compareValue="11">
+				SR.ABL_STATUS
+			</isEqual>
+			<isEqual property="sortKey" compareValue="12">
+				SR.CLIENTSYSTEM_TYPE
+			</isEqual>
+			<isEqual property="sortKey" compareValue="13">
+				SR.UPD_DT
+			</isEqual>
+
+			<isEqual property="sortKey" compareValue="100">
+				SR.RENDO_CD
+			</isEqual>
+
+			<isEqual property="orderBy" compareValue="asc">
+				ASC
+			</isEqual>
+			<isEqual property="orderBy" compareValue="desc">
+				DESC
+			</isEqual>
+		</isNotEmpty>
+	</sql>
+
+	<!-- 店舗検索(地域,沿線から検索)の共通 FROM SQL -->
+	<sql id="shopSearchByAreaEnsenFromStatement">
+		FROM
+			SHOP_KANRI SK
+			INNER JOIN
+				SHOP_RIREKI SR
+				ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+			LEFT JOIN
+				MST_AREA MA
+				ON MA.AREACD = SR.AREACD
+			LEFT JOIN
+				MST_PREF MP
+				ON MP.PREFCD = SR.PREFCD
+			LEFT JOIN
+				MST_CITY MC
+				ON MC.PREFCD = SR.PREFCD AND MC.CITYCD = SR.CITYCD
+			LEFT JOIN
+				MST_ENSEN MES
+				<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+				ON MES.ENSENCD = SR.ENSENCD
+			LEFT JOIN
+				MST_EKI MEK
+				<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+				ON MEK.ENSENCD = SR.ENSENCD AND MEK.EKICD = SR.EKICD
+	</sql>
+
+	<!-- 店舗検索(店舗情報から検索) -->
+	<select id="selectShopSearchByShopInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopSearchParamBean"
+			resultMap="shopSearchInfo">
+		<include refid="shopSearchSelectCommonStatement"/>
+		<include refid="shopSearchFromCommonStatement"/>
+		<include refid="shopSearchCommonOrderByStatement"/>
+	</select>
+
+	<!-- 店舗検索(店舗情報から検索)の件数 -->
+	<select id="selectShopSearchByShopInfoCount"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopSearchParamBean"
+			resultMap="shopSearchCount">
+		SELECT
+			COUNT(*) AS ROW_COUNT
+		<include refid="shopSearchFromCommonStatement"/>
+	</select>
+
+	<!-- 店舗検索(地域から検索) -->
+	<select id="selectShopSearchByArea"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopSearchParamBean"
+			resultMap="shopSearchInfo">
+		<include refid="shopSearchSelectCommonStatement"/>
+		<include refid="shopSearchByAreaEnsenFromStatement"/>
+		<dynamic prepend="WHERE">
+			<isNotEqual prepend="AND" property="area" compareValue="null">
+				SR.AREACD = #area#
+			</isNotEqual>
+			<isNotEqual prepend="AND" property="pref" compareValue="null">
+				SR.PREFCD = #pref#
+			</isNotEqual>
+			<isNotEqual prepend="AND" property="city" compareValue="null">
+				SR.CITYCD = #city#
+			</isNotEqual>
+		</dynamic>
+		<include refid="shopSearchCommonOrderByStatement"/>
+	</select>
+
+	<!-- 店舗検索(地域から検索)の件数 -->
+	<select id="selectShopSearchByAreaCount"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopSearchParamBean"
+			resultMap="shopSearchCount">
+		SELECT
+			COUNT(*) AS ROW_COUNT
+		<include refid="shopSearchByAreaEnsenFromStatement"/>
+		<dynamic prepend="WHERE">
+			<isNotEqual prepend="AND" property="area" compareValue="null">
+				SR.AREACD = #area#
+			</isNotEqual>
+			<isNotEqual prepend="AND" property="pref" compareValue="null">
+				SR.PREFCD = #pref#
+			</isNotEqual>
+			<isNotEqual prepend="AND" property="city" compareValue="null">
+				SR.CITYCD = #city#
+			</isNotEqual>
+		</dynamic>
+	</select>
+
+	<!-- 店舗検索(沿線から検索) -->
+	<select id="selectShopSearchByEnsen"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopSearchParamBean"
+			resultMap="shopSearchInfo">
+		<include refid="shopSearchSelectCommonStatement"/>
+		<include refid="shopSearchByAreaEnsenFromStatement"/>
+		<dynamic prepend="WHERE">
+			<isNotEqual prepend="AND" property="area" compareValue="null">
+				SR.AREACD = #area#
+			</isNotEqual>
+			<isNotEmpty prepend="AND" property="ensenType">
+				MES.ENSENTYPE = #ensenType#
+			</isNotEmpty>
+			<isNotEqual prepend="AND" property="ensen" compareValue="null">
+			<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+				SR.ENSENCD = #ensen#
+			</isNotEqual>
+			<isNotEqual prepend="AND" property="eki" compareValue="null">
+			<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+				SR.EKICD = #eki#
+			</isNotEqual>
+		</dynamic>
+		<include refid="shopSearchCommonOrderByStatement"/>
+	</select>
+
+	<!-- 店舗検索(沿線から検索)の件数 -->
+	<select id="selectShopSearchByEnsenCount"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopSearchParamBean"
+			resultMap="shopSearchCount">
+		SELECT
+			COUNT(*) AS ROW_COUNT
+		<include refid="shopSearchByAreaEnsenFromStatement"/>
+			LEFT JOIN
+				MST_ENSEN ME
+				ON ME.ENSENCD = SR.ENSENCD
+		<dynamic prepend="WHERE">
+			<isNotEqual prepend="AND" property="area" compareValue="null">
+				SR.AREACD = #area#
+			</isNotEqual>
+			<isNotEmpty prepend="AND" property="ensenType">
+				ME.ENSENTYPE = #ensenType#
+			</isNotEmpty>
+			<isNotEqual prepend="AND" property="ensen" compareValue="null">
+			<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+				SR.ENSENCD = #ensen#
+			</isNotEqual>
+			<isNotEqual prepend="AND" property="eki" compareValue="null">
+			<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+				SR.EKICD = #eki#
+			</isNotEqual>
+		</dynamic>
+	</select>
+
+	<!-- 店舗詳細 -->
+	<select id="selectShopDetailInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopDetailInfoSearchParamBean"
+			resultMap="shopDetailInfo">
+		select
+			SK.SHOPCD as SHOPCD,
+			SR.PASSWORD_ENC as PASSWORD,
+			SR.COMPANY as COMPANY,
+			SR.BUMON as BUMON,
+			SR.DANTAI as DANTAI,
+			SR.LIC_TRUST as LIC_TRUST,
+			SR.GROUPNAME as GROUPNAME,
+			SR.ZIP as ZIP,
+			SR.ADDRESS_1 as ADDRESS_1,
+			SR.ADDRESS_2 as ADDRESS_2,
+			SR.TEL as TEL,
+
+			<!-- 2013/07/25 店舗電話番号変更対応２次リリース分 ３項目追加 -->
+			null as SHOP_TEL_FREE,
+			null as SHOP_TEL_KBN,
+			null as SHOP_TEL_MAGAZINE,
+			<!-- 2013/7/25 end -->
+
+			SR.FAX as FAX,
+			SR.AREACD as AREACD,
+			MA.AREANAME as AREANAME,
+			SR.PREFCD as PREFCD,
+			MP.PREFNAME as PREFNAME,
+			SR.CITYCD as CITYCD,
+			MC.CITYNAME as CITYNAME,
+			MES.AREACD as ENSENAREACD,<!-- 2009/06 李昊燮追加 -->
+			MES.ENSENTYPE as ENSENTYPE,
+			<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+			MES.ENSENCD as ENSENCD,
+
+			MES.ENSENNAME as ENSENNAME,
+			<!-- 2009.03.13 SHOP_RIREKI → SHOP_KANRI に変更 -->
+			MEK.EKICD as EKICD,
+
+			MEK.EKINAME as EKINAME,
+			SR.LIC_NUM as LIC_NUM,
+			SR.LIC_ENTRY as LIC_ENTRY,
+			SR.LIC_VALID as LIC_VALID,
+			SR.LIC_CHIEF as LIC_CHIEF,
+			SR.TANTOU as TANTOU,
+			SR.HP_NAME_1,
+			SR.HP_URL_1,
+			SR.HP_NAME_2,
+			SR.HP_URL_2,
+			SR.HP_NAME_3,
+			SR.HP_URL_3,
+			SR.HP_NAME_4,
+			SR.HP_URL_4,
+			SR.HP_NAME_5,
+			SR.HP_URL_5,
+			SR.EMAIL_1,
+			SR.EMAIL_2,
+			SR.EMAIL_3,
+			SR.EMAIL_4,
+			SR.EMAIL_5,
+			SR.FM_KBN as FM_KBN,
+			null as LASTLOGIN_DT,
+			to_char(SR.UPD_DT, 'yyyy-mm-dd hh24:mi:ss') as SR_UPD_DT,
+			to_char(SR.UPD_DT, 'yyyy-mm-dd hh24:mi:ss') as SK_UPD_DT,
+			SR.CERTIFY_FLG as CERTIFY_FLG,
+			SR.SHOP_STATUS as SHOP_STATUS,
+			SK.CT_KEISAI_FLG,
+			SK.ABL_KEISAI_FLG,
+			SR.CLIENTSYSTEM_TYPE as CLIENTSYSTEM_TYPE,
+			null as ADMIN_NOTE,
+			to_char(SK.ADMIN_UPD_DT, 'yyyy-mm-dd hh24:mi:ss') as ADMIN_UPD_DT,
+			SR.BUMONKANA as BUMONKANA,
+			null as SHOP_ICON_DEL_FLG,
+			9999 as  PICKUP_CNT,
+			(select count(*) from ASP_SHOP ASP where ASP.SHOPCD = SR.SHOPCD) ASP_CNT,
+			null as ADPARK_SEND_FLG,
+			null as WEB_LOG_FLG,
+			<!--
+			(SELECT count(*) FROM CT_KEISAI_BUKKEN CKB,BUKKEN_RIREKI_SHOP BRS WHERE CKB.SHOPCD = SR.SHOPCD AND CKB.PK_BUKKEN_RIREKI = BRS.PK_BUKKEN_RIREKI) CT_BUKKEN_CNT,
+			(SELECT count(*) FROM ABL_KEISAI_BUKKEN CKB,BUKKEN_RIREKI_SHOP BRS WHERE CKB.SHOPCD = SR.SHOPCD 	AND	  CKB.PK_BUKKEN_RIREKI = BRS.PK_BUKKEN_RIREKI) ABL_BUKKEN_CNT,
+			 -->
+			 null CT_BUKKEN_CNT,
+			 null ABL_BUKKEN_CNT,
+			null as SHOP_MAP_PCT_FLG,
+			null as SHOP_PHOTO_1_FLG,
+			null as SHOP_PHOTO_2_FLG,
+		<!-- 2009/05/22 李昊燮 追加開始 -->
+			null as SHOP_PHOTO_3_FLG,
+			null  as SHOP_PHOTO_4_FLG,
+			null  as SHOP_MAP_PCT_COMMENT,
+			null  as SHOP_PHOTO_1_COMMENT,
+			null  as SHOP_PHOTO_2_COMMENT,
+			null  as SHOP_PHOTO_3_COMMENT,
+			null  as SHOP_PHOTO_4_COMMENT,
+			SR.BUSINESS_HOURS as BUSINESS_HOURS,
+			SR.HOLIDAY as HOLIDAY,
+			null as BUSY_COMMENT,
+			SR.PK_SHOP_RIREKI,
+			MR.RENDO_CD,
+			MR.CERTIFY_CHK_FLG,
+			SR.CT_SHISYA_CD,
+			SR.INQ_MNG_EMAIL,
+			SR.NOTICE_EMAIL,
+			SR.LOCATION_X,
+			SR.LOCATION_Y,
+		<!-- 2015/12/10 櫻庭哲史 店舗LINE＠ID追加 -->
+			SR.LINE_ACCOUNT
+		from
+			SHOP_RIREKI SR
+			inner join SHOP_KANRI SK on SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+			LEFT JOIN
+				SHOP_RIREKI_EKI SRE
+				ON SRE.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST  and SRE.ENTRY_NO = 1
+			left join MST_AREA MA on MA.AREACD = SR.AREACD
+			left join MST_PREF MP on MP.PREFCD = SR.PREFCD
+			left join MST_CITY MC on MC.PREFCD = SR.PREFCD and MC.CITYCD = SR.CITYCD
+			LEFT JOIN
+				MST_ENSEN MES
+				ON MES.ENSENCD = SRE.ENSENCD
+			LEFT JOIN
+				MST_EKI MEK
+				ON MEK.ENSENCD = SRE.ENSENCD AND MEK.EKICD = SRE.EKICD
+			LEFT OUTER JOIN MST_RENDO MR
+				ON	MR.RENDO_CD = SR.RENDO_CD
+		where
+			SK.SHOPCD = #shopCd#
+	</select>
+
+	<!-- 登録状況更新ページへの用データを照会 -->
+	<select id="selectShopRegistrationStatusUpdatePage"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopRegistrationStautsUpdatePageParamBean"
+			resultMap="shopRegistrationStautsUpdatePage">
+		SELECT
+			SR.COMPANY AS COMPANY,
+			SR.BUMON AS BUMON,
+			SR.SHOPCD AS SHOPCD,
+			SR.PASSWORD_ENC AS PASSWORD,
+			SR.CERTIFY_FLG AS CERTIFY_FLG,
+			SR.SHOP_STATUS AS SHOP_STATUS,
+			SR.CT_STATUS as CT_FLG,
+			SR.ABL_STATUS as ABL_FLG,
+			SR.CLIENTSYSTEM_TYPE AS CLIENTSYSTEM_TYPE,
+			TO_CHAR(SK.UPD_DT, 'yyyymmddhh24missFF3') AS UPD_DT,
+			null AS TORIHIKISAKI_SEQ,
+			null AS TORIHIKISAKI_NAME,
+			null AS FUDOUSAN_CD,
+			null AS TORIHIKISAKI_CD,
+			null AS FUDOUSAN_NAME,
+			SR.ADMIN_NOTE AS ADMIN_NOTE,
+			SR.BUMONKANA AS BUMONKANA,
+			null AS SHOP_ICON_DEL_FLG
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+		ON
+			SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+<!--
+		LEFT OUTER JOIN
+			USK_TORIHIKISAKI UT
+		ON
+			UT.SHOPCD = SR.SHOPCD
+			AND UT.DEL_KBN = '0'
+		LEFT OUTER JOIN
+			USK_FUDOUSAN_KAISYA FK
+		ON
+			FK.FUDOUSAN_KAISYA_CD = UT.FUDOUSAN_KAISYA_CD
+			AND FK.DEL_KBN = '0' -->
+		WHERE
+			SK.SHOPCD = #shopCd#
+	</select>
+
+	<!-- 取引先更新処理(1/3-紐付設定処理)(全3件のSQLトランザクション処理) -->
+	<update id="updateShopBindInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.ShopRegistrationStauts">
+		UPDATE
+			USK_TORIHIKISAKI
+		SET
+			SHOPCD = #shopCd#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #updPg#,
+			UPD_ID = #operId#
+		WHERE
+			TORIHIKISAKI_SEQ = #torihikisakiSeq# AND
+            DEL_KBN = '0' AND
+			(SHOPCD IS NULL or SHOPCD = #shopCd#)
+	</update>
+
+	<!-- 取引先更新処理(2/3-旧紐付内容初期化)(全3件のSQLトランザクション処理) -->
+	<update id="updateShopBindInfo2"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.ShopRegistrationStauts">
+		UPDATE
+			USK_TORIHIKISAKI
+		SET
+			SHOPCD = NULL,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #updPg#,
+			UPD_ID = #operId#
+		WHERE
+			SHOPCD = #shopCd# AND
+               DEL_KBN = '0' AND
+			TORIHIKISAKI_SEQ != #torihikisakiSeq#
+	</update>
+
+	<!-- 登録状況更新完了 & 取引先更新処理(3/3-旧紐付内容初期化)(全3件のSQLトランザクション処理) -->
+	<update id="updateShopRegistrationStatus"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.ShopRegistrationStauts">
+		UPDATE
+			SHOP_KANRI
+		SET
+			CERTIFY_FLG = #certifyFlg#,
+			SHOP_STATUS = #shopStatus#,
+			CT_FLG = #ctFlg#,
+			ABL_FLG = #ablFlg#,
+			ADMIN_NOTE = #adminNote#,
+			UPD_DT = SYSTIMESTAMP,
+			ADMIN_UPD_DT = SYSDATE,
+			UPD_ID = #operId#,
+			UPD_PG = #updPg#,
+			BUMONKANA = #bumonKana#
+
+			<!-- 2009/03/23 李昊燮 「地図上の店舗アイコン表示状態」コメント処理
+			<isEqual property="shopIconDelFlg" compareValue="0">
+			,SHOP_ICON_DEL_FLG = NULL
+			</isEqual>
+			<isEqual property="shopIconDelFlg" compareValue="1">
+			,SHOP_ICON_DEL_FLG = #shopIconDelFlg#
+			</isEqual>
+			 -->
+		WHERE
+			SHOPCD = #shopCd#
+			AND
+			TO_CHAR(UPD_DT, 'YYYY-MM-DD HH24:MI:SS') = #updDt#
+	</update>
+
+	<!-- 不動産ASP設定情報,登録,完了で使用する店舗基本情報 -->
+	<select id="selectAspShopInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspShopInfoParamBean"
+			resultMap="aspShopInfo">
+		SELECT
+			SR.COMPANY AS COMPANY,
+			SR.BUMON AS BUMON,
+			SR.SHOPCD AS SHOPCD,
+			<!-- 2014/06 kashiyama mod start -->
+			<!--
+			SR.PASSWORD AS PASSWORD
+			-->
+			TO_CHAR(SK.UPD_DT,'YYYY/MM/DD HH24:MI:SS.ff3') AS UPD_DT,
+			SR.PASSWORD_ENC AS PASSWORD
+			<!-- 2014/06 kashiyama mod end -->
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+		ON
+			SR.SHOPCD = SR.SHOPCD
+		AND
+			PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		WHERE
+			SR.SHOPCD = #shopCd#
+	</select>
+
+	<!-- 不動産ASP設定で使用するエリアと都道府県情報 -->
+	<select id="selectAspAreaPrefInfo"
+			resultMap="aspAreaPrefInfo">
+		SELECT
+			AREA.AREACD AS AREACD,
+			AREA.AREANAME AS AREANAME,
+			PREF.PREFCD AS PREFCD,
+			PREF.PREFNAME AS PREFNAME,
+			'pref' || PREF.PREFCD AS PREFCODENAME
+		FROM
+			(
+				SELECT
+					AREACD,
+					AREANAME,
+					SORT_KEY
+				FROM
+					MST_AREA
+			) AREA
+		INNER JOIN
+			(
+				SELECT
+					AREACD,
+					PREFCD,
+					PREFNAME,
+					SORT_KEY
+				FROM MST_PREF
+			) PREF
+		ON
+			AREA.AREACD = PREF.AREACD
+		ORDER BY
+			AREA.SORT_KEY,
+			PREF.SORT_KEY
+	</select>
+
+	<!-- 不動産ASP設定で使用する都道府県情報 -->
+	<select id="selectAspPrefInfo"
+			resultMap="aspPrefInfo">
+		SELECT
+			PREFCD,
+			PREFNAME,
+			SORT_KEY,
+			to_char(UPD_DT, 'YYYY-MM-DD HH24:MI:SS') AS UPD_DT
+		FROM
+			MST_PREF
+		ORDER BY
+			SORT_KEY
+	</select>
+
+	<!-- 不動産ASP設定で使用する契約情報 -->
+	<select id="selectAspShopContractInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspShopContractInfoParameterBean"
+			resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspContractInfo">
+			SELECT
+				SKK.KEIYAKU_NO AS keiyakuNo,
+				SKK.SHOPCD AS shopCd,
+				MSKK.KEIYAKU_CD AS keiyakuCd,
+				MSKK.KEIYAKU_SUB_CD AS keiyakuSubCd,
+				SKK.KEIYAKU_START_DT AS keiyakuStartDt,
+				SKK.KEIYAKU_END_DT AS keiyakuEndDt,
+				SKK.KEIYAKU_NOTE AS keiyakuNote
+			FROM
+				MST_SHOP_KEIYAKU_KANRI MSKK
+					LEFT JOIN (
+						SELECT
+								KEIYAKU_NO,
+								SHOPCD,
+								KEIYAKU_CD,
+								KEIYAKU_SUB_CD,
+								KEIYAKU_START_DT,
+								KEIYAKU_END_DT,
+								KEIYAKU_NOTE
+							FROM
+								SHOP_KEIYAKU_KANRI SKK
+							WHERE
+								SHOPCD = #shopCd#
+								AND KEIYAKU_CD='00005'
+								AND KEIYAKU_SUB_CD='000'
+								AND TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISS')
+									BETWEEN KEIYAKU_START_DT AND KEIYAKU_END_DT
+					) SKK
+						ON SKK.KEIYAKU_CD = MSKK.KEIYAKU_CD
+						AND SKK.KEIYAKU_SUB_CD = MSKK.KEIYAKU_SUB_CD
+			WHERE
+				MSKK.KEIYAKU_CD='00005'
+			AND
+				MSKK.KEIYAKU_SUB_CD='000'
+
+	</select>
+
+	<!-- 不動産ASP設定の登録 : エリア以外の全部 -->
+	<insert id="insertAspAddCommit"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspInfo">
+		<!-- 2014/06 kashiyama add start -->
+		<!--
+		INSERT INTO ASP_SHOP (
+			SHOPCD,
+			DISP_COMPANYNM,
+			DISP_LAYOUT,
+			COLORKEY,
+			BOX_TYPE,
+			SEARCH_ITEM1,
+			SEARCH_ITEM2,
+			LOGO_FLG,
+			LOGO_TYPE,
+			ENSENTYPE_1,
+			ENSENTYPE_2,
+			ENSENTYPE_3,
+			POLICY_FLG,
+			POLICY_URL,
+			ASP_SHOP_STATUS,
+			UPD_DT,
+			INS_DT
+		) VALUES (
+			#shopCd#,
+			#title#,
+			#layout#,
+			#templateColor#,
+			#selectBoxType#,
+			#searchItem1#,
+			#searchItem2#,
+			#logoFlg#,
+			#logoImageType#,
+			#ensenType1#,
+			#ensenType2#,
+			#ensenType3#,
+			#policyFlg#,
+			#policyUrl#,
+			#aspShopStatus#,
+			SYSTIMESTAMP,
+			SYSTIMESTAMP
+		)
+		-->
+	    <selectKey resultClass="java.lang.Long" keyProperty="aspShopSeq">
+			SELECT SEQ_ASP_SHOP_SEQ.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO ASP_SHOP (
+			SHOPCD,
+			APP_START_DT,
+			ASP_SHOP_SEQ,
+			DISP_COMPANYNM,
+			DISP_LAYOUT,
+			COLORKEY,
+			BOX_TYPE,
+			SEARCH_ITEM1,
+			SEARCH_ITEM2,
+			LOGO_FLG,
+			LOGO_TYPE,
+			ENSENTYPE_1,
+			ENSENTYPE_2,
+			ENSENTYPE_3,
+			POLICY_FLG,
+			POLICY_URL,
+			INS_DT,
+			INS_PG,
+			INS_ID,
+			UPD_DT,
+			UPD_PG,
+			UPD_ID
+		) VALUES (
+			#shopCd#,
+			TO_CHAR(SYSTIMESTAMP,'YYYYMMDDHH24MISS'),
+			#aspShopSeq#,
+			#title#,
+			#layout#,
+			#templateColor#,
+			#selectBoxType#,
+			#searchItem1#,
+			#searchItem2#,
+			#logoFlg#,
+			#logoImageType#,
+			#ensenType1#,
+			#ensenType2#,
+			#ensenType3#,
+			#policyFlg#,
+			#policyUrl#,
+			SYSTIMESTAMP,
+			#insPg#,
+			#insId#,
+			SYSTIMESTAMP,
+			#insPg#,
+			#insId#
+		)
+		<!-- 2014/06 kashiyama mod end -->
+	</insert>
+
+	<!-- 不動産ASP設定の登録 : エリア設定 -->
+	<insert id="insertAspAreaCommit"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspAreaInfo">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		INSERT INTO ASP_PREF (
+			SHOPCD,
+			PREFCD,
+			SORT_KEY,
+			UPD_DT
+		) VALUES (
+			#shopCd#,
+			#prefCd#,
+			#sortKey#,
+			SYSTIMESTAMP
+		)
+		-->
+		INSERT INTO ASP_PREF (
+			ASP_SHOP_SEQ,
+			SHOPCD,
+			PREFCD,
+			SORT_KEY,
+			INS_DT,
+			INS_PG,
+			INS_ID,
+			UPD_DT,
+			UPD_PG,
+			UPD_ID
+		) VALUES (
+			#aspShopSeq#,
+			#shopCd#,
+			#prefCd#,
+			#sortKey#,
+			SYSTIMESTAMP,
+			#insPg#,
+			#insId#,
+			SYSTIMESTAMP,
+			#insPg#,
+			#insId#
+		)
+		<!-- 2014/06 kashiyama mod end -->
+	</insert>
+
+	<!-- 不動産ASP設定の登録 : 契約設定 -->
+	<insert id="insertAspContractCommit"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspContractInfo">
+        <selectKey resultClass="java.lang.Long" keyProperty="keiyakuNo">
+			SELECT SEQ_KEIYAKU_NO.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO SHOP_KEIYAKU_KANRI (
+			KEIYAKU_NO,
+			SHOPCD,
+			KEIYAKU_CD,
+			KEIYAKU_SUB_CD,
+			KEIYAKU_START_DT,
+			KEIYAKU_END_DT,
+			KEIYAKU_NOTE,
+			INS_DT,
+			INS_PG,
+			INS_ID,
+			UPD_DT,
+			UPD_PG,
+			UPD_ID
+		) VALUES (
+			#keiyakuNo#,
+			#shopCd#,
+			#keiyakuCd#,
+			#keiyakuSubCd#,
+			TO_CHAR(SYSTIMESTAMP,'YYYYMMDDHH24MISS'),
+			'99999999999999',
+			null,
+			SYSTIMESTAMP,
+			#insPg#,
+			#insId#,
+			SYSTIMESTAMP,
+			#insPg#,
+			#insId#
+		)
+	</insert>
+
+	<!-- 不動産ASP設定情報画面用, 不動産ASP設定情報登録後画面用 -->
+	<select id="selectAspRegisteredInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspShopInfoParamBean"
+			resultMap="aspInfo">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		SELECT
+			SHOPCD,
+			DISP_COMPANYNM,
+			DISP_LAYOUT,
+			BOX_TYPE,
+			COLORKEY,
+			SEARCH_ITEM1,
+			SEARCH_ITEM2,
+			LOGO_FLG,
+			LOGO_TYPE,
+			POLICY_FLG,
+			POLICY_URL,
+			ASP_SHOP_STATUS,
+			ENSENTYPE_1,
+			ENSENTYPE_2,
+			ENSENTYPE_3,
+			to_char(UPD_DT, 'YYYY-MM-DD HH24:MI:SS') AS UPD_DT,
+			to_char(INS_DT, 'YYYY-MM-DD HH24:MI:SS') AS INS_DT
+		FROM
+			ASP_SHOP
+		WHERE
+			SHOPCD = #shopCd#
+		-->
+		<![CDATA[
+		SELECT
+			SK.SHOPCD,
+			ASS.DISP_COMPANYNM,
+			ASS.DISP_LAYOUT,
+			ASS.BOX_TYPE,
+			ASS.COLORKEY,
+			ASS.SEARCH_ITEM1,
+			ASS.SEARCH_ITEM2,
+			ASS.LOGO_FLG,
+			ASS.LOGO_TYPE,
+			ASS.POLICY_FLG,
+			ASS.POLICY_URL,
+			CASE
+				WHEN VSKD.KEIYAKU_FLG = '1' THEN '1'
+				ELSE '0'
+			END AS ASP_SHOP_STATUS,
+			ASS.ENSENTYPE_1,
+			ASS.ENSENTYPE_2,
+			ASS.ENSENTYPE_3,
+			to_char(ASS.UPD_DT, 'YYYY-MM-DD HH24:MI:SS') AS UPD_DT,
+			TO_CHAR(TO_DATE(VSKD.KEIYAKU_START_DT,'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS') AS INS_DT,
+			TO_CHAR(SK.UPD_DT,'YYYY/MM/DD HH24:MI:SS.ff3') AS SHOP_KANRI_UPD_DT,
+			ASP_SHOP_SEQ
+		FROM
+			SHOP_KANRI SK
+				INNER JOIN SHOP_RIREKI SR
+					ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+				INNER JOIN ASP_SHOP ASS
+					ON ASS.SHOPCD = SK.SHOPCD
+				INNER JOIN V_SHOP_KEIYAKU_DETAIL VSKD
+					ON VSKD.SHOPCD=SK.SHOPCD
+		WHERE
+			ASS.APP_START_DT = (SELECT MAX(APP_START_DT)
+					FROM ASP_SHOP
+					WHERE APP_START_DT <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					AND SHOPCD = SK.SHOPCD)
+		AND
+			VSKD.KEIYAKU_CD='00005'
+		AND
+			VSKD.KEIYAKU_SUB_CD='000'
+		AND
+			SK.SHOPCD = #shopCd#
+		]]>
+		<!-- 2014/06 kashiyama mod end -->
+	</select>
+
+	<!-- 不動産ASP設定情報画面用, 不動産ASP設定情報登録後画面用 -->
+	<select id="selectAspAreaRegisteredInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspShopInfoParamBean"
+			resultMap="aspPrefInfo">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		SELECT
+			AP.PREFCD AS PREFCD,
+			MP.PREFNAME AS PREFNAME,
+			AP.SORT_KEY AS SORT_KEY,
+			to_char(AP.UPD_DT, 'YYYY-MM-DD HH24:MI:SS') AS UPD_DT
+		FROM
+			ASP_PREF AP
+		INNER JOIN
+			MST_PREF MP
+		ON
+			AP.PREFCD =MP.PREFCD
+		WHERE
+			AP.SHOPCD = #shopCd#
+		ORDER BY AP.SORT_KEY
+		-->
+		<![CDATA[
+		SELECT
+			AP.PREFCD AS PREFCD,
+			MP.PREFNAME AS PREFNAME,
+			AP.SORT_KEY AS SORT_KEY,
+			to_char(AP.UPD_DT, 'YYYY-MM-DD HH24:MI:SS') AS UPD_DT
+		FROM
+			ASP_PREF AP
+		INNER JOIN
+			MST_PREF MP
+		ON
+			AP.PREFCD =MP.PREFCD
+		INNER JOIN
+			ASP_SHOP ASS
+		ON
+			ASS.SHOPCD = AP.SHOPCD
+		AND
+			ASS.ASP_SHOP_SEQ = AP.ASP_SHOP_SEQ
+		WHERE
+			ASS.APP_START_DT = (SELECT MAX(APP_START_DT)
+					FROM ASP_SHOP
+					WHERE APP_START_DT <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					AND SHOPCD = AP.SHOPCD )
+		AND AP.SHOPCD = #shopCd#
+		ORDER BY AP.SORT_KEY
+		]]>
+		<!-- 2014/06 kashiyama mod end -->
+	</select>
+
+	<!-- 不動産ASP設定情報を更新 -->
+	<update id="updateAspByShopCd"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspInfo">
+		UPDATE
+			ASP_SHOP
+		SET
+			DISP_COMPANYNM = #title#,
+			DISP_LAYOUT = #layout#,
+			COLORKEY = #templateColor#,
+			BOX_TYPE = #selectBoxType#,
+			SEARCH_ITEM1 = #searchItem1#,
+			SEARCH_ITEM2 = #searchItem2#,
+			LOGO_FLG = #logoFlg#,
+			LOGO_TYPE = #logoImageType#,
+			ENSENTYPE_1 = #ensenType1#,
+			ENSENTYPE_2 = #ensenType2#,
+			ENSENTYPE_3 = #ensenType3#,
+			POLICY_FLG = #policyFlg#,
+			POLICY_URL = #policyUrl#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #insPg#,
+			UPD_ID = #insId#
+		WHERE
+			SHOPCD = #shopCd#
+		AND
+			ASP_SHOP_SEQ = #aspShopSeq#
+	</update>
+
+	<!-- 不動産ASP設定情報のエリア設定を確認 -->
+	<select id="selectAspPrefCountByShopCdPrefCd"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspPrefInfo"
+			resultMap="aspPrefCount">
+		SELECT
+			COUNT(*) AS ASP_PREF_COUNT
+		FROM
+			ASP_PREF
+		WHERE
+			SHOPCD = #shopCd#
+		AND
+			PREFCD = #prefCd#
+		AND
+			ASP_SHOP_SEQ = #aspShopSeq#
+	</select>
+
+	<!-- 不動産ASP設定情報のエリア設定を登録 -->
+	<insert id="insertAspPref"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspPrefInfo">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		INSERT INTO ASP_PREF (
+			SHOPCD,
+			PREFCD,
+			SORT_KEY,
+			UPD_DT
+		) VALUES (
+			#shopCd#,
+			#prefCd#,
+			#sortKey#,
+			SYSTIMESTAMP
+		)
+		-->
+		INSERT INTO ASP_PREF (
+			ASP_SHOP_SEQ,
+			SHOPCD,
+			PREFCD,
+			SORT_KEY,
+			INS_DT,
+			INS_PG,
+			INS_ID,
+			UPD_DT,
+			UPD_PG,
+			UPD_ID
+		) VALUES (
+			#aspShopSeq#,
+			#shopCd#,
+			#prefCd#,
+			#sortKey#,
+			SYSTIMESTAMP,
+			#insPg#,
+			#insId#,
+			SYSTIMESTAMP,
+			#insPg#,
+			#insId#
+		)
+		<!-- 2014/06 kashiyama mod end -->
+	</insert>
+
+	<!-- 不動産ASP設定情報のエリア設定を更新 -->
+	<update id="updateAspPrefByShopCd"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspPrefInfo">
+		UPDATE
+			ASP_PREF
+		SET
+			SORT_KEY = #sortKey#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #insPg#,
+			UPD_ID = #insId#
+		WHERE
+			SHOPCD = #shopCd#
+		AND
+			PREFCD = #prefCd#
+		AND ASP_SHOP_SEQ = #aspShopSeq#
+	</update>
+
+	<!-- 不動産ASP設定情報のエリア設定を更新
+	<select id="selectAspPrefUpdDtByShopCd"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspPrefInfo"
+			resultMap="aspPrefUpdDt">
+		SELECT
+			to_char(UPD_DT, 'YYYY-MM-DD HH24:MI:SS') AS UPD_DT
+		FROM
+			ASP_PREF
+		WHERE
+			SHOPCD = #shopCd#
+		AND
+			PREFCD = #prefCd#
+	</select> -->
+
+	<!-- 不動産ASP設定情報のエリア設定を削除 -->
+	<delete id="deleteAspPrefByShopCdAndPrefCd"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspPrefDeleteCommitParamBean">
+		DELETE FROM ASP_PREF
+		WHERE SHOPCD = #shopCd#
+			AND ASP_SHOP_SEQ = #aspShopSeq#
+			AND
+		<iterate property="prefCd" open=" PREFCD NOT IN ( " close=" ) " conjunction=" , ">
+			#prefCd[]#
+		</iterate>
+	</delete>
+
+	<!-- 2014/06 kashiyama add start -->
+	<!-- 店舗契約管理情報の論理削除-->
+	<update id="updateAspContractCommit"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.AspContractInfo">
+		UPDATE SHOP_KEIYAKU_KANRI SET
+			KEIYAKU_END_DT = TO_CHAR(SYSTIMESTAMP,'YYYYMMDDHH24MISS') - 1
+			,UPD_DT = SYSTIMESTAMP
+			,UPD_PG = #insPg#
+			,UPD_ID = #insId#
+		WHERE KEIYAKU_NO = #keiyakuNo#
+	</update>
+	<!-- 2014/06 kashiyama add end -->
+
+	<!-- 2014/06 kashiyama add start -->
+	<!-- 不動産ASPグループ設定 -->
+	<!-- 不動産ASPグループリスト -->
+	<select id="aspGroupInsertCopypList" parameterClass="java.lang.String"
+		resultClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspGroupAddCommitParamBean">
+		<![CDATA[
+		SELECT
+			AG.ASP_SHOP_SEQ AS aspShopSeq,
+			AG.GROUP_SHOPCD  AS groupshopCd,
+			AG.SHOPCD AS shopCd,
+			AG.ASP_SHOP_STATUS AS shopStatus
+		FROM
+			ASP_GROUP_SHOP AG
+		INNER JOIN
+			ASP_SHOP ASS
+			ON ASS.ASP_SHOP_SEQ =AG.ASP_SHOP_SEQ
+			AND ASS.SHOPCD = AG.SHOPCD
+		WHERE
+			ASS.APP_START_DT = (
+				SELECT MAX(APP_START_DT) FROM ASP_SHOP
+				WHERE APP_START_DT <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				AND SHOPCD = ASS.SHOPCD
+			)
+			AND AG.SHOPCD = #shopCd#
+		]]>
+	</select>
+	<!-- 2014/06 kashiyama add end -->
+
+	<!-- 2014/06 kashiyama add start -->
+	<!-- 不動産ASPグループ設定 -->
+	<!-- 不動産ASPグループリスト -->
+	<select id="aspShopSeq" parameterClass="java.lang.String"
+		resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT
+			ASS.ASP_SHOP_SEQ
+		FROM
+			ASP_SHOP ASS
+		WHERE
+			ASS.APP_START_DT = (SELECT MAX(APP_START_DT)
+					FROM ASP_SHOP
+					WHERE APP_START_DT <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					AND SHOPCD = ASS.SHOPCD)
+		AND ASS.SHOPCD = #shopCd#
+		GROUP BY ASS.ASP_SHOP_SEQ
+		]]>
+	</select>
+	<!-- 2014/06 kashiyama add end -->
+
+
+
+	<!-- 不動産ASPグループ設定 -->
+	<!-- 不動産ASPグループリスト -->
+	<select id="aspGroupShopList" parameterClass="java.lang.String"
+		resultMap="groupShopSearchInfo">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		SELECT
+			SR.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.EMAIL_1,
+			SR.LIC_TRUST,
+			SR.TEL,
+			SR.FAX,
+			SR.CERTIFY_FLG,
+			SR.SHOP_STATUS,
+			SK.CT_KEISAI_FLG,
+			SK.ABL_KEISAI_FLG,
+			SR.CLIENTSYSTEM_TYPE,
+			AGS.ASP_SHOP_STATUS AS ASP_FLG,
+			null ADPARK_SEND_FLG,
+			to_char(AGS.UPD_DT, 'YY/MM/DD HH24:MI:SS') UPD_DT
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+			ON SK.PK_SHOP_RIREKI_LAST=SR.PK_SHOP_RIREKI
+		INNER JOIN
+			ASP_GROUP_SHOP AGS
+			ON AGS.GROUP_SHOPCD = SR.SHOPCD
+		WHERE
+			AGS.SHOPCD = #shopCd#
+		-->
+		<![CDATA[
+		SELECT
+			SR.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.EMAIL_1,
+			SR.LIC_TRUST,
+			SR.TEL,
+			SR.FAX,
+			SR.CERTIFY_FLG,
+			SR.SHOP_STATUS,
+			SK.CT_KEISAI_FLG AS CT_FLG,
+			SK.ABL_KEISAI_FLG AS ABL_FLG,
+			SR.CLIENTSYSTEM_TYPE,
+			AGS.ASP_SHOP_STATUS AS ASP_FLG,
+			null ADPARK_SEND_FLG,
+			to_char(AGS.UPD_DT, 'YY/MM/DD HH24:MI:SS') UPD_DT,
+			ASS.ASP_SHOP_SEQ,
+			MR.RENDO_NAME
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+			ON SK.PK_SHOP_RIREKI_LAST=SR.PK_SHOP_RIREKI
+		INNER JOIN
+			ASP_GROUP_SHOP AGS
+			ON AGS.GROUP_SHOPCD = SR.SHOPCD
+		INNER JOIN
+			ASP_SHOP ASS
+			ON ASS.SHOPCD = AGS.SHOPCD
+			AND ASS.ASP_SHOP_SEQ = AGS.ASP_SHOP_SEQ
+		LEFT JOIN
+			MST_RENDO MR
+			ON MR.RENDO_CD = SR.CLIENTSYSTEM_TYPE
+		INNER JOIN
+			V_SHOP_KEIYAKU_DETAIL VSKD
+			ON VSKD.SHOPCD = ASS.SHOPCD
+		WHERE
+			ASS.APP_START_DT = (SELECT MAX(APP_START_DT)
+					FROM ASP_SHOP
+					WHERE APP_START_DT <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					AND SHOPCD = AGS.SHOPCD)
+		AND
+			VSKD.KEIYAKU_CD='00005'
+		AND
+			VSKD.KEIYAKU_SUB_CD='000'
+		AND
+			AGS.SHOPCD = #shopCd#
+		]]>
+		<!-- 2014/06 kashiyama mod end -->
+	</select>
+
+	<!-- 不動産ASPグループ設定 -->
+	<!-- 不動産ASPグループ照会 -->
+	<select id="selectGroupShopCount"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspGroupSearchParamBean"
+		resultClass="java.lang.Integer">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		SELECT
+			COUNT(GROUP_SHOPCD)
+		FROM
+			ASP_GROUP_SHOP
+		WHERE
+			GROUP_SHOPCD = #groupshopCd#
+			AND
+			SHOPCD = #shopCd#
+		-->
+		<![CDATA[
+		SELECT
+			COUNT(GROUP_SHOPCD)
+		FROM
+			ASP_GROUP_SHOP AGS
+		INNER JOIN
+			ASP_SHOP ASS
+			ON ASS.ASP_SHOP_SEQ = AGS.ASP_SHOP_SEQ
+			AND ASS.SHOPCD = AGS.SHOPCD
+		WHERE
+			ASS.APP_START_DT = (SELECT MAX(APP_START_DT)
+					FROM ASP_SHOP
+					WHERE APP_START_DT <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					AND SHOPCD = ASS.SHOPCD)
+		AND
+			AGS.GROUP_SHOPCD = #groupshopCd#
+		AND
+			AGS.SHOPCD = #shopCd#
+		]]>
+		<!-- 2014/06 kashiyama mod end -->
+	</select>
+
+	<!-- 不動産ASPグループ設定 -->
+	<!-- 不動産ASPグループする登録店舗検索 -->
+	<select id="selectAddAspGroup"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspGroupSearchParamBean"
+		resultMap="groupShopAddInfo">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		SELECT
+			SR.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.EMAIL_1,
+			SR.LIC_TRUST,
+			SR.TEL,
+			SR.FAX,
+			SR.CERTIFY_FLG,
+			SR.SHOP_STATUS,
+			SK.CT_KEISAI_FLG,
+			SK.ABL_KEISAI_FLG,
+			SR.CLIENTSYSTEM_TYPE,
+			(SELECT COUNT(SHOPCD) FROM ASP_SHOP WHERE SR.SHOPCD = SHOPCD) AS ASP_FLG,
+			null ADPARK_SEND_FLG,
+		-->
+			<!--
+			(SELECT BUKKEN_CNT FROM $chintaiBukkenCountTableName$ WHERE SR.SHOPCD = SHOPCD) CT_BUKKEN_CNT,
+			 -->
+		<!--
+			 null as CT_BUKKEN_CNT,
+			SR.UPD_DT
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+		ON	SK.PK_SHOP_RIREKI_LAST=SR.PK_SHOP_RIREKI
+		WHERE
+			SR.SHOPCD = #groupshopCd#
+		-->
+		<![CDATA[
+		SELECT
+			SR.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.EMAIL_1,
+			SR.LIC_TRUST,
+			SR.TEL,
+			SR.FAX,
+			SR.CERTIFY_FLG,
+			SR.SHOP_STATUS,
+			SR.CT_STATUS AS CT_FLG,
+			SR.ABL_STATUS AS ABL_FLG,
+			SR.CLIENTSYSTEM_TYPE,
+			(SELECT COUNT(SHOPCD) FROM ASP_SHOP WHERE SR.SHOPCD = SHOPCD) AS ASP_FLG,
+			null as ADPARK_SEND_FLG,
+			null as CT_BUKKEN_CNT,
+			SR.UPD_DT,
+			null as ASP_SHOP_SEQ,
+			MR.RENDO_NAME AS RENDO_NAME
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+		ON	SK.PK_SHOP_RIREKI_LAST=SR.PK_SHOP_RIREKI
+		LEFT OUTER JOIN MST_RENDO MR
+		ON	MR.RENDO_CD = SR.RENDO_CD
+		WHERE
+			SR.SHOPCD = #groupshopCd#
+		]]>
+		<!-- 2014/06 kashiyama mod end -->
+	</select>
+
+	<!-- 不動産ASPグループ設定 -->
+	<!-- 不動産ASPグループする店舗(編集、削除)検索 -->
+	<select id="selectAspGroupShop"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspGroupSearchParamBean"
+		resultMap="groupShopUpdate">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		SELECT
+			SR.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.SHOP_STATUS,
+			AGS.ASP_SHOP_STATUS AS ASP_FLG,
+			AGS.UPD_DT
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+		ON	SK.PK_SHOP_RIREKI_LAST=SR.PK_SHOP_RIREKI
+		INNER JOIN
+			ASP_GROUP_SHOP AGS
+			ON AGS.GROUP_SHOPCD = SR.SHOPCD
+		WHERE
+			AGS.GROUP_SHOPCD =	#groupshopCd#
+			AND
+			AGS.SHOPCD = #shopCd#
+		-->
+		<![CDATA[
+		SELECT
+			SR.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.SHOP_STATUS,
+			AGS.ASP_SHOP_STATUS AS ASP_FLG,
+			AGS.UPD_DT,
+			TO_CHAR(SK2.UPD_DT,'YYYY/MM/DD HH24:MI:SS.ff3') AS SHOP_KANRI_UPD_DT,
+			ASS.ASP_SHOP_SEQ
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+		ON	SK.PK_SHOP_RIREKI_LAST=SR.PK_SHOP_RIREKI
+		INNER JOIN
+			ASP_GROUP_SHOP AGS
+			ON AGS.GROUP_SHOPCD = SR.SHOPCD
+		INNER JOIN
+			ASP_SHOP ASS
+            ON ASS.SHOPCD = AGS.SHOPCD
+            AND ASS.ASP_SHOP_SEQ = AGS.ASP_SHOP_SEQ
+		 INNER JOIN SHOP_KANRI SK2
+			ON AGS.SHOPCD = SK2.SHOPCD
+		WHERE
+			ASS.APP_START_DT = (SELECT MAX(APP_START_DT)
+					FROM ASP_SHOP
+					WHERE APP_START_DT <= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					AND SHOPCD = AGS.SHOPCD)
+		AND
+			AGS.GROUP_SHOPCD =	#groupshopCd#
+		AND
+			AGS.SHOPCD = #shopCd#
+		]]>
+		<!-- 2014/06 kashiyama mod end -->
+
+	</select>
+
+	<!-- 不動産ASPグループ設定 -->
+	<!-- 不動産ASPグループ登録-->
+	<insert id="aspGroupAddCommit"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspGroupAddCommitParamBean">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		INSERT
+		INTO
+			ASP_GROUP_SHOP
+			(SHOPCD,
+			GROUP_SHOPCD,
+			ASP_SHOP_STATUS,
+			UPD_DT)
+		VALUES
+			(#shopCd#,
+			#groupshopCd#,
+			#aspFlg#,
+			SYSDATE)
+		-->
+		INSERT INTO
+			ASP_GROUP_SHOP(
+				ASP_SHOP_SEQ,
+				GROUP_SHOPCD,
+				SHOPCD,
+				ASP_SHOP_STATUS,
+				INS_DT,
+				INS_PG,
+				INS_ID,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID
+			)
+		VALUES
+			(
+				#aspShopSeq#,
+				#groupshopCd#,
+				#shopCd#,
+				'0',
+				SYSTIMESTAMP,
+				#insPg#,
+				#insId#,
+				SYSTIMESTAMP,
+				#insPg#,
+				#insId#)
+		<!-- 2014/06 kashiyama mod end -->
+	</insert>
+
+	<!-- 不動産ASPグループ設定 -->
+	<!-- 不動産ASPグループ更新 -->
+	<update id="aspGroupUpdateCommit"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspGroupUpdateCommitParamBean">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		UPDATE
+			ASP_GROUP_SHOP
+		SET
+			ASP_SHOP_STATUS = #aspFlg#,
+			UPD_DT = SYSTIMESTAMP
+		WHERE
+			SHOPCD = #shopCd#
+			AND
+			GROUP_SHOPCD = #groupshopCd#
+		-->
+		UPDATE
+			ASP_GROUP_SHOP
+		SET
+			ASP_SHOP_STATUS = #aspFlg#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_ID = #insId#,
+			UPD_PG = #insPg#
+		WHERE
+			SHOPCD = #shopCd#
+		AND
+			GROUP_SHOPCD = #groupshopCd#
+		AND
+			ASP_SHOP_SEQ = #aspShopSeq#
+		<!-- 2014/06 kashiyama mod end -->
+	</update>
+
+	<!-- 不動産ASPグループ設定 -->
+	<!-- 不動産ASPグループ削除 -->
+	<update id="aspGroupDeleteCommit"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.AspGroupDeleteCommitParamBean">
+		<!-- 2014/06 kashiyama mod start -->
+		<!--
+		DELETE
+		FROM
+			ASP_GROUP_SHOP
+		WHERE
+			SHOPCD = #shopCd#
+			AND
+			<iterate property="delShop" open=" GROUP_SHOPCD IN ( " close=" ) " conjunction=" , ">
+				#delShop[]#
+			</iterate>
+		-->
+		DELETE
+		FROM
+			ASP_GROUP_SHOP
+		WHERE
+			SHOPCD = #shopCd#
+		AND
+			ASP_SHOP_SEQ = #aspShopSeq#
+		AND
+			<iterate property="delShop" open=" GROUP_SHOPCD IN ( " close=" ) " conjunction=" , ">
+				#delShop[]#
+			</iterate>
+		<!-- 2014/06 kashiyama mod end -->
+	</update>
+
+	<!-- 店舗画像情報を取得 -->
+	<select id="selectShopImageInfoByShopCd"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopImageInfoSearchParamBean"
+			resultMap="shopImageInfo">
+		SELECT
+			SR.COMPANY AS COMPANY,
+			SR.BUMON AS BUMON,
+			SR.SHOPCD AS SHOPCD,
+			SR.PASSWORD AS PASSWORD,
+			null AS SHOP_MAP_PCT_FLG,
+			null AS SHOP_PHOTO_1_FLG,
+			null AS SHOP_PHOTO_2_FLG,
+			<!-- 2009/06 李昊燮追加開始 -->
+			SR.SHOP_PHOTO_3_FLG,
+			SR.SHOP_PHOTO_4_FLG,
+			SR.SHOP_MAP_PCT_COMMENT,
+			SR.SHOP_PHOTO_1_COMMENT,
+			SR.SHOP_PHOTO_2_COMMENT,
+			SR.SHOP_PHOTO_3_COMMENT,
+			SR.SHOP_PHOTO_4_COMMENT,
+			<!-- 2009/06 李昊燮追加終了 -->
+			TO_CHAR(SR.UPD_DT, 'yyyy-mm-dd hh24:mi:ss') AS UPD_DT,
+			SR.UPD_PG AS UPD_PG,
+			SR.UPD_ID AS UPD_ID
+		FROM
+			SHOP_RIREKI SR
+		INNER JOIN
+			SHOP_KANRI SK
+		ON
+			SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		WHERE
+			SR.SHOPCD = #shopCd#
+	</select>
+
+	<!-- 店舗画像のフラグを更新 -->
+	<update id="updateShopImageFlgUpdateCommit"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.domain.ShopImageInfo">
+		UPDATE
+			SHOP_KANRI
+		SET
+			SHOP_MAP_PCT_FLG = #shopMapPctFlgOrg#,
+			SHOP_PHOTO_1_FLG = #shopPhoto1FlgOrg#,
+			SHOP_PHOTO_2_FLG = #shopPhoto2FlgOrg#,
+			<!-- 2009/06 李昊燮追加開始 -->
+			SHOP_PHOTO_3_FLG = #shopPhoto3FlgOrg#,
+			SHOP_PHOTO_4_FLG = #shopPhoto4FlgOrg#,
+			SHOP_MAP_PCT_COMMENT = #shopMapPctComment#,
+			SHOP_PHOTO_1_COMMENT = #shopPhoto1Comment#,
+			SHOP_PHOTO_2_COMMENT = #shopPhoto2Comment#,
+			SHOP_PHOTO_3_COMMENT = #shopPhoto3Comment#,
+			SHOP_PHOTO_4_COMMENT = #shopPhoto4Comment#,
+			<!-- 2009/06 李昊燮追加終了 -->
+			UPD_DT = SYSTIMESTAMP,
+			ADMIN_UPD_DT = SYSDATE,
+			UPD_ID = #updId#,
+			UPD_PG = #updPg#
+		WHERE
+			SHOPCD = #shopCd#
+		AND
+			UPD_DT = to_date(#updDt#, 'YYYY/MM/DD HH24:MI:SS')
+	</update>
+
+	<!-- 店舗画像の倫理削除処理 2009/06 李昊燮追加 -->
+	<update id="updateShopImageFlg">
+		UPDATE
+			SHOP_KANRI
+		SET
+		<isNotEmpty property="shopMapPctFileDeleteCheck">
+			SHOP_MAP_PCT_FLG = '0',
+		</isNotEmpty>
+		<isNotEmpty property="shopPhoto1FileDeleteCheck">
+			SHOP_PHOTO_1_FLG = '0',
+		</isNotEmpty>
+		<isNotEmpty property="shopPhoto2FileDeleteCheck">
+			SHOP_PHOTO_2_FLG = '0',
+		</isNotEmpty>
+		<isNotEmpty property="shopPhoto3FileDeleteCheck">
+			SHOP_PHOTO_3_FLG = '0',
+		</isNotEmpty>
+		<isNotEmpty property="shopPhoto4FileDeleteCheck">
+			SHOP_PHOTO_4_FLG = '0',
+		</isNotEmpty>
+			ADMIN_UPD_DT = SYSDATE,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_ID = #updId#,
+			UPD_PG = #updPg#
+		WHERE
+			SHOPCD = #shopCd#
+		AND
+			UPD_DT = to_date(#updDt#, 'YYYY/MM/DD HH24:MI:SS')
+	</update>
+
+	<sql id="bukkenCodeSearchSelect">
+		SELECT
+			BK.ROOM_KEY,
+			CASE WHEN BRS.UKETSUKECD IS NOT NULL THEN BRS.UKETSUKECD ELSE BR.UKETSUKECD END AS UKETSUKECD,
+			BK.SHOPCD,
+			BK.BKCD,
+			BK.ROOMNO,
+			BR.BKNAME,
+			BR.BKKANA,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.EMAIL_1,
+			SR.EMAIL_2,
+			SR.EMAIL_3,
+			SR.EMAIL_4,
+			SR.EMAIL_5,
+			SR.EMAIL_USE_KBN_1,
+			SR.EMAIL_USE_KBN_2,
+			SR.EMAIL_USE_KBN_3,
+			SR.EMAIL_USE_KBN_4,
+			SR.EMAIL_USE_KBN_5,
+			to_char(BR.ADMIN_UPD_DT, 'YYYY-MM-DD HH24:MI:SS') as ADMIN_UPD_DT,
+			BR.INS_KBN,
+			to_char(BSK2.INS_DT, 'YYYY-MM-DD HH24:MI:SS') as INS_DT,
+			BK.PK_BUKKEN_RIREKI_LAST,
+			BR.CT_STOP_DT,
+			BR.ABL_STOP_DT,
+			BSK.REC_SEND_STATUS,
+			to_char(BSK.UPD_DT, 'YYYY-MM-DD HH24:MI:SS') as UPD_DT
+		FROM
+			BUKKEN_KANRI BK
+			INNER JOIN BUKKEN_RIREKI BR
+				ON BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST AND
+				   BR.NEW_OLD_KBN = '1'
+			LEFT OUTER JOIN (
+				SELECT * FROM BUKKEN_STATUS_KANRI A
+					WHERE A.PK_BUKKEN_RIREKI =(
+						SELECT MAX(PK_BUKKEN_RIREKI) FROM BUKKEN_STATUS_KANRI
+						WHERE  REC_SEND_STATUS='90' AND
+			 		  		   (CT_FRONT_SEND_RESULT_KBN in ('5','6') OR ABL_FRONT_SEND_RESULT_KBN in ('5','6')) AND
+							   ROOM_KEY = A.ROOM_KEY
+			 			GROUP BY ROOM_KEY
+					)
+			) BSK
+				ON BSK.ROOM_KEY = BK.ROOM_KEY
+			INNER JOIN SHOP_KANRI SK
+				ON SK.SHOPCD = BK.SHOPCD
+			INNER JOIN SHOP_RIREKI SR
+				ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+			LEFT OUTER JOIN BUKKEN_RIREKI_SHOP BRS
+				ON BRS.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST AND
+				   BRS.AGENCY_SHOPCD = BK.SHOPCD
+			LEFT OUTER JOIN BUKKEN_STATUS_KANRI BSK2
+				ON BSK2.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+	</sql>
+
+	<sql id="bukkenCodeSearchWhere">
+		<isNotEmpty prepend="AND" property="bkKanriShopcd">
+				    BK.SHOPCD = #bkKanriShopcd#
+					AND BK.BKCD = #bkKanriBkcd#
+					AND BK.ROOMNO = #bkKanriRoomno#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="bkCd">
+			BK.BKCD   = LPAD(#bkCd#, '15', '0')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roomNo">
+			BK.ROOMNO = LPAD(#roomNo#, '4', '0')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roomCd">
+			BR.ROOMCD = #roomCd#
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="bkName">
+		  <isEqual compareValue="0" property="searchType">
+			(BR.BKNAME LIKE #bkName#||'%' OR BR.BKKANA LIKE #bkName#||'%')
+		  </isEqual>
+		  <isEqual compareValue="1" property="searchType">
+			(BR.BKNAME LIKE '%'||#bkName#||'%' OR BR.BKKANA LIKE '%'||#bkName#||'%')
+		  </isEqual>
+		</isNotEmpty>
+	</sql>
+
+	<select id="bukkenCodeSearchList"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.BukkenCodeSearchParamBean"
+		resultMap="bukkenListMap">
+			(
+		<include refid="bukkenCodeSearchSelect"/>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="shopCd">
+				BK.SHOPCD = #shopCd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="uketukeCd">
+				BR.UKETSUKECD = #uketukeCd#
+			</isNotEmpty>
+			<include refid="bukkenCodeSearchWhere"/>
+		</dynamic>
+			)
+		<dynamic prepend="UNION" open="(" close=")">
+			<isNotEmpty property="shopCdorUketukeCd" >
+				<include refid="bukkenCodeSearchSelect"/>
+				WHERE
+				EXISTS(SELECT 'X' FROM BUKKEN_RIREKI_SHOP BRS2
+                    WHERE BRS2.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+                    <isNotEmpty property="shopCd" >
+                      AND BRS2.AGENCY_SHOPCD = #shopCd#
+                    </isNotEmpty>
+                    <isNotEmpty property="uketukeCd" >
+                      AND BRS2.UKETSUKECD = #uketukeCd#
+                    </isNotEmpty>
+                    )
+                <isNotEmpty property="shopCdorUketukeCd" prepend="AND">
+                	<include refid="bukkenCodeSearchWhere"/>
+                </isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+		<!--
+		<dynamic prepend="UNION" open="(" close=")">
+			<isNotEmpty property="shopCd" >
+				<include refid="bukkenCodeSearchSelect"/>
+				WHERE
+				EXISTS(SELECT 'X' FROM BUKKEN_RIREKI_SHOP BRS2
+                    WHERE BRS2.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+                      AND BRS2.AGENCY_SHOPCD = #shopCd#
+                    )
+                <isNotEmpty property="shopCd" prepend="AND">
+                	<include refid="bukkenCodeSearchWhere"/>
+                </isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="UNION" open="(" close=")">
+			<isNotEmpty property="uketukeCd">
+				<include refid="bukkenCodeSearchSelect"/>
+				WHERE
+				EXISTS(SELECT 'X' FROM BUKKEN_RIREKI_SHOP BRS2
+                    WHERE BRS2.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+                      AND BRS2.UKETSUKECD = #uketukeCd#
+                    )
+                <isNotEmpty property="uketukeCd" prepend="AND">
+                	<include refid="bukkenCodeSearchWhere"/>
+                </isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+		 -->
+		ORDER BY SHOPCD, BKCD, ROOMNO
+	</select>
+
+	<select id="bukkenQueryIdSearchList"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.BukkenQueryIdSearchParamBean"
+		resultMap="bukkenListMap">
+		SELECT
+			BR.UKETSUKECD,
+			BK.SHOPCD,
+			BK.BKCD,
+			BK.ROOMNO,
+			BR.BKNAME,
+			BR.BKKANA,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.EMAIL_1,
+			to_char(BR.ADMIN_UPD_DT, 'YYYY-MM-DD HH24:MI:SS') as ADMIN_UPD_DT,
+			BR.INS_KBN,
+			to_char(BR.INS_DT, 'YYYY-MM-DD HH24:MI:SS') as INS_DT,
+			BK.PK_BUKKEN_RIREKI_LAST
+		FROM
+			SHOP_KANRI SK INNER JOIN BUKKEN_KANRI BK
+			ON SR.SHOPCD = BK.SHOPCD
+			INNER JOIN BUKKEN_RIREKI BR ON BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+			INNER JOIN SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		WHERE
+			BR.UKETSUKECD = #uketukeCd#
+	</select>
+
+
+	<select id="bukkenInfo"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.BukkenInfoParamBean"
+		resultMap="bukkenInfoMap">
+		SELECT
+			BK.ROOM_KEY,
+			BK.SHOPCD,
+			BK.BKCD,
+			BK.ROOMNO,
+			BK.ROOM_KEY,
+			BR.BKNAME,
+			BR.BKKANA,
+			to_char(BR.ADMIN_UPD_DT, 'YYYY-MM-DD HH24:MI:SS') as BUKKEN_ADMIN_UPD_DT,
+			to_char(SK.ADMIN_UPD_DT, 'YYYY-MM-DD HH24:MI:SS') as SHOP_ADMIN_UPD_DT,
+			BR.INS_KBN,
+			to_char(BSK2.INS_DT, 'YYYY-MM-DD HH24:MI:SS') as INS_DT,
+			BK.PK_BUKKEN_RIREKI_LAST,
+			to_char(BR.CT_START_DT, 'YYYY-MM-DD HH24:MI:SS') as CT_START_DT,
+			to_char(BR.ABL_START_DT, 'YYYY-MM-DD HH24:MI:SS') as ABL_START_DT,
+			BR.MAPPING_FLG,
+			null as LOCATION_UPD,
+			BRE.ENSENCD,
+			BRE.OTHER_TRANS_NAME,
+			BRE.OTHER_TRANS_PLATFORM,
+			(SELECT MES.ENSENNAME FROM MST_ENSEN MES WHERE MES.ENSENCD = BRE.ENSENCD) AS ENSENNAME,
+			(SELECT MEK.EKINAME FROM MST_EKI MEK WHERE MEK.EKICD = BRE.EKICD AND MEK.ENSENCD = BRE.ENSENCD) AS EKINAME,
+			BR.SHOZAICHI_DETAIL,
+			BRE.EKI_TOHO,
+			BRE.BUS,
+			BRE.BUSTEI,
+			BRE.BUS_TEIHO,
+			BRE.CAR,
+			BRE.CAR_KYORI,
+			BR.CHINRYO,
+			BR.KANRI_KIN,
+			BR.REI_KIN,
+			BR.SHIKI_KIN,
+			BR.HOSHO_KIN,
+			BR.KAIYAKU_KIN,
+			<!-- 2009/07 単位表示バグ修正　開始 -->
+			BR.REI_TAN,
+			BR.SHIKI_TAN,
+			BR.HOSHO_TAN,
+			BR.KAIYAKU_TAN,
+			BR.SHOUKYAKU_TAN,
+			BR.SHOUKYAKU_KIN,
+			<!-- 2009/07 単位表示バグ修正　終了 -->
+			null as PREFKEY,
+			BR.AREACD,
+			MMD.MADORI || BR.MADORICD_PLUS AS MADORI,
+			BR.SEN_MENSEKI,
+			MSB.SHUBETSU,
+			BR.SHUBETSUCD,
+			MKZ.KOUZOU,
+			BR.CHIKUNEN,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.PASSWORD_ENC as PASSWORD,
+			SR.CERTIFY_FLG,
+			SR.SHOP_STATUS,
+			SR.ADMIN_NOTE,
+			Case
+				When (BR.LOCATION_X Is Not Null And BR.LOCATION_Y Is Not Null)
+				Then '1'
+				Else '0'
+			End LOCATION_FLG_CT,
+			Case
+				When (BR.LOCATION_X Is Not Null And BR.LOCATION_Y Is Not Null)
+				Then '1'
+				Else '0'
+			End LOCATION_FLG_ABL,
+			BR.INS_DT,
+			BR.HEYADOME_KBN,
+			BR.CT_STOP_DT,
+			BR.ABL_STOP_DT,
+			BSK.REC_SEND_STATUS,
+			to_char(BSK.UPD_DT, 'YYYY-MM-DD HH24:MI:SS') as UPD_DT,
+			null as FUNC_ID,
+
+			Case
+			<![CDATA[ When (BR.CT_END_DT < sysdate) ]]> Then 'true'
+				Else 'false'
+				End CT_END_DT_FLG,
+			Case
+			<![CDATA[ When (ABL_END_DT < sysdate) ]]> Then 'true'
+				Else 'false'
+				End ABL_END_DT_FLG,
+			BR.BK_ADR_1,
+			BR.BK_ADR_2,
+			BR.BK_ADR_3,
+			BR.KEIYAKU_KBN,
+			CKB.SHOPCD as CKB_SHOPCD,
+			AKB.SHOPCD as AKB_SHOPCD,
+			TO_CHAR(BK.UPD_DT, 'YYYY-MM-DD HH24:MI:SS.FF3') as BUKKEN_KANRI_LAST_UPDATE,
+			AKB.SHOPCD as AKB_SHOPCD,
+			BR.CHANGE_SOURCE_KBN as CHANGE_SOURCE_KBN
+		FROM
+		BUKKEN_KANRI BK
+		INNER JOIN (BUKKEN_RIREKI BR
+					LEFT JOIN MST_MADORI MMD
+							ON MMD.MADORICD = BR.MADORICD
+					LEFT JOIN MST_SHUBETSU MSB
+							ON MSB.SHUBETSUCD = BR.SHUBETSUCD
+					LEFT JOIN MST_KOUZOU MKZ
+							ON MKZ.KOUZOUCD = BR.KOUZOUCD
+					LEFT JOIN (
+							SELECT * FROM (
+								SELECT BRE.* FROM BUKKEN_RIREKI_EKI BRE
+								INNER JOIN BUKKEN_KANRI BK
+								ON BK.PK_BUKKEN_RIREKI_LAST = BRE.PK_BUKKEN_RIREKI
+								INNER JOIN  BUKKEN_RIREKI BR
+								ON BR.PK_BUKKEN_RIREKI = BRE.PK_BUKKEN_RIREKI
+								WHERE
+											BK.ROOM_KEY = #roomKey#
+								ORDER BY BRE.ENTRY_NO
+								)
+								WHERE ROWNUM=1
+					) BRE
+							ON BRE.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+				)
+			ON BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+		LEFT OUTER JOIN (
+			SELECT * FROM BUKKEN_STATUS_KANRI A
+					WHERE A.PK_BUKKEN_RIREKI =(
+						SELECT MAX(PK_BUKKEN_RIREKI) FROM BUKKEN_STATUS_KANRI
+						WHERE  REC_SEND_STATUS='90' AND
+			 		  		   (CT_FRONT_SEND_RESULT_KBN in ('5','6','7') OR ABL_FRONT_SEND_RESULT_KBN in ('5','6','7')) AND
+							   ROOM_KEY = A.ROOM_KEY
+			 			GROUP BY ROOM_KEY
+					)
+		) BSK
+			ON BSK.ROOM_KEY = BK.ROOM_KEY
+		INNER JOIN SHOP_KANRI SK
+			ON SK.SHOPCD = BK.SHOPCD
+		INNER JOIN SHOP_RIREKI SR
+			ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		LEFT OUTER JOIN CT_KEISAI_BUKKEN CKB
+			ON CKB.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+		LEFT OUTER JOIN ABL_KEISAI_BUKKEN AKB
+			ON AKB.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+		LEFT OUTER JOIN BUKKEN_STATUS_KANRI BSK2
+			ON BSK2.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+		WHERE
+			BK.ROOM_KEY = #roomKey#
+	</select>
+
+	<!-- 物件詳細 担当店取得 -->
+	<select id="tantouShopList" resultMap ="tantouShopListMap" parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.BukkenInfoParamBean">
+		SELECT
+			SK.SHOPCD as SHOPCD,
+			SR.COMPANY as COMPANY,
+			SR.BUMON as BUMON
+		FROM
+		SHOP_KANRI SK
+		INNER JOIN
+		(
+			SELECT BRS.AGENCY_SHOPCD
+			FROM
+			BUKKEN_KANRI BK
+			INNER JOIN BUKKEN_RIREKI BR
+				ON BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+			INNER JOIN BUKKEN_STATUS_KANRI BSK
+				ON BSK.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+			INNER JOIN SHOP_KANRI SK
+				ON SK.SHOPCD = BK.SHOPCD
+			INNER JOIN SHOP_RIREKI SR
+				ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+			LEFT OUTER JOIN BUKKEN_RIREKI_SHOP BRS
+				ON BRS.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+			WHERE
+				BK.ROOM_KEY = #roomKey#
+		)E
+		ON E.AGENCY_SHOPCD = SK.SHOPCD
+		INNER JOIN SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+	</select>
+
+
+
+	<!-- 2014/06 kashiyama add start -->
+	<select id="selectPublishStatusUpdateCheck"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.BukkenPublishStatusUpdateCommitParamBean"
+		resultClass="HashMap">
+		SELECT
+			BR.CHANGE_SOURCE_KBN,
+			BR.CT_STOP_DT,
+			BR.ABL_STOP_DT
+		FROM
+			BUKKEN_KANRI BK
+		JOIN
+			BUKKEN_RIREKI BR
+		ON
+			BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+		WHERE
+			BR.ROOM_KEY = #roomKey#
+		AND
+			TO_CHAR(BK.UPD_DT, 'YYYY-MM-DD HH24:MI:SS.FF3') = #bukkenKanriLastUpdate#
+	</select>
+
+	<select id="selectPkBukkenRireki"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.BukkenPublishStatusUpdateCommitParamBean"
+		resultClass="java.lang.Long">
+		SELECT SEQ_PK_BUKKEN_RIREKI.nextval as pkBukkenRireki FROM DUAL
+	</select>
+	<!-- 2014/06 kashiyama add end -->
+
+	<!-- 2014/06 kashiyama mod start -->
+	<!--
+	<update id="bukkenPublishStatusUpdateCommit"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.BukkenPublishStatusUpdateCommitParamBean">
+		UPDATE
+			BUKKEN_KANRI
+		SET
+			ADMIN_UPD_DT = SYSDATE,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #updPg#,
+			UPD_ID = #operUserId#
+		WHERE
+			SHOPCD = #shopCd# AND
+			BKCD = #bkCd# AND
+			ROOMNO = #roomNo#
+	</update>
+	-->
+	<!-- 物件履歴登録-->
+	<insert id="bukkenPublishStatuRirekiAddCommit"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.BukkenPublishStatusRirekiAddCommitParamBean">
+
+		INSERT INTO BUKKEN_RIREKI_CRE_REQ(
+			PK_BUKKEN_RIREKI,
+			CRE_REQ_SEQ,
+			ROOM_KEY,
+			COMMON_NO,
+			SYORI_REQ_KBN,
+			CRE_REQ_TABLE,
+			CRE_REQ_COL,
+			CRE_REQ_VAL,
+			REQ_KBN,
+			INS_DT,
+			INS_PG,
+			INS_ID,
+			UPD_DT,
+			UPD_PG,
+			UPD_ID
+		) VALUES (
+			#pkBukkenRireki#,
+			#creReqSeq#,
+			#roomKey#,
+			#commonNo#,
+			#syoriReqKbn#,
+			#creReqTable#,
+			#creReqCol#,
+			#creReqVal#,
+			'2',
+			SYSTIMESTAMP,
+			#updPg#,
+			#operUserId#,
+			SYSTIMESTAMP,
+			#updPg#,
+			#operUserId#
+		)
+	</insert>
+
+	<!-- 物件ステータス管理登録-->
+	<insert id="bukkenStatuKanriAddCommit"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.BukkenPublishStatusUpdateCommitParamBean">
+
+		INSERT INTO BUKKEN_STATUS_KANRI(
+			PK_BUKKEN_RIREKI,
+			NEW_OLD_KBN,
+			ROOM_KEY,
+			REC_SEND_STATUS,
+			CT_FRONT_SEND_RESULT_KBN,
+			ABL_FRONT_SEND_RESULT_KBN,
+			BK_BUKKEN_RIREKI,
+			IMG_ID,
+			IMG_BASE_DT,
+			IMG_CHK_DT,
+			INS_DT,
+			INS_PG,
+			INS_ID,
+			UPD_DT,
+			UPD_PG,
+			UPD_ID
+		) VALUES (
+			#pkBukkenRireki#,
+			'1',
+			#roomKey#,
+			'11',
+			'0',
+			'0',
+			null,
+			null,
+			null,
+			null,
+			SYSTIMESTAMP,
+			#updPg#,
+			#operUserId#,
+			SYSTIMESTAMP,
+			#updPg#,
+			#operUserId#
+		)
+	</insert>
+
+
+	<!-- 契約明細設定（数量なし）画面表示 -->
+	<!-- 2014/06 kashiyama add start -->
+	<select id="contractNormalUpdatePage"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractNormalUpdatePageParamBean"
+		resultMap="contractNormalUpdatePageMap">
+		SELECT
+			SK.SHOPCD
+			,SR.COMPANY
+			,SR.BUMON
+			,SR.PASSWORD_ENC AS PASSWORD
+			,VSKD.KEIYAKU_NAME
+			,VSKD.KEIYAKU_COMMENT
+			,VSKD.KEIYAKU_FLG
+			,KEIYAKU_START_DT
+			,KEIYAKU_END_DT
+			,VSKD.KEIYAKU_CD
+			,VSKD.KEIYAKU_SUB_CD
+			,TO_CHAR(SK.UPD_DT,'YYYY/MM/DD HH24:MI:SS.ff3') AS UPD_DT
+		FROM
+		SHOP_KANRI SK INNER JOIN SHOP_RIREKI SR
+			ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		JOIN V_SHOP_KEIYAKU_DETAIL VSKD
+			ON VSKD.SHOPCD = SK.SHOPCD
+		WHERE
+			SK.SHOPCD = #shopCd#
+			AND VSKD.KEIYAKU_CD = #keiyakuCd#
+			AND VSKD.KEIYAKU_SUB_CD = #keiyakuSubCd#
+	</select>
+
+	<!-- 契約明細設定（数量なし）画面表示 -->
+	<update id="contractNormalUpdateCommit"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractNormalUpdateCommitParamBean">
+		UPDATE
+			SHOP_KEIYAKU_KANRI
+		SET
+			KEIYAKU_END_DT = TO_CHAR(SYSTIMESTAMP,'YYYYMMDDHH24MISS') -1,
+			UPD_DT =  SYSTIMESTAMP,
+			UPD_PG = #updPg#,
+			UPD_ID = #operUserId#
+			WHERE
+				KEIYAKU_NO = #keiyakuNo#
+	</update>
+
+	<insert id="contractNormalAddCommit"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractNormalUpdateCommitParamBean">
+		<selectKey resultClass="java.lang.Long" keyProperty="keiyakuNo">
+			SELECT SEQ_KEIYAKU_NO.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO SHOP_KEIYAKU_KANRI (
+			KEIYAKU_NO,
+			SHOPCD,
+			KEIYAKU_CD,
+			KEIYAKU_SUB_CD,
+			KEIYAKU_START_DT,
+			KEIYAKU_END_DT,
+			KEIYAKU_NOTE,
+			INS_DT,
+			INS_PG,
+			INS_ID,
+			UPD_DT,
+			UPD_PG,
+			UPD_ID,
+			RESERVE_KBN
+		) VALUES (
+			#keiyakuNo#,
+			#shopCd#,
+			#keiyakuCd#,
+			#keiyakuSubCd#,
+			TO_CHAR(SYSTIMESTAMP,'YYYYMMDDHH24MISS'),
+			'99999999999999',
+			null,
+			SYSTIMESTAMP,
+			#updPg#,
+			#operUserId#,
+			SYSTIMESTAMP,
+			#updPg#,
+			#operUserId#,
+			'2'
+		)
+	</insert>
+
+	<select id="selectShopContractInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractInfoParameterBean"
+			resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.ContractInfo">
+			SELECT
+				SKK.KEIYAKU_NO AS keiyakuNo,
+				SKK.SHOPCD AS shopCd,
+				MSKK.KEIYAKU_CD AS keiyakuCd,
+				MSKK.KEIYAKU_SUB_CD AS keiyakuSubCd,
+				SKK.KEIYAKU_START_DT AS keiyakuStartDt,
+				SKK.KEIYAKU_END_DT AS keiyakuEndDt,
+				SKK.KEIYAKU_NOTE AS keiyakuNote
+			FROM
+				MST_SHOP_KEIYAKU_KANRI MSKK
+					LEFT JOIN (
+						SELECT
+								KEIYAKU_NO,
+								SHOPCD,
+								KEIYAKU_CD,
+								KEIYAKU_SUB_CD,
+								KEIYAKU_START_DT,
+								KEIYAKU_END_DT,
+								KEIYAKU_NOTE
+							FROM
+								SHOP_KEIYAKU_KANRI SKK
+							WHERE
+								SHOPCD = #shopCd#
+								AND TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISS')
+									BETWEEN KEIYAKU_START_DT AND KEIYAKU_END_DT
+					) SKK
+						ON SKK.KEIYAKU_CD = MSKK.KEIYAKU_CD
+						AND SKK.KEIYAKU_SUB_CD = MSKK.KEIYAKU_SUB_CD
+			WHERE
+				MSKK.KEIYAKU_CD = #keiyakuCd#
+			AND
+				MSKK.KEIYAKU_SUB_CD= #keiyakuSubCd#
+	</select>
+	<!-- 2014/06 kashiyama add end -->
+
+	<select id="webLogUpdatePage"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.WebLogUpdatePageParamBean"
+		resultMap="webLogUpdatePageMap">
+		SELECT
+			SR.COMPANY,
+			SR.BUMON,
+			SR.SHOPCD,
+			SR.PASSWORD,
+			null as WEB_LOG_FLG,
+			TO_CHAR(SR.UPD_DT,'YYYY-MM-DD HH24:MI:SS') UPD_DT
+		FROM
+			SHOP_KANRI SK
+				INNER JOIN SHOP_RIREKI SR
+					ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		WHERE
+			SR.SHOPCD = #shopCd#
+	</select>
+
+	<update id="webLogUpdateCommit"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.WebLogUpdateCommitParamBean">
+		UPDATE
+			SHOP_KANRI
+		SET
+			WEB_LOG_FLG = #webLogFlg#,
+			ADMIN_UPD_DT = SYSDATE,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_ID = #operUserId#,
+			UPD_PG = #updPg#
+		WHERE
+			SHOPCD = #shopCd#
+	</update>
+
+	<!-- 免許有効期限切れ一覧検索 -->
+	<select id="licenseExpireShopList" resultMap="licenseExpireShopMap">
+		<![CDATA[
+		SELECT
+			SK.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.EMAIL_1,
+			SR.EMAIL_2,
+			SR.EMAIL_3,
+			SR.EMAIL_4,
+			SR.EMAIL_5,
+			SR.LIC_TRUST,
+			SR.TEL,
+			SR.FAX,
+			SR.CERTIFY_FLG,
+			SR.SHOP_STATUS,
+			SK.CT_KEISAI_FLG,
+			SK.ABL_KEISAI_FLG,
+			SR.CLIENTSYSTEM_TYPE,
+			TO_CHAR(TO_DATE(LIC_VALID),'YYYY/MM/DD') AS LIC_VALID,
+			MR.RENDO_NAME
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+			ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		LEFT OUTER JOIN
+		    MST_RENDO MR
+		    ON MR.RENDO_CD = SR.RENDO_CD
+		WHERE
+			SR.LIC_VALID < TRUNC(SYSDATE)
+		AND
+			SR.SHOP_STATUS = '1'
+		ORDER BY
+			SR.LIC_VALID, SK.SHOPCD
+		]]>
+	</select>
+
+	<sql id="bukkenRirekiInfo">
+		SELECT
+			to_char(BSK.INS_DT, 'yyyy/mm/dd hh24:mi:ss') AS insDt,
+			BR.INS_KBN AS insKbn,
+			BR.HEYADOME_KBN AS heyadomeKbn,
+			MH.HEYAJOKYO AS heyaJokyo,
+			BR.TORIHIKI AS torihiki,
+			BR.TORIHIKIKEITAI AS torihikiKeitai,
+			BR.LOCATION_X AS locX,
+			BR.LOCATION_Y AS locY,
+			(SELECT COUNT(*) FROM BUKKEN_RIREKI_IMG BRI1
+			  WHERE BRI1.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI AND
+			        BRI1.IMG_KBN IN (SELECT MIK.IMG_KBN FROM MST_IMG_KBN MIK WHERE MIK.SHOP_BUKKEN_KBN = '2' AND MIK.IMG_CATEGORY = '01' AND MIK.DEL_KBN = '0')) AS imgCnt,
+			(SELECT COUNT(*) FROM BUKKEN_RIREKI_IMG BRI1
+			  WHERE BRI1.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI AND
+			        BRI1.IMG_KBN IN (SELECT MIK.IMG_KBN FROM MST_IMG_KBN MIK WHERE MIK.SHOP_BUKKEN_KBN = '2' AND MIK.IMG_CATEGORY != '01' AND MIK.DEL_KBN = '0')) AS allImgCnt,
+			BSK.IMG_BASE_DT AS imgBaseDt,
+			BSK.REC_SEND_STATUS AS recSendStatus,
+			BSK.CT_FRONT_SEND_RESULT_KBN AS ctFrontSendResultKbn,
+			BSK.ABL_FRONT_SEND_RESULT_KBN AS ablFrontSendResultKbn,
+			BR.PK_BUKKEN_RIREKI AS pkBukkenRireki,
+			BR.SHOPCD AS shopcd,
+			BR.BKCD AS bkcd,
+			BR.ROOMNO AS roomno,
+			BR.INS_PG AS brInsPg,
+			BSK.INS_PG AS bskInsPg,
+			BR.UPD_PG AS brUpdPg,
+			BSK.UPD_PG AS bskUpdPg,
+			BR.FORMAT_TYPE_CD AS formatTypeCd,
+			SR.RENDO_CD AS rendoCd,
+			MR.RENDO_NAME AS rendoName
+		FROM BUKKEN_STATUS_KANRI BSK
+		LEFT OUTER JOIN
+			BUKKEN_RIREKI BR ON BR.PK_BUKKEN_RIREKI = BSK.PK_BUKKEN_RIREKI
+		LEFT OUTER JOIN
+			MST_HEYAJOKYO MH ON MH.HEYAJOKYOCD = BR.HEYAJOKYOCD
+		LEFT OUTER JOIN
+			SHOP_KANRI SK ON SK.SHOPCD = BR.SHOPCD
+		LEFT OUTER JOIN
+			SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		LEFT OUTER JOIN
+			MST_RENDO MR ON MR.RENDO_CD = SR.RENDO_CD
+		WHERE
+			BSK.ROOM_KEY = #roomKey#
+		ORDER BY BSK.INS_DT DESC
+	</sql>
+
+	<!-- 入稿履歴一覧情報 2008/05/19 Lee Hosup追加 -->
+	<select id="bukkenRirekiInfo" resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.BukkenRirekiInfo">
+		<include refid="bukkenRirekiInfo"/>
+	</select>
+
+	<select id="bukkenRirekiInfoCsvDownload" resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.BukkenRirekiInfoCsvDownload">
+		<include refid="bukkenRirekiInfo"/>
+	</select>
+
+	<!-- 店舗基本情報更新機能追加対応 2009/05/22 李昊燮追加 -->
+	<select id="selectEnsenInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopBasicInfoUpdateConfirmParamBean"
+			resultClass ="net.chintai.backend.sysadmin.shop_bukken.domain.EnsenInfo">
+		SELECT
+			MA.AREANAME AS ensenAreaName,
+			MEN.ENSENTYPE AS ensenType,
+			MEN.ENSENNAME AS ensenName,
+			ME.EKINAME AS ekiName
+		FROM
+			MST_ENSEN MEN
+		INNER JOIN
+			MST_AREA MA ON MA.AREACD = MEN.AREACD
+		INNER JOIN
+			MST_EKI ME ON ME.ENSENCD = MEN.ENSENCD
+		WHERE
+			MEN.ENSENCD = #ensenCd# AND
+			ME.EKICD = #ekiCd#
+	</select>
+
+	<!-- 店舗基本情報更新機能追加対応 2009/05/22 李昊燮追加 -->
+	<update id="shopBasicInfoUpdate"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopBasicInfoUpdateCommitParamBean">
+		UPDATE
+			SHOP_KANRI
+		SET
+			ZIP               = #zipCd#,
+			ADDRESS_1         = #address1#,
+			ADDRESS_2         = #address2#,
+			TEL               = #tel#,
+
+			<!-- 2013/07/25 店舗電話番号変更対応２次リリース分 ３項目追加 -->
+			SHOP_TEL_FREE     = #shopTelFree#,
+			SHOP_TEL_KBN      = #shopTelKbn#,
+			SHOP_TEL_MAGAZINE = #shopTelMagazine#,
+			<!-- 2013/7/25 end -->
+
+			FAX               = #fax#,
+			ENSENCD           = #ensenCd#,
+			EKICD             = #ekiCd#,
+			LIC_NUM           = #licNum#,
+			EMAIL             = #email#,
+			HP_URL            = #hpUrl#,
+			HP_NAME           = #hpName#,
+			BUSINESS_HOURS    = #businessHours#,
+			HOLIDAY           = #holiday#,
+			BUSY_COMMENT      = #busyComment#,
+			ADMIN_UPD_DT      = SYSDATE,
+			UPD_DT            = SYSTIMESTAMP,
+			UPD_PG            = #updPg#,
+			UPD_ID            = #updId#
+		WHERE
+			SHOPCD = #shopCd# AND
+			TO_CHAR(UPD_DT, 'YYYY-MM-DD HH24:MI:SS') = #updDt#
+	</update>
+
+
+	<!-- 名寄せ店舗対象外一覧　対応 2012/01/28 石井追加 -->
+	<sql id="nayoseSkipShopStatement">
+		FROM
+			CT_NAYOSE_SKIP_SHOP CNSS
+		INNER JOIN
+			SHOP_KANRI SK
+			ON SK.SHOPCD = CNSS.SHOPCD
+		INNER JOIN
+			SHOP_RIREKI SR
+			ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		ORDER BY CNSS.INS_DT DESC
+	</sql>
+
+	<!-- 名寄せ店舗対象外一覧取得 -->
+	<select id="selectNayoseSkipShopList" resultMap ="nayoseSkipShopMap">
+		SELECT
+			SK.SHOPCD as SHOPCD,
+			SR.COMPANY as COMPANY,
+			SR.BUMON as BUMON,
+			to_char(CNSS.INS_DT, 'yyyy/mm/dd hh24:mi:ss') as INS_DT
+
+		<include refid="nayoseSkipShopStatement"/>
+	</select>
+
+	<!-- 名寄せ店舗対象外Count取得 -->
+	<select id="selectNayoseSkipShopCount" resultClass ="java.lang.Integer">
+		SELECT
+			Count(*) as ROW_COUNT
+		<include refid="nayoseSkipShopStatement"/>
+	</select>
+	<!-- 名寄せ店舗対象外一覧　対応 2012/01/28 石井追加 ここまで-->
+
+	<!-- 2014/06 kashiyama add start-->
+	<!-- 物件枠情報検索(共用) -->
+	<select id="selectContractAmountDetail"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractAmountDetailParamBean"
+		resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.ContractAmountDomain">
+	SELECT
+		SKK.KEIYAKU_AMOUNT AS wakuCnt
+		,SKK.KEIYAKU_NO AS keiyakuNo
+		,SKK.SHOPCD AS shopCd
+		,SKK.KEIYAKU_CD AS keiyakuCd
+		,SKK.KEIYAKU_SUB_CD AS keiyakuSubCd
+		,SKK.KEIYAKU_START_DT AS keiyakuStartDt
+		,SKK.KEIYAKU_END_DT AS keiyakuEndDt
+		,TO_CHAR(SKK.UPD_DT,'YYYY/MM/DD HH24:MI:SS') AS updDt
+		,KEIYAKU_NOTE AS keiyakuNote
+		,RESERVE_KBN AS reserveKbn
+	FROM
+		SHOP_KANRI SK
+	JOIN SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+	JOIN SHOP_KEIYAKU_KANRI SKK
+		ON SKK.SHOPCD = SK.SHOPCD
+	JOIN MST_SHOP_KEIYAKU_KANRI MSKK
+		ON MSKK.KEIYAKU_CD = SKK.KEIYAKU_CD
+		AND MSKK.KEIYAKU_SUB_CD = SKK.KEIYAKU_SUB_CD
+	WHERE
+		SKK.SHOPCD = #shopCd#
+	AND SKK.KEIYAKU_CD = #keiyakuCd#
+	AND SKK.KEIYAKU_SUB_CD = #keiyakuSubCd#
+	ORDER BY SKK.KEIYAKU_START_DT DESC
+		<!--
+	SELECT
+		skd.APP_START_DT AS appStartDt,
+		skd.KEIYAKU_AMOUNT AS wakuCnt,
+		TO_CHAR(TO_TIMESTAMP(skd.UPD_DT),'YYYY/MM/DD HH24:MI:SS') AS updDt
+	FROM
+		SHOP_KANRI SK
+	JOIN SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+	JOIN V_SHOP_KEIYAKU_DETAIL VSKD
+		ON SR.SHOPCD = VSKD.SHOPCD
+	JOIN MST_SHOP_KEIYAKU_KANRI MSKK
+		ON VSKD.KEIYAKU_CD = MSKK.KEIYAKU_CD
+		AND VSKD.KEIYAKU_SUB_CD = MSKK.KEIYAKU_SUB_CD
+	JOIN SHOP_KEIYAKU_DETAIL SKD
+		ON SKD.SHOPCD = VSKD.SHOPCD
+		AND SKD.KEIYAKU_CD = VSKD.KEIYAKU_CD
+		AND SKD.KEIYAKU_SUB_CD = VSKD.KEIYAKU_SUB_CD
+	WHERE
+		SK.SHOPCD = #shopCd#
+	AND VSKD.KEIYAKU_CD = #keiyakuCd#
+	AND VSKD.KEIYAKU_SUB_CD = #keiyakuSubCd#
+	ORDER BY skd.APP_START_DT DESC
+		 -->
+	</select>
+
+	<!-- 契約情報検索 -->
+	<select id="selectContractAmountInfo"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractAmountInfoParamBean"
+		resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.ContractAmountInfoDomain">
+	SELECT
+		SK.SHOPCD as shopCd
+		,SR.COMPANY as company
+		,SR.BUMON as bumon
+		,SR.PASSWORD_ENC AS PASSWORD
+		,VSKD.KEIYAKU_NAME as keiyakuName
+		,VSKD.KEIYAKU_COMMENT as keiyakuComment
+		,VSKD.KEIYAKU_FLG as keiyakuFlg
+		,KEIYAKU_START_DT as keiyakuStartDt
+		,KEIYAKU_END_DT as keiyakuEndDt
+		,VSKD.KEIYAKU_CD as keiyakuCd
+		,VSKD.KEIYAKU_SUB_CD as keiyakuSubCd
+		,MSKK.KEIYAKU_AMOUNT_VAL_LIST as strAmountList
+		,MSKK.KEIYAKU_AMOUNT_LENGTH as amountLenth
+		,TO_CHAR(SK.UPD_DT,'YYYY/MM/DD HH24:MI:SS.ff3') as shopKanriUpdDt
+	FROM
+		SHOP_KANRI SK INNER JOIN SHOP_RIREKI SR
+			ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		JOIN V_SHOP_KEIYAKU_DETAIL VSKD
+			ON VSKD.SHOPCD = SK.SHOPCD
+		JOIN MST_SHOP_KEIYAKU_KANRI MSKK
+			ON VSKD.KEIYAKU_CD = MSKK.KEIYAKU_CD
+			AND VSKD.KEIYAKU_SUB_CD = MSKK.KEIYAKU_SUB_CD
+	WHERE
+		SK.SHOPCD = #shopCd#
+		AND VSKD.KEIYAKU_CD = #keiyakuCd#
+		AND VSKD.KEIYAKU_SUB_CD = #keiyakuSubCd#
+	ORDER BY KEIYAKU_START_DT DESC
+	</select>
+
+	<!-- 契約枠設定情報新規登録確認 -->
+	<select id="countApplyYmdh"
+		  parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractAmountAddConfirmParamBean"
+		  resultClass="int">
+	SELECT
+		COUNT(*)
+	FROM
+		SHOP_KEIYAKU_KANRI
+	WHERE
+		SHOPCD = #shopCd#
+	AND
+		KEIYAKU_CD = #keiyakuCd#
+	AND
+		KEIYAKU_SUB_CD = #keiyakuSubCd#
+	AND
+		KEIYAKU_START_DT = #applyYear#||#applyMonth#||#applyDay#||#applyHour#||'0000'
+	AND
+		#applyYear#||#applyMonth#||#applyDay#||#applyHour#||'0000' >= TO_CHAR(SYSTIMESTAMP,'YYYYMMDDHH24')
+		  <!--
+	SELECT
+		COUNT(*)
+	FROM
+		SHOP_KEIYAKU_DETAIL
+	WHERE
+		SHOPCD = #shopCd#
+	AND
+		KEIYAKU_CD = #keiyakuCd#
+	AND
+		KEIYAKU_SUB_CD = #keiyakuSubCd#
+	AND
+		APP_START_DT = #applyYear#||#applyMonth#||#applyDay#||#applyHour#||'0000'
+	AND
+		#applyYear#||#applyMonth#||#applyDay#||#applyHour#||'0000' >= TO_CHAR(SYSTIMESTAMP,'YYYYMMDDHH24')
+		 -->
+	</select>
+
+	<!-- 契約詳細情報登録 -->
+	<insert id="insertContractAmount"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractAmountAddCommitParamBean">
+		<selectKey resultClass="java.lang.String" keyProperty="keiyakuNo">
+			SELECT SEQ_KEIYAKU_NO.nextval FROM DUAL
+		</selectKey>
+	INSERT INTO SHOP_KEIYAKU_KANRI (
+		KEIYAKU_NO,
+		SHOPCD,
+		KEIYAKU_CD,
+		KEIYAKU_SUB_CD,
+		KEIYAKU_START_DT,
+		KEIYAKU_END_DT,
+		KEIYAKU_NOTE,
+		INS_DT,
+		INS_PG,
+		INS_ID,
+		UPD_DT,
+		UPD_PG,
+		UPD_ID,
+		RESERVE_KBN
+	) VALUES (
+		#keiyakuNo#,
+		#shopCd#,
+		#keiyakuCd#,
+		#keiyakuSubCd#,
+		TO_CHAR(SYSTIMESTAMP,'YYYYMMDDHH24') || '0000',
+		'99999999999999',
+		null,
+		SYSTIMESTAMP,
+		#pgName#,
+		#userId#,
+		SYSTIMESTAMP,
+		#pgName#,
+		#userId#,
+		'2'
+	)
+	</insert>
+
+	<!-- 契約詳細情報登録 -->
+	<insert id="insertContractAmountDetail"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractAmountAddCommitParamBean">
+		<selectKey resultClass="java.lang.String" keyProperty="keiyakuNo">
+			SELECT SEQ_KEIYAKU_NO.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO SHOP_KEIYAKU_KANRI(
+			KEIYAKU_NO
+			,SHOPCD
+			,KEIYAKU_CD
+			,KEIYAKU_SUB_CD
+			,KEIYAKU_START_DT
+			,KEIYAKU_END_DT
+			,KEIYAKU_AMOUNT
+			,KEIYAKU_NOTE
+			,INS_DT
+			,INS_PG
+			,INS_ID
+			,UPD_DT
+			,UPD_PG
+			,UPD_ID
+			,RESERVE_KBN
+		) VALUES (
+			#keiyakuNo#
+			,#shopCd#
+			,#keiyakuCd#
+			,#keiyakuSubCd#
+			,#keiyakuStartDt#
+			,#keiyakuEndDt#
+			<isNotEqual property="wakuCnt" compareValue="-1">
+			,#wakuCnt#
+			</isNotEqual>
+			<isEqual property="wakuCnt" compareValue="-1">
+			,#wakuCntNote#
+			</isEqual>
+			,#keiyakuNote#
+			,SYSTIMESTAMP
+			,#pgName#
+			,#userId#
+			,SYSTIMESTAMP
+			,#pgName#
+			,#userId#
+			,'2'
+		)
+
+			<!--
+	INSERT INTO
+		SHOP_KEIYAKU_DETAIL(
+		SHOPCD,
+		KEIYAKU_CD,
+		KEIYAKU_SUB_CD,
+		APP_START_DT,
+		KEIYAKU_AMOUNT,
+		INS_DT,
+		INS_PG,
+		INS_ID,
+		UPD_DT,
+		UPD_PG,
+		UPD_ID
+		) VALUES (
+		#shopCd#,
+		#keiyakuCd#,
+		#keiyakuSubCd#,
+		#applyYear#||#applyMonth#||#applyDay#||#applyHour#||'0000',
+		<isNotEqual property="wakuCnt" compareValue="-1">
+			#wakuCnt#,
+		</isNotEqual>
+		<isEqual property="wakuCnt" compareValue="-1">
+			#wakuCntNote#,
+		</isEqual>
+		SYSTIMESTAMP,
+		#pgName#,
+		#userId#,
+		SYSTIMESTAMP,
+		#pgName#,
+		#userId#
+		)
+		-->
+	</insert>
+
+	<!-- 枠設定情報照会(更新画面用) -->
+	<select id="selectContractAmountForUpdate"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractAmountUpdatePageParamBean"
+			resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.ContractAmountDomain">
+	SELECT
+		KEIYAKU_AMOUNT AS wakuCnt,
+		APP_START_DT as appStartDt
+	FROM
+		SHOP_KEIYAKU_DETAIL
+	WHERE
+		SHOPCD = #shopCd#
+	AND
+		KEIYAKU_CD = #keiyakuCd#
+	AND
+		KEIYAKU_SUB_CD = #keiyakuSubCd#
+	AND
+		APP_START_DT = #appStartDt#
+	</select>
+
+	<!-- 枠設定更新 -->
+	<update id="updateContractAmount"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractAmountUpdateCommitParamBean">
+	UPDATE
+		SHOP_KEIYAKU_DETAIL
+	SET
+		<isNotEqual property="wakuCnt" compareValue="-1">
+			KEIYAKU_AMOUNT = #wakuCnt#,
+		</isNotEqual>
+		<isEqual property="wakuCnt" compareValue="-1">
+			KEIYAKU_AMOUNT = #wakuCntNote#,
+		</isEqual>
+		UPD_DT = SYSTIMESTAMP,
+		UPD_ID = #updId#,
+		UPD_PG = #updPg#
+	WHERE
+		SHOPCD = #shopCd#
+	AND
+		KEIYAKU_CD = #keiyakuCd#
+	AND
+		KEIYAKU_SUB_CD = #keiyakuSubCd#
+	AND
+		APP_START_DT = #appStartDt#
+	</update>
+
+	<!-- 件枠設定情報確認 -->
+	<select id="selectContractAmountForDelete"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractAmountDeleteConfirmParamBean"
+			resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.ContractAmountDomain">
+	SELECT
+		KEIYAKU_AMOUNT AS wakuCnt,
+		TO_CHAR(TO_TIMESTAMP(APP_START_DT),'YYYY') || '年'
+		|| TO_CHAR(TO_TIMESTAMP(APP_START_DT),'MM') || '月'
+		|| TO_CHAR(TO_TIMESTAMP(APP_START_DT),'DD') || '日'
+		|| TO_CHAR(TO_TIMESTAMP(APP_START_DT),'HH24') || '時' as startYmdh,
+		APP_START_DT as appStartDt,
+		TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDT
+	FROM
+		SHOP_KEIYAKU_DETAIL
+	WHERE
+		SHOPCD = #shopCd#
+	AND
+		KEIYAKU_CD = #keiyakuCd#
+	AND
+		KEIYAKU_SUB_CD = #keiyakuSubCd#
+	AND
+		<iterate property="delFlgList" open=" APP_START_DT IN ( " close=" ) " conjunction=" , ">
+		#delFlgList[]#
+		</iterate>
+	ORDER BY appStartDt DESC
+	</select>
+
+	<!-- 件枠設定情報削除処理 -->
+	<delete id="deleteWakuInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ContractAmountDeleteCommitParamBean">
+	DELETE
+		SHOP_KEIYAKU_DETAIL
+	WHERE
+		SHOPCD = #shopCd#
+	AND
+		KEIYAKU_CD = #keiyakuCd#
+	AND
+		KEIYAKU_SUB_CD = #keiyakuSubCd#
+	AND
+		APP_START_DT = #delFlg#
+	</delete>
+
+	<!-- 契約情報検索 -->
+	<select id="selectContractShopListingInfo"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingInfoParamBean"
+		resultMap="shopListingContract">
+		<!--
+	SELECT
+		SK.SHOPCD
+		,SR.COMPANY
+		,SR.BUMON
+		,SR.PASSWORD_ENC
+		,MSKK.KEIYAKU_NAME
+		,MSKK.KEIYAKU_COMMENT
+		,SKK.KEIYAKU_NOTE
+		,SKK.KEIYAKU_CD
+		,SKK.KEIYAKU_SUB_CD
+		,TO_CHAR(SKK.UPD_DT,'YYYY/MM/DD HH24:MI:SS.ff3') as UPD_DT
+		,RESERVE_KBN
+	FROM
+	SHOP_KANRI SK INNER JOIN SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+	JOIN SHOP_KEIYAKU_KANRI SKK
+		ON SKK.SHOPCD = SK.SHOPCD
+	JOIN MST_SHOP_KEIYAKU_KANRI MSKK
+		ON MSKK.KEIYAKU_CD = SKK.KEIYAKU_CD
+		AND MSKK.KEIYAKU_SUB_CD = SKK.KEIYAKU_SUB_CD
+	WHERE
+		SKK.SHOPCD = #shopCd#
+		AND SKK.KEIYAKU_CD = #keiyakuCd#
+		AND SKK.KEIYAKU_SUB_CD = #keiyakuSubCd#
+		 -->
+		<!--
+	SELECT
+		SK.SHOPCD
+		,SR.COMPANY
+		,SR.BUMON
+		,SR.PASSWORD_ENC
+		,MSKK.KEIYAKU_NAME
+		,MSKK.KEIYAKU_COMMENT
+		,SKK.KEIYAKU_NOTE
+		,SKK.KEIYAKU_CD
+		,SKK.KEIYAKU_SUB_CD
+		,TO_CHAR(SK.UPD_DT,'YYYY/MM/DD HH24:MI:SS.ff3') as UPD_DT
+		,SKK.KEIYAKU_START_DT
+		,SKK.KEIYAKU_END_DT
+		,MSKK.KEIYAKU_AMOUNT_VAL_LIST
+		,MSKK.KEIYAKU_AMOUNT_LENGTH
+	FROM
+	SHOP_KANRI SK INNER JOIN SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+	JOIN SHOP_KEIYAKU_KANRI SKK
+		ON SKK.SHOPCD = SK.SHOPCD
+	JOIN MST_SHOP_KEIYAKU_KANRI MSKK
+		ON MSKK.KEIYAKU_CD = SKK.KEIYAKU_CD
+		AND MSKK.KEIYAKU_SUB_CD = SKK.KEIYAKU_SUB_CD
+	WHERE
+		SKK.SHOPCD = #shopCd#
+		AND SKK.KEIYAKU_CD = #keiyakuCd#
+		AND SKK.KEIYAKU_SUB_CD = #keiyakuSubCd#
+	ORDER BY SKK.KEIYAKU_START_DT DESC
+		 -->
+	SELECT
+		SK.SHOPCD
+		,SR.COMPANY
+		,SR.BUMON
+		,SR.PASSWORD_ENC
+		,X.KEIYAKU_NAME
+		,X.KEIYAKU_COMMENT
+		,X.KEIYAKU_NOTE
+		,X.KEIYAKU_CD
+		,X.KEIYAKU_SUB_CD
+		,TO_CHAR(SK.UPD_DT,'YYYY/MM/DD HH24:MI:SS.ff3') as UPD_DT
+		,X.KEIYAKU_START_DT
+		,X.KEIYAKU_END_DT
+		,X.KEIYAKU_AMOUNT_VAL_LIST
+		,X.KEIYAKU_AMOUNT_LENGTH
+FROM
+	SHOP_KANRI SK
+	INNER JOIN SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+	CROSS JOIN (
+				SELECT
+					MSKK.KEIYAKU_NAME
+					,MSKK.KEIYAKU_COMMENT
+					,MSKK.KEIYAKU_AMOUNT_VAL_LIST
+					,MSKK.KEIYAKU_AMOUNT_LENGTH
+					,MSKK.KEIYAKU_CD
+					,MSKK.KEIYAKU_SUB_CD
+					,Y.SHOPCD
+					,Y.KEIYAKU_NOTE
+					,Y.KEIYAKU_START_DT
+					,Y.KEIYAKU_END_DT
+				FROM
+				MST_SHOP_KEIYAKU_KANRI MSKK
+				LEFT JOIN (
+						SELECT
+							SK.SHOPCD
+							,SKK.KEIYAKU_NOTE
+							,SKK.KEIYAKU_CD
+							,SKK.KEIYAKU_SUB_CD
+							<!-- ,CASE WHEN TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') BETWEEN SKK.KEIYAKU_START_DT AND SKK.KEIYAKU_END_DT THEN '1' ELSE '0' END as KEIYAKU_FLG -->
+							,SKK.KEIYAKU_START_DT
+							,SKK.KEIYAKU_END_DT
+						FROM
+							SHOP_KANRI SK INNER JOIN SHOP_RIREKI SR
+								ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+							JOIN SHOP_KEIYAKU_KANRI SKK
+								ON SKK.SHOPCD = SK.SHOPCD
+						WHERE
+							SK.SHOPCD = #shopCd#
+							AND SKK.KEIYAKU_CD = #keiyakuCd#
+							AND SKK.KEIYAKU_SUB_CD = #keiyakuSubCd#
+				) Y
+					ON MSKK.KEIYAKU_CD = Y.KEIYAKU_CD
+					AND MSKK.KEIYAKU_SUB_CD = Y.KEIYAKU_SUB_CD
+				WHERE
+					MSKK.KEIYAKU_CD = #keiyakuCd#
+					AND MSKK.KEIYAKU_SUB_CD = #keiyakuSubCd#
+		) X
+WHERE
+	SK.SHOPCD = #shopCd#
+ORDER BY X.KEIYAKU_START_DT DESC
+	</select>
+
+	<!-- 店舗リスティング明細情報取得 -->
+	<select id="selectShopListingDetail"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingDetailParamBean"
+		resultMap="shopListingDetail">
+	SELECT
+		SKK.KEIYAKU_NO
+		,SKK.SHOPCD
+		,SKK.KEIYAKU_CD
+		,SKK.KEIYAKU_SUB_CD
+		,SKK.KEIYAKU_START_DT
+		,SKK.KEIYAKU_END_DT
+		,TO_CHAR(SKK.UPD_DT,'YYYY/MM/DD HH24:MI:SS') UPD_DT
+		,SKK.KEIYAKU_NOTE
+		,SKK.RESERVE_KBN
+		,SKK.KEIYAKU_AMOUNT
+	FROM
+		SHOP_KANRI SK
+	JOIN SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+	JOIN SHOP_KEIYAKU_KANRI SKK
+		ON SKK.SHOPCD = SK.SHOPCD
+	JOIN MST_SHOP_KEIYAKU_KANRI MSKK
+		ON MSKK.KEIYAKU_CD = SKK.KEIYAKU_CD
+		AND MSKK.KEIYAKU_SUB_CD = SKK.KEIYAKU_SUB_CD
+	WHERE
+		SKK.SHOPCD = #shopCd#
+		AND SKK.KEIYAKU_CD = #keiyakuCd#
+		AND SKK.KEIYAKU_SUB_CD = #keiyakuSubCd#
+	ORDER BY KEIYAKU_START_DT DESC
+	</select>
+
+	<!-- 店舗リスティング更新情報取得 -->
+	<select id="selectShopListingForUpdate"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingUpdatePageParamBean"
+		resultMap="shopListingDetail">
+	SELECT
+		 KEIYAKU_NO
+		,SHOPCD
+		,KEIYAKU_CD
+		,KEIYAKU_SUB_CD
+		,KEIYAKU_START_DT
+		,KEIYAKU_END_DT
+		,UPD_DT
+		,KEIYAKU_NOTE
+		,RESERVE_KBN
+		,KEIYAKU_AMOUNT
+	FROM
+		SHOP_KEIYAKU_KANRI
+	WHERE
+		KEIYAKU_NO = #keiyakuNo#
+	</select>
+
+
+	<!-- 店舗リスティング日付重複チェック -->
+	<select id="shopListingChkKeiyakuEndDt"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingAddConfirmParamBean"
+		resultClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingKikanChkBean">
+	SELECT
+		SHOPCD as shopCd,
+		KEIYAKU_CD as keiyakuCd,
+		KEIYAKU_SUB_CD as keiyakuSubCd,
+		KEIYAKU_START_DT as keiyakuStartDt,
+		KEIYAKU_END_DT as keiyakuEndDt,
+		KEIYAKU_NO as keiyakuNo
+	FROM
+		SHOP_KEIYAKU_KANRI
+	WHERE
+			SHOPCD = #shopCd#
+		AND
+			KEIYAKU_CD = #keiyakuCd#
+		AND
+			KEIYAKU_SUB_CD = #keiyakuSubCd#
+		<isNotEmpty prepend="AND" property="keiyakuNo">
+			KEIYAKU_NO != #keiyakuNo#
+		</isNotEmpty>
+	ORDER BY KEIYAKU_START_DT DESC
+	</select>
+
+	<select id="viewCheck"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingAddConfirmParamBean"
+		resultClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingKikanChkBean">
+	SELECT
+		SHOPCD as shopCd,
+		KEIYAKU_CD as keiyakuCd,
+		KEIYAKU_SUB_CD as keiyakuSubCd,
+		KEIYAKU_START_DT as keiyakuStartDt,
+		KEIYAKU_END_DT as keiyakuEndDt,
+		KEIYAKU_NO as keiyakuNo
+	FROM
+		V_SHOP_KEIYAKU_KANRI
+	WHERE
+			SHOPCD = #shopCd#
+		AND
+			KEIYAKU_CD = #keiyakuCd#
+		AND
+			KEIYAKU_SUB_CD = #keiyakuSubCd#
+		<isNotEmpty prepend="AND" property="keiyakuNo">
+			KEIYAKU_NO != #keiyakuNo#
+		</isNotEmpty>
+	</select>
+
+	<!-- 店舗リスティング日付重複チェック -->
+	<select id="shopListingCountApplyYmdh"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingKikanChkBean"
+		resultClass="int">
+	SELECT
+		COUNT(*)
+	FROM
+		SHOP_KEIYAKU_KANRI
+	WHERE
+			KEIYAKU_NO = #keiyakuNo#
+		<isNotEmpty property="keiyakuEndYear">
+			<isNotEqual property="keiyakuEndDt" compareValue="99991231235959">
+			AND KEIYAKU_END_DT <![CDATA[ >= ]]> #keiyakuStartYear#
+							|| #keiyakuStartMonth#
+							|| #keiyakuStartDay#
+							|| #keiyakuStartHour#
+							|| '0000'
+			AND KEIYAKU_START_DT <![CDATA[<=]]> #keiyakuEndYear#
+							|| #keiyakuEndMonth#
+							|| #keiyakuEndDay#
+							|| #keiyakuEndHour#
+							|| '0000'
+			</isNotEqual>
+			<isEqual property="keiyakuEndDt" compareValue="99991231235959">
+			AND KEIYAKU_START_DT = #keiyakuStartYear#
+							|| #keiyakuStartMonth#
+							|| #keiyakuStartDay#
+							|| #keiyakuStartHour#
+							|| '0000'
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty property="keiyakuEndYear">
+			<isNotEqual property="keiyakuEndDt" compareValue="99991231235959">
+			AND KEIYAKU_END_DT <![CDATA[ >= ]]> #keiyakuStartYear#
+							|| #keiyakuStartMonth#
+							|| #keiyakuStartDay#
+							|| #keiyakuStartHour#
+							|| '0000'
+			AND KEIYAKU_START_DT <![CDATA[<=]]> #keiyakuStartYear#
+							|| #keiyakuStartMonth#
+							|| #keiyakuStartDay#
+							|| #keiyakuStartHour#
+							|| '0000'
+			</isNotEqual>
+			<isEqual property="keiyakuEndDt" compareValue="99991231235959">
+			AND KEIYAKU_START_DT = #keiyakuStartYear#
+							|| #keiyakuStartMonth#
+							|| #keiyakuStartDay#
+							|| #keiyakuStartHour#
+							|| '0000'
+			</isEqual>
+		</isEmpty>
+		<!--
+	SELECT
+		COUNT(*)
+	FROM
+		SHOP_KEIYAKU_KANRI
+	WHERE
+			SHOPCD = #shopCd#
+		AND
+			KEIYAKU_CD = #keiyakuCd#
+		AND
+			KEIYAKU_SUB_CD = #keiyakuSubCd#
+		AND KEIYAKU_END_DT <![CDATA[ >= ]]> #keiyakuStartYear#
+							|| #keiyakuStartMonth#
+							|| #keiyakuStartDay#
+							|| #keiyakuStartHour#
+							|| '0000'
+		<isNotEmpty prepend="AND" property="keiyakuEndYear">
+			KEIYAKU_START_DT <![CDATA[<=]]> #keiyakuEndYear#
+							|| #keiyakuEndMonth#
+							|| #keiyakuEndDay#
+							|| #keiyakuEndHour#
+							|| '0000'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keiyakuNo">
+			KEIYAKU_NO != #keiyakuNo#
+		</isNotEmpty>
+		 -->
+	</select>
+
+	<!-- 店舗リスティング更新 -->
+	<update id="updateShopListing"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingUpdateCommitParamBean">
+		UPDATE
+			SHOP_KEIYAKU_KANRI
+		SET
+			KEIYAKU_START_DT = #keiyakuStartDt#
+			,KEIYAKU_END_DT =  #keiyakuEndDt#
+			,KEIYAKU_NOTE = #keiyakuNote#
+			<isNotEqual property="wakuCnt" compareValue="-1">
+			,KEIYAKU_AMOUNT = #wakuCnt#
+			</isNotEqual>
+			<isEqual property="wakuCnt" compareValue="-1">
+			,KEIYAKU_AMOUNT = #wakuCntNote#
+			</isEqual>
+			,UPD_DT = SYSTIMESTAMP
+			,UPD_PG = #pgName#
+			,UPD_ID = #userId#
+		WHERE
+			KEIYAKU_NO =#keiyakuNo#
+	</update>
+
+	<!-- 店舗リスティング登録 -->
+	<insert id="insertShopListing"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingAddCommitParamBean">
+	    <selectKey resultClass="java.lang.String" keyProperty="keiyakuNo">
+			SELECT SEQ_KEIYAKU_NO.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO SHOP_KEIYAKU_KANRI(
+			KEIYAKU_NO
+			,SHOPCD
+			,KEIYAKU_CD
+			,KEIYAKU_SUB_CD
+			,KEIYAKU_START_DT
+			,KEIYAKU_END_DT
+			,KEIYAKU_AMOUNT
+			,KEIYAKU_NOTE
+			,INS_DT
+			,INS_PG
+			,INS_ID
+			,UPD_DT
+			,UPD_PG
+			,UPD_ID
+			,RESERVE_KBN
+		) VALUES (
+			#keiyakuNo#
+			,#shopCd#
+			,#keiyakuCd#
+			,#keiyakuSubCd#
+			,#keiyakuStartDt#
+			,#keiyakuEndDt#
+			<isNotEqual property="wakuCnt" compareValue="-1">
+			,#wakuCnt#
+			</isNotEqual>
+			<isEqual property="wakuCnt" compareValue="-1">
+			,#wakuCntNote#
+			</isEqual>
+			,#keiyakuNote#
+			,SYSTIMESTAMP
+			,#pgName#
+			,#userId#
+			,SYSTIMESTAMP
+			,#pgName#
+			,#userId#
+			,'2'
+		)
+	</insert>
+
+	<!-- 契約設定情報削除処理 -->
+	<delete id="deleteKeiyakuInfo"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingDeleteCommitParamBean">
+	DELETE
+		SHOP_KEIYAKU_KANRI
+	WHERE
+		KEIYAKU_NO = #keiyakuNo#
+	</delete>
+
+	<!-- 件枠設定情報確認 -->
+	<select id="selectShopListingForDelete"
+		parameterClass="net.chintai.backend.sysadmin.shop_bukken.dao.ShopListingDeleteConfirmParamBean"
+		resultMap="shopListingDetail">
+	SELECT
+		 KEIYAKU_NO
+		,SHOPCD
+		,KEIYAKU_CD
+		,KEIYAKU_SUB_CD
+		,KEIYAKU_START_DT
+		,KEIYAKU_END_DT
+		,TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS UPD_DT
+		,KEIYAKU_NOTE
+		,RESERVE_KBN
+		,KEIYAKU_AMOUNT
+	FROM
+		SHOP_KEIYAKU_KANRI
+	WHERE
+		<iterate property="delFlgList" open=" KEIYAKU_NO IN ( " close=" ) " conjunction=" , ">
+		#delFlgList[]#
+		</iterate>
+	ORDER BY KEIYAKU_START_DT DESC
+	</select>
+	<!-- 2014/06 kashiyama add end -->
+
+	<select id="selectColumnComments"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadColumnInServiceBean"
+			resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.ColumnComments">
+		SELECT
+			UCC.COLUMN_NAME as columnName,
+			UCC.COMMENTS as comments
+		FROM USER_TAB_COLUMNS UTC
+			JOIN USER_COL_COMMENTS UCC
+		ON UTC.TABLE_NAME = UCC.TABLE_NAME
+		AND UTC.COLUMN_NAME = UCC.COLUMN_NAME
+		WHERE UTC.TABLE_NAME = #tableName#
+		<isNotEmpty  property="excludeColumns" prepend="AND">
+			(	UTC.COLUMN_NAME NOT IN
+			<iterate property="excludeColumns" open=" (" close=")" conjunction=",">
+				#excludeColumns[]#
+			</iterate>
+			)
+		</isNotEmpty>
+		ORDER BY UTC.COLUMN_ID
+	</select>
+
+	<select id="selectBukkenRireki"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC
+	</select>
+
+	<select id="selectBukkenRirekiComment"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_COMMENT
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, COMMENT_KBN
+	</select>
+
+	<select id="selectBukkenRirekiEki"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_EKI
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, ENTRY_NO
+	</select>
+
+	<select id="selectBukkenRirekiImg"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_IMG
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, IMG_KBN
+	</select>
+
+	<select id="selectBukkenRirekiMadori"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_MADORI
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, ENTRY_NO
+	</select>
+
+	<select id="selectBukkenRirekiShop"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_SHOP
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, AGENCY_SHOPCD
+	</select>
+
+	<select id="selectBukkenRirekiAround"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_AROUND
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, ENTRY_NO
+	</select>
+
+	<select id="selectBukkenRirekiRoad"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_ROAD
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, ENTRY_NO
+	</select>
+
+	<select id="selectBukkenRirekiChusha"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_CHUSHA
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, CHUSHA_SECTION
+	</select>
+
+	<select id="selectBukkenRirekiFeature"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_FEATURE
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, ENTRY_NO
+	</select>
+
+	<select id="selectBukkenRirekiCharacter"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_CHARACTER
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, CHAR_KBN
+	</select>
+
+	<select id="selectBukkenRirekiHiyou"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_HIYOU
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, HIYOU_KBN, ENTRY_NO
+	</select>
+
+	<select id="selectBukkenRirekiZoning"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM BUKKEN_RIREKI_ZONING
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, ENTRY_NO
+	</select>
+
+	<select id="selectShopInquiry"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM SHOP_INQUIRY
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, INQID DESC
+	</select>
+
+	<select id="selectAblShopInquiry"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM ABL_SHOP_INQUIRY
+		WHERE PK_BUKKEN_RIREKI IN
+			<iterate property="pkBukkenRireki" open=" (" close=")" conjunction=",">
+				#pkBukkenRireki[]#
+			</iterate>
+		ORDER BY PK_BUKKEN_RIREKI DESC, INQID DESC
+	</select>
+
+	<select id="selectShopRireki"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.CsvDownloadShopInServiceBean"
+			resultClass="java.util.HashMap">
+		SELECT
+			*
+		FROM SHOP_RIREKI
+		WHERE SHOPCD = #shopcd#
+		ORDER BY PK_SHOP_RIREKI DESC
+	</select>
+
+	<select id="selectImgCntEachCategory"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.ImgCntEachCategoryInServiceBean"
+			resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.ImgCntEachCategory">
+		SELECT MIC2.IMG_CATEGORY AS imgCategory,
+			   NVL2(S.CNT, S.CNT, 0) AS keisaiCnt,
+			   NVL2(T.CNT, T.CNT, 0) AS allCnt
+		  FROM MST_IMG_CATEGORY MIC2,
+			(
+			SELECT MIK.IMG_CATEGORY AS IMG_CATEGORY, COUNT(*) AS CNT
+			  FROM MST_IMG_KBN MIK, MST_IMG_CATEGORY MIC
+			 WHERE MIK.IMG_KBN IN (SELECT BRI.IMG_KBN
+			 						 FROM BUKKEN_RIREKI_IMG BRI
+			 						WHERE BRI.PK_BUKKEN_RIREKI = #pkBukkenRireki#
+			 						  AND (BRI.IMG_FILE_NM IS NOT NULL or BRI.IMG_OUTER_URL IS NOT NULL)
+			 					  )
+			   AND MIK.DEL_KBN = '0'
+			   AND MIK.SHOP_BUKKEN_KBN = '2'
+			   AND MIK.IMG_CATEGORY = MIC.IMG_CATEGORY
+			   AND MIC.SHOP_BUKKEN_KBN = '2'
+			   AND MIC.DEL_KBN = '0'
+			 GROUP BY MIK.IMG_CATEGORY
+			) S,
+			(
+			SELECT MIK.IMG_CATEGORY AS IMG_CATEGORY, COUNT(*) AS CNT
+			  FROM MST_IMG_KBN MIK, MST_IMG_CATEGORY MIC
+			 WHERE MIK.IMG_KBN IN (SELECT BRI.IMG_KBN
+			 						 FROM BUKKEN_RIREKI_IMG BRI
+			 						 WHERE BRI.PK_BUKKEN_RIREKI = #pkBukkenRireki#
+			 					  )
+			   AND MIK.DEL_KBN = '0'
+			   AND MIK.SHOP_BUKKEN_KBN = '2'
+			   AND MIK.IMG_CATEGORY = MIC.IMG_CATEGORY
+			   AND MIC.SHOP_BUKKEN_KBN = '2'
+			   AND MIC.DEL_KBN = '0'
+			 GROUP BY MIK.IMG_CATEGORY
+			) T
+		 WHERE MIC2.IMG_CATEGORY = S.IMG_CATEGORY (+)
+		   AND MIC2.IMG_CATEGORY = T.IMG_CATEGORY (+)
+		   AND MIC2.SHOP_BUKKEN_KBN = '2'
+		   AND MIC2.DEL_KBN = '0'
+		 ORDER BY MIC2.IMG_CATEGORY
+	</select>
+
+	<select id="selectMstInsPg"
+			parameterClass="net.chintai.backend.sysadmin.shop_bukken.service.bean.MstInsPgInServiceBean"
+			resultClass="net.chintai.backend.sysadmin.shop_bukken.domain.MstInsPg">
+		SELECT
+			PG as pg,
+			SYSTEM_CATEGORY_NAME as systemCategoryName,
+			PG_NAME as pgName,
+			REFERENCE_PRIORITY as referencePriority
+		FROM MST_INS_PG E
+		<dynamic prepend="where">
+			<isNotEmpty property="pg" prepend="AND">
+				E.PG = #pg#
+			</isNotEmpty>
+			<isNotEmpty property="referencePriority" prepend="AND">
+				E.REFERENCE_PRIORITY = #referencePriority#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+</sqlMap>

@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+.list-inline {
+  padding-left: 0;
+  margin-left: -0px;
+  list-style: none;
+}
+.list-inline > li {
+  display: inline-block;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.list-sep li + li::before {
+    content: "/";
+	margin-left: -5px;
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings useStatementNamespaces="true"
+			enhancementEnabled="true"
+			statementCachingEnabled="true"
+			cacheModelsEnabled="true" />
+
+	<!-- commons -->
+	<sqlMap resource="net/chintai/backend/sysadmin/common/dao/maps/Auth.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/common/dao/maps/CustomTag.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/common/dao/maps/SystemControl.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/common/dwr/dao/maps/AddressEnsen.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/common/dwr/dao/maps/Operation.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/common/dwr/dao/maps/AdDataMatchingForAjax.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/common/dwr/dao/maps/DcoType.xml" />
+
+	<!-- functions -->
+	<sqlMap resource="net/chintai/backend/sysadmin/login/dao/maps/Login.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/profile/dao/maps/Profile.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/shop_bukken/dao/maps/ShopBukken.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/user/dao/maps/User.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/shop_inquiry/dao/maps/ShopInquiry.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/cjn_inquiry/dao/maps/CjnInquiry.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/review/dao/maps/Review.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/external/sevendays/dao/maps/Sevendays.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/demand/dao/maps/Demand.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/master/dao/maps/Master.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/shop_listing/dao/maps/ShopListing.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/addata_matching/dao/maps/AdDataMatching.xml" />
+	<sqlMap resource="net/chintai/backend/sysadmin/dataoutput/dao/maps/Dataoutput.xml" />
+
+	<!-- operation logging (use "main team" and "ad team") -->
+	<sqlMap resource="net/chintai/backend/sysadmin/logging/dao/Logging.xml" />
+</sqlMapConfig>

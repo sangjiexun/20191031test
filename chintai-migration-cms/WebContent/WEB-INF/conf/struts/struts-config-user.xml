@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+		PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+	<!-- ========== Form Bean Definitions ================================== -->
+	<form-beans>
+
+		<!-- ユーザ登録確認フォーム -->
+		<form-bean name="userAddConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="passwd"  type="java.lang.String"/>
+			<form-property name="passwdConfirm"  type="java.lang.String"/>
+			<form-property name="userName"  type="java.lang.String"/>
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="userNote"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- ユーザ登録画面に戻るフォーム -->
+		<form-bean name="userAddPageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="userName"  type="java.lang.String"/>
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="userNote"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- ユーザ登録完了フォーム -->
+		<form-bean name="userAddCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="passwd"  type="java.lang.String"/>
+			<form-property name="passwdConfirm"  type="java.lang.String"/>
+			<form-property name="userName"  type="java.lang.String"/>
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="userNote"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- ユーザ削除確認フォーム -->
+		<form-bean name="userDeleteConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userCheckId"  type="java.lang.String[]"/>
+			<form-property name="updDt"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- ユーザ削除実行フォーム -->
+		<form-bean name="userDeleteCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userCheckId"  type="java.lang.String[]"/>
+			<form-property name="updDt"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- ユーザ詳細フォーム -->
+		<form-bean name="userInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- ユーザ更新画面に遷移フォーム -->
+		<form-bean name="userUpdatePageForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- ユーザ更新確認フォーム -->
+		<form-bean name="userUpdateConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="userName"  type="java.lang.String"/>
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="userNote"  type="java.lang.String"/>
+			<form-property name="updDt"  type="java.lang.String"/>
+			<form-property name="cjnAccountSeq"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- ユーザ更新画面に戻るフォーム -->
+		<form-bean name="userUpdatePageBakcForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="userName"  type="java.lang.String"/>
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="userNote"  type="java.lang.String"/>
+			<form-property name="updDt"  type="java.lang.String"/>
+			<form-property name="cjnAccountSeq"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- ユーザ更新完了フォーム -->
+		<form-bean name="userUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="userName"  type="java.lang.String"/>
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="userNote"  type="java.lang.String"/>
+			<form-property name="updDt"  type="java.lang.String"/>
+			<form-property name="cjnAccountSeq"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- ユーザ一覧画面に戻るフォーム -->
+		<form-bean name="userListPageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userCheckId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- ユーザパスワード変更画面に遷移フォーム -->
+		<form-bean name="userPasswordChangePageForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- ユーザパスワード変更フォーム -->
+		<form-bean name="userPasswordChangeForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="passwd"  type="java.lang.String"/>
+			<form-property name="passwdConfirm"  type="java.lang.String"/>
+			<form-property name="updDt"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- グループ更新ページフォーム -->
+		<form-bean name="groupUpdatePageForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupId"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- グループ更新確認フォーム -->
+		<form-bean name="groupUpdateConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="groupName"  type="java.lang.String"/>
+			<form-property name="groupUpdDt"  type="java.lang.String"/>
+			<form-property name="authorityId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- グループ更新確認の戻る用ページフォーム -->
+		<form-bean name="groupUpdateConfirmPageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="groupName"  type="java.lang.String"/>
+			<form-property name="groupUpdDt"  type="java.lang.String"/>
+			<form-property name="authorityId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- グループ更新完了フォーム -->
+		<form-bean name="groupUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="groupName"  type="java.lang.String"/>
+			<form-property name="groupUpdDt"  type="java.lang.String"/>
+			<form-property name="authorityId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- グループ追加ページフォーム -->
+		<form-bean name="groupAddPageForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupName"  type="java.lang.String"/>
+			<form-property name="authorityId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- グループ追加確認ページフォーム -->
+		<form-bean name="groupAddConfirmPageForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupName"  type="java.lang.String"/>
+			<form-property name="authorityId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- グループ追加確認の戻る用ページフォーム -->
+		<form-bean name="groupAddConfirmPageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupName"  type="java.lang.String"/>
+			<form-property name="authorityId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- グループ追加確認ページフォーム -->
+		<form-bean name="groupAddCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupName"  type="java.lang.String"/>
+			<form-property name="authorityId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- グループ削除確認ページフォーム -->
+		<form-bean name="groupDeleteConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- グループ削除確認ページフォーム -->
+		<form-bean name="groupDeleteCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupName"  type="java.lang.String[]"/>
+			<form-property name="groupId"  type="java.lang.String[]"/>
+			<form-property name="updDt"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- グループ削除確認の戻る用ページフォーム -->
+		<form-bean name="groupDeleteCommitPageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="groupId"  type="java.lang.String[]"/>
+		</form-bean>
+
+		<!-- 操作ログ検索フォーム -->
+		<form-bean name="logOperationSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userIdSearch" type="java.lang.String"/>
+			<form-property name="userNameSearch" type="java.lang.String"/>
+			<form-property name="authority" type="java.lang.String"/>
+			<form-property name="operationIdSearch" type="java.lang.String"/>
+			<form-property name="insDtFrom" type="java.lang.String"/>
+			<form-property name="fromYear" type="java.lang.String"/>
+			<form-property name="fromMonth" type="java.lang.String"/>
+			<form-property name="fromDay" type="java.lang.String"/>
+			<form-property name="fromTime" type="java.lang.String"/>
+			<form-property name="insDtTo" type="java.lang.String"/>
+			<form-property name="toYear" type="java.lang.String"/>
+			<form-property name="toMonth" type="java.lang.String"/>
+			<form-property name="toDay" type="java.lang.String"/>
+			<form-property name="toTime" type="java.lang.String"/>
+			<form-property name="sortKey" type="java.lang.String"/>
+			<form-property name="orderBy" type="java.lang.String"/>
+			<form-property name="displayNum" type="java.lang.Integer"/>
+			<form-property name="offSet" type="java.lang.Integer"/>
+		</form-bean>
+
+		<!-- 操作ログ検索フォーム(ページング用) -->
+		<form-bean name="logOperationSearchPagingForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="offSet" type="java.lang.Integer"/>
+		</form-bean>
+	</form-beans>
+
+	<!-- ========== Action Mapping Definitions ============================= -->
+	<action-mappings>
+
+		<!-- ユーザ一覧画面へ -->
+		<action path="/user/UserList"
+				type="net.chintai.backend.sysadmin.user.action.UserListAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/UserList.jsp"/>
+		</action>
+
+		<!-- ユーザ登録画面へ -->
+		<action path="/user/UserAddPage"
+				type="net.chintai.backend.sysadmin.user.action.UserAddPageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/UserAdd.jsp"/>
+		</action>
+
+		<!-- ユーザ登録確認画面へ -->
+		<action path="/user/UserAddConfirm"
+				name="userAddConfirmForm"
+				type="net.chintai.backend.sysadmin.user.action.UserAddConfirmAction"
+				scope="request"
+				validate="true"
+				input="/user/UserAddPageBack.do">
+			<forward name="success" path="/WEB-INF/jsp/user/UserAddConfirm.jsp"/>
+			<forward name="fail" path="/WEB-INF/jsp/user/UserAdd.jsp"/>
+		</action>
+
+		<!-- ユーザ登録画面に戻る -->
+		<action path="/user/UserAddPageBack"
+				name="userAddPageBackForm"
+				type="net.chintai.backend.sysadmin.user.action.UserAddPageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/UserAdd.jsp"/>
+		</action>
+
+		<!-- ユーザ登録完了・ユーザ一覧画面へ -->
+		<action path="/user/UserAddCommit"
+				name="userAddCommitForm"
+				type="net.chintai.backend.sysadmin.user.action.UserAddCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/user/UserList.do"/>
+		</action>
+
+		<!-- ユーザ一覧画面に戻る -->
+		<action path="/user/UserListPageBack"
+				name="userListPageBackForm"
+				type="net.chintai.backend.sysadmin.user.action.UserListPageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/UserList.jsp" />
+		</action>
+
+		<!-- ユーザ削除確認画面へ -->
+		<action path="/user/UserDeleteConfirm"
+				name="userDeleteConfirmForm"
+				type="net.chintai.backend.sysadmin.user.action.UserDeleteConfirmAction"
+				scope="request"
+				validate="true"
+				input="/user/UserList.do">
+			<forward name="success" path="/WEB-INF/jsp/user/UserDeleteConfirm.jsp"/>
+			<forward name="fail" path="/user/UserList.do"/>
+		</action>
+
+		<!-- ユーザ削除完了 -->
+		<action path="/user/UserDeleteCommit"
+				name="userDeleteCommitForm"
+				type="net.chintai.backend.sysadmin.user.action.UserDeleteCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/user/UserList.do"/>
+		</action>
+
+		<!-- ユーザ詳細画面へ -->
+		<action path="/user/UserInfo"
+				name="userInfoForm"
+				type="net.chintai.backend.sysadmin.user.action.UserInfoAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/UserInfo.jsp"/>
+		</action>
+
+		<!-- ユーザ詳細画面に戻る -->
+		<action path="/user/UserInfoPageBack"
+				name="userInfoForm"
+				type="net.chintai.backend.sysadmin.user.action.UserInfoAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/UserInfo.jsp"/>
+		</action>
+
+		<!-- ユーザ更新画面へ -->
+		<action path="/user/UserUpdatePage"
+				name="userUpdatePageForm"
+				type="net.chintai.backend.sysadmin.user.action.UserUpdatePageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/UserUpdatePage.jsp"/>
+			<forward name="fail" path="/user/UserList.do"/>
+		</action>
+
+		<!-- ユーザ更新確認画面へ -->
+		<action path="/user/UserUpdateConfirm"
+				name="userUpdateConfirmForm"
+				type="net.chintai.backend.sysadmin.user.action.UserUpdateConfirmAction"
+				scope="request"
+				validate="true"
+				input="/user/UserUpdatePageBack.do">
+			<forward name="success" path="/WEB-INF/jsp/user/UserUpdateConfirm.jsp"/>
+		</action>
+
+		<!-- ユーザ更新画面に戻る -->
+		<action path="/user/UserUpdatePageBack"
+				name="userUpdatePageBakcForm"
+				type="net.chintai.backend.sysadmin.user.action.UserUpdatePageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/UserUpdatePage.jsp"/>
+		</action>
+
+		<!-- ユーザ更新完了 -->
+		<action path="/user/UserUpdateCommit"
+				name="userUpdateCommitForm"
+				type="net.chintai.backend.sysadmin.user.action.UserUpdateCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/user/UserInfo.do"/>
+			<forward name="fail" path="/user/UserList.do"/>
+		</action>
+
+		<!-- ユーザパスワード変更画面へ -->
+		<action path="/user/UserPasswordChangePage"
+				name="userPasswordChangePageForm"
+				type="net.chintai.backend.sysadmin.user.action.UserPasswordChangePageAction"
+				scope="request"
+				input="/WEB-INF/jsp/user/UserInfo.jsp">
+			<forward name="success" path="/WEB-INF/jsp/user/UserPasswordChange.jsp"/>
+			<forward name="fail" path="/user/UserList.do"/>
+		</action>
+
+		<!-- ユーザパスワード変更 -->
+		<action path="/user/UserPasswordChangeCommit"
+				name="userPasswordChangeForm"
+				type="net.chintai.backend.sysadmin.user.action.UserPasswordChangeCommitAction"
+				scope="request"
+				validate="true"
+				input="/user/UserPasswordChangePage.do">
+			<forward name="success" path="/user/UserInfo.do"/>
+			<forward name="fail" path="/user/UserList.do"/>
+		</action>
+
+		<!-- グループ 一覧ページへ -->
+		<action path="/user/GroupList"
+				type="net.chintai.backend.sysadmin.user.action.GroupListAction"
+				scope="request"
+				validate="true"
+				input="/WEB-INF/jsp/user/GroupList.jsp">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupList.jsp"/>
+		</action>
+
+		<!-- グループ 登録ページへ -->
+		<action path="/user/GroupAddPage"
+				name="groupAddPageForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupAddPageAction"
+				scope="request"
+				validate="true"
+				input="/WEB-INF/jsp/user/GroupAdd.jsp">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupAdd.jsp"/>
+		</action>
+
+		<!-- グループ 登録確認ページへ -->
+		<action path="/user/GroupAddConfirm"
+				name="groupAddConfirmPageForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupAddConfirmAction"
+				scope="request"
+				validate="true"
+				input="/user/GroupAddConfirmPageBack.do">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupAddConfirm.jsp"/>
+		</action>
+
+		<!-- グループ 登録ページに戻る -->
+		<action path="/user/GroupAddConfirmPageBack"
+				name="groupAddConfirmPageBackForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupAddConfirmPageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupAdd.jsp"/>
+		</action>
+
+		<!-- グループ 一覧ページへ -->
+		<action path="/user/GroupListBack"
+				type="net.chintai.backend.sysadmin.user.action.GroupListBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupList.jsp"/>
+		</action>
+
+		<!-- グループ 登録後グループ一覧ページへ -->
+		<action path="/user/GroupAddCommit"
+				name="groupAddCommitForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupAddCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/user/GroupList.do" />
+		</action>
+
+		<!-- グループ設定変更ページへ -->
+		<action path="/user/GroupUpdatePage"
+				name="groupUpdatePageForm"
+				scope="request"
+				type="net.chintai.backend.sysadmin.user.action.GroupUpdatePageAction"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupUpdate.jsp"/>
+			<forward name="fail" path="/user/GroupList.do"/>
+		</action>
+
+		<!-- グループ設定変更確認ページへ -->
+		<action path="/user/GroupUpdateConfirm"
+				name="groupUpdateConfirmForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupUpdateConfirmAction"
+				scope="request"
+				validate="true"
+				input="/user/GroupUpdateConfirmPageBack.do">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupUpdateConfirm.jsp"/>
+		</action>
+
+		<!-- グループ設定変更ページへ -->
+		<action path="/user/GroupUpdateConfirmPageBack"
+				name="groupUpdateConfirmPageBackForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupUpdateConfirmPageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupUpdate.jsp"/>
+		</action>
+
+		<!-- グループ設定変更後グループ一覧ページへ -->
+		<action path="/user/GroupUpdateCommit"
+				name="groupUpdateCommitForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupUpdateCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/user/GroupList.do" />
+		</action>
+
+		<!-- グループ削除ページへ -->
+		<action path="/user/GroupDeleteConfirm"
+				name="groupDeleteConfirmForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupDeleteConfirmAction"
+				scope="request"
+				validate="true"
+				input="/user/GroupList.do">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupDeleteConfirm.jsp"/>
+			<forward name="fail" path="/user/GroupList.do"/>
+			<forward name="usedGroupExist" path="/WEB-INF/jsp/user/GroupList.jsp"/>
+		</action>
+
+		<!-- グループ一覧ページに戻る -->
+		<action path="/user/GroupDeleteConfirmPageBack"
+				name="groupDeleteCommitPageBackForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupDeleteConfirmPageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/GroupList.jsp"/>
+		</action>
+
+		<!-- グループ削除後グループ一覧ページへ -->
+		<action path="/user/GroupDeleteCommit"
+				name="groupDeleteCommitForm"
+				type="net.chintai.backend.sysadmin.user.action.GroupDeleteCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/user/GroupList.do" />
+		</action>
+
+		<!-- 操作ログページへ -->
+		<action path="/user/LogOperationSearchPage"
+				name="logOperationSearchForm"
+				type="net.chintai.backend.sysadmin.user.action.LogOperationSearchPageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/LogOperation.jsp"/>
+		</action>
+
+		<!-- 操作ログ検索 -->
+		<action path="/user/LogOperationSearch"
+				name="logOperationSearchForm"
+				type="net.chintai.backend.sysadmin.user.action.LogOperationSearchAction"
+				scope="request"
+				validate="true"
+				input="/user/LogOperationSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/user/LogOperation.jsp"/>
+		</action>
+
+		<!-- 操作ログ検索(ページング) -->
+		<action path="/user/LogOperationSearchPaging"
+				name="logOperationSearchForm"
+				type="net.chintai.backend.sysadmin.user.action.LogOperationSearchAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/user/LogOperation.jsp"/>
+		</action>
+
+	</action-mappings>
+
+</struts-config>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+		PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+	<form-beans>
+			<!-- プロフィル更新確認フォーム -->
+		<form-bean name="profileUpdateConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="userName"  type="java.lang.String"/>
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="userNote"  type="java.lang.String"/>
+			<form-property name="updDt"  type="java.lang.String"/>
+			<form-property name="groupName"  type="java.lang.String"/>
+		</form-bean>
+
+			<!-- プロフィル更新完了フォーム -->
+		<form-bean name="profileUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="userName"  type="java.lang.String"/>
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="userNote"  type="java.lang.String"/>
+			<form-property name="updDt"  type="java.lang.String"/>
+			<form-property name="groupName"  type="java.lang.String"/>
+		</form-bean>
+
+			<!-- プロフィル更新画面に戻るフォーム -->
+		<form-bean name="profileUpdatePageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"  type="java.lang.String"/>
+			<form-property name="userName"  type="java.lang.String"/>
+			<form-property name="groupId"  type="java.lang.String"/>
+			<form-property name="userNote"  type="java.lang.String"/>
+			<form-property name="updDt"  type="java.lang.String"/>
+			<form-property name="groupName"  type="java.lang.String"/>
+		</form-bean>
+
+		<!-- プロフィルパスワード変更フォーム -->
+		<form-bean name="profilePasswordChangeCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="updDt"  type="java.lang.String"/>
+			<form-property name="oldPasswd" type="java.lang.String"/>
+			<form-property name="passwd"  type="java.lang.String"/>
+			<form-property name="passwdConfirm"  type="java.lang.String"/>
+		</form-bean>
+	</form-beans>
+	<!-- ========== Action Mapping Definitions ============================= -->
+	<action-mappings>
+
+		<!-- プロフィル詳細 -->
+		<action path="/profile/ProfileInfo"
+				type="net.chintai.backend.sysadmin.profile.action.ProfileInfoAction"
+				scope="request">
+			<forward name="success" path="/WEB-INF/jsp/profile/ProfileInfo.jsp" />
+		</action>
+
+		<!-- プロフィル更新画面に遷移 -->
+		<action path="/profile/ProfileUpdatePage"
+				type="net.chintai.backend.sysadmin.profile.action.ProfileUpdatePageAction"
+				scope="request">
+			<forward name="success" path="/WEB-INF/jsp/profile/ProfileUpdatePage.jsp"/>
+		</action>
+
+		<!-- プロフィル更新確認 -->
+		<action path="/profile/ProfileUpdateConfirm"
+				name="profileUpdateConfirmForm"
+				type="net.chintai.backend.sysadmin.profile.action.ProfileUpdateConfirmAction"
+				scope="request"
+				validate="true"
+				input="/profile/ProflieUpdatePageBack.do">
+			<forward name="success" path="/WEB-INF/jsp/profile/ProfileUpdateConfirm.jsp"/>
+		</action>
+
+		<!-- プロフィル詳細画面に戻る -->
+		<action path="/profile/ProfileInfoPageBack"
+				type="net.chintai.backend.sysadmin.profile.action.ProfileInfoAction"
+				scope="request">
+			<forward name="success" path="/WEB-INF/jsp/profile/ProfileInfo.jsp" />
+		</action>
+
+		<!-- プロフィル更新完了 -->
+		<action path="/profile/ProfileUpdateCommit"
+				name="profileUpdateCommitForm" type="net.chintai.backend.sysadmin.profile.action.ProfileUpdateCommitAction"
+				scope="request">
+			<forward name="success" path="/profile/ProfileInfo.do"/>
+		</action>
+
+		<!-- プロフィル更新画面に戻る -->
+		<action path="/profile/ProflieUpdatePageBack"
+				name="profileUpdatePageBackForm"
+				type="net.chintai.backend.sysadmin.profile.action.ProflieUpdatePageBackAction"
+				scope="request">
+			<forward name="success" path="/WEB-INF/jsp/profile/ProfileUpdatePage.jsp"/>
+		</action>
+
+		<!-- プロフィルパスワード変更画面に遷移 -->
+		<action path="/profile/ProfilePasswordChangePage"
+				name="profilePasswordChangeForm"
+				type="net.chintai.backend.sysadmin.profile.action.ProfilePasswordChangePageAction"
+				scope="request">
+			<forward name="success" path="/WEB-INF/jsp/profile/ProfilePasswordChange.jsp"/>
+		</action>
+
+		<!-- プロフィルパスワード変更完了 -->
+		<action path="/profile/ProfilePasswordChangeCommit"
+				name="profilePasswordChangeCommitForm"
+				type="net.chintai.backend.sysadmin.profile.action.ProfilePasswordChangeCommitAction"
+				scope="request"
+				validate="true"
+				input="/profile/ProfilePasswordChangePage.do">
+			<forward name="success" path="/profile/ProfileInfo.do"/>
+			<forward name="fail" path="/WEB-INF/jsp/profile/ProfilePasswordChange.jsp"/>
+		</action>
+
+	</action-mappings>
+</struts-config>

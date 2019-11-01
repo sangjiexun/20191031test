@@ -1,0 +1,148 @@
+/*
+ * using namespace
+ */
+var SideBar = function() {
+    var pub = {};
+
+    /* Sidebar HTML */
+    var str = '<div id="sidebar_style">'
+        + '<ul>'
+#if($ctx.isAuthorized("01"))
+        + '  <li class="lv1">店舗・物件管理'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/shop_bukken/ShopSearchPage.do">店舗・契約管理</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/shop_bukken/BukkenSearchPage.do">物件検索</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/shop_bukken/LicenseExpiredShopList.do">免許証有効期限切れ店舗一覧</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/shop_bukken/NayoseSkipShopDownloadPage.do">名寄せ処理対象外店舗一覧</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/shop_bukken/ShopReserve.do">店舗予約</a></li>'
+        + '    </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("11"))
+        + '  <li class="lv1">物件枠管理'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/demand/ContractAmountMaintenancePage.do">物件枠・リスティング枠メンテナンス</a></li>'
+        + '    </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("12"))
+#end
+#if($ctx.isAuthorized("02"))
+#end
+#if($ctx.isAuthorized("03"))
+#end
+#if($ctx.isAuthorized("05"))
+        + '  <li class="lv1">Web審査'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/review/ReviewShopSearchPage.do">店舗検索</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/review/ReviewBukkenSearchPage.do">物件検索</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/review/ReviewShopMediaCountPage.do">店舗別出稿状況集計</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/review/ReviewTodofukenMediaCountPage.do">都道府県別出稿状況集計</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/review/ReviewBukkenAlertCountPage.do">警告対象物件一覧</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/review/ReviewConfig.do">審査設定内容表示</a></li>'
+        + '    </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("06"))
+        + '  <li class="lv1">店舗／物件問い合せ閲覧'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/shop_inquiry/InquiryRecentSearchPage.do">問い合せ情報閲覧</a></li>'
+        + '    </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("07"))
+        + '  <li class="lv1">CHINTAIへの問い合せ管理'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/cjn_inquiry/CjnInquiryTypeList.do">問い合せ種別一覧</a></li>'
+#if($ctx.cjnAccountType == "1")
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/cjn_inquiry/CjnUserList.do">問い合せユーザ管理</a></li>'
+#end
+        + '    </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("16"))
+#end
+#if($ctx.isAuthorized("17"))
+        + '  <li class="lv1">ADデータと物件データ照合'
+        + '    <ul>'
+        + '    <li class="lv2"><a href="$!{ctx.contextPath}/addata_matching/AdDataUploadPage.do">ADデータアップロード</a></li>'
+        + '    <li class="lv2"><a href="$!{ctx.contextPath}/addata_matching/MatchingDataDownloadPage.do">照合結果ダウンロード</a></li>'
+        + '  </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("08"))
+        + '  <li class="lv1">マスタ管理'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/master/RosenIndex.do">沿線・駅メンテナンス</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/master/ShikutyosonIndexPage.do">市区町村メンテナンス</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/master/EmailListDownloadPage.do">メールアドレス抽出</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/master/RendoSendList.do">連動元別出稿管理</a></li>'
+        + '    </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("09"))
+        + '  <li class="lv1">ユーザ管理'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/user/UserList.do">ユーザ一覧</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/user/GroupList.do">グループ一覧</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/user/LogOperationSearchPage.do">操作ログ</a></li>'
+        + '    </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("13"))
+#end
+#if($ctx.isAuthorized("15"))
+#end
+#if($ctx.isAuthorized("18"))
+#end
+#if($ctx.isAuthorized("19"))
+        + '  <li class="lv1">他社データ連携出力設定'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="$!{ctx.contextPath}/dataoutput/DataoutputIndex.do">他社データ連携出力設定</a></li>'
+        + '    </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("15"))
+        + '  <li class="lv1">WEBログ'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="$!{ctx.weblogUrl}/cls/shinki/?loginKey=$!{ctx.loginKey}" target="_blank">新規営業</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.weblogUrl}/cls/kison/?loginKey=$!{ctx.loginKey}" target="_blank">既存店フォロー</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.weblogUrl}/cls/management/report/?loginKey=$!{ctx.loginKey}" target="_blank">レポート出力</a></li>'
+        + '      <li class="lv2"><a href="$!{ctx.weblogUrl}/cls/management/freeCall/?loginKey=$!{ctx.loginKey}" target="_blank">フリーコール検索</a></li>'
+        + '    </ul>'
+        + '  </li>'
+#end
+#if($ctx.isAuthorized("10"))
+        + '  <li class="lv1">外部サービス'
+        + '    <ul>'
+        + '      <li class="lv2"><a href="https://wp2.videoi.jp/" target="_blank">ビデオリサーチ</a></li>'
+        + '      <li class="lv2"><a href="http://www.interfax.jp/users/" target="_blank">InterFAX</a></li>'
+        + '      <li class="lv2"><a href="http://www.post.japanpost.jp/zipcode/dl/kogaki.html" target="_blank">日本郵便：住所と郵便番号のダウンロード</a></li>'
+        + '    </ul>'
+        + '  </li>'
+#end
+        + '</ul>'
+        + '</div>';
+
+    /*
+     * Cross-browser event handling
+     */
+    function addEvent(eventName, functionName) {
+        if(window.addEventListener) {
+            window.addEventListener(eventName, functionName, false);
+        } else {
+            window.attachEvent('on' + eventName, functionName);
+        }
+    }
+
+    /*
+     * Sidebar rendering
+     */
+    pub.write = function() {
+        addEvent('load', function() {
+            document.getElementById("sidebar").innerHTML = str;
+        });
+    }
+    return pub;
+
+}();

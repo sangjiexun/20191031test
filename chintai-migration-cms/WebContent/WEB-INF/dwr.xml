@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE dwr PUBLIC
+  "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN"
+  "http://getahead.ltd.uk/dwr/dwr20.dtd">
+<dwr>
+	<allow>
+		<create creator="spring" javascript="AddressEnsenManager">
+			<param name="beanName" value="addressEnsenService" />
+		</create>
+		<convert converter="bean" match="net.chintai.backend.sysadmin.common.dwr.service.bean.AreaBean" />
+		<convert converter="bean" match="net.chintai.backend.sysadmin.common.dwr.service.bean.PrefBean" />
+		<convert converter="bean" match="net.chintai.backend.sysadmin.common.dwr.service.bean.CityBean" />
+		<convert converter="bean" match="net.chintai.backend.sysadmin.common.dwr.service.bean.EnsenBean" />
+		<convert converter="bean" match="net.chintai.backend.sysadmin.common.dwr.service.bean.EkiBean" />
+		<convert converter="bean" match="net.chintai.backend.sysadmin.common.dwr.service.bean.AddressBean" />
+
+		<create creator="spring" javascript="Operation">
+			<param name="beanName" value="operationService" />
+		</create>
+		<convert converter="bean" match="net.chintai.backend.sysadmin.common.dwr.service.bean.OperationBean" />
+
+		<!-- ADデータアップロード画面用 -->
+		<create creator="spring" javascript="AdDataMatchingManager">
+			<param name="beanName" value="adDataMatchingService" />
+		</create>
+
+		<!-- 他社データ連携出力設定用 -->
+		<create creator="spring" javascript="DcoTypeManager">
+			<param name="beanName" value="dcoTypeService" />
+		</create>
+		<convert converter="bean" match="net.chintai.backend.sysadmin.common.dwr.service.bean.DcoTypeBean" />
+
+	</allow>
+</dwr>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="prefClientSettingDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.PrefClientSettingDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<!-- エイブル担当店/取扱店出力情報設定更新  -->
+	<bean id="ablOutSettingDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.AblOutSettingDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="ablOutUpdateCommitDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.AblOutUpdateCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<!-- 沿線・駅データ元出力設定 -->
+	<bean id="rosenClientSettingSearchDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.RosenClientSettingSearchDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="rosenClientSettingCommitDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.RosenClientSettingCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="ekiClientSettingInfoDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.EkiClientSettingInfoDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="ekiClientSettingCommitDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.EkiClientSettingCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="shikutyosonClientSettingDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.ShikutyosonClientSettingDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="shikutyosonClientSettingCommitDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.ShikutyosonClientSettingCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="shopSkipSettingDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.ShopSkipSettingDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<!-- Service Definecions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="prefClientSettingService" class="net.chintai.backend.sysadmin.dataoutput.service.impl.PrefClientSettingServiceImpl">
+		<property name="prefClientSettingDao"><ref local="prefClientSettingDao"/></property>
+	</bean>
+
+	<bean id="prefClientUpdateCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="prefClientUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="prefClientUpdateCommit">PROPAGATION_REQUIRED, -java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="prefClientUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.dataoutput.service.impl.PrefClientUpdateCommitServiceImpl">
+		<property name="prefClientUpdateCommitDao">
+			<ref bean="prefClientUpdateCommitDao" />
+		</property>
+	</bean>
+
+	<bean id="prefClientUpdateCommitDao" class="net.chintai.backend.sysadmin.dataoutput.dao.impl.PrefClientUpdateCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<!-- エイブル担当店/取扱店出力情報設定更新  -->
+	<bean id="ablOutSettingService" class="net.chintai.backend.sysadmin.dataoutput.service.impl.AblOutSettingServiceImpl">
+		<property name="ablOutSettingDao"><ref local="ablOutSettingDao"/></property>
+	</bean>
+
+	<bean id="ablOutUpdateCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="ablOutUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="ablOutUpdateCommit">PROPAGATION_REQUIRED, -java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ablOutUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.dataoutput.service.impl.AblOutUpdateCommitServiceImpl">
+		<property name="ablOutUpdateCommitDao">
+			<ref local="ablOutUpdateCommitDao" />
+		</property>
+	</bean>
+
+	<!-- 沿線・駅データ元出力設定 -->
+	<bean id="rosenClientSettingSearchService" class="net.chintai.backend.sysadmin.dataoutput.service.impl.RosenClientSettingSearchServiceImpl">
+		<property name="rosenClientSettingSearchDao">
+			<ref local="rosenClientSettingSearchDao" />
+		</property>
+	</bean>
+
+	<bean id="rosenClientSettingCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="rosenClientSettingCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="rosenClientSettingCommit">PROPAGATION_REQUIRED, -java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="rosenClientSettingCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.dataoutput.service.impl.RosenClientSettingCommitServiceImpl">
+		<property name="rosenClientSettingCommitDao">
+			<ref bean="rosenClientSettingCommitDao" />
+		</property>
+	</bean>
+
+	<!-- 駅別データ元出力設定 -->
+	<bean id="ekiClientSettingInfoService" class="net.chintai.backend.sysadmin.dataoutput.service.impl.EkiClientSettingInfoServiceImpl">
+		<property name="ekiClientSettingInfoDao">
+			<ref local="ekiClientSettingInfoDao" />
+		</property>
+	</bean>
+
+	<bean id="ekiClientSettingCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="ekiClientSettingCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="ekiClientSettingCommit">PROPAGATION_REQUIRED, -java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ekiClientSettingCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.dataoutput.service.impl.EkiClientSettingCommitServiceImpl">
+		<property name="ekiClientSettingCommitDao">
+			<ref bean="ekiClientSettingCommitDao" />
+		</property>
+	</bean>
+
+	<!-- 市区町村別データ元出力設定 -->
+	<bean id="shikutyosonClientSettingInfoService" class="net.chintai.backend.sysadmin.dataoutput.service.impl.ShikutyosonClientSettingInfoServiceImpl">
+		<property name="shikutyosonClientSettingDao">
+			<ref local="shikutyosonClientSettingDao" />
+		</property>
+	</bean>
+
+	<bean id="shikutyosonClientSettingCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="shikutyosonClientSettingCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="cityClientSettingCommit">PROPAGATION_REQUIRED, -java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="shikutyosonClientSettingCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.dataoutput.service.impl.ShikutyosonClientSettingCommitServiceImpl">
+		<property name="shikutyosonClientSettingCommitDao">
+			<ref bean="shikutyosonClientSettingCommitDao" />
+		</property>
+	</bean>
+	
+	<bean id="shopSkipSettingService" class="net.chintai.backend.sysadmin.dataoutput.service.impl.ShopSkipSettingServiceImpl">
+		<property name="shopSkipSettingDao">
+			<ref bean="shopSkipSettingDao" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- $Id: applicationContext-sevendays.xml 1601 2007-10-28 09:04:05Z t-kojima $ -->
+<beans>
+	
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="sevendaysMenuDao"
+		class="net.chintai.backend.sysadmin.external.sevendays.dao.impl.SevendaysMenuDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- Service Definitions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="sevendaysMenuService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="sevendaysMenuServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="isEnabled*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="sevendaysMenuServiceTarget"
+		class="net.chintai.backend.sysadmin.external.sevendays.service.impl.SevendaysMenuServiceImpl">
+		<property name="sevendaysMenuDao">
+			<ref bean="sevendaysMenuDao" />
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<!--
+	$Id: CustomTag.xml 2871 2007-11-27 00:52:45Z t-kojima $
+-->
+<sqlMap namespace="customTag">
+
+	<!-- query cache -->
+	<cacheModel type="memory" readOnly="true" id="queryCache">
+		<property name="reference-type" value="WEAK" />
+		<flushInterval minutes="3" />
+	</cacheModel>
+
+	<!-- 都道府県プルダウンの中身作成用 -->
+	<resultMap id="prefMap"
+			class="net.chintai.backend.sysadmin.common.tags.domain.TodofukenDomain">
+		<result property="areaName" column="AREANAME" />
+		<result property="prefCd" column="PREFCD" />
+		<result property="prefName" column="PREFNAME" />
+	</resultMap>
+	<select id="selectAreaTotal" resultMap="prefMap" cacheModel="queryCache">
+		<![CDATA[
+		SELECT
+			MA.AREANAME,
+			MP.PREFCD,
+			MP.PREFNAME
+		FROM
+			MST_PREF MP
+		INNER JOIN
+			MST_AREA MA
+			ON MA.AREACD = MP.AREACD
+		ORDER BY
+			MA.SORT_KEY,
+			MP.SORT_KEY
+    ]]>
+	</select>
+
+	<!-- ユーザグループプルダウンの中身作成用 -->
+	<resultMap id="userGroupMap"
+			class="net.chintai.backend.sysadmin.common.tags.domain.UserGroupDomain">
+		<result property="id" column="GROUP_ID" />
+		<result property="name" column="GROUP_NAME" />
+	</resultMap>
+	<select id="selectUserGroup" resultMap="userGroupMap">
+		<![CDATA[
+		SELECT
+			GROUP_ID,
+			GROUP_NAME
+		FROM
+			MNG_MST_GROUP
+			ORDER BY GROUP_ID
+    ]]>
+	</select>
+
+	<!-- 操作内容プルダウン中身作成用 -->
+	<resultMap id="operationContentsMap"
+			class="net.chintai.backend.sysadmin.common.tags.domain.AuthorityTagDomain">
+		<result property="authorityId" column="AUTHORITY_ID" />
+		<result property="authorityName" column="AUTHORITY_NAME" />
+	</resultMap>
+	<select id="selectOperationContents"
+			resultMap="operationContentsMap" cacheModel="queryCache">
+		SELECT
+			AUTHORITY_ID,
+			AUTHORITY_NAME
+		FROM
+			MNG_MST_AUTHORITY
+		ORDER BY
+			AUTHORITY_ID
+	</select>
+
+	<!-- エリアプルダウン中身作成用 -->
+	<resultMap id="areaMap"
+			class="net.chintai.backend.sysadmin.common.tags.domain.AreaInfoDomain">
+		<result property="areaCd" column="AREACD" />
+		<result property="areaName" column="AREANAME" />
+	</resultMap>
+	<select id="selectAreaInfo" resultMap="areaMap" cacheModel="queryCache">
+		SELECT AREACD, AREANAME FROM MST_AREA
+	</select>
+
+	<!-- Q&Aカテゴリプルダウン中身作成用 -->
+	<resultMap id="mngQaCategoryMap"
+			class="net.chintai.backend.sysadmin.common.tags.domain.MngMstQaCategoryDomain">
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="categoryId1" column="CATEGORY_ID_1" />
+		<result property="categoryId2" column="CATEGORY_ID_2" />
+		<result property="categoryName" column="CATEGORY_NAME" />
+	</resultMap>
+	<select id="selectMngMstQaCategory" resultMap="mngQaCategoryMap">
+		<![CDATA[
+		SELECT
+			(CATEGORY_ID_1 || CATEGORY_ID_2) AS CATEGORY_ID,
+			CATEGORY_ID_1,
+			CATEGORY_ID_2,
+			CATEGORY_NAME
+		FROM
+			MNG_MST_QA_CATEGORY
+		WHERE
+			CATEGORY_ID_2 <> '000'
+		ORDER BY
+			CATEGORY_ID_1,
+			CATEGORY_ID_2
+		 ]]>
+	</select>
+
+	<!-- お問合せ種別プルダウン中身作成用 -->
+	<resultMap id="inquiryInfoMap"
+			class="net.chintai.backend.sysadmin.common.tags.domain.InquiryDomain">
+		<result property="inqKindSeq" column="CJN_INQ_KIND_SEQ" />
+		<result property="inqTitle" column="INQ_TITLE" />
+	</resultMap>
+	<select id="selectInquiryInfo" resultMap="inquiryInfoMap">
+		SELECT
+			CJN_INQ_KIND_SEQ,
+			INQ_TITLE
+		FROM
+			MST_CJN_INQUIRY
+		ORDER BY
+			CJN_INQ_KIND_SEQ
+	</select>
+
+	<!-- 担当支社プルダウン中身作成用 -->
+	<resultMap id="shisyaInfoMap"
+			class="net.chintai.backend.sysadmin.common.tags.domain.ShisyaDomain">
+		<result property="optionValue" column="CT_SHISYA_CD" />
+		<result property="optionName" column="CT_SHISYA_NAME" />
+	</resultMap>
+	<select id="selectShisyaInfo" resultMap="shisyaInfoMap">
+		SELECT
+			CT_SHISYA_NAME,
+			CT_SHISYA_CD
+		FROM
+			<!-- 2014/06 kashiyama mod start -->
+			<!--
+			USK_MST_CT_SHISYA
+			-->
+			MST_CT_SHISYA
+			<!-- 2014/06 kashiyama mod end -->
+		WHERE
+			DEL_KBN = '0' AND
+			SHISYA_KBN = '0'
+	</select>
+
+	<!-- 問合せ用区分値マスタプルダウン中身作成用 -->
+	<resultMap id="mstInquiryKbnMap"
+			class="net.chintai.backend.sysadmin.common.tags.domain.MstInquiryKbnDomain">
+		<result property="inqKbn" column="INQ_KBN" />
+		<result property="inqKbnName" column="INQ_KBN_NAME" />
+	</resultMap>
+	<select id="selectMstInquiryKbn" resultMap="mstInquiryKbnMap" parameterClass="java.lang.String">
+		SELECT
+			INQ_KBN,
+			INQ_KBN_NAME
+		FROM
+			MST_INQUIRY_KBN
+		WHERE
+			DEL_KBN = '0' AND
+			INQ_KBN_COL_NAME = #inqKbnColName#
+		Order by INQ_KBN
+	</select>
+
+	<resultMap id="mstRendoMap"
+			class="net.chintai.backend.sysadmin.common.tags.domain.MstRendoDomain">
+		<result property="rendoCd" column="RENDO_CD" />
+		<result property="rendoName" column="RENDO_NAME" />
+	</resultMap>
+	<select id="selectMstRendo" resultMap="mstRendoMap" parameterClass="java.lang.String">
+		SELECT
+			RENDO_CD,
+			RENDO_NAME
+		FROM
+			MST_RENDO
+		Order by RENDO_CD
+	</select>
+</sqlMap>

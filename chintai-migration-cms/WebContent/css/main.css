@@ -1,0 +1,649 @@
+﻿@charset "UTF-8";
+
+/*
+ * ログイン画面
+ */
+#login {
+  padding: 2ex;
+  }
+
+#login p {
+  padding: 1ex;
+  }
+
+/*
+ * メインエリア
+ */
+#main {
+  float: left;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  }
+
+.main_layout {
+  margin-left: 200px;
+  padding: 1em;
+  }
+
+.main_layout p {
+  margin: 1ex 0;
+  }
+
+.main_layout pre {
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/*
+ * 追加/登録画面のフォーム
+ */
+.main_layout .add_form {
+  margin: 1ex 0.2ex;
+  padding: 0.5ex;
+  }
+
+.main_layout .add_form .add_form_title {
+  font-weight: bold;
+  font-size: 120%;
+  padding: 0.2ex 0.5ex;
+  }
+
+.main_layout .add_form .annotation {
+  color: #86828C;
+  padding: 0.3ex 1ex;
+  }
+
+.main_layout .add_form .form_space {
+  padding: 0.5ex 1ex 1ex 1ex;
+  word-spacing: 1ex;
+  }
+
+/*
+ * ポップアップレイアウト
+ */
+.popup_layout {
+  margin-left: 10px;
+  padding: 1em;
+  }
+
+.popup_layout p {
+  margin: 1ex 0;
+  }
+
+.popup_layout .add_form {
+  margin: 1ex 0.2ex;
+  padding: 0.5ex;
+  }
+
+.popup_layout .search_label {
+  font-size: 80%;
+}
+
+.popup_layout .add_form .add_form_title {
+  font-weight: bold;
+  font-size: 120%;
+  padding: 0.2ex 0.5ex;
+  }
+
+.popup_layout .add_form .annotation {
+  color: #86828C;
+  padding: 0.3ex 1ex;
+  }
+
+.popup_layout .add_form .form_space {
+  padding: 0.5ex 1ex 1ex 1ex;
+  word-spacing: 1ex;
+  }
+
+.popup_layout .add_form .asp_img_box {
+  border:1px solid #000033;
+  padding: 1ex;
+  margin: 0ex 2ex;
+  }
+
+
+/*
+ * パンくず
+ */
+.topic_path {
+  padding-bottom: 1ex;
+  }
+
+/*
+ * 小見出し
+ */
+p.section_header {
+  background-color: #CFCFB1;
+  padding: 0.5ex;
+  font-weight: bold;
+  font-size: 120%;
+  width: 99%; /* IE6 バグ回避用 */
+  margin-top: 1.5ex;
+  }
+
+/*
+ * 右側ボタン
+ */
+p.right-button  {
+  text-align: right;
+  padding-bottom: 1ex;
+  }
+
+/*
+ * 注意書き
+ */
+.caution {
+  font-weight: bold;
+  color: red;
+  }
+
+.annotation_left {
+  text-align: right;
+}
+
+.appeal {
+  color: red;
+}
+
+/*
+ * テーブル汎用
+ */
+td.left {
+  text-align: left;
+  }
+
+td.right {
+  text-align: right;
+  }
+
+col.left {
+  text-align: left;
+  }
+
+/*
+ * 詳細表示系
+ */
+table.type_detail {
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  width: 99%;
+  margin-bottom: 3ex;
+  }
+
+table.type_detail th {
+  border: 1px solid;
+  padding: 1ex;
+  background-color: #DFFFCC;
+  }
+
+table.type_detail th.del_data {
+  background-color: #DFDFDF;
+  }
+
+table.type_detail td {
+  border: 1px solid;
+  padding: 1ex;
+  }
+table.type_detail td.del_data {
+  background-color: #DFDFDF;
+  }
+
+
+/*
+ * 詳細表示系 preあり
+ */
+table.type_detail_pre {
+  table-layout: fixed;
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  width: 99%;
+  margin-bottom: 3ex;
+  }
+
+table.type_detail_pre th {
+  border: 1px solid;
+  padding: 1ex;
+  background-color: #DFFFCC;
+  }
+
+table.type_detail_pre td {
+  border: 1px solid;
+  padding: 1ex;
+  }
+
+/*
+ * 罫線なしの表
+ */
+table.type_none {
+  border: 0px;
+  }
+
+table.type_none th {
+  border: 0px;
+  padding: 0.5ex;
+  background-color: #FFFFFF;
+  }
+
+table.type_none th.del_data {
+  background-color: #DFDFDF;
+  }
+
+table.type_none td {
+  border: 0px;
+  padding: 0.5ex;
+  }
+
+table.type_none td.del_data {
+  background-color: #DFDFDF;
+  }
+
+/*
+ * 物件条件指定表のインラインテーブル
+ */
+table.type_bukken {
+  border: 0px;
+  }
+
+table.type_bukken th {
+  border: 0px;
+  padding: 0.5ex 1ex;
+  background-color: #FFFFFF;
+  }
+
+table.type_bukken td {
+  border: 0px;
+  padding: 0.5ex 1ex;
+  background-color: #FFFFFF;
+  }
+
+/*
+ * 一覧表示系
+ */
+table.type_list {
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  width: 99%;
+  margin-bottom: 2ex;
+  text-align: center;
+  }
+
+table.type_list th {
+  background-color: #DFFFCC;
+  border: 1px solid;
+  padding: 1ex;
+  }
+
+table.type_list td {
+  border: 1px solid;
+  padding: 1ex;
+  }
+
+/*
+ * 一覧表示系 preあり
+ */
+table.type_list_pre {
+  table-layout: fixed;
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  width: 99%;
+  margin-bottom: 2ex;
+  text-align: center;
+  }
+
+table.type_list_pre th {
+  background-color: #DFFFCC;
+  border: 1px solid;
+  padding: 1ex;
+  }
+
+table.type_list_pre td {
+  border: 1px solid;
+  padding: 1ex;
+  }
+
+/*
+ * 一覧表示系・ページング用
+ */
+table.type_list_nomargin {
+  /*table-layout: fixed;*/
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  width: 99%;
+  text-align: center;
+}
+
+table.type_list_nomargin th {
+  background-color: #DFFFCC;
+  border: 1px solid;
+  padding: 1ex;
+  }
+
+table.type_list_nomargin td {
+  border: 1px solid;
+  padding: 1ex;
+  }
+
+/*
+ * 検索ボックス系
+ */
+table.type_search_shop {
+  font-size: 80%;
+  border-collapse: collapse;
+  }
+
+table.type_search_shop td {
+  padding: 0.5ex;
+  border: 1px solid #666666;
+  }
+
+table.type_search_shop th {
+  padding: 0.5ex 1.5ex;
+  border: 1px solid #666666;
+  background-color: #DFDFDF;
+}
+
+table.type_searchbox {
+  }
+
+table.type_searchbox td {
+  padding: 0.2ex;
+  border: 0;
+  }
+
+
+/*
+ * ユーザ登録数推移(日)の集計表示用
+ */
+table.type_count_daily {
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 80%;
+  }
+
+table.type_count_daily th {
+  border: 1px solid #505050;
+  width: 100px;
+  padding: 3px 1px;
+  }
+
+table.type_count_daily td {
+  border: 1px solid #505050;
+  width: 25px;
+  padding: 3px 1px;
+  }
+
+/*
+ * ユーザ登録数推移(月)の集計表示用
+ */
+table.type_count_monthly {
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 80%;
+  }
+
+table.type_count_monthly th {
+  border: 1px solid #505050;
+  width: 100px;
+  padding: 3px 1px;
+  }
+
+table.type_count_monthly td {
+  border: 1px solid #505050;
+  width: 40px;
+  padding: 3px 1px;
+  }
+
+/*
+ * アプローチ状況サマリの集計表示用
+ */
+table.type_approach {
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 80%;
+  }
+
+table.type_approach th {
+  border: 1px solid #505050;
+  padding: 4px 2px;
+  }
+
+table.type_approach td {
+  border: 1px solid #505050;
+  padding: 4px 2px;
+  }
+
+/*
+ * 現在の物件数・集計表示用
+ */
+table.type_bukken_num {
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  width: 99%;
+  margin-bottom: 2ex;
+  }
+
+table.type_bukken_num th {
+  background-color: #DFFFCC;
+  border: 1px solid;
+  padding: 1ex;
+  text-align: center;
+  }
+
+table.type_bukken_num td {
+  border: 1px solid;
+  padding: 1ex;
+  text-align: right;
+  }
+
+/*
+ * 不動産ASP都道府県/沿線設定の表(登録/編集時)
+ */
+table.type_asp {
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  width: 99%;
+  margin-bottom: 2ex;
+  text-align: center;
+  }
+
+table.type_asp th, table.type_asp td {
+  padding: 0.5ex;
+  border: 1px solid;
+  width: 12%;
+  }
+
+table.type_asp th {
+  background-color: #DFFFCC;
+  }
+
+table.type_asp td {
+  text-align: right;
+  }
+
+table.type_asp td input {
+  width: 20px;
+  }
+
+table.type_asp td.no_item {
+  background-color: #DFDFDF;
+}
+
+/*
+ * 不動産ASP都道府県/沿線設定の表(閲覧/確認時)
+ */
+table.type_asp_areaview {
+  border: 1px solid #505050;
+  border-collapse: collapse;
+  margin-bottom: 2ex;
+  text-align: center;
+  }
+
+table.type_asp_areaview th, table.type_asp_areaview td {
+  padding: 1ex;
+  border: 1px solid;
+  }
+
+table.type_asp_areaview th {
+  background-color: #DFFFCC;
+  }
+
+
+/*
+ * 入稿履歴一覧の画像種類のタイトル部分
+ * @since 2008.07.23
+ */
+table.type_bk_rireki_img_list_title{
+	border-color: #DFFFCC;
+	width: 99%;
+	padding: 0px;
+}
+table.type_bk_rireki_img_list_title tr{
+	padding: 0px;
+	text-align: center;
+}
+
+table.type_bk_rireki_img_list_title td{
+	padding: 0px;
+	width: 7.0%;
+	border: none; /*20140422追加*/
+}
+
+
+/*
+ * 入稿履歴一覧の画像種類のデータ部分
+ * @since 2008.07.23
+ */
+table.type_bk_rireki_img_list_data{
+	border-color: #ffffff;
+	width: 99%;
+	padding: 0px;
+}
+table.type_bk_rireki_img_list_data tr{
+	padding: 0px;
+	text-align: center;
+}
+
+table.type_bk_rireki_img_list_data td{
+	padding: 0px;
+	width: 7.0%;
+    border: none; /*20140422追加*/
+}
+
+
+/*
+ * ページングのセレクタ
+ */
+.pager {
+  font-size: 120%;
+  word-spacing: 1ex;
+  text-align: right;
+  padding-right: 1%;
+  }
+
+/*
+ * 警告メッセージ
+ */
+p.notify {
+  border: 1px solid #ff6666;
+  background-color: #ffcccc;
+  padding: 1ex;
+  font-weight: bold;
+  font-size: 120%;
+  }
+
+/*
+ * メッセージ
+ */
+p.message {
+  border: 1px solid #66ffff;
+  background-color: #ccffff;
+  padding: 1ex;
+  font-weight: bold;
+  font-size: 120%;
+  }
+
+/*
+ * 表直下のボタン
+ */
+.under_table {
+  text-align: right;
+  padding-right: 1%;
+  }
+
+/*
+ * li のインデント補正
+ */
+ul.normal {
+  margin-left: 3ex;
+  padding: 0.5ex;
+  }
+
+ul.menu1 {
+  margin-left: 3ex;
+  padding: 1ex;
+  font-weight: bold;
+  font-size: 120%;
+  }
+
+ul.menu2 {
+  margin-left: 3ex;
+  padding: 0.5ex;
+  font-weight: normal;
+  font-size: 85%;
+  list-style: none;
+  }
+
+
+/*
+ * 細い線
+ */
+hr.sharp {
+  padding: 0px;
+  height: 1px;
+  border-bottom-width: 1px;
+  border-top-style: none;
+  border-right-style: none;
+  border-bottom-style: dotted;
+  border-left-style: none;
+  border-bottom-color: #000000;
+}
+
+
+/*
+ * 下線のみの表
+ */
+table.type_under {
+  border: 0px;
+  }
+
+table.type_under th {
+  border: 0px;
+  padding: 0.5ex;
+  background-color: #FFFFFF;
+  }
+
+table.type_under td {
+  padding: 0.5px;
+  height: 35px;
+  border-bottom-width: 1px;
+  border-top-style: none;
+  border-right-style: none;
+  border-bottom-style: dotted;
+  border-left-style: none;
+  border-bottom-color: #000000;
+  }
+
+/*
+ * td罫線なし
+ * 20140625追加
+ */
+table.tdNoBorder td{
+  border: none;
+}

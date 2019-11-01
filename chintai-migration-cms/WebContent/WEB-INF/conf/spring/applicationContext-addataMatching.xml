@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+
+	<bean id="adDataUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.addata_matching.dao.impl.AdDataUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="matchingDataListDao" class="net.chintai.backend.sysadmin.addata_matching.dao.impl.MatchingDataListDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="matchingDataDownloadDao" class="net.chintai.backend.sysadmin.addata_matching.dao.impl.MatchingDataDownloadDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+
+	<!-- Service Definecions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+
+		<!-- ADデータアップロード -->
+	<bean id="adDataUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="adDataUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="adDataUpdateCommit">PROPAGATION_REQUIRED, -java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="adDataUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.addata_matching.service.impl.AdDataUpdateCommitServiceImpl">
+		<property name="adDataUpdateCommitDao">
+			<ref bean="adDataUpdateCommitDao" />
+		</property>
+	</bean>
+
+		<!-- 照合結果一覧 -->
+	<bean id="matchingDataListService" class="net.chintai.backend.sysadmin.addata_matching.service.impl.MatchingDataListServiceImpl">
+		<property name="matchingDataListDao"><ref local="matchingDataListDao"/></property>
+	</bean>
+
+		<!-- 照合結果ダウンロード -->
+	<bean id="matchingDataDownloadService" class="net.chintai.backend.sysadmin.addata_matching.service.impl.MatchingDataDownloadServiceImpl">
+		<property name="matchingDataDownloadDao"><ref local="matchingDataDownloadDao"/></property>
+	</bean>
+
+</beans>

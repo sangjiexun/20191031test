@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="dataoutput">
+
+
+	<resultMap id="prefClientDataList"
+		class="net.chintai.backend.sysadmin.dataoutput.domain.PrefClientDataDomain">
+		<result property="prefname" column="PREFNAME" />
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE" />
+		<result property="prefcd" column="PREFCD" />
+	</resultMap>
+
+	<resultMap id="mstPref"
+		class="net.chintai.backend.sysadmin.dataoutput.domain.MstPrefDomain">
+		<result property="prefcd" column="PREFCD" />
+		<result property="prefname" column="PREFNAME" />
+<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて追加 2014/1/7 strat -->
+		<result property="dcoName" column="DCO_NAME"/>
+<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて追加 2014/1/7 end -->
+	</resultMap>
+
+<!-- E-0034_0035_他社データ連携出力(スマイティ)_追加改修にて追加 2013/10/21 -->
+	<resultMap id="ablSettingList"
+		class="net.chintai.backend.sysadmin.dataoutput.domain.AblOutSettingDomain">
+		<result property="dcoType" column="DCO_TYPE"/>
+		<result property="bukkenOutKbn" column="BUKKEN_OUT_KBN"/>
+		<result property="updDt" column="UPD_DT"/>
+<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて追加 2014/1/7 strat -->
+		<result property="dcoName" column="DCO_NAME"/>
+<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて追加 2014/1/7 end -->
+	</resultMap>
+<!-- E-0034_0035_他社データ連携出力(スマイティ)_追加改修にて追加 2013/10/21 end-->
+
+
+
+<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて追加 2014/1/7 strat -->
+	<resultMap id="mstEnsenList"
+		class="net.chintai.backend.sysadmin.dataoutput.domain.MstEnsenDomain" >
+		<result property="ensenCd" column="ENSENCD"/>
+		<result property="ensenName" column="ENSENNAME"/>
+		<result property="ensenKana" column="ENSENKANA"/>
+		<result property="ensenType" column="ENSENTYPE"/>
+		<result property="areaName" column="AREANAME"/>
+		<result property="dcoName" column="DCO_NAME"/>
+	</resultMap>
+
+	<resultMap id="rosenOutSettingList"
+		class="net.chintai.backend.sysadmin.dataoutput.domain.RosenClientSettingDomain" >
+		<result property="ensenCd" column="ENSENCD"/>
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+	</resultMap>
+
+	<resultMap id="ekiOutSettingList"
+		 class="net.chintai.backend.sysadmin.dataoutput.domain.EkiClientSettingDomain">
+		<result property="ekiCd" column="EKICD"/>
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+	</resultMap>
+
+	<resultMap id="mstEkiList"
+		class="net.chintai.backend.sysadmin.dataoutput.domain.MstEkiDomain" >
+		<result property="ekiCd" column="EKICD"/>
+		<result property="ekiName" column="EKINAME"/>
+	</resultMap>
+
+	<resultMap id="ensenSkipConfigList" class="java.lang.String" >
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+	</resultMap>
+
+	<resultMap id="shikutyosonOutSettingList"
+		class="net.chintai.backend.sysadmin.dataoutput.domain.ShikutyosonClientSettingDomain" >
+		<result property="cityCd" column="CITYCD"/>
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+	</resultMap>
+
+	<resultMap id="mstCityList"
+		class="net.chintai.backend.sysadmin.dataoutput.domain.MstCityDomain" >
+		<result property="cityCd" column="CITYCD"/>
+		<result property="cityName" column="CITYNAME"/>
+		<result property="prefName" column="PREFNAME"/>
+		<result property="dcoName" column="DCO_NAME"/>
+	</resultMap>
+
+	<resultMap id="prefSkipConfigList" class="java.lang.String" >
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+	</resultMap>
+<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて追加 2014/1/7 end -->
+
+<!-- 店舗別出力設定追加 2018/04/20 start -->
+	<resultMap id="shopSkipConfigList" class="net.chintai.backend.sysadmin.dataoutput.domain.ShopSkipSettingDomain" >
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="licNum" column="LIC_NUM"/>
+		<result property="prefName" column="PREFNAME"/>
+	</resultMap>
+<!-- 店舗別出力設定追加 2018/04/20 end -->
+
+
+
+	<select id ="getPrefClientDataList" resultMap="prefClientDataList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.PrefClientSettingParamBean">
+		SELECT
+			MP.PREFCD,
+			MP.PREFNAME,
+			DPSC.CLIENTSYSTEM_TYPE
+		FROM
+			DCO_PREF_SKIP_CONFIG DPSC
+				LEFT JOIN MST_PREF MP ON DPSC.PREFCD = MP.PREFCD
+		WHERE
+		<!--  E-0070 建物名表示に関する改修にて、dcoTypeを変数に変更 -->
+			DPSC.DCO_TYPE = #dcoType#
+		ORDER BY
+			DPSC.PREFCD,DPSC.CLIENTSYSTEM_TYPE
+	</select>
+
+	<select id ="getMstPref" resultMap="mstPref" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.PrefClientSettingParamBean">
+	<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて、MST_DCOからDCO_NAMEを取得する処理を追加 2014/1/7 -->
+		SELECT
+			MP.PREFCD,
+			MP.PREFNAME,
+			MD.DCO_NAME
+		FROM
+			MST_PREF MP,
+			MST_DCO MD
+		WHERE
+			MD.DCO_TYPE = #dcoType#
+		ORDER BY
+			MP.PREFCD
+	</select>
+
+	<insert id="insertPrefSkipConfig"
+			parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.PrefClientUpdateParamBean">
+		INSERT INTO
+ 			DCO_PREF_SKIP_CONFIG DPSC (
+  				DPSC.DCO_TYPE,
+  				DPSC.PREFCD,
+  				DPSC.CLIENTSYSTEM_TYPE,
+  				DPSC.INS_DT,
+  				DPSC.INS_PG,
+  				DPSC.INS_ID,
+  				DPSC.UPD_DT,
+  				DPSC.UPD_PG,
+  				DPSC.UPD_ID
+
+			) VALUES (
+				<!--  E-0070 建物名表示に関する改修にて、dcoTypeを変数に変更 -->
+				#dcoType#,
+				#prefcd#,
+				#clientsystemType#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#
+			)
+	</insert>
+
+<!--  E-0070 建物名表示に関する改修にて、parameterClassを追加 -->
+	<delete id="deletePrefSkipConfig" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.PrefClientSettingParamBean">
+		DELETE FROM
+			DCO_PREF_SKIP_CONFIG DPSC
+		<!--  E-0070 建物名表示に関する改修にて、WHERE句を追加 -->
+		WHERE
+			DPSC.DCO_TYPE = #dcoType#
+	</delete>
+
+<!-- E-0034_0035_他社データ連携出力(スマイティ)_追加改修にて追加 2013/10/21 -->
+<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて、MST_DCOからDCO_NAMEを取得する処理を追加 2014/1/7 -->
+	<select id="getAblSettingList" resultMap="ablSettingList">
+		SELECT
+			DAOC.DCO_TYPE       AS DCO_TYPE,
+			MD.DCO_NAME         AS DCO_NAME,
+			DAOC.BUKKEN_OUT_KBN AS BUKKEN_OUT_KBN,
+			TO_CHAR(DAOC.UPD_DT,'YYYY/MM/DD HH24:MI:SS') AS UPD_DT
+		FROM
+			DCO_ABL_OUT_CONFIG DAOC,
+			MST_DCO MD
+		WHERE
+			DAOC.DCO_TYPE = MD.DCO_TYPE
+		ORDER BY
+			DAOC.DCO_TYPE
+	</select>
+
+	<update id="ablOutUpdate"
+			parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.AblOutUpdateParamBean">
+		UPDATE
+			DCO_ABL_OUT_CONFIG DAOC
+		SET
+			BUKKEN_OUT_KBN                               = #bukkenOutKbn#,
+			UPD_DT                                       = SYSTIMESTAMP,
+			UPD_PG                                       = #pgName#,
+			UPD_ID                                       = #userId#
+		WHERE
+			DCO_TYPE                                     = #dcoType# AND
+			TO_CHAR(DAOC.UPD_DT,'YYYY/MM/DD HH24:MI:SS') = #updDt#
+
+	</update>
+<!-- E-0034_0035_他社データ連携出力(スマイティ)_追加改修にて追加 2013/10/21 end-->
+
+
+<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて追加 2014/1/7 start -->
+
+	<select id ="getRosenOutSettingList" resultMap="rosenOutSettingList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.RosenClientSettingParamBean">
+		SELECT
+			ME.ENSENCD AS ENSENCD,
+			DES.CLIENTSYSTEM_TYPE AS CLIENTSYSTEM_TYPE
+		FROM
+			MST_AREA MA,
+			DCO_ENSEN_SKIP_CONFIG DES
+				LEFT JOIN MST_ENSEN ME ON DES.ENSENCD = ME.ENSENCD
+		WHERE
+			MA.AREACD = ME.AREACD AND
+			DES.DCO_TYPE = #dcoType#
+		ORDER BY
+			DES.ENSENCD, DES.CLIENTSYSTEM_TYPE
+	</select>
+
+
+	<select id="getMstEnsenList" resultMap="mstEnsenList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.RosenClientSettingParamBean">
+		SELECT
+			ME.ENSENCD AS ENSENCD,
+			ME.ENSENNAME AS ENSENNAME,
+			ME.ENSENKANA AS ENSENKANA,
+			ME.ENSENTYPE AS ENSENTYPE,
+			MA.AREANAME AS AREANAME,
+			MD.DCO_NAME AS DCO_NAME
+		FROM
+			MST_AREA MA,
+			MST_ENSEN ME,
+			MST_DCO MD
+		WHERE
+			MA.AREACD = ME.AREACD AND
+			ME.ENSENTYPE = #ensenType# AND
+			ME.AREACD = #areaCd# AND
+			ME.DEL_KBN = '0' AND
+			MD.DCO_TYPE = #dcoType#
+		ORDER BY
+			ME.ENSENCD
+	</select>
+
+	<delete id="deleteEnsenSkipConfig" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.RosenClientSettingCommitParamBean">
+		DELETE
+			FROM DCO_ENSEN_SKIP_CONFIG DES
+		WHERE
+			DES.DCO_TYPE = #dcoType# AND
+			EXISTS(
+				SELECT 1
+				FROM MST_ENSEN ME
+				WHERE
+				ME.ENSENCD = DES.ENSENCD AND
+				ME.AREACD = #areaCd# AND
+				ME.ENSENTYPE = #ensenType#)
+	</delete>
+
+	<insert id="insertEnsenSkipConfig"
+			parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.RosenClientSettingCommitParamBean">
+		INSERT INTO
+ 			DCO_ENSEN_SKIP_CONFIG DES (
+  				DES.DCO_TYPE,
+  				DES.ENSENCD,
+  				DES.CLIENTSYSTEM_TYPE,
+  				DES.INS_DT,
+  				DES.INS_PG,
+  				DES.INS_ID,
+  				DES.UPD_DT,
+  				DES.UPD_PG,
+  				DES.UPD_ID
+			) VALUES (
+				#dcoType#,
+				#ensenCd#,
+				#clientsystemType#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#
+			)
+	</insert>
+
+
+
+	<select id="getEkiOutSettingList" resultMap="ekiOutSettingList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.EkiClientSettingParamBean">
+		SELECT
+			ME.EKICD AS EKICD,
+			DEKI.CLIENTSYSTEM_TYPE AS CLIENTSYSTEM_TYPE
+		FROM
+			DCO_EKI_SKIP_CONFIG DEKI
+				LEFT JOIN MST_EKI ME ON ME.ENSENCD = DEKI.ENSENCD
+		WHERE
+			ME.ENSENCD = #ensenCd# AND
+			ME.DEL_KBN = '0' AND
+			DEKI.DCO_TYPE = #dcoType# AND
+			ME.EKICD = DEKI.EKICD
+		ORDER BY
+			DEKI.EKICD, DEKI.CLIENTSYSTEM_TYPE
+	</select>
+
+	<select id="getMstEkiList" resultMap="mstEkiList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.EkiClientSettingParamBean">
+		SELECT
+			ME.EKICD AS EKICD,
+			ME.EKINAME AS EKINAME
+		FROM
+			MST_EKI ME
+		WHERE
+			ME.ENSENCD = #ensenCd# AND
+			ME.DEL_KBN = '0'
+		ORDER BY
+			ME.EKICD
+	</select>
+
+	<delete id="deleteEkiSkipConfig" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.EkiClientSettingCommitParamBean">
+		DELETE FROM
+			DCO_EKI_SKIP_CONFIG DEKI
+		WHERE
+			DEKI.DCO_TYPE = #dcoType# AND
+			DEKI.ENSENCD = #ensenCd#
+	</delete>
+
+	<insert id="insertEkiSkipConfig"
+			parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.EkiClientSettingCommitParamBean">
+		INSERT INTO
+ 			DCO_EKI_SKIP_CONFIG DEKI (
+  				DEKI.DCO_TYPE,
+  				DEKI.ENSENCD,
+  				DEKI.EKICD,
+  				DEKI.CLIENTSYSTEM_TYPE,
+  				DEKI.INS_DT,
+  				DEKI.INS_PG,
+  				DEKI.INS_ID,
+  				DEKI.UPD_DT,
+  				DEKI.UPD_PG,
+  				DEKI.UPD_ID
+			) VALUES (
+				#dcoType#,
+				#ensenCd#,
+				#ekiCd#,
+				#clientsystemType#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#
+			)
+	</insert>
+
+	<select id="getEnsenSkipConfig" resultMap="ensenSkipConfigList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.EkiClientSettingParamBean">
+		SELECT
+			DES.CLIENTSYSTEM_TYPE AS CLIENTSYSTEM_TYPE
+		FROM
+			DCO_ENSEN_SKIP_CONFIG DES
+		WHERE
+			DES.DCO_TYPE = #dcoType# AND
+			DES.ENSENCD = #ensenCd#
+	</select>
+
+	<delete id="deleteEnsenSkipConfigEki" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.EkiClientSettingCommitParamBean">
+		DELETE
+			DCO_ENSEN_SKIP_CONFIG DES
+		WHERE
+			DES.DCO_TYPE = #dcoType# AND
+			DES.ENSENCD = #ensenCd# AND
+			DES.CLIENTSYSTEM_TYPE IN ($parentalType$)
+	</delete>
+
+	<select id="getShikutyosonOutSettingList" resultMap="shikutyosonOutSettingList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShikutyosonClientSettingParamBean">
+		SELECT
+			MC.CITYCD AS CITYCD,
+			DCSC.CLIENTSYSTEM_TYPE AS CLIENTSYSTEM_TYPE
+		FROM
+			MST_PREF MP,
+			DCO_CITY_SKIP_CONFIG DCSC
+				LEFT JOIN MST_CITY MC ON DCSC.PREFCD = MC.PREFCD AND DCSC.CITYCD = MC.CITYCD
+		WHERE
+			MP.PREFCD = MC.PREFCD AND
+			MC.PREFCD = #pref# AND
+			DCSC.DCO_TYPE = #dcoType#
+			<isNotEmpty prepend="AND" property="city">
+				MC.CITYCD = #city#
+			</isNotEmpty>
+		ORDER BY
+			DCSC.CITYCD, DCSC.CLIENTSYSTEM_TYPE
+	</select>
+
+	<select id="getMstCityList" resultMap="mstCityList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShikutyosonClientSettingParamBean">
+		SELECT
+			MC.CITYCD AS CITYCD,
+			MC.CITYNAME AS CITYNAME,
+			MP.PREFNAME AS PREFNAME,
+			MD.DCO_NAME AS DCO_NAME
+		FROM
+			MST_CITY MC,
+			MST_PREF MP,
+			MST_DCO MD
+		WHERE
+			MP.PREFCD = MC.PREFCD AND
+			MD.DCO_TYPE = #dcoType# AND
+			MC.DEL_KBN = '0' AND
+			MC.PREFCD = #pref#
+			<isNotEmpty prepend="AND" property="city">
+				MC.CITYCD = #city#
+			</isNotEmpty>
+
+		ORDER BY
+			MC.CITYCD
+	</select>
+
+	<select id="getPrefSkipConfig" resultMap="prefSkipConfigList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShikutyosonClientSettingParamBean">
+		SELECT
+			DPSC.CLIENTSYSTEM_TYPE AS CLIENTSYSTEM_TYPE
+		FROM
+			DCO_PREF_SKIP_CONFIG DPSC
+		WHERE
+			DPSC.DCO_TYPE = #dcoType# AND
+			DPSC.PREFCD = #pref#
+	</select>
+
+	<delete id="deleteCitySkipConfig" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShikutyosonClientSettingCommitParamBean">
+		DELETE FROM
+			DCO_CITY_SKIP_CONFIG DCSC
+		WHERE
+			DCSC.DCO_TYPE = #dcoType# AND
+			DCSC.PREFCD = #prefCd#
+			<isNotEmpty prepend="AND" property="cityCd">
+				DCSC.CITYCD = #cityCd#
+			</isNotEmpty>
+
+	</delete>
+
+	<insert id="insertCitySkipConfig"
+			parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShikutyosonClientSettingCommitParamBean">
+		INSERT INTO
+			DCO_CITY_SKIP_CONFIG DCSC (
+				DCSC.DCO_TYPE,
+				DCSC.PREFCD,
+				DCSC.CITYCD,
+				DCSC.CLIENTSYSTEM_TYPE,
+				DCSC.INS_DT,
+				DCSC.INS_PG,
+				DCSC.INS_ID,
+				DCSC.UPD_DT,
+				DCSC.UPD_PG,
+				DCSC.UPD_ID
+			) VALUES (
+				#dcoType#,
+				#prefCd#,
+				#cityCd#,
+				#clientsystemType#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#
+			)
+	</insert>
+
+	<delete id="deletePrefSkipConfigCity" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShikutyosonClientSettingCommitParamBean">
+		DELETE
+			DCO_PREF_SKIP_CONFIG DPSC
+		WHERE
+			DPSC.DCO_TYPE = #dcoType# AND
+			DPSC.PREFCD = #prefCd# AND
+			DPSC.CLIENTSYSTEM_TYPE IN ($parentalType$)
+	</delete>
+
+<!-- E-0053_スマイティ用データ抽出　市区・駅対応にて追加 2014/1/7 end -->
+
+<!-- 店舗別出力設定追加 2018/04/20 start -->
+	<select id="getShopSkipConfig" resultMap="shopSkipConfigList" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShopSkipSettingParamBean">
+		SELECT
+			DSSC.SHOPCD as SHOPCD,
+			SR.COMPANY as COMPANY,
+			SR.BUMON as BUMON,
+			SR.LIC_NUM as LIC_NUM,
+			MP.PREFNAME as PREFNAME
+		FROM
+			DCO_SHOP_SKIP_CONFIG DSSC
+				LEFT JOIN SHOP_KANRI SK ON (DSSC.SHOPCD = SK.SHOPCD)
+				LEFT JOIN SHOP_RIREKI SR ON (SK.PK_SHOP_RIREKI_LAST = SR.PK_SHOP_RIREKI)
+				LEFT JOIN MST_PREF MP ON (SR.PREFCD = MP.PREFCD)
+		WHERE
+			DSSC.DCO_TYPE = #dcoType#
+		ORDER BY
+			DSSC.SHOPCD
+	</select>
+	
+	<delete id="deleteShopSkipConfig" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShopSkipSettingParamBean">
+		DELETE FROM
+			DCO_SHOP_SKIP_CONFIG DSSC
+		WHERE
+			DSSC.DCO_TYPE = #dcoType#
+	</delete>
+	
+	<insert id="insertShopSkipConfig" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShopSkipSettingParamBean">
+		INSERT INTO
+			DCO_SHOP_SKIP_CONFIG DSSC (
+				DSSC.DCO_TYPE,
+				DSSC.SHOPCD,
+				DSSC.INS_DT,
+				DSSC.INS_PG,
+				DSSC.INS_ID,
+				DSSC.UPD_DT,
+				DSSC.UPD_PG,
+				DSSC.UPD_ID
+			) VALUES (
+				#dcoType#,
+				#shopCd#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#
+			)
+	</insert>
+	
+	<delete id="deleteBkShopSkipConfig" parameterClass="Date">
+		DELETE FROM
+			BAK_DCO_SHOP_SKIP_CONFIG BDSSC
+		WHERE
+			<![CDATA[BDSSC.UPD_DT < #param#]]>
+	</delete>
+	
+	<insert id="insertBkShopSkipConfig" parameterClass="net.chintai.backend.sysadmin.dataoutput.dao.ShopSkipSettingParamBean">
+		INSERT INTO
+			BAK_DCO_SHOP_SKIP_CONFIG BDSSC (
+				BDSSC.DCO_SHOP_RIREKI_NO,
+				BDSSC.DCO_TYPE,
+				BDSSC.SHOPCD,
+				BDSSC.INS_DT,
+				BDSSC.INS_PG,
+				BDSSC.INS_ID,
+				BDSSC.UPD_DT,
+				BDSSC.UPD_PG,
+				BDSSC.UPD_ID
+			)
+			SELECT
+				(SELECT
+					CASE 
+						WHEN MAX(DCO_SHOP_RIREKI_NO) IS NULL THEN 1
+						ELSE MAX(DCO_SHOP_RIREKI_NO) + 1
+					END
+				FROM
+					BAK_DCO_SHOP_SKIP_CONFIG
+				) AS DCO_SHOP_RIREKI_NO,
+				DSSC.DCO_TYPE,
+				DSSC.SHOPCD,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#userId#
+			FROM
+				DCO_SHOP_SKIP_CONFIG DSSC
+			WHERE
+				DSSC.DCO_TYPE = #dcoType#
+	</insert>
+<!-- 店舗別出力設定追加 2018/04/20 end -->
+</sqlMap>

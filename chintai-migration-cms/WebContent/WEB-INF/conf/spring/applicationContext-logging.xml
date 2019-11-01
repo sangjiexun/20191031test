@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- $Id: applicationContext-logging.xml 1601 2007-10-28 09:04:05Z t-kojima $ -->
+<!-- この設定ファイルは広告チームと共有します。変更には十分注意して下さい。 -->
+<beans>
+	
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="operationLoggingDao"
+		class="net.chintai.backend.sysadmin.logging.dao.OperationLoggingDaoImpl" singleton="false">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- Service Definitions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="operationLoggingService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="operationLoggingServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="write">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="operationLoggingServiceTarget"
+		class="net.chintai.backend.sysadmin.logging.service.OperationLoggingServiceImpl">
+		<property name="operationLoggingDao">
+			<ref bean="operationLoggingDao" />
+		</property>
+	</bean>
+
+</beans>

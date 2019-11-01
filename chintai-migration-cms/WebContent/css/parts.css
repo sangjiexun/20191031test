@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+/*
+ * ページヘッダ
+ */
+#header {
+  width: 100%;
+  border-bottom: 1px solid #666666;
+  background-color: #CCCCFF;
+  font-family: Impact, "MS UI Gothic", sans-serif;
+  font-size: 16pt; /* サイズ固定 */
+  }
+
+#header p {
+  padding: 2pt; /* サイズ固定 */
+  }
+
+#header a:link {
+  color: black;
+  text-decoration: none;
+  }
+
+#header a:visited {
+  color: black;
+  text-decoration: none;
+  }
+
+#header a:hover {
+  color: black;
+  text-decoration: none;
+  }
+
+#header a:active {
+  color: black;
+  text-decoration: none;
+  }
+
+/*
+ * ページフッタ
+ */
+#footer {
+  text-align: center;
+  padding: 0.4ex;
+  border-top: 1px solid #666666;
+  clear: both;
+  }
+
+/*
+ * 左メニュー
+ */
+#sidebar {
+  float: left;
+  width: 200px;
+  margin-right: -200px;
+  background-color: #D9E0F0;
+  position: relative;
+  z-index: 2;
+  }
+
+#sidebar_style {
+  padding: 0 1ex;
+  border: 0px solid #FFFFFF;
+  }
+
+#sidebar li {
+  list-style:none;
+  }
+
+#sidebar li.lv1 {
+  padding: 1ex 0;
+  font-weight: bold;
+  border-bottom: 1px solid #666666;
+  }
+
+#sidebar li.lv2 {
+  padding: 0.2ex 0 0.2ex 2ex;
+  font-weight: normal;
+  }
+
+#sidebar p.lv1 {
+  padding: 1ex 0;
+  }
+
+/*
+ * サブヘッダ (ユーザ名/ログアウト のエリア)
+ */
+#headline {
+  text-align: right;
+  background-color: #EEEEFF;
+  padding: 0.5ex;
+}

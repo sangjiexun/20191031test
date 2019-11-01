@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+		PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+	<!-- ========== Form Bean Definitions ================================== -->
+	<form-beans>
+
+		<!-- 問い合せ情報検索 -->
+		<form-bean name="inquiryRecentSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="shopCd" type="java.lang.String" />
+			<form-property name="companyBumonName" type="java.lang.String" />
+			<form-property name="inqId" type="java.lang.String" />
+			<form-property name="keyword" type="java.lang.String" />
+			<form-property name="keywordMode" type="java.lang.String" />
+			<form-property name="inqFlg" type="java.lang.String" />
+			<form-property name="sysFlg" type="java.lang.String" />
+			<form-property name="carrierType" type="java.lang.String" />
+			<form-property name="refFlg" type="java.lang.String" />
+			<form-property name="inquiryStatus" type="java.lang.String" />
+			<form-property name="insDtFrom" type="java.lang.String" />
+			<form-property name="fromYear" type="java.lang.String" />
+			<form-property name="fromMonth" type="java.lang.String" />
+			<form-property name="fromDay" type="java.lang.String" />
+			<form-property name="fromTime" type="java.lang.String" />
+			<form-property name="insDtTo" type="java.lang.String" />
+			<form-property name="toYear" type="java.lang.String" />
+			<form-property name="toMonth" type="java.lang.String" />
+			<form-property name="toDay" type="java.lang.String" />
+			<form-property name="toTime" type="java.lang.String" />
+			<form-property name="orderByItem" type="java.lang.String" />
+			<form-property name="orderBy" type="java.lang.String" />
+			<form-property name="searchFlg" type="java.lang.String" />
+			<form-property name="cnt" type="java.lang.Integer" />
+			<form-property name="offSet" type="java.lang.Integer" />
+			<form-property name="outputMode" type="java.lang.String" />
+			<form-property name="keywordSchool" type="java.lang.String" />
+			<form-property name="schoolName" type="java.lang.String" />
+			<form-property name="schoolMode" type="java.lang.String" />
+			<form-property name="schoolFlg" type="java.lang.String" />
+			<form-property name="siteType" type="java.lang.String" />
+
+
+		</form-bean>
+
+		<!-- 問い合せ情報検索(ページング用) -->
+		<form-bean name="inquiryRecentSearchPagingForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="offSet" type="java.lang.Integer" />
+		</form-bean>
+
+		<!-- 問い合せ履歴詳細 -->
+		<form-bean name="inquiryRecentInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="inqId" type="java.lang.String" />
+		</form-bean>
+
+		<!-- システム操作履歴検索 -->
+		<form-bean name="inquiryLogOperationSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="shopCd" type="java.lang.String" />
+			<form-property name="companyBumonName" type="java.lang.String" />
+			<form-property name="sessionStatus" type="java.lang.String" />
+			<form-property name="inqId" type="java.lang.String" />
+			<form-property name="insDtFrom" type="java.lang.String" />
+			<form-property name="fromYear" type="java.lang.String" />
+			<form-property name="fromMonth" type="java.lang.String" />
+			<form-property name="fromDay" type="java.lang.String" />
+			<form-property name="fromTime" type="java.lang.String" />
+			<form-property name="insDtTo" type="java.lang.String" />
+			<form-property name="toYear" type="java.lang.String" />
+			<form-property name="toMonth" type="java.lang.String" />
+			<form-property name="toDay" type="java.lang.String" />
+			<form-property name="toTime" type="java.lang.String" />
+			<form-property name="offSet" type="java.lang.Integer" />
+		</form-bean>
+
+		<!-- システム操作履歴検索(ページング用) -->
+		<form-bean name="inquiryLogOperationSearchPagingForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="offSet" type="java.lang.Integer" />
+		</form-bean>
+	</form-beans>
+
+
+	<!-- ========== Action Mapping Definitions ============================= -->
+	<action-mappings>
+
+		<!-- 問い合せ情報検索画面に遷移 -->
+		<action path="/shop_inquiry/InquiryRecentSearchPage"
+				name="inquiryRecentSearchForm"
+				type="net.chintai.backend.sysadmin.shop_inquiry.action.InquiryRecentSearchPageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/shop_inquiry/InquiryRecentSearch.jsp" />
+		</action>
+
+		<!-- 問い合せ情報検索 -->
+		<action path="/shop_inquiry/InquiryRecentSearch"
+				name="inquiryRecentSearchForm"
+				type="net.chintai.backend.sysadmin.shop_inquiry.action.InquiryRecentSearchAction"
+				scope="request"
+				validate="true"
+				input="/shop_inquiry/InquiryRecentSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/shop_inquiry/InquiryRecentSearch.jsp" />
+		</action>
+
+		<!-- 問い合せ情報検索(ページング) -->
+		<action path="/shop_inquiry/InquiryRecentSearchPaging"
+				name="inquiryRecentSearchForm"
+				type="net.chintai.backend.sysadmin.shop_inquiry.action.InquiryRecentSearchAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/shop_inquiry/InquiryRecentSearch.jsp" />
+		</action>
+
+		<!-- 問い合せ履歴詳細 -->
+		<action path="/shop_inquiry/InquiryRecentInfo"
+				name="inquiryRecentInfoForm"
+				type="net.chintai.backend.sysadmin.shop_inquiry.action.InquiryRecentInfoAction"
+				scope="request"
+				input="/WEB-INF/jsp/shop_inquiry/InquiryRecentSearch.jsp">
+			<forward name="success" path="/WEB-INF/jsp/shop_inquiry/InquiryRecentInfo.jsp" />
+		</action>
+
+		<!-- システム操作履歴検索画面に遷移 -->
+		<!--
+		<action path="/shop_inquiry/InquiryLogOperationSearchPage"
+				name="inquiryLogOperationSearchForm"
+				type="net.chintai.backend.sysadmin.shop_inquiry.action.InquiryLogOperationSearchPageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/shop_inquiry/InquiryLogOperationSearch.jsp" />
+		</action>
+		 -->
+
+		<!-- システム操作履歴検索 -->
+		<!--
+		<action path="/shop_inquiry/InquiryLogOperationSearch"
+				name="inquiryLogOperationSearchForm"
+				type="net.chintai.backend.sysadmin.shop_inquiry.action.InquiryLogOperationSearchAction"
+				scope="request"
+				validate="true"
+				input="/shop_inquiry/InquiryLogOperationSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/shop_inquiry/InquiryLogOperationSearch.jsp" />
+		</action>
+		 -->
+
+		<!-- システム操作履歴検索(ページング) -->
+		<!--
+		<action path="/shop_inquiry/InquiryLogOperationSearchPaging"
+				name="inquiryLogOperationSearchPagingForm"
+				type="net.chintai.backend.sysadmin.shop_inquiry.action.InquiryLogOperationSearchPagingAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/shop_inquiry/InquiryLogOperationSearch.jsp" />
+		</action>
+		 -->
+	</action-mappings>
+
+</struts-config>

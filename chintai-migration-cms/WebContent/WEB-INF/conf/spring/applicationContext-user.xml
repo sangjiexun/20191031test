@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="userListDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserListDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="userAddConfirmDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserAddConfirmDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="userAddCommitDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserAddCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="userDeleteConfirmDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserDeleteConfirmDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="userDeleteCommitDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserDeleteCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="userInfoDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserInfoDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="userUpdatePageDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserUpdatePageDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="userUpdateCommitDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserUpdateCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="groupNameDao" class="net.chintai.backend.sysadmin.user.dao.impl.GroupNameDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="userPasswordChangePageDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserPasswordChangePageDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="userPasswordChangeCommitDao" class="net.chintai.backend.sysadmin.user.dao.impl.UserPasswordChangeCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="selectGroupListDao" class="net.chintai.backend.sysadmin.user.dao.impl.GroupListDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="selectGroupUpdatePageDao" class="net.chintai.backend.sysadmin.user.dao.impl.GroupUpdatePageDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="groupUpdateCommitDao" class="net.chintai.backend.sysadmin.user.dao.impl.GroupUpdateCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="authorityListDao" class="net.chintai.backend.sysadmin.user.dao.impl.AuthorityListDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="groupAddCommitDao" class="net.chintai.backend.sysadmin.user.dao.impl.GroupAddCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="groupDeleteConfirmDao" class="net.chintai.backend.sysadmin.user.dao.impl.GroupDeleteConfirmDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="groupDeleteCommitDao" class="net.chintai.backend.sysadmin.user.dao.impl.GroupDeleteCommitDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="logOperationSearchDao" class="net.chintai.backend.sysadmin.user.dao.impl.LogOperationSearchDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<!-- Service Definecions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="UserListService" class="net.chintai.backend.sysadmin.user.service.impl.UserListServiceImpl">
+		<property name="userListDao"><ref local="userListDao"/></property>
+	</bean>
+
+	<bean id="UserAddConfirmService" class="net.chintai.backend.sysadmin.user.service.impl.UserAddConfirmServiceImpl">
+		<property name="userAddConfirmDao"><ref local="userAddConfirmDao"/></property>
+	</bean>
+
+	<bean id="UserAddCommitService" class="net.chintai.backend.sysadmin.user.service.impl.UserAddCommitServiceImpl">
+		<property name="userAddCommitDao"><ref local="userAddCommitDao"/></property>
+	</bean>
+
+	<bean id="UserDeleteConfirmService" class="net.chintai.backend.sysadmin.user.service.impl.UserDeleteConfirmServiceImpl">
+		<property name="userDeleteConfirmDao"><ref local="userDeleteConfirmDao"/></property>
+	</bean>
+
+	<bean id="UserDeleteCommitServiceTarget" class="net.chintai.backend.sysadmin.user.service.impl.UserDeleteCommitServiceImpl">
+		<property name="userDeleteCommitDao"><ref local="userDeleteCommitDao"/></property>
+	</bean>
+	<bean id="UserDeleteCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="UserDeleteCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props><prop key="userDelete*">PROPAGATION_REQUIRED,-java.lang.Exception</prop></props>
+		</property>
+	</bean>
+
+	<bean id="UserInfoService" class="net.chintai.backend.sysadmin.user.service.impl.UserInfoServiceImpl">
+		<property name="userInfoDao"><ref local="userInfoDao"/></property>
+	</bean>
+
+	<bean id="UserUpdatePageService" class="net.chintai.backend.sysadmin.user.service.impl.UserUpdatePageServiceImpl">
+		<property name="userUpdatePageDao"><ref local="userUpdatePageDao"/></property>
+	</bean>
+
+	<bean id="UserUpdateCommitServiceTarget" class="net.chintai.backend.sysadmin.user.service.impl.UserUpdateCommitServiceImpl">
+		<property name="userUpdateCommitDao"><ref local="userUpdateCommitDao"/></property>
+	</bean>
+	<bean id="UserUpdateCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="UserUpdateCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props><prop key="userUpdateCommit">PROPAGATION_REQUIRED,-java.lang.Exception</prop></props>
+		</property>
+	</bean>
+
+	<bean id="GroupNameService" class="net.chintai.backend.sysadmin.user.service.impl.GroupNameServiceImpl">
+		<property name="groupNameDao"><ref local="groupNameDao"/></property>
+	</bean>
+
+	<bean id="UserPasswordChangePageService" class="net.chintai.backend.sysadmin.user.service.impl.UserPasswordChangePageServiceImpl">
+		<property name="userPasswordChangePageDao"><ref local="userPasswordChangePageDao"/></property>
+	</bean>
+
+	<bean id="UserPasswordChangeCommitServiceTarget" class="net.chintai.backend.sysadmin.user.service.impl.UserPasswordChangeCommitServiceImpl">
+		<property name="userPasswordChangeCommitDao"><ref local="userPasswordChangeCommitDao"/></property>
+	</bean>
+	<bean id="UserPasswordChangeCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="UserPasswordChangeCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props><prop key="userPasswordChange">PROPAGATION_REQUIRED,-java.lang.Exception</prop></props>
+		</property>
+	</bean>
+
+	<bean id="groupListService" class="net.chintai.backend.sysadmin.user.service.impl.GroupListServiceImpl">
+		<property name="selectGroupListDao"><ref local="selectGroupListDao"/></property>
+	</bean>
+
+	<bean id="groupUpdatePageService" class="net.chintai.backend.sysadmin.user.service.impl.GroupUpdatePageServiceImpl">
+		<property name="selectGroupUpdatePageDao"><ref local="selectGroupUpdatePageDao"/></property>
+	</bean>
+
+	<bean id="groupUpdateCommitServiceTarget" class="net.chintai.backend.sysadmin.user.service.impl.GroupUpdateCommitServiceImpl">
+		<property name="groupUpdateCommitDao"><ref local="groupUpdateCommitDao"/></property>
+	</bean>
+
+	<bean id="groupUpdateCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="groupUpdateCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="updateGroup">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="authorityListService" class="net.chintai.backend.sysadmin.user.service.impl.AuthorityListServiceImpl">
+		<property name="authorityListDao"><ref local="authorityListDao"/></property>
+	</bean>
+
+	<bean id="groupAddCommitServiceTarget" class="net.chintai.backend.sysadmin.user.service.impl.GroupAddCommitServiceImpl">
+		<property name="groupAddCommitDao"><ref local="groupAddCommitDao"/></property>
+	</bean>
+
+	<bean id="groupAddCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="groupAddCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="selectSeqGroupId">PROPAGATION_REQUIRED</prop>
+				<prop key="insertGroup">PROPAGATION_REQUIRED</prop>
+				<prop key="insertGroupByAuthority">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="groupUsedCountService" class="net.chintai.backend.sysadmin.user.service.impl.GroupUsedCountServiceImpl">
+		<property name="groupDeleteConfirmDao"><ref local="groupDeleteConfirmDao"/></property>
+	</bean>
+
+	<bean id="groupDeleteConfirmService" class="net.chintai.backend.sysadmin.user.service.impl.GroupDeleteConfirmServiceImpl">
+		<property name="groupDeleteConfirmDao"><ref local="groupDeleteConfirmDao"/></property>
+	</bean>
+
+	<bean id="groupDeleteCommitServiceTarget" class="net.chintai.backend.sysadmin.user.service.impl.GroupDeleteCommitServiceImpl">
+		<property name="groupDeleteCommitDao"><ref local="groupDeleteCommitDao"/></property>
+	</bean>
+
+	<bean id="groupDeleteCommitService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="groupDeleteCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="deleteGroupByGroupId">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+				<prop key="deleteAuthorityByGroupId">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="LogOperationSearchService" class="net.chintai.backend.sysadmin.user.service.impl.LogOperationSearchServiceImpl">
+		<property name="logOperationSearchDao"><ref local="logOperationSearchDao"/></property>
+	</bean>
+
+</beans>

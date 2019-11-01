@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%-20t] %-5p - %m (%F:%L)%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="${batch.log4j.LevelMin}" /> <!-- see java opts. e.g. -Dbatch.log4j.LevelMin=info -->
+			<param name="LevelMax" value="FATAL" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+		<filter class="org.apache.log4j.varia.DenyAllFilter" />
+	</appender>
+
+
+<logger name="java.sql"><level value="ERROR" /></logger>
+<logger name="com.ibatis.sqlmap"><level value="ERROR" /></logger>
+<logger name="org.apache.commons"><level value="ERROR" /></logger>
+<logger name="org.apache.struts"><level value="ERROR" /></logger>
+<logger name="org.apache.struts.action.ExceptionHandler"><level value="ERROR" /></logger>
+<logger name="net.chintai.backend"><level value="ERROR" /></logger>
+
+
+    <logger name="jdbc.resultset">
+        <level value="FATAL" />
+    </logger>
+
+
+
+	<logger name="net.chintai.batch.common.persistence">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="net.chintai.batch">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="com.amazonaws.request">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="com.amazonaws">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="org.mybatis">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.ibatis">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.springframework.batch">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.springframework.transaction">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.springframework.jdbc">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="org.springframework">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="org.springframework.http.client">
+		<level value="ERROR" />
+	</logger>
+	<logger name="httpclient">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.commons.httpclient">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.http">
+		<level value="ERROR" />
+	</logger>
+	<logger name="httpclient.wire">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="jdbc.audit">
+		<level value="FATAL" />
+	</logger>
+	<logger name="jdbc.resultsettable">
+		<level value="FATAL" />
+	</logger>
+	<logger name="jdbc.sqlonly">
+		<level value="FATAL" />
+	</logger>
+	<logger name="jdbc.sqltiming">
+		<level value="FATAL" />
+	</logger>
+	<logger name="jdbc.connection">
+		<level value="FATAL" />
+	</logger>
+
+    <logger name="net.sf.log4jdbc.log.slf4j">
+        <level value="FATAL" />
+    </logger>
+
+    <logger name="org.directwebremoting">
+        <level value="ERROR" />
+    </logger>
+    <logger name="org.apache.velocity">
+        <level value="ERROR" />
+    </logger>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="stdout" />
+	</root>
+
+</log4j:configuration>

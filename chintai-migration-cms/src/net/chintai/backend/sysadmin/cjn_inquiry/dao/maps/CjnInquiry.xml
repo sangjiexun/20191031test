@@ -1,0 +1,1045 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="cjn_inquiry">
+
+	<!-- Result Map -->
+	<!-- 問い合せ種別一覧 -->
+	<resultMap id="typeList"
+			class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquiryTypeList">
+		<result property="cjnInqKindSeq" column="CJN_INQ_KIND_SEQ" />
+		<result property="inqTitle" column="INQ_TITLE" />
+		<result property="inqComment" column="INQ_COMMENT" />
+		<result property="inqUrl" column="INQ_URL" />
+		<result property="inqGroupType" column="INQ_GROUP_TYPE" />
+		<result property="totalCount" column="CNT_TOTAL" />
+		<result property="noReadCount" column="CNT_UNREAD" />
+		<result property="noShoriCount" column="CNT_UNREPLY" />
+	</resultMap>
+
+	<!-- 問い合せ種別一覧・閲覧可能ユーザ -->
+	<resultMap id="readableUser"
+			class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquiryReadableUser">
+		<result property="cjnInqKindSeq" column="CJN_INQ_KIND_SEQ" />
+		<result property="userName" column="USER_NAME" />
+	</resultMap>
+
+	<!-- 問い合せ種別詳細 -->
+	<resultMap id="typeInfo"
+			class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquiryTypeInfo">
+		<result property="cjnInqKindSeq" column="CJN_INQ_KIND_SEQ" />
+		<result property="inqTitle" column="INQ_TITLE" />
+		<result property="inqComment" column="INQ_COMMENT" />
+		<result property="inqUrl" column="INQ_URL" />
+		<result property="dispTitle" column="DISP_TITLE" />
+		<result property="dispSortKey" column="DISP_SORT_KEY" />
+		<result property="inqGroupType" column="INQ_GROUP_TYPE" />
+		<result property="adminNote" column="ADMIN_NOTE" />
+		<result property="insDt" column="INS_DT_C" />
+		<result property="updDt" column="UPD_DT_C" />
+	</resultMap>
+
+	<!-- 問い合せ種別閲覧可能ユーザ一覧 -->
+	<resultMap id="typeInfoUsers"
+			class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquiryTypeInfoUsers">
+		<result property="userName" column="USER_NAME" />
+		<result property="cjnAccountSeq" column="CJN_ACCOUNT_SEQ" />
+		<result property="exists" column="EXISTS_FLG" javaType="java.lang.Boolean" jdbcType="NUMBER" />
+	</resultMap>
+
+	<!-- 問い合せ検索(処理件数) -->
+	<resultMap id="DisposeCountList"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquirySearchDisposeCountInfo" >
+		<result property="totalCount" javaType="java.lang.String"/>
+		<result property="noReadCount" javaType="java.lang.String"/>
+		<result property="noShoriCount" javaType="java.lang.String"/>
+	</resultMap>
+
+	<!-- 問い合せ検索一覧 -->
+	<resultMap id="cjnInquirySearchList"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquirySearchList">
+		<result property="cjnInqId" column="CJN_INQID" />
+		<result property="insDt" column="INS_DT" />
+		<result property="lastRefDt" column="LASTREF_DT" />
+		<result property="lastRefUser" column="LASTREF_USER" />
+		<result property="inquiryStatus" column="INQUIRY_STATUS" />
+		<result property="lastOpeUser" column="LASTOPE_USER" />
+		<result property="lastOpeDt" column="LASTOPE_DT" />
+		<result property="updDt" column="UPD_DT" />
+		<result property="refFlg" column="REF_FLG"/>
+		<result property="cjnInqKindSeq" column="CJN_INQ_KIND_SEQ" />
+		<result property="cjnAccountSeq" column="CJN_ACCOUNT_SEQ"/>
+
+		<result property="carrierType" column="CARRIER_TYPE"/>
+		<result property="fregiDenpyoNo" column="FREGI_DENPYO_NO"/>
+		<result property="fregiTorihikiNo" column="FREGI_TORIHIKI_NO"/>
+
+		<result property="refFlgName" column="REF_FLG_NAME" />
+		<result property="inquiryStatusName" column="INQUIRY_STATUS_NAME" />
+		<result property="carrierTypeName" column="CARRIER_TYPE_NAME" />
+	</resultMap>
+
+	<!-- 問い合せ詳細 -->
+	<resultMap id="cjnInquiryInfo"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquiryInfo">
+		<result property="cjnInqId" column="CJN_INQID" />
+		<result property="insDt" column="INS_DT" />
+		<result property="refFlg" column="REF_FLG" />
+		<result property="inquiryStatus" column="INQUIRY_STATUS" />
+		<result property="lastRefDt" column="LASTREF_DT" />
+		<result property="lastRefUser" column="LASTREF_USER"/>
+		<result property="lastOpeUser" column="LASTOPE_USER" />
+		<result property="lastOpeDt" column="LASTOPE_DT" />
+		<result property="updDt" column="UPD_DT" />
+		<result property="inqContents" column="INQ_CONTENTS" nullValue=""/>
+
+		<result property="carrierType" column="CARRIER_TYPE"/>
+		<result property="fregiDenpyoNo" column="FREGI_DENPYO_NO"/>
+		<result property="fregiTorihikiNo" column="FREGI_TORIHIKI_NO"/>
+		<result property="inquiryStatusName" column="INQUIRY_STATUS_NAME" />
+		<result property="carrierTypeName" column="CARRIER_TYPE_NAME" />
+
+	</resultMap>
+
+	<!-- 問い合せ管理利用ユーザ一覧 -->
+	<resultMap id="cjnUserList"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnUserList" >
+		<result property="userId" column="USER_ID"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="email1" column="CJN_EMAIL_1"/>
+		<result property="emailStatus1" column="CJN_EMAIL_STATUS_1"/>
+		<result property="email2" column="CJN_EMAIL_2"/>
+		<result property="emailStatus2" column="CJN_EMAIL_STATUS_2"/>
+		<result property="email3" column="CJN_EMAIL_3"/>
+		<result property="emailStatus3" column="CJN_EMAIL_STATUS_3"/>
+		<result property="accountLevel" column="CJN_ACCOUNT_TYPE"/>
+		<result property="insDt" column="INS_DT"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="cjnAccountSeq" column="CJN_ACCOUNT_SEQ"/>
+	</resultMap>
+
+	<!-- 問い合せ管理利用ユーザ -->
+	<resultMap id="cjnUserInfo"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnUserInfo" >
+		<result property="userId" column="USER_ID"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="email1" column="CJN_EMAIL_1"/>
+		<result property="emailStatus1" column="CJN_EMAIL_STATUS_1"/>
+		<result property="email2" column="CJN_EMAIL_2"/>
+		<result property="emailStatus2" column="CJN_EMAIL_STATUS_2"/>
+		<result property="email3" column="CJN_EMAIL_3"/>
+		<result property="emailStatus3" column="CJN_EMAIL_STATUS_3"/>
+		<result property="accountLevel" column="CJN_ACCOUNT_TYPE"/>
+		<result property="insDt" column="INS_DT"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="cjnAccountSeq" column="CJN_ACCOUNT_SEQ"/>
+		<result property="adminNote" column="CJN_ADMIN_NOTE"/>
+	</resultMap>
+
+	<!-- 閲覧可能問い合せユーザ権限 -->
+	<resultMap id="cjnUserAccount"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnUserAccountInfo">
+		<result property="inqTitle" column="INQ_TITLE"/>
+		<result property="inqComment" column="INQ_COMMENT"/>
+		<result property="cnt" column="CNT"/>
+	</resultMap>
+
+	<!-- 閲覧可能問い合せ権限リスト取得 -->
+	<resultMap id="cjnUserAccountLevel"
+		class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnUserAuthorityUpdateInfo">
+		<result property="inqTitle" column="INQ_TITLE"/>
+		<result property="inqComment" column="INQ_COMMENT"/>
+		<result property="cnt" column="CNT"/>
+		<result property="cjnInqKindSeq" column="CJN_INQ_KIND_SEQ"/>
+	</resultMap>
+
+	<!-- システム操作履歴・件数 -->
+	<resultMap id="cjnLogOperationCount" class="java.lang.Integer">
+		<result property="cjnLogOperationCount" column="ROW_COUNT"/>
+	</resultMap>
+
+	<!-- システム操作履歴 -->
+	<resultMap id="cjnLogOperationInfo"
+			class="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnLogOperationInfo">
+		<result property="userId" column="USER_ID" />
+		<result property="authUserId" column="AUTH_USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="cjnAccountSeq" column="CJN_ACCOUNT_SEQ" />
+		<result property="cjnInqKindSeq" column="CJN_INQ_KIND_SEQ" />
+		<result property="cjnInqId" column="CJN_INQID" />
+		<result property="sessionStatus" column="SESSION_STATUS" />
+		<result property="inqTitle" column="INQ_TITLE" />
+		<result property="updDt" column="UPD_DT" />
+	</resultMap>
+
+	<!-- Statements -->
+	<!-- 問い合せ種別一覧取得 -->
+	<select id="selectTypeList" resultMap="typeList">
+		SELECT
+			MCI.CJN_INQ_KIND_SEQ,
+			MCI.INQ_TITLE,
+			MCI.INQ_COMMENT,
+			MCI.INQ_URL,
+			MCI.INQ_GROUP_TYPE,
+			(SELECT
+				COUNT(CJN_INQID) FROM CJN_INQUIRY
+				WHERE CJN_INQ_KIND_SEQ = MCI.CJN_INQ_KIND_SEQ
+			) CNT_TOTAL,
+			(SELECT
+				COUNT(CJN_INQID) FROM CJN_INQUIRY
+				WHERE CJN_INQ_KIND_SEQ = MCI.CJN_INQ_KIND_SEQ
+				AND REF_FLG = '0'
+			) CNT_UNREAD,
+			(SELECT
+				COUNT(CJN_INQID) FROM CJN_INQUIRY
+				WHERE CJN_INQ_KIND_SEQ = MCI.CJN_INQ_KIND_SEQ
+				AND REF_FLG = '1' AND INQUIRY_STATUS = '0'
+			) CNT_UNREPLY
+		FROM
+			MST_CJN_INQUIRY MCI
+		ORDER BY
+			CJN_INQ_KIND_SEQ
+	</select>
+
+	<!-- 問い合せ種別一覧画面・閲覧可能ユーザ名一覧取得 -->
+	<select id="selectReadableUsersList" resultMap="readableUser">
+		SELECT
+			CAL.CJN_INQ_KIND_SEQ,
+			MU.USER_NAME
+		FROM
+			CJN_ACCOUNT_LEVEL CAL
+			INNER JOIN
+				MNG_USERS MU
+			ON
+				MU.CJN_ACCOUNT_SEQ = CAL.CJN_ACCOUNT_SEQ
+			INNER JOIN
+				MNG_GROUP_AUTHORITY MGA
+			ON
+				MU.GROUP_ID = MGA.GROUP_ID
+		WHERE
+			MGA.AUTHORITY_ID = '07'
+			AND
+			MU.DEL_KBN = '0'
+		ORDER BY
+			CJN_INQ_KIND_SEQ
+	</select>
+
+	<!-- 問い合せ種別一覧画面・閲覧可能問い合せ一覧取得 -->
+	<select id="selectKindSeqList" resultClass="java.lang.Integer" parameterClass="java.lang.String">
+		SELECT
+			CJN_INQ_KIND_SEQ
+		FROM
+			CJN_ACCOUNT_LEVEL CAL
+		INNER JOIN
+			MNG_USERS MU
+			ON CAL.CJN_ACCOUNT_SEQ = MU.CJN_ACCOUNT_SEQ
+		WHERE
+			MU.USER_ID = #value#
+		ORDER BY
+			CJN_INQ_KIND_SEQ
+	</select>
+
+	<!-- 問い合せ種別一覧画面・問い合せ管理ユーザ権限取得 -->
+	<select id="selectAccountType" resultClass="java.lang.String" parameterClass="java.lang.String">
+		SELECT
+			CJN_ACCOUNT_TYPE
+		FROM
+			MNG_USERS
+		WHERE
+			USER_ID = #value#
+			AND
+			DEL_KBN = '0'
+			AND
+			CJN_ACCOUNT_SEQ IS NOT NULL
+	</select>
+
+	<!-- 問い合せ種別登録 -->
+	<insert id="insertType"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquiryTypeInfo">
+		<selectKey resultClass="java.lang.Integer" keyProperty="cjnInqKindSeq" type="pre">
+			SELECT
+				SEQ_CJN_INQ_KIND_SEQ.NEXTVAL AS CJN_INQ_KIND_SEQ
+			FROM
+				DUAL
+		</selectKey>
+		INSERT INTO
+			MST_CJN_INQUIRY (
+				CJN_INQ_KIND_SEQ,
+				INQ_TITLE,
+				INQ_COMMENT,
+				INQ_URL,
+				DISP_TITLE,
+				DISP_SORT_KEY,
+				INQ_GROUP_TYPE,
+				ADMIN_NOTE,
+				INS_DT,
+				INS_PG,
+				INS_ID,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID
+			) VALUES (
+				#cjnInqKindSeq#,
+				#inqTitle#,
+				#inqComment#,
+				#inqUrl#,
+				#dispTitle#,
+				#dispSortKey#,
+				#inqGroupType#,
+				#adminNote#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#
+			)
+	</insert>
+
+	<!-- 問い合せ種別詳細取得 -->
+	<!-- 問い合せ種別更新画面表示情報取得 -->
+	<sql id="selectTypeInfoSql">
+		SELECT
+			CJN_INQ_KIND_SEQ,
+			INQ_TITLE,
+			INQ_COMMENT,
+			INQ_URL,
+			DISP_TITLE,
+			DISP_SORT_KEY,
+			INQ_GROUP_TYPE,
+			ADMIN_NOTE,
+			TO_CHAR(INS_DT, 'YYYY/MM/DD HH24:MI:SS') INS_DT_C,
+			TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') UPD_DT_C
+		FROM
+			MST_CJN_INQUIRY
+		WHERE
+			CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+	</sql>
+	<select id="selectTypeInfo" resultMap="typeInfo"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquiryTypeInfoParamBean">
+		<include refid="selectTypeInfoSql" />
+	</select>
+	<select id="selectTypeUpdatePage" resultMap="typeInfo"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquiryTypeUpdatePageParamBean">
+		<include refid="selectTypeInfoSql" />
+	</select>
+
+	<!-- 問い合せ種別閲覧可能ユーザ一覧取得 -->
+	<select id="selectTypeInfoUsers" resultMap="typeInfoUsers"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquiryTypeInfoParamBean">
+		SELECT
+			MU.USER_NAME,
+			MU.CJN_ACCOUNT_SEQ,
+			CASE NVL(CAL.CJN_INQ_KIND_SEQ, -1)
+				WHEN #cjnInqKindSeq# THEN 1
+				ELSE 0
+			END EXISTS_FLG
+		FROM
+			MNG_USERS MU
+		LEFT JOIN
+			(SELECT
+				CJN_ACCOUNT_SEQ,
+				CJN_INQ_KIND_SEQ
+			FROM
+				CJN_ACCOUNT_LEVEL
+			WHERE
+				CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+			) CAL
+			ON MU.CJN_ACCOUNT_SEQ = CAL.CJN_ACCOUNT_SEQ
+		WHERE
+			MU.DEL_KBN = '0'
+			AND
+			MU.CJN_ACCOUNT_SEQ IS NOT NULL
+		ORDER BY
+			MU.CJN_ACCOUNT_SEQ
+	</select>
+
+	<!-- 問い合せ種別更新 -->
+	<update id="updateType"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquiryTypeInfo">
+		UPDATE
+			MST_CJN_INQUIRY
+		SET
+			INQ_TITLE      = #inqTitle#,
+			INQ_COMMENT    = #inqComment#,
+			INQ_URL        = #inqUrl#,
+			DISP_TITLE     = #dispTitle#,
+			DISP_SORT_KEY  = #dispSortKey#,
+			INQ_GROUP_TYPE = #inqGroupType#,
+			ADMIN_NOTE     = #adminNote#,
+			UPD_DT         = SYSTIMESTAMP,
+			UPD_PG         = #pgName#,
+			UPD_ID         = #operUserId#
+		WHERE
+			CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+			AND
+			TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+	</update>
+
+	<!-- 閲覧可能ユーザ情報の最終更新日時取得 -->
+	<select id="selectUsersAvailabilityLastUpdateTime"
+			parameterClass="java.lang.Integer" resultClass="java.lang.String">
+		SELECT
+			TO_CHAR(MAX(UPD_DT), 'YYYY/MM/DD HH24:MI:SS') UPD_DT_C
+		FROM
+			CJN_ACCOUNT_LEVEL
+		WHERE
+			CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+	</select>
+
+	<!-- 閲覧可能ユーザ情報更新／データ全削除 -->
+	<delete id="deleteUsersAvailability" parameterClass="java.lang.Integer">
+		DELETE FROM
+			CJN_ACCOUNT_LEVEL
+		WHERE
+			CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+	</delete>
+
+	<!-- 閲覧可能ユーザ情報更新／新規データ挿入 -->
+	<insert id="insertUsersAvailability"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.domain.CjnInquiryTypeInfoUsers">
+		INSERT INTO
+			CJN_ACCOUNT_LEVEL (
+				CJN_INQ_KIND_SEQ,
+				CJN_ACCOUNT_SEQ,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID,
+				INS_DT,
+				INS_PG,
+				INS_ID
+			) VALUES (
+				#cjnInqKindSeq#,
+				#cjnAccountSeq#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#
+			)
+	</insert>
+
+
+	<!-- 問い合せ検索(処理件数) -->
+	<select id="selectDisposeCountList"
+			resultMap="DisposeCountList"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquirySearchDisposeCountPageParamBean">
+		SELECT
+			(SELECT COUNT(CJN_INQID) FROM CJN_INQUIRY
+				WHERE CJN_INQ_KIND_SEQ = #cjnInqKindSeq#) totalCount,
+			(SELECT COUNT(CJN_INQID) FROM CJN_INQUIRY
+				WHERE CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+				AND REF_FLG = '0') noReadCount,
+			(SELECT COUNT(CJN_INQID) FROM CJN_INQUIRY
+				WHERE CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+				AND REF_FLG = '1' AND INQUIRY_STATUS = '0') noShoriCount
+		FROM DUAL
+	</select>
+
+	<!-- 問い合せ検索一覧 -->
+	<!-- 問い合せ検索一覧総数 -->
+	<!-- 問い合せ検索一覧/一覧総数・Where条件部分 -->
+	<sql id="selectInquiryListWhere">
+	   	<dynamic prepend="where">
+			<isNotEmpty property="cjnInqId" prepend="AND">
+				CI.CJN_INQID LIKE '%'||#cjnInqId#||'%'
+			</isNotEmpty>
+			<isNotEmpty  prepend="AND" property="keywords">
+				<isEqual compareValue="0" property="modeAndOr">
+					<iterate property="keywordList" open="(" close=")" conjunction="AND">
+						CI.INQ_CONTENTS LIKE '%'||#keywordList[]#||'%'
+					</iterate>
+				</isEqual>
+				<isEqual compareValue="1" property="modeAndOr">
+					<iterate property="keywordList" open="(" close=")" conjunction="OR">
+						CI.INQ_CONTENTS LIKE '%'||#keywordList[]#||'%'
+					</iterate>
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="refFlg" prepend="AND">
+				CI.REF_FLG=#refFlg#
+			</isNotEmpty>
+			<isNotEmpty property="inquiryStatus" prepend="AND">
+				CI.INQUIRY_STATUS = #inquiryStatus#
+			</isNotEmpty>
+			<isNotEmpty property="insDateFromSearch" prepend="AND">
+				<![CDATA[
+				to_char(CI.INS_DT ,'yyyyMMddhh24') >= #insDateFromSearch#
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="insDateToSearch" prepend="AND">
+				<![CDATA[
+				to_char(CI.INS_DT ,'yyyyMMddhh24') <=  #insDateToSearch#
+				]]>
+			</isNotEmpty>
+
+			<!-- 2008.07.10 検索条件の追加 雑誌・ザガットクレジット対応 start -->
+			<isNotEmpty property="pcMobileStatus" prepend="AND">
+				CI.CARRIER_TYPE = #pcMobileStatus#
+			</isNotEmpty>
+			<isNotEmpty property="dealNumber" prepend="AND">
+				CI.FREGI_TORIHIKI_NO LIKE '%'||#dealNumber#||'%'
+			</isNotEmpty>
+			<isNotEmpty property="slipNumber" prepend="AND">
+				CI.FREGI_DENPYO_NO LIKE '%'||#slipNumber#||'%'
+			</isNotEmpty>
+			<!-- 2008.07.10 検索条件の追加 end -->
+
+		</dynamic>
+		<dynamic>
+		ORDER BY
+			<isEqual property="sortKey" compareValue="1">
+				CI.CJN_INQID
+			</isEqual>
+			<isEqual property="sortKey" compareValue="2">
+				CI.INS_DT
+			</isEqual>
+			<isEqual property="sortKey" compareValue="3">
+				CI.LASTREF_DT
+			</isEqual>
+			<isEqual property="sortKey" compareValue="4">
+				CI.LASTOPE_DT
+			</isEqual>
+			<isEqual property="orderBy" compareValue="asc">
+				ASC
+			</isEqual>
+			<isEqual property="orderBy" compareValue="desc">
+				DESC
+			</isEqual>
+		</dynamic>
+	</sql>
+	<!-- 問い合せ検索一覧 -->
+	<select id="selectInquiryList"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquirySearchParamBean"
+			resultMap="cjnInquirySearchList">
+		SELECT
+			CAL.CJN_ACCOUNT_SEQ,
+			CI.CJN_INQ_KIND_SEQ,
+			CI.CJN_INQID,
+			CI.CARRIER_TYPE,
+			CI.FREGI_DENPYO_NO,
+			CI.FREGI_TORIHIKI_NO,
+			to_char(CI.INS_DT,'YYYY-MM-DD HH24:MI:SS') INS_DT,
+			to_char(CI.LASTREF_DT, 'YYYY-MM-DD HH24:MI:SS') LASTREF_DT,
+			(SELECT MU.USER_NAME FROM MNG_USERS MU
+				WHERE MU.CJN_ACCOUNT_SEQ = CI.CJN_ACCOUNT_SEQ_LASTREF
+				) LASTREF_USER,
+			CI.REF_FLG,
+			CI.INQUIRY_STATUS,
+			to_char(CI.UPD_DT, 'YYYY-MM-DD HH24:MI:SS') UPD_DT,
+			to_char(CI.LASTOPE_DT, 'YYYY-MM-DD HH24:MI:SS') LASTOPE_DT,
+			(SELECT MU.USER_NAME FROM MNG_USERS MU
+				WHERE MU.CJN_ACCOUNT_SEQ = CI.CJN_ACCOUNT_SEQ_LASTOPE
+				) LASTOPE_USER,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'REF_FLG'        AND MIK.INQ_KBN = CI.REF_FLG) AS REF_FLG_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'INQUIRY_STATUS' AND MIK.INQ_KBN = CI.INQUIRY_STATUS) AS INQUIRY_STATUS_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'CARRIER_TYPE'   AND MIK.INQ_KBN = CI.CARRIER_TYPE) AS CARRIER_TYPE_NAME
+		FROM
+			CJN_INQUIRY CI
+			INNER JOIN
+				MST_CJN_INQUIRY MCI
+			ON
+				MCI.CJN_INQ_KIND_SEQ = CI.CJN_INQ_KIND_SEQ
+			INNER JOIN
+				CJN_ACCOUNT_LEVEL CAL
+			ON
+				CAL.CJN_INQ_KIND_SEQ = CI.CJN_INQ_KIND_SEQ
+			INNER JOIN
+				MNG_USERS MU
+			ON
+				MU.USER_ID = #userId#
+				AND
+				CAL.CJN_ACCOUNT_SEQ = MU.CJN_ACCOUNT_SEQ
+				AND
+				CI.CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+		<include refid="selectInquiryListWhere" />
+	</select>
+
+	<!-- 問い合せ検索一覧総数 -->
+	<select id="selectInquiryListCount"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquirySearchParamBean"
+			resultClass="java.lang.Integer">
+		SELECT
+			COUNT(CI.CJN_INQID) TOTALCNT
+		FROM
+			CJN_INQUIRY CI
+			INNER JOIN
+				MST_CJN_INQUIRY MCI
+			ON
+				MCI.CJN_INQ_KIND_SEQ = CI.CJN_INQ_KIND_SEQ
+			INNER JOIN
+				CJN_ACCOUNT_LEVEL CAL
+			ON
+				CAL.CJN_INQ_KIND_SEQ = CI.CJN_INQ_KIND_SEQ
+			INNER JOIN
+				MNG_USERS MU
+			ON
+				MU.USER_ID = #userId#
+				AND
+				CAL.CJN_ACCOUNT_SEQ = MU.CJN_ACCOUNT_SEQ
+				AND
+				CI.CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+		<include refid="selectInquiryListWhere" />
+	</select>
+
+	<!-- 問い合せ詳細 -->
+	<select id="selectCjnInquiry"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquiryInfoParamBean"
+			resultMap="cjnInquiryInfo">
+		SELECT
+			CI.CJN_INQID,
+
+			CI.CARRIER_TYPE,
+			CI.FREGI_DENPYO_NO,
+			CI.FREGI_TORIHIKI_NO,
+
+			to_char(CI.INS_DT,'YYYY-MM-DD HH24:MI:SS') INS_DT,
+			to_char(CI.LASTREF_DT,'YYYY-MM-DD HH24:MI:SS') LASTREF_DT,
+			(SELECT MU.USER_NAME FROM MNG_USERS MU
+				WHERE MU.CJN_ACCOUNT_SEQ = CI.CJN_ACCOUNT_SEQ_LASTREF) LASTREF_USER,
+			CI.REF_FLG,
+			CI.INQUIRY_STATUS,
+			to_char(CI.LASTOPE_DT,'YYYY-MM-DD HH24:MI:SS') LASTOPE_DT,
+			to_char(CI.UPD_DT,'YYYY-MM-DD HH24:MI:SS') UPD_DT,
+			(SELECT MU.USER_NAME FROM MNG_USERS MU
+				WHERE MU.CJN_ACCOUNT_SEQ = CI.CJN_ACCOUNT_SEQ_LASTOPE) LASTOPE_USER,
+			CI.INQ_CONTENTS INQ_CONTENTS,
+			(SELECT INQ_KBN_NAME FROM MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'CARRIER_TYPE'   AND MIK.INQ_KBN= CI.CARRIER_TYPE) AS CARRIER_TYPE_NAME,
+			(SELECT INQ_KBN_NAME FROM MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'INQUIRY_STATUS' AND MIK.INQ_KBN= CI.INQUIRY_STATUS) AS INQUIRY_STATUS_NAME
+		FROM
+			CJN_INQUIRY CI
+		WHERE
+			CI.CJN_INQID = #cjnInqId#
+			AND
+			CI.CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+	</select>
+
+	<!-- 問い合せ詳細閲覧ログ記録 -->
+	<insert id="insertCjnInquiryInfoReading"
+		parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquiryInfoReadingLoggingParamBean">
+		<selectKey resultClass="java.lang.Integer" keyProperty="cjnHistorySeq" type="pre">
+			SELECT
+				SEQ_CJN_HISTORY_SEQ.NEXTVAL AS CJN_HISTORY_SEQ
+			FROM
+				DUAL
+		</selectKey>
+
+		INSERT INTO
+					CJN_SESSION_HISTORY
+					(
+						CJN_HISTORY_SEQ,
+						CJN_ACCOUNT_SEQ,
+						SESSION_STATUS,
+						UPD_DT,
+						UPD_ID,
+						CJN_INQID
+					)
+		VALUES (
+					#cjnHistorySeq#,
+					#cjnAccountSeq#,
+					#sessionStatus#,
+					SYSTIMESTAMP,
+					#userId#,
+					#cjnInqId#
+				)
+	</insert>
+
+	<!-- 問い合せ詳細 -->
+	<!-- REF_FLG更新/最終閲覧日時更新/最終閲覧者シーケンス更新-->
+	<update id="udateRefFlg"
+		parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquiryInfoParamBean">
+		UPDATE
+			CJN_INQUIRY
+		SET
+			REF_FLG = '1',
+			LASTREF_DT = SYSDATE,
+			CJN_ACCOUNT_SEQ_LASTREF = (
+											SELECT
+												CJN_ACCOUNT_SEQ
+											FROM
+												MNG_USERS
+											WHERE
+												USER_ID = #userId#
+										)
+		WHERE
+			CJN_INQID = #cjnInqId#
+	          AND
+            CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+	</update>
+
+	<!-- 問い合せ処理状況更新 -->
+	<update id="updateInquiryStastus"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquiryStatusUpdateCommitParamBean">
+		UPDATE
+			CJN_INQUIRY
+		SET
+			INQUIRY_STATUS = #inquiryStatus#,
+			UPD_DT=SYSTIMESTAMP,
+			LASTOPE_DT = SYSDATE,
+			UPD_ID = #operUserId#,
+			UPD_PG = #pgName#,
+			CJN_ACCOUNT_SEQ_LASTOPE = (
+											SELECT
+												CJN_ACCOUNT_SEQ
+											FROM
+												MNG_USERS
+											WHERE
+												USER_ID = #operUserId#
+										)
+		WHERE
+			CJN_INQID = #cjnInqId#
+			AND
+			CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+			AND
+			to_char(UPD_DT,'YYYY-MM-DD HH24:MI:SS') = #updDt#
+
+	</update>
+
+	<!-- 問い合せユーザ情報・共通カラム部分 -->
+	<!-- 共通カラム使用 -->
+	<sql id="cjnUserColumn">
+			MU.USER_ID,
+			MU.USER_NAME,
+			MU.CJN_EMAIL_1,
+			MU.CJN_EMAIL_STATUS_1,
+			MU.CJN_EMAIL_2,
+			MU.CJN_EMAIL_STATUS_2,
+			MU.CJN_EMAIL_3,
+			MU.CJN_EMAIL_STATUS_3,
+			MU.CJN_ACCOUNT_TYPE,
+			to_char(MU.INS_DT,'YYYY-MM-DD HH24:MI:SS') INS_DT,
+			to_char(MU.UPD_DT,'YYYY-MM-DD HH24:MI:SS') UPD_DT,
+			MU.CJN_ACCOUNT_SEQ
+	</sql>
+
+	<!-- 問い合せユーザ一覧 -->
+	<select id="selectCjnUserList" resultMap="cjnUserList">
+		SELECT
+			<include refid="cjnUserColumn"/>
+		FROM
+			MNG_USERS MU
+		INNER JOIN
+			MNG_GROUP_AUTHORITY MGA
+		ON
+			MU.GROUP_ID = MGA.GROUP_ID
+			AND
+			MU.DEL_KBN = '0'
+			AND
+			MU.CJN_ACCOUNT_SEQ IS NOT NULL
+		WHERE
+			MGA.AUTHORITY_ID = '07'
+		ORDER BY MU.USER_ID
+	</select>
+
+	<!-- 問い合せユーザアカウントシーケンス -->
+	<select id="cjnAccountSeq"
+			parameterClass="java.lang.String" resultMap="cjnUserAccount">
+		SELECT
+			MCI.INQ_TITLE,
+			MCI.INQ_COMMENT,
+			(
+				SELECT
+					COUNT(CJN_INQ_KIND_SEQ)
+				FROM
+					CJN_ACCOUNT_LEVEL
+				WHERE
+					CJN_ACCOUNT_SEQ = #cnjAccountSeq#
+					AND
+					CJN_INQ_KIND_SEQ = MCI.CJN_INQ_KIND_SEQ
+			) CNT
+		FROM
+			MST_CJN_INQUIRY MCI
+		ORDER BY MCI.CJN_INQ_KIND_SEQ
+	</select>
+
+	<!-- 問い合せユーザ情報取得 -->
+	<!-- 共通カラム使用 -->
+	<select id="selectCjnUser" resultMap="cjnUserInfo" parameterClass="java.lang.String">
+		SELECT
+			<include refid="cjnUserColumn"/>
+		, MU.CJN_ADMIN_NOTE
+		FROM
+			MNG_USERS MU
+		INNER JOIN
+			MNG_GROUP_AUTHORITY MGA
+		ON
+			MU.GROUP_ID = MGA.GROUP_ID
+		WHERE
+			MU.CJN_ACCOUNT_SEQ = #cjnAccountSeq#
+			AND
+			MGA.AUTHORITY_ID = '07'
+	</select>
+
+	<!-- 問い合せユーザ情報取得 -->
+	<!-- 共通カラム使用 -->
+	<select id="selectUpdateCjnUser" resultMap="cjnUserInfo" parameterClass="java.lang.String">
+		SELECT
+			<include refid="cjnUserColumn"/>
+		, MU.CJN_ADMIN_NOTE
+		FROM
+			MNG_USERS MU
+		INNER JOIN
+			MNG_GROUP_AUTHORITY MGA
+		ON
+			MU.GROUP_ID = MGA.GROUP_ID
+		WHERE
+			CJN_ACCOUNT_SEQ = #cjnAccountSeq#
+	</select>
+
+	<!-- 問い合せユーザ情報更新 -->
+	<update id="updateCjnUser"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnUserUpdateCommitParamBean">
+		UPDATE
+			MNG_USERS
+		SET
+			CJN_EMAIL_1 = #email1#,
+			CJN_EMAIL_STATUS_1 = #emailStatus1#,
+			CJN_EMAIL_2 = #email2#,
+			CJN_EMAIL_STATUS_2 = #emailStatus2#,
+			CJN_EMAIL_3 = #email3#,
+			CJN_EMAIL_STATUS_3 = #emailStatus3#,
+			CJN_ACCOUNT_TYPE = #accountLevel#,
+			CJN_ADMIN_NOTE = #adminNote#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #pgName#,
+			UPD_ID = #operUserId#
+		WHERE
+			CJN_ACCOUNT_SEQ = #cjnAccountSeq#
+			AND
+			to_char(UPD_DT,'YYYY-MM-DD HH24:MI:SS') = #updDt#
+	</update>
+
+	<!-- 閲覧可能問い合せ権限リスト取得 -->
+	<select id="selectCjnAccountLevelList" resultMap="cjnUserAccountLevel"
+			parameterClass="java.lang.String">
+		SELECT
+			MCI.INQ_TITLE,
+			MCI.INQ_COMMENT,
+			(
+				SELECT
+					COUNT(CJN_INQ_KIND_SEQ)
+				FROM
+					CJN_ACCOUNT_LEVEL
+				WHERE
+					CJN_ACCOUNT_SEQ = #cjnAccountSeq#
+					AND
+					CJN_INQ_KIND_SEQ = MCI.CJN_INQ_KIND_SEQ
+			) CNT,
+			MCI.CJN_INQ_KIND_SEQ
+		FROM
+			MST_CJN_INQUIRY MCI
+		ORDER BY MCI.CJN_INQ_KIND_SEQ
+	</select>
+
+	<!-- 閲覧可能問い合せ権限更新 -->
+	<!-- 最終更新日時取得 -->
+	<select id="selectUserAuthorityLastUpdDt"
+		resultClass="java.lang.String" parameterClass="java.lang.String">
+		SELECT
+			TO_CHAR(MAX(UPD_DT), 'YYYY-MM-DD HH24:MI:SS') UPD_DT
+		FROM
+			CJN_ACCOUNT_LEVEL
+		WHERE
+			CJN_ACCOUNT_SEQ = #cjnAccountSeq#
+	</select>
+
+	<!-- 閲覧可能問い合せ権限更新 -->
+	<!-- 閲覧可能問い合せ権限レコード削除 -->
+	<delete id="deleteUserAuthority"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnUserAuthorityUpdateParamBean">
+		DELETE FROM
+			CJN_ACCOUNT_LEVEL
+		WHERE
+			CJN_ACCOUNT_SEQ = #cjnAccountSeq#
+	</delete>
+
+	<!-- 閲覧可能問い合せ権限更新 -->
+	<!-- 閲覧可能問い合せ権限レコード追加 -->
+	<insert id="insertUserAuthority"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnUserAuthorityUpdateParamBean">
+		INSERT INTO
+			CJN_ACCOUNT_LEVEL
+			(
+				CJN_ACCOUNT_SEQ,
+				CJN_INQ_KIND_SEQ,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID,
+				INS_DT,
+				INS_PG,
+				INS_ID
+			)
+		VALUES
+			(
+				#cjnAccountSeq#,
+				#cjnInqKindSeq#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#
+			)
+	</insert>
+
+	<!-- 問い合せページ・アクセスコントロール -->
+	<select id="selectCjnAccountSeqCountForKindSeq"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquiryAccessControlParamBean"
+			resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			CJN_ACCOUNT_LEVEL CAL
+			INNER JOIN
+				(SELECT CJN_ACCOUNT_SEQ
+					FROM MNG_USERS
+					WHERE
+						USER_ID = #userId#
+						AND DEL_KBN = '0'
+						AND CJN_ACCOUNT_SEQ IS NOT NULL
+				) MU
+				ON MU.CJN_ACCOUNT_SEQ = CAL.CJN_ACCOUNT_SEQ
+		WHERE
+			CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+	</select>
+
+	<select id="selectCjnAccountSeqCountForInqId"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnInquiryAccessControlParamBean"
+			resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			CJN_ACCOUNT_LEVEL CAL
+			INNER JOIN (
+				SELECT CJN_ACCOUNT_SEQ
+					FROM MNG_USERS
+					WHERE
+						USER_ID = #userId#
+						AND DEL_KBN = '0'
+						AND CJN_ACCOUNT_SEQ IS NOT NULL
+				) MU
+				ON MU.CJN_ACCOUNT_SEQ = CAL.CJN_ACCOUNT_SEQ
+		WHERE
+			CJN_INQ_KIND_SEQ = (
+				SELECT CJN_INQ_KIND_SEQ
+					FROM CJN_INQUIRY
+					WHERE
+						CJN_INQID = #cjnInqId#
+				)
+	</select>
+
+	<!-- システム操作履歴の件数 -->
+	<select id="selectLogOperationCount"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnLogOperationSearchParamBean"
+			resultMap="cjnLogOperationCount">
+		SELECT
+			COUNT(*) ROW_COUNT
+		FROM
+			CJN_SESSION_HISTORY CSH
+			LEFT JOIN
+				MNG_USERS MU
+				ON CSH.CJN_ACCOUNT_SEQ = MU.CJN_ACCOUNT_SEQ
+			LEFT JOIN
+				CJN_INQUIRY CI
+				ON CSH.CJN_INQID = CI.CJN_INQID
+			LEFT JOIN
+				MST_CJN_INQUIRY MCI
+				ON CI.CJN_INQ_KIND_SEQ = MCI.CJN_INQ_KIND_SEQ
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="userId">
+				MU.USER_ID LIKE '%' || #userId# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="userName">
+				MU.USER_NAME LIKE '%' || #userName# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cjnInqId">
+				CSH.CJN_INQID LIKE '%' || #cjnInqId# || '%'
+			</isNotEmpty>
+			<isNotEqual prepend="AND" property="cjnInqKindSeq" compareValue="0">
+				CI.CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+			</isNotEqual>
+			<isNotEmpty prepend="AND" property="processStatus">
+				CSH.SESSION_STATUS = #processStatus#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="updDtFrom">
+				<![CDATA[
+				CSH.UPD_DT >= TO_DATE(#updDtFrom#, 'YYYYMMDDHH24MISS')
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="updDtTo">
+				<![CDATA[
+				CSH.UPD_DT <= TO_DATE(#updDtTo#, 'YYYYMMDDHH24MISS')
+				]]>
+			</isNotEmpty>
+		</dynamic>
+			ORDER BY
+				CSH.UPD_DT DESC
+	</select>
+
+	<!-- システム操作履歴検索(CHINTAIへの問い合せ管理) -->
+	<select id="selectLogOperationList" resultMap="cjnLogOperationInfo"
+			parameterClass="net.chintai.backend.sysadmin.cjn_inquiry.dao.CjnLogOperationSearchParamBean">
+		SELECT
+			MU.USER_ID,
+			AUTH.USER_ID AUTH_USER_ID,
+			NVL(MU.USER_NAME, '--') USER_NAME,
+			CSH.CJN_ACCOUNT_SEQ,
+			CI.CJN_INQ_KIND_SEQ,
+			CSH.SESSION_STATUS,
+			NVL(CSH.CJN_INQID, '--') CJN_INQID,
+			NVL(MCI.INQ_TITLE, '--') INQ_TITLE,
+			to_char(CSH.UPD_DT,'YYYY-MM-DD HH24:MI:SS') UPD_DT
+		FROM
+			CJN_SESSION_HISTORY CSH
+			LEFT JOIN
+				MNG_USERS MU
+				ON CSH.CJN_ACCOUNT_SEQ = MU.CJN_ACCOUNT_SEQ
+			LEFT JOIN (
+				SELECT USER_ID, CJN_ACCOUNT_SEQ
+					FROM MNG_USERS U
+					INNER JOIN MNG_GROUP_AUTHORITY MGA
+					ON U.GROUP_ID = MGA.GROUP_ID
+					WHERE MGA.AUTHORITY_ID = '07'
+						AND U.DEL_KBN = '0'
+						AND U.CJN_ACCOUNT_SEQ IS NOT NULL
+				) AUTH ON CSH.CJN_ACCOUNT_SEQ = AUTH.CJN_ACCOUNT_SEQ
+			LEFT JOIN
+				CJN_INQUIRY CI
+				ON CSH.CJN_INQID = CI.CJN_INQID
+			LEFT JOIN
+				MST_CJN_INQUIRY MCI
+				ON CI.CJN_INQ_KIND_SEQ = MCI.CJN_INQ_KIND_SEQ
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="userId">
+				MU.USER_ID LIKE '%' || #userId# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="userName">
+				MU.USER_NAME LIKE '%' || #userName# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cjnInqId">
+				CSH.CJN_INQID LIKE '%' || #cjnInqId# || '%'
+			</isNotEmpty>
+			<isNotEqual prepend="AND" property="cjnInqKindSeq" compareValue="0">
+				CI.CJN_INQ_KIND_SEQ = #cjnInqKindSeq#
+			</isNotEqual>
+			<isNotEmpty prepend="AND" property="processStatus">
+				CSH.SESSION_STATUS = #processStatus#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="updDtFrom">
+				<![CDATA[
+				CSH.UPD_DT >= TO_DATE(#updDtFrom#, 'YYYYMMDDHH24MISS')
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="updDtTo">
+				<![CDATA[
+				CSH.UPD_DT <= TO_DATE(#updDtTo#, 'YYYYMMDDHH24MISS')
+				]]>
+			</isNotEmpty>
+		</dynamic>
+			ORDER BY
+				CSH.UPD_DT DESC
+	</select>
+
+</sqlMap>

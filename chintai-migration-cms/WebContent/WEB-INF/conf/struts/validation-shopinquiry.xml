@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+  <formset>
+    <!-- 適用するアクション・フォームBeanを論理名で指定 -->
+
+    <!-- 問い合せ情報閲覧 -->
+    <form name="inquiryRecentSearchForm">
+
+      <!-- 店舗コード -->
+      <field property="shopCd" depends="maxlength, mask">
+        <msg name="maxlength" key="WARN.MSG.0007" />
+        <arg name="maxlength" key="bukken.shopCd" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>9</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0007" />
+        <arg name="mask" key="bukken.shopCd" position="0" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+
+      <!-- 店舗名 -->
+      <field property="companyBumonName" depends="maxlength, scripting">
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="shop_inquiry.bumonNm" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>400</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="shop_inquiry.bumonNm" position="0" />
+      </field>
+
+      <!-- 問い合せID -->
+      <field property="inqId" depends="maxlength, mask">
+        <msg name="maxlength" key="WARN.MSG.0007" />
+        <arg name="maxlength" key="shop_inquiry.inqId" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>16</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0013" />
+        <arg name="mask" key="shop_inquiry.inqId" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+
+      <!-- キーワード -->
+      <field property="keyword" depends="maxlength, scripting">
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="shop_inquiry.keyword" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>250</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="shop_inquiry.keyword" position="0" />
+      </field>
+
+      <!-- 大学名 -->
+      <field property="schoolName" depends="maxlength, scripting">
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="shop_inquiry.schoolName" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>250</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="shop_inquiry.schoolName" position="0" />
+      </field>
+
+      <!-- 問い合せ日時（下限） -->
+      <field property="insDtFrom" depends="date">
+        <msg name="date" key="WARN.MSG.0027"/>
+        <arg name="date" key="shop_inquiry.insDtFrom" position="0" />
+        <var>
+          <var-name>datePattern</var-name>
+          <var-value>yyyyMMddHH</var-value>
+        </var>
+      </field>
+
+      <!-- 問い合せ日時（上限） -->
+      <field property="insDtTo" depends="date">
+        <msg name="date" key="WARN.MSG.0027"/>
+        <arg name="date" key="shop_inquiry.insDtTo" position="0" />
+        <var>
+          <var-name>datePattern</var-name>
+          <var-value>yyyyMMddHH</var-value>
+        </var>
+      </field>
+
+      <!-- 問い合せ日時チェック -->
+      <field property="dateCheck" depends="dateCompare">
+        <msg name="dateCompare" key="WARN.MSG.0009"/>
+        <arg name="dateCompare" key="shop_inquiry.insDt"/>
+        <var>
+          <var-name>startDate</var-name>
+          <var-value>insDtFrom</var-value>
+        </var>
+        <var>
+          <var-name>endDate</var-name>
+          <var-value>insDtTo</var-value>
+        </var>
+        <var>
+          <var-name>datePattern</var-name>
+          <var-value>yyyyMMddHH</var-value>
+        </var>
+      </field>
+
+    </form>
+
+    <!-- システム操作履歴検索 -->
+    <form name="inquiryLogOperationSearchForm">
+
+      <!-- 店舗コード -->
+      <field property="shopCd" depends="maxlength, mask">
+        <msg name="maxlength" key="WARN.MSG.0007" />
+        <arg name="maxlength" key="bukken.shopCd" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>9</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0013" />
+        <arg name="mask" key="bukken.shopCd" position="0" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+
+      <!-- 店舗名 -->
+      <field property="companyBumonName" depends="maxlength, scripting">
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="shop_inquiry.bumonNm" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>60</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="shop_inquiry.bumonNm" position="0" />
+      </field>
+
+      <!-- 問い合せID -->
+      <field property="inqId" depends="maxlength, mask">
+        <msg name="maxlength" key="WARN.MSG.0007" />
+        <arg name="maxlength" key="shop_inquiry.inqId" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>16</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0013" />
+        <arg name="mask" key="shop_inquiry.inqId" position="0" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+
+      <!-- 処理日時（下限） -->
+      <field property="insDtFrom" depends="date">
+        <msg name="date" key="WARN.MSG.0027"/>
+        <arg name="date" key="shop_inquiry.logInsDtFrom" position="0" />
+        <var>
+          <var-name>datePattern</var-name>
+          <var-value>yyyyMMddHH</var-value>
+        </var>
+      </field>
+
+      <!-- 処理日時（上限） -->
+      <field property="insDtTo" depends="date">
+        <msg name="date" key="WARN.MSG.0027"/>
+        <arg name="date" key="shop_inquiry.logInsDtTo" position="0" />
+        <var>
+          <var-name>datePattern</var-name>
+          <var-value>yyyyMMddHH</var-value>
+        </var>
+      </field>
+
+      <!-- 処理日時チェック -->
+      <field property="dateCheck" depends="dateCompare">
+        <msg name="dateCompare" key="WARN.MSG.0009"/>
+        <arg name="dateCompare" key="shop_inquiry.logInsDt"/>
+        <var>
+          <var-name>startDate</var-name>
+          <var-value>insDtFrom</var-value>
+        </var>
+        <var>
+          <var-name>endDate</var-name>
+          <var-value>insDtTo</var-value>
+        </var>
+        <var>
+          <var-name>datePattern</var-name>
+          <var-value>yyyyMMddHH</var-value>
+        </var>
+      </field>
+    </form>
+  </formset>
+</form-validation>

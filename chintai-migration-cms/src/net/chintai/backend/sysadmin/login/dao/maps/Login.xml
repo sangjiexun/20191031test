@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="login">
+
+	<resultMap id="user" class="net.chintai.backend.sysadmin.login.domain.User">
+		<result property="userId"      column="USER_ID"/>
+		<result property="userName"    column="USER_NAME"/>
+		<result property="password"    column="PASSWORD"/>
+		<result property="description" column="USER_NOTE"/>
+	</resultMap>
+
+	<select id="selectUser" resultMap="user">
+		SELECT
+			USER_ID,
+			USER_NAME,
+			PASSWORD,
+			USER_NOTE
+		FROM
+			MNG_USERS
+		WHERE
+			USER_ID = #value#
+			AND DEL_KBN = '0'
+	</select>
+
+
+	<insert id="insertMngSession"
+			parameterClass="net.chintai.backend.sysadmin.login.dao.MngSessionParamBean">
+	    <selectKey resultClass="java.lang.Long" keyProperty="sidId">
+			SELECT SEQ_SESSION_SEQ.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO MNG_SESSION (
+			SID,
+			USER_ID,
+			LOGIN_KEY,
+			LOGIN_TIME,
+			STATUS,
+			INS_DT,
+			INS_PG,
+			INS_ID,
+			UPD_DT,
+			UPD_PG,
+			UPD_ID
+		) VALUES (
+			#sidId#,
+			#userId#,
+			#loginKey#,
+			SYSTIMESTAMP,
+			'0',
+			SYSTIMESTAMP,
+			#pgName#,
+			#operUserId#,
+			SYSTIMESTAMP,
+			#pgName#,
+			#operUserId#
+		)
+	</insert>
+
+	<delete id="deleteMngSession"
+			parameterClass="java.lang.Long">
+		DELETE MNG_SESSION
+		WHERE SID =#sidId#
+	</delete>
+
+</sqlMap>

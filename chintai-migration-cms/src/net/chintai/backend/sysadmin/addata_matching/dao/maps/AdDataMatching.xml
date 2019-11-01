@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="adDataMatching">
+
+	<!-- 照合結果一覧用resultMap -->
+	<resultMap id="matchingDataList"
+		class="net.chintai.backend.sysadmin.addata_matching.domain.MatchingDataDomain">
+		<result property="taisyoYm" column="TAISYO_YM" />
+		<result property="insDt" column="INS_DT" />
+	</resultMap>
+
+	<!-- 照合結果ダウンロード用resultMap -->
+	<resultMap id="matchingDataInfo"
+		class="net.chintai.backend.sysadmin.addata_matching.domain.MatchingDataDownloadDomain" >
+		<result property="groupName" column="GROUPNAME"/>
+		<result property="areaCd" column="AREACD"/>
+		<result property="areaName" column="AREANAME"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="torihikiNo" column="TORIHIKI_NO"/>
+		<result property="bkcd" column="BKCD"/>
+		<result property="roomCd" column="ROOMCD"/>
+		<result property="roomType" column="ROOMTYPE"/>
+		<result property="torihikiShubetsu" column="TORIHIKI_SHUBETSU"/>
+		<result property="torihikiName" column="TORIHIKI_NAME"/>
+		<result property="chinryo" column="CHINRYO"/>
+		<result property="torihikiSakuseiDate" column="TORIHIKI_SAKUSEI_DATE"/>
+		<result property="cmInsGaku" column="CM_INS_GAKU"/>
+		<result property="cmInsDt" column="CM_INS_DT"/>
+		<result property="adInsCnt" column="AD_INS_CNT"/>
+		<result property="adInsGaku" column="AD_INS_GAKU"/>
+		<result property="adInsDt" column="AD_INS_DT"/>
+		<result property="kashiCm" column="KASHI_CM"/>
+		<result property="kariCm" column="KARI_CM"/>
+		<result property="cmMitsu" column="CM_MITSU"/>
+		<result property="cmMitsuAd" column="CM_MITSU_AD"/>
+		<result property="tantouCd" column="TANTOU_CD"/>
+		<result property="tantouName" column="TANTOU_NAME"/>
+		<result property="kashiCd" column="KASHI_CD"/>
+		<result property="dataType" column="DATA_TYPE"/>
+		<result property="lastChinryo" column="LAST_CHINRYO"/>
+		<result property="lastHassinDate" column="LAST_HASSIN_DT"/>
+	</resultMap>
+
+
+	<!-- 照合結果一覧取得 -->
+	<select id ="matchingDataList" resultMap="matchingDataList">
+		SELECT
+ 			ADK.TAISYO_YM,
+ 			TO_CHAR(TRUNC(MIN(ADK.INS_DT)),'YYYY/MM/DD') AS INS_DT
+		FROM
+			AD_DATA_KANRI ADK
+		WHERE
+			ADK.DEL_KBN='0'
+		GROUP BY
+			ADK.TAISYO_YM
+		ORDER BY
+			ADK.TAISYO_YM DESC
+	</select>
+
+	<!-- 照合結果総件数 -->
+	<select id="matchingDataTotalCount" resultClass="int">
+		SELECT
+ 			COUNT(COUNT(*))
+		FROM
+			AD_DATA_KANRI ADK
+		WHERE
+			ADK.DEL_KBN='0'
+		GROUP BY
+			ADK.TAISYO_YM
+		ORDER BY
+			ADK.TAISYO_YM DESC
+	</select>
+
+
+	<!-- ADデータ更新 削除フラグを1(削除)にセットする -->
+	<update id="deleteAdData"
+			parameterClass="net.chintai.backend.sysadmin.addata_matching.dao.AdDataAddParamBean" >
+		UPDATE AD_DATA_KANRI ADK
+		SET
+			ADK.DEL_KBN = '1',
+		 	ADK.UPD_DT=SYSTIMESTAMP,
+ 			ADK.UPD_PG=#pgName#,
+ 			ADK.UPD_ID=#operUserId#
+		WHERE
+			ADK.TAISYO_YM = #taisyoYm#
+		AND
+ 			ADK.DEL_KBN = '0'
+	</update>
+
+
+
+
+	<!-- ADデータの追加 -->
+	<insert id="adDataInsert"
+			parameterClass="net.chintai.backend.sysadmin.addata_matching.dao.AdDataAddParamBean">
+		INSERT INTO
+ 			AD_DATA_KANRI ADK (
+  				ADK.PK_AD_DATA_SEQ,
+  				ADK.TAISYO_YM,
+  				ADK.GROUPNAME,
+  				ADK.AREACD,
+  				ADK.AREANAME,
+  				ADK.SHOPCD,
+  				ADK.BUMON,
+  				ADK.TORIHIKI_NO,
+  				ADK.BKCD,
+  				ADK.ROOMCD,
+  				ADK.ROOMTYPE,
+  				ADK.TORIHIKI_SHUBETSU,
+  				ADK.TORIHIKI_NAME,
+  				ADK.CHINRYO,
+  				ADK.TORIHIKI_SAKUSEI_DATE,
+  				ADK.CM_INS_GAKU,
+  				ADK.CM_INS_DT,
+  				ADK.AD_INS_CNT,
+  				ADK.AD_INS_GAKU,
+  				ADK.AD_INS_DT,
+  				ADK.KASHI_CM,
+  				ADK.KARI_CM,
+  				ADK.CM_MITSU,
+  				ADK.CM_MITSU_AD,
+  				ADK.TANTOU_CD,
+  				ADK.TANTOU_NAME,
+  				ADK.KASHI_CD,
+  				ADK.DATA_TYPE,
+  				ADK.LAST_CHINRYO,
+  				ADK.LAST_HASSIN_DT,
+  				ADK.DEL_KBN,
+  				ADK.INS_DT,
+  				ADK.INS_PG,
+  				ADK.INS_ID,
+  				ADK.UPD_DT,
+  				ADK.UPD_PG,
+  				ADK.UPD_ID
+			)
+				VALUES(
+					SEQ_AD_DATA.NEXTVAL,
+					#taisyoYm# ,
+					#groupName# ,
+					#areaCd#,
+					#areaName#,
+					#shopCd#,
+					#bumon#,
+					#torihikiNo#,
+					#bkCd#,
+					#roomCd#,
+					#roomtType#,
+					#torihikiShubetsu#,
+					#torihikiName#,
+					#chinryo#,
+					#torihikiSakuseiDate#,
+					#cmInsGaku#,
+					#cmInsDt#,
+					#adInsCnt#,
+					#adInsGaku#,
+					#adInsDt#,
+					#kashiCm#,
+					#kariCm#,
+					#cmMitsu#,
+					#cmMitsuAd#,
+					#tantouCd#,
+					#tantouName#,
+					#kashiCd#,
+					#dataType#,
+					(SELECT
+							BR.CHINRYO
+						FROM MV_BUKKEN_RIREKI BR
+						LEFT OUTER JOIN BUKKEN_RIREKI_SHOP BRS
+							ON BRS.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+
+						WHERE BR.NEW_OLD_KBN = '1'
+						AND #shopCDforMatching# IN (CASE WHEN BRS.AGENCY_SHOPCD IS NULL THEN BR.SHOPCD ELSE BRS.AGENCY_SHOPCD END)
+						AND BR.BKCD = #bkCdforMatching#
+						AND BR.ROOMCD = #roomCd#
+						AND BR.CT_START_DT
+						BETWEEN ADD_MONTHS(TO_DATE(#taisyoYmforMatching#,'YYYYMMDD'),-2) AND SYSDATE
+					),
+					(SELECT
+							BR.CT_START_DT
+						FROM MV_BUKKEN_RIREKI BR
+						LEFT OUTER JOIN BUKKEN_RIREKI_SHOP BRS
+							ON BRS.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+
+						WHERE BR.NEW_OLD_KBN = '1'
+						AND #shopCDforMatching# IN (CASE WHEN BRS.AGENCY_SHOPCD IS NULL THEN BR.SHOPCD ELSE BRS.AGENCY_SHOPCD END)
+						AND BR.BKCD = #bkCdforMatching#
+						AND BR.ROOMCD = #roomCd#
+						AND BR.CT_START_DT
+						BETWEEN ADD_MONTHS(TO_DATE(#taisyoYmforMatching#,'YYYYMMDD'),-2) AND SYSDATE
+					),
+					'0',
+					SYSTIMESTAMP,
+					#pgName#,
+					#operUserId#,
+					SYSTIMESTAMP,
+					#pgName#,
+					#operUserId#
+				)
+		</insert>
+
+
+<!--
+	<insert id="adDataInsert"
+			parameterClass="net.chintai.backend.sysadmin.addata_matching.dao.AdDataAddParamBean">
+		<![CDATA[
+		INSERT INTO
+ 			AD_DATA_KANRI ADK (
+  				ADK.PK_AD_DATA_SEQ,
+  				ADK.TAISYO_YM,
+  				ADK.GROUPNAME,
+  				ADK.AREACD,
+  				ADK.AREANAME,
+  				ADK.SHOPCD,
+  				ADK.BUMON,
+  				ADK.TORIHIKI_NO,
+  				ADK.BKCD,
+  				ADK.ROOMCD,
+  				ADK.ROOMTYPE,
+  				ADK.TORIHIKI_SHUBETSU,
+  				ADK.TORIHIKI_NAME,
+  				ADK.CHINRYO,
+  				ADK.TORIHIKI_SAKUSEI_DATE,
+  				ADK.CM_INS_GAKU,
+  				ADK.CM_INS_DT,
+  				ADK.AD_INS_CNT,
+  				ADK.AD_INS_GAKU,
+  				ADK.AD_INS_DT,
+  				ADK.KASHI_CM,
+  				ADK.KARI_CM,
+  				ADK.CM_MITSU,
+  				ADK.CM_MITSU_AD,
+  				ADK.TANTOU_CD,
+  				ADK.TANTOU_NAME,
+  				ADK.KASHI_CD,
+  				ADK.DATA_TYPE,
+  				ADK.LAST_CHINRYO,
+  				ADK.LAST_HASSIN_DT,
+  				ADK.DEL_KBN,
+  				ADK.INS_DT,
+  				ADK.INS_PG,
+  				ADK.INS_ID,
+  				ADK.UPD_DT,
+  				ADK.UPD_PG,
+  				ADK.UPD_ID
+			)
+				Select
+					SEQ_AD_DATA.NEXTVAL,
+					#taisyoYm# ,
+					#groupName# ,
+					#areaCd#,
+					#areaName#,
+					#shopCd#,
+					#bumon#,
+					#torihikiNo#,
+					#bkCd#,
+					#roomCd#,
+					#roomtType#,
+					#torihikiShubetsu#,
+					#torihikiName#,
+					#chinryo#,
+					#torihikiSakuseiDate#,
+					#cmInsGaku#,
+					#cmInsDt#,
+					#adInsCnt#,
+					#adInsGaku#,
+					#adInsDt#,
+					#kashiCm#,
+					#kariCm#,
+					#cmMitsu#,
+					#cmMitsuAd#,
+					#tantouCd#,
+					#tantouName#,
+					#kashiCd#,
+					#dataType#,
+					TAB2.CHINRYO,
+					TAB2.CT_START_DT,
+					'0',
+					#insDt#,
+					#pgName#,
+					#operUserId#,
+					#updDt#,
+					#pgName#,
+					#operUserId#
+				From dual TAB1 LEFT JOIN
+						(SELECT
+							BR.CHINRYO,
+							BR.CT_START_DT,
+							#shopCDforMatching# AS SHOPCD
+						FROM BUKKEN_KANRI BK
+						INNER JOIN BUKKEN_RIREKI BR
+							ON BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+						LEFT OUTER JOIN BUKKEN_RIREKI_SHOP BRS
+							ON BRS.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+
+						WHERE #shopCDforMatching# IN (CASE WHEN BRS.AGENCY_SHOPCD IS NULL THEN BR.SHOPCD ELSE BRS.AGENCY_SHOPCD END)
+						AND BR.BKCD = #bkCdforMatching#
+						AND BR.ROOMCD = #roomCd#
+						AND BR.CT_START_DT
+						BETWEEN ADD_MONTHS(TO_DATE(#taisyoYmforMatching#,'YYYYMMDD'),-2) AND SYSDATE
+						)  TAB2
+				ON #shopCDforMatching# = TAB2.SHOPCD
+
+			]]>
+		</insert>
+ -->
+
+
+	<!-- 照合結果のダウンロード -->
+	<select id="selectMatchingData"
+	parameterClass="net.chintai.backend.sysadmin.addata_matching.dao.MatchingDataDownloadParamBean"
+	resultMap="matchingDataInfo">
+	<![CDATA[
+		SELECT
+ 			GROUPNAME,
+ 			AREACD,
+ 			AREANAME,
+ 			SHOPCD,
+ 			BUMON,
+ 			TORIHIKI_NO,
+ 			BKCD,
+ 			ROOMCD,
+ 			ROOMTYPE,
+ 			TORIHIKI_SHUBETSU,
+ 			TORIHIKI_NAME,
+ 			CHINRYO,
+ 			TORIHIKI_SAKUSEI_DATE,
+ 			CM_INS_GAKU,
+ 			CM_INS_DT,
+ 			AD_INS_CNT,
+ 			AD_INS_GAKU,
+ 			AD_INS_DT,
+ 			KASHI_CM,
+ 			KARI_CM,
+ 			CM_MITSU,
+ 			CM_MITSU_AD,
+ 			TANTOU_CD,
+ 			TANTOU_NAME,
+ 			KASHI_CD,
+ 			DATA_TYPE,
+ 			LAST_CHINRYO,
+ 			to_char(LAST_HASSIN_DT, 'yyyy-mm-dd hh24:mi:ss') as LAST_HASSIN_DT
+
+		FROM
+			AD_DATA_KANRI ADK
+		WHERE
+ 			ADK.TAISYO_YM = #taisyoYm#
+		AND
+ 			ADK.DEL_KBN='0'
+		ORDER BY
+			ADK.PK_AD_DATA_SEQ ASC
+	]]>
+	</select>
+
+
+
+
+</sqlMap>

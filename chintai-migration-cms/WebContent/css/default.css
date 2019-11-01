@@ -1,0 +1,51 @@
+@charset "UTF-8";
+@import url(main.css);
+@import url(parts.css);
+@import url(crnwl.css);
+/*
+ * 全体の設定
+ */
+* {
+  margin: 0;
+  padding: 0;
+  }
+
+body {
+  background-color:#FFFFFF;
+  width: 100%;
+  font-size: 75%;
+  }
+
+a:link {
+  color: navy;
+  text-decoration: none;
+  }
+
+a:visited {
+  color: maroon;
+  text-decoration: none;
+  }
+
+a:hover {
+  color: green;
+  }
+
+a:active {
+  color: green;
+  }
+
+h1 {
+  font-size: 150%;
+  padding-bottom: 1ex;
+  }
+
+#container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  }
+
+.text-left {
+  text-align: left;
+  }

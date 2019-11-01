@@ -1,0 +1,1345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="master">
+
+	<!-- ResultMap -->
+	<!-- 沿線・駅検索 -->
+	<!-- 沿線・駅検索resultMap -->
+	<resultMap id="rosenList"
+		class="net.chintai.backend.sysadmin.master.domain.RosenListDomain">
+		<result property="ensenCd" column="ENSENCD"/>
+		<result property="ensenName" column="ENSENNAME"/>
+		<result property="ensenKana" column="ENSENKANA"/>
+		<result property="ensenType" column="ENSENTYPE"/>
+		<result property="ensenSeq" column="ENSENSEQ"/>
+		<result property="areaCd" column="AREACD"/>
+		<result property="ensenDelFlg" column="DEL_KBN"/>
+		<result property="areaName" column="AREANAME"/>
+		<result property="railwaycoName" column="RAILWAYCONAME"/>
+		<result property="ensenUseStopFlg" column="ENSEN_USE_STOP_FLG"/>
+		<result property="ensennameShort" column="ENSENNAME_SHORT"/>
+		<result property="ensenkanaShort" column="ENSENKANA_SHORT"/>
+	</resultMap>
+
+	<!-- 沿線・駅詳細resultMap -->
+	<resultMap id="rosenInfo"
+		class="net.chintai.backend.sysadmin.master.domain.RosenInfoDomain">
+		<result property="ekiCd" column="EKICD"/>
+		<result property="ekiName" column="EKINAME"/>
+		<result property="startekiFlg" column="STARTEKI_FLG"/>
+		<result property="stopFlg" column="STOP_FLG"/>
+		<result property="ekiSeq" column="EKISEQ"/>
+		<result property="ekiNo" column="EKINO"/>
+		<result property="unionEkiName" column="UNION_EKINAME"/>
+		<result property="unionEkiKana" column="UNION_EKIKANA"/>
+		<result property="ekiAddress" column="EKIADDRESS"/>
+		<result property="locationY" column="LOCATIONY"/>
+		<result property="locationX" column="LOCATIONX"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="delKbn" column="DEL_KBN"/>
+		<result property="ekiUseStopFlg" column="EKI_USE_STOP_FLG"/>
+	</resultMap>
+
+	<!-- 沿線・駅CSV用resultMap -->
+	<resultMap id="ensenEkiInfo"
+		class="net.chintai.backend.sysadmin.master.domain.EnsenEkiDomain" >
+		<result property="ensenCd" column="ENSENCD"/>
+		<result property="ensenName" column="ENSENNAME"/>
+		<result property="ensenType" column="ENSENTYPE"/>
+		<result property="areaCd" column="AREACD"/>
+		<result property="ensenSortKey" column="ENSEN_SORT_KEY"/>
+		<result property="ensenUseStopFlg" column="ENSEN_USE_STOP_FLG"/>
+		<result property="ekiCd" column="EKICD"/>
+		<result property="ekiName" column="EKINAME"/>
+		<result property="ekiSortKey" column="EKI_SORT_KEY"/>
+		<result property="stopFlg" column="STOP_FLG"/>
+		<result property="ekiUseStopFlg" column="EKI_USE_STOP_FLG"/>
+		<result property="ensenKana" column="ENSENKANA"/>
+		<result property="railwaycoNo" column="RAILWAYCO_NO"/>
+		<result property="ensenSeq" column="ENSENSEQ"/>
+		<result property="ekiNo" column="EKINO"/>
+		<result property="startekiFlg" column="STARTEKI_FLG"/>
+		<result property="ekiSeq" column="EKISEQ"/>
+		<result property="ensennameShort" column="ENSENNAME_SHORT"/>
+		<result property="ensenkanaShort" column="ENSENKANA_SHORT"/>
+	</resultMap>
+
+	<!-- 沿線マスタローカルキャッシュ -->
+	<resultMap id="ensenMasterCache" class="net.chintai.backend.sysadmin.master.domain.EnsenDomain">
+		<result property="ensenCd" column="ENSENCD"/>
+		<result property="ensenUseStopFlg" column="ENSEN_USE_STOP_FLG"/>
+	</resultMap>
+
+	<!-- 駅マスタローカルキャッシュ -->
+	<resultMap id="ekiMasterCache" class="net.chintai.backend.sysadmin.master.domain.EkiDomain">
+		<result property="ensenEkiCd" column="ENSEN_EKI_CD"/>
+		<result property="ekiUseStopFlg" column="EKI_USE_STOP_FLG"/>
+	</resultMap>
+
+	<!-- 統一駅マスタローカルキャッシュ -->
+	<resultMap id="nodeMasterCache" class="net.chintai.backend.sysadmin.master.domain.NodeDomain">
+		<result property="ekiNo" column="EKINO"/>
+	</resultMap>
+
+	<!-- 配布用CSVデータresultMap 沿線 -->
+	<resultMap id="ensenDistribute"
+		class="net.chintai.backend.sysadmin.master.domain.EnsenDomain">
+		<result property="ensenCd" column="ENSENCD"/>
+		<result property="areaCd" column="AREACD"/>
+		<result property="ensenName" column="ENSENNAME"/>
+	</resultMap>
+
+	<!-- 配布用CSVデータresultMap 駅 -->
+	<resultMap id="ekiDistribute"
+		class="net.chintai.backend.sysadmin.master.domain.EkiDomain">
+		<result property="ensenCd" column="ENSENCD"/>
+		<result property="ekiCd" column="EKICD"/>
+		<result property="ekiName" column="EKINAME"/>
+	</resultMap>
+
+	<!-- 鉄道会社検索 -->
+	<!-- 鉄道会社検索resultMap -->
+	<resultMap id="tetudoGaishaList"
+		class="net.chintai.backend.sysadmin.master.domain.TetudoGaishaInfo">
+		<result property="railwaycoNo" column="RAILWAYCONO"/>
+		<result property="railwaycoName" column="RAILWAYCONAME"/>
+		<result property="railwaycoKana" column="RAILWAYCOKANA"/>
+		<result property="railwaycoSeq" column="RAILWAYCOSEQ"/>
+		<result property="delKbn" column="DELKBN"/>
+	</resultMap>
+
+	<!-- 鉄道会社検索の件数 -->
+	<resultMap id="tetudoGaishaCount" class="java.lang.Integer">
+		<result property="tetudoGaishaCount" column="ROW_COUNT"/>
+	</resultMap>
+
+	<!-- 市区町村メンテナンス -->
+	<!-- 市区町村検索 resultMap-->
+	<resultMap id="shikutyosonList"
+		class="net.chintai.backend.sysadmin.master.domain.ShikutyosonSearchInfo">
+		<result property="zipCd" column="ZIPCD"/>
+		<result property="prefName" column="PREFNAME"/>
+		<result property="cityName" column="CITYNAME"/>
+		<result property="machiikiName" column="ADDRESS"/>
+		<result property="prefcd" column="PREFCD"/>
+		<result property="citycd" column="CITYCD"/>
+	</resultMap>
+
+	<!-- 携帯ゲーム対応機種メンテナンス -->
+	<!-- 携帯ゲーム対応機種メンテナンスCSVダウンロード -->
+	<resultMap id="MobileCSVDownload"
+		class="net.chintai.backend.sysadmin.master.domain.MobileMaintenanceListInfo">
+		<result property="dlSeq" column="DL_SEQ"/>
+		<result property="itemCd" column="ITEM_CD"/>
+		<result property="carrierType" column="CARRIER_TYPE"/>
+		<result property="userAgent" column="USER_AGENT"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="discription" column="DISCRIPTION"/>
+		<result property="updDt" column="UPD_DT"/>
+	</resultMap>
+
+	<!-- メールマガジン用メールアドレス検索resultMap -->
+	<resultMap id="magazineMail"
+		class="net.chintai.backend.sysadmin.master.domain.MagazineMailDomain">
+		<result property="magazineMailAddress" column="EMAIL"/>
+	</resultMap>
+
+	<!-- 不動産会社メールアドレスダウンロードresultMap -->
+	<resultMap id="shopMail"
+		class="net.chintai.backend.sysadmin.master.domain.ShopMailDomain">
+		<result property="areaCd" column="AREACD"/>
+		<result property="areaName" column="AREANAME"/>
+		<result property="prefCd" column="PREFCD"/>
+		<result property="prefName" column="PREFNAME"/>
+		<result property="shopCd" column="SHOPCD"/>
+		<result property="company" column="COMPANY"/>
+		<result property="bumon" column="BUMON"/>
+		<result property="zip" column="ZIP"/>
+		<result property="address1" column="ADDRESS_1"/>
+		<result property="address2" column="ADDRESS_2"/>
+		<result property="tel" column="TEL"/>
+		<result property="fax" column="FAX"/>
+		<result property="email1" column="EMAIL_1" />
+		<result property="email2" column="EMAIL_2" />
+		<result property="email3" column="EMAIL_3" />
+		<result property="email4" column="EMAIL_4" />
+		<result property="email5" column="EMAIL_5" />
+		<result property="licTrust" column="LIC_TRUST"/>
+		<result property="tantou" column="TANTOU"/>
+		<result property="clientsystemType" column="CLIENTSYSTEM_TYPE"/>
+		<result property="shopStatus" column="SHOP_STATUS"/>
+	</resultMap>
+
+	<!-- 連動元出稿管理リストresultMap -->
+	<resultMap id="rendoSendKanriList"
+		class="net.chintai.backend.sysadmin.master.domain.RendoSendListDomain">
+		<result property="rendoCd" column="RENDO_CD"/>
+		<result property="rendoName" column="RENDO_NAME"/>
+		<result property="rendoCompany" column="RENDO_COMPANY"/>
+		<result property="keiyakuCd" column="KEIYAKU_CD"/>
+		<result property="keiyakuSubCd" column="KEIYAKU_SUB_CD"/>
+		<result property="rendoSendDispName" column="RENDO_SEND_DISP_NAME"/>
+		<result property="permitFlg" column="PERMIT_FLG"/>
+		<result property="reserveCnt" column="RESERVE_CNT"/>
+	</resultMap>
+
+	<!-- 連動元出稿管理情報resultMap -->
+	<resultMap id="rendoSendKanri"
+		class="net.chintai.backend.sysadmin.master.domain.RendoSendInfoDomain">
+		<result property="rendoSendNo" column="RENDO_SEND_NO"/>
+		<result property="rendoCd" column="RENDO_CD"/>
+		<result property="keiyakuCd" column="KEIYAKU_CD"/>
+		<result property="keiyakuSubCd" column="KEIYAKU_SUB_CD"/>
+		<result property="permitStartDt" column="PERMIT_START_DT"/>
+		<result property="PermitEndDt" column="PERMIT_END_DT"/>
+		<result property="updDt" column="UPD_DT"/>
+		<result property="note" column="NOTE"/>
+	</resultMap>
+
+
+	<!-- Statements -->
+	<!-- 沿線・駅検索 -->
+	<select id="selectEnsenByAreaCdRosenType"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.RosenSearchParamBean"
+			resultMap="rosenList">
+		SELECT
+			ME.ENSENCD AS ENSENCD,
+			ME.ENSENNAME AS ENSENNAME,
+			ME.ENSENKANA AS ENSENKANA,
+			ME.SORT_KEY AS ENSEN_SORT_KEY,
+			ME.ENSENTYPE AS ENSENTYPE,
+			ME.ENSENSEQ AS ENSENSEQ,
+			ME.AREACD AS AREACD,
+			ME.DEL_KBN AS DEL_KBN,
+			MA.AREANAME AS AREANAME,
+			MR.RAILWAYCO_NAME AS RAILWAYCONAME,
+			CASE
+				WHEN MEUS.ENSENCD IS NULL THEN '0'
+				ELSE '1'
+			END ENSEN_USE_STOP_FLG,
+			ME.ENSENNAME_SHORT AS ENSENNAME_SHORT,
+			ME.ENSENKANA_SHORT AS ENSENKANA_SHORT
+		FROM
+			MST_ENSEN ME
+			INNER JOIN MST_AREA MA
+				ON ME.AREACD = MA.AREACD
+			LEFT JOIN MST_ENSEN_USE_STOP MEUS
+				ON ME.ENSENCD = MEUS.ENSENCD
+			LEFT JOIN MST_RAILWAY_COMPANY MR
+				ON ME.RAILWAYCO_NO = MR.RAILWAYCO_NO
+		WHERE
+			ME.AREACD = #areaCd#
+			AND ME.ENSENTYPE = #ensenType#
+		ORDER BY
+			ENSEN_SORT_KEY, ENSENCD
+	</select>
+
+	<!-- Statements -->
+	<!-- 沿線・駅 名称から検索 -->
+	<select id="selectEnsenByEnsenEkiName"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.RosenNameSearchParamBean"
+			resultMap="rosenList">
+		SELECT
+			DISTINCT(ME.ENSENCD) AS ENSENCD,
+			ME.ENSENNAME AS ENSENNAME,
+			ME.ENSENKANA AS ENSENKANA,
+			ME.SORT_KEY AS ENSEN_SORT_KEY,
+			ME.ENSENTYPE AS ENSENTYPE,
+			ME.ENSENSEQ AS ENSENSEQ,
+			ME.AREACD AS AREACD,
+			ME.DEL_KBN AS DEL_KBN,
+			MA.AREANAME AS AREANAME,
+			MR.RAILWAYCO_NAME AS RAILWAYCONAME,
+			CASE
+				WHEN MEUS.ENSENCD IS NULL THEN '0'
+				ELSE '1'
+			END ENSEN_USE_STOP_FLG,
+			ME.ENSENNAME_SHORT AS ENSENNAME_SHORT,
+			ME.ENSENKANA_SHORT AS ENSENKANA_SHORT
+		FROM
+			MST_ENSEN ME
+			LEFT JOIN MST_EKI MEK
+				ON MEK.ENSENCD = ME.ENSENCD
+			INNER JOIN MST_AREA MA
+				ON ME.AREACD = MA.AREACD
+			LEFT JOIN MST_UNION_EKI MU
+				ON MEK.EKINO = MU.EKINO
+			LEFT JOIN MST_ENSEN_USE_STOP MEUS
+				ON ME.ENSENCD = MEUS.ENSENCD
+			LEFT JOIN MST_RAILWAY_COMPANY MR
+				ON ME.RAILWAYCO_NO = MR.RAILWAYCO_NO
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="ensenNameParam">
+			  (ME.ENSENNAME like '%'||#ensenNameParam#||'%' OR ME.ENSENKANA like '%'||#ensenNameParam#||'%')
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ekiNameParam">
+			  (MEK.EKINAME like '%'||#ekiNameParam#||'%' OR MU.EKIKANA like '%'||#ekiNameParam#||'%')
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY
+			ENSEN_SORT_KEY, ENSENCD
+	</select>
+
+	<!-- 沿線詳細 -->
+	<select id="selectRosenInfoByEnsenCd"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.RosenInfoSearchParamBean"
+			resultMap="rosenInfo">
+		SELECT
+			MEK.EKICD AS EKICD,
+			MEK.EKINAME AS EKINAME,
+			MEK.STARTEKI_FLG AS STARTEKI_FLG,
+			MEK.STOP_FLG AS STOP_FLG,
+			MEK.EKISEQ AS EKISEQ,
+			MEK.EKINO AS EKINO,
+			to_char(MEK.UPD_DT, 'YYYY/MM/DD HH24:MI') AS UPD_DT,
+			MES.SORT_KEY AS ENSEN_SORT_KEY,
+			MEK.SORT_KEY AS EKI_SORT_KEY,
+			MEK.EKINO AS EKINO,
+			MEK.DEL_KBN AS DEL_KBN,
+			MU.EKINAME AS UNION_EKINAME,
+			MU.EKIKANA AS UNION_EKIKANA,
+			MU.EKIADDRESS AS EKIADDRESS,
+			MU.LOCATION_X AS LOCATIONX,
+			MU.LOCATION_Y AS LOCATIONY,
+			CASE
+				WHEN MEKUS.ENSENCD IS NULL AND MEKUS.EKICD IS NULL AND MEUS.ENSENCD IS NULL THEN '0'
+				ELSE '1'
+			END EKI_USE_STOP_FLG
+		FROM
+			MST_AREA MA
+			INNER JOIN MST_ENSEN MES
+				ON MES.AREACD = MA.AREACD
+			INNER JOIN MST_EKI MEK
+				ON MEK.ENSENCD = MES.ENSENCD
+			LEFT JOIN MST_ENSEN_USE_STOP MEUS
+				ON MES.ENSENCD = MEUS.ENSENCD
+			LEFT JOIN MST_EKI_USE_STOP MEKUS
+				ON MEK.ENSENCD = MEKUS.ENSENCD AND MEK.EKICD = MEKUS.EKICD
+			LEFT JOIN MST_UNION_EKI MU
+				ON MEK.EKINO = MU.EKINO
+		WHERE
+			MEK.ENSENCD = #ensenCd#
+		ORDER BY
+			ENSEN_SORT_KEY, MEK.ENSENCD, EKI_SORT_KEY, EKICD
+	</select>
+
+	<!-- 沿線・駅CSV ファイルのダウンロード -->
+	<select id="selectEnsenEkiForCsv"
+			resultMap="ensenEkiInfo">
+		SELECT
+			MEK.ENSENCD AS ENSENCD,
+			ME.ENSENNAME AS ENSENNAME,
+			ME.ENSENTYPE AS ENSENTYPE,
+			ME.AREACD AS AREACD,
+			ME.SORT_KEY AS ENSEN_SORT_KEY,
+			CASE
+				WHEN MES.ENSENCD IS NULL THEN '0'
+				ELSE '1'
+			END ENSEN_USE_STOP_FLG,
+			MEK.EKICD AS EKICD,
+			MEK.EKINAME AS EKINAME,
+			MEK.SORT_KEY AS EKI_SORT_KEY,
+			MEK.STOP_FLG AS STOP_FLG,
+			CASE
+				WHEN MEKS.ENSENCD IS NULL AND MEKS.EKICD IS NULL AND MES.ENSENCD IS NULL THEN '0'
+				ELSE '1'
+			END EKI_USE_STOP_FLG,
+			ME.ENSENKANA AS ENSENKANA,
+			ME.RAILWAYCO_NO,
+			ME.ENSENSEQ,
+			MEK.EKINO,
+			MEK.STARTEKI_FLG,
+			MEK.EKISEQ,
+			ME.ENSENNAME_SHORT AS ENSENNAME_SHORT,
+			ME.ENSENKANA_SHORT AS ENSENKANA_SHORT
+		FROM
+			MST_ENSEN ME
+			INNER JOIN MST_EKI MEK
+				ON ME.ENSENCD = MEK.ENSENCD
+			LEFT JOIN
+				MST_ENSEN_USE_STOP MES
+				ON ME.ENSENCD = MES.ENSENCD
+			LEFT JOIN
+				MST_EKI_USE_STOP MEKS
+				ON MEK.ENSENCD = MEKS.ENSENCD
+					AND MEK.EKICD = MEKS.EKICD
+		WHERE
+			ME.DEL_KBN = '0' AND
+			MEK.DEL_KBN = '0'
+		ORDER BY
+			ENSEN_SORT_KEY, ENSENCD, EKI_SORT_KEY, EKICD
+	</select>
+
+	<!-- 沿線マスタキャッシュ取得 -->
+	<select id="selectEnsenMaster"
+			parameterClass="java.util.List"
+			resultMap="ensenMasterCache">
+		SELECT
+			ME.ENSENCD,
+			CASE
+				WHEN MES.ENSENCD IS NULL THEN '0'
+				ELSE '1'
+			END ENSEN_USE_STOP_FLG
+		FROM
+			MST_ENSEN ME
+			LEFT JOIN
+				MST_ENSEN_USE_STOP MES
+				ON ME.ENSENCD = MES.ENSENCD
+		WHERE
+			ME.ENSENCD IN
+			<iterate open="(" close=")" conjunction=",">#[]#</iterate>
+	</select>
+
+	<!-- 駅マスタキャッシュ取得 -->
+	<select id="selectEkiMaster"
+			parameterClass="java.util.List"
+			resultMap="ekiMasterCache">
+		SELECT
+			ME.ENSENCD || '-' || ME.EKICD ENSEN_EKI_CD,
+			CASE
+				WHEN MEKS.ENSENCD IS NULL AND MEKS.EKICD IS NULL AND MES.ENSENCD IS NULL THEN '0'
+				ELSE '1'
+			END EKI_USE_STOP_FLG
+		FROM
+			MST_EKI ME
+			LEFT JOIN
+				MST_EKI_USE_STOP MEKS
+				ON ME.ENSENCD = MEKS.ENSENCD
+					AND ME.EKICD = MEKS.EKICD
+			LEFT JOIN
+				MST_ENSEN_USE_STOP MES
+				ON ME.ENSENCD = MES.ENSENCD
+			<dynamic prepend="WHERE ">
+				<iterate conjunction=" OR">(ME.ENSENCD = #[].ensenCd# AND ME.EKICD = #[].ekiCd#)</iterate>
+			</dynamic>
+	</select>
+
+	<!-- 沿線データの追加 -->
+	<insert id="ensenInsert"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.EnsenDomain">
+		<![CDATA[
+		INSERT INTO
+			MST_ENSEN (
+				ENSENCD,
+				ENSENNAME,
+				ENSENTYPE,
+				AREACD,
+				SORT_KEY,
+				DEL_KBN,
+				INS_DT,
+				INS_PG,
+				INS_ID,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID,
+				ENSENKANA,
+				RAILWAYCO_NO,
+				ENSENSEQ,
+				ENSENNAME_SHORT,
+				ENSENKANA_SHORT
+			) VALUES (
+				#ensenCd#,
+				#ensenName#,
+				#ensenType#,
+				#areaCd#,
+				#ensenSortKey#,
+				'0',
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				#ensenKana#,
+				#railwaycoNo#,
+				#ensenSeq#,
+				#ensennameShort#,
+				#ensenkanaShort#
+			)
+		]]>
+	</insert>
+
+	<!-- 駅データの追加 -->
+	<insert id="ekiInsert"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.EkiDomain">
+		<![CDATA[
+		INSERT INTO
+			MST_EKI (
+				ENSENCD,
+				EKICD,
+				EKINAME,
+				SORT_KEY,
+				STOP_FLG,
+				DEL_KBN,
+				INS_DT,
+				INS_PG,
+				INS_ID,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID,
+				EKINO,
+				STARTEKI_FLG,
+				EKISEQ
+			) VALUES (
+				#ensenCd#,
+				#ekiCd#,
+				#ekiName#,
+				#ekiSortKey#,
+				#stopFlg#,
+				'0',
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				#ekiNo#,
+				#startekiFlg#,
+				#ekiSeq#
+			)
+		]]>
+	</insert>
+
+	<!-- 沿線データの更新 -->
+	<update id="ensenUpdate"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.EnsenDomain">
+		UPDATE
+			MST_ENSEN
+		SET
+			<isNotEmpty property="ensenName">
+				ENSENNAME = #ensenName#,
+			</isNotEmpty>
+			<isNotEmpty property="ensenType">
+				ENSENTYPE = #ensenType#,
+			</isNotEmpty>
+			<isNotEmpty property="areaCd">
+				AREACD = #areaCd#,
+			</isNotEmpty>
+			<isNotEmpty property="ensenSortKey">
+				SORT_KEY = #ensenSortKey#,
+			</isNotEmpty>
+			<isNotEmpty property="ensenKana">
+				ENSENKANA = #ensenKana#,
+			</isNotEmpty>
+			<isNotEmpty property="railwaycoNo">
+				RAILWAYCO_NO = #railwaycoNo#,
+			</isNotEmpty>
+			<isNotEmpty property="ensenSeq">
+				ENSENSEQ = #ensenSeq#,
+			</isNotEmpty>
+			<isNotEmpty property="ensennameShort">
+				ENSENNAME_SHORT = #ensennameShort#,
+			</isNotEmpty>
+				ENSENKANA_SHORT = #ensenkanaShort#,
+				UPD_DT = SYSTIMESTAMP,
+				UPD_PG = #pgName#,
+				UPD_ID = #operUserId#
+		WHERE
+			ENSENCD = #ensenCd#
+	</update>
+
+	<!-- 駅データの更新 -->
+	<update id="ekiUpdate"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.EkiDomain">
+		UPDATE
+			MST_EKI
+		SET
+		<isNotEmpty property="ekiName">
+			EKINAME = #ekiName#,
+		</isNotEmpty>
+		<isNotEmpty property="ekiSortKey">
+			SORT_KEY = #ekiSortKey#,
+		</isNotEmpty>
+		<isNotEmpty property="stopFlg">
+			STOP_FLG = #stopFlg#,
+		</isNotEmpty>
+		<isNotEmpty property="ekiNo">
+			EKINO = #ekiNo#,
+		</isNotEmpty>
+		<isNotEmpty property="startekiFlg">
+			STARTEKI_FLG = #startekiFlg#,
+		</isNotEmpty>
+		<isNotEmpty property="ekiSeq">
+			EKISEQ = #ekiSeq#,
+		</isNotEmpty>
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #pgName#,
+			UPD_ID = #operUserId#
+		WHERE
+			ENSENCD = #ensenCd#
+			AND
+			EKICD = #ekiCd#
+	</update>
+
+	<!-- 沿線配布停止データの追加 -->
+	<insert id="ensenUseStopFlgInsert"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.EnsenDomain">
+		INSERT INTO
+			MST_ENSEN_USE_STOP (
+				ENSENCD,
+				INS_ID,
+				INS_DT,
+				INS_PG,
+				UPD_ID,
+				UPD_DT,
+				UPD_PG
+			) VALUES (
+				#ensenCd#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#
+			)
+	</insert>
+
+	<!-- 沿線配布停止テーブルから指定データを削除 -->
+	<delete id="ensenUseStopFlgDelete"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.EnsenDomain">
+		DELETE FROM
+			MST_ENSEN_USE_STOP
+		WHERE
+			ENSENCD = #ensenCd#
+	</delete>
+
+	<!-- 駅配布停止データの追加 -->
+	<insert id="ekiUseStopFlgInsert"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.EkiDomain">
+		INSERT INTO
+			MST_EKI_USE_STOP (
+				ENSENCD,
+				EKICD,
+				INS_ID,
+				INS_DT,
+				INS_PG,
+				UPD_ID,
+				UPD_DT,
+				UPD_PG
+			) VALUES (
+				#ensenCd#,
+				#ekiCd#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#
+			)
+	</insert>
+
+	<!-- 駅配布停止テーブルから指定データを削除 -->
+	<delete id="ekiUseStopFlgDelete"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.EkiDomain">
+		DELETE FROM
+			MST_EKI_USE_STOP
+		WHERE
+			ENSENCD = #ensenCd# AND
+			EKICD = #ekiCd#
+	</delete>
+
+	<!-- 統一駅データの追加 -->
+	<insert id="nodeInsert"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.NodeDomain">
+		<![CDATA[
+		INSERT INTO
+			MST_UNION_EKI (
+				EKINO,
+				EKINAME,
+				EKIKANA,
+				PREFCD,
+				CITYCD,
+				EKIADDRESS,
+				LOCATION_X,
+				LOCATION_Y,
+				DEL_KBN,
+				INS_DT,
+				INS_PG,
+				INS_ID,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID
+			) VALUES (
+				#ekiNo#,
+				#ekiName#,
+				#ekiKana#,
+				#prefCd#,
+				#cityCd#,
+				#ekiAddress#,
+				#locationX#,
+				#locationY#,
+				#delKbn#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#
+			)
+		]]>
+	</insert>
+
+	<!-- 統一駅データの更新/論理削除 -->
+	<update id="nodeUpdate"
+			parameterClass="net.chintai.backend.sysadmin.master.domain.NodeDomain">
+		UPDATE
+			MST_UNION_EKI
+		SET
+			<isNotEmpty property="ekiName">
+				EKINAME = #ekiName#,
+			</isNotEmpty>
+			<isNotEmpty property="ekiKana">
+				EKIKANA = #ekiKana#,
+			</isNotEmpty>
+			<isNotEmpty property="prefCd">
+				PREFCD = #prefCd#,
+			</isNotEmpty>
+			<isNotEmpty property="cityCd">
+				CITYCD = #cityCd#,
+			</isNotEmpty>
+			<isNotEmpty property="ekiAddress">
+				EKIADDRESS = #ekiAddress#,
+			</isNotEmpty>
+			<isNotEmpty property="locationX">
+				LOCATION_X = #locationX#,
+			</isNotEmpty>
+			<isNotEmpty property="locationY">
+				LOCATION_Y = #locationY#,
+			</isNotEmpty>
+			<isNotEmpty property="delKbn">
+				DEL_KBN = #delKbn#,
+			</isNotEmpty>
+				UPD_DT = SYSTIMESTAMP,
+				UPD_PG = #pgName#,
+				UPD_ID = #operUserId#
+		WHERE
+			EKINO = #ekiNo#
+	</update>
+
+	<!-- 統一駅マスタキャッシュ取得 -->
+	<select id="selectNodeMaster"
+			parameterClass="java.util.List"
+			resultMap="nodeMasterCache">
+		SELECT
+			EKINO
+		FROM
+			MST_UNION_EKI
+	</select>
+			<!--
+		WHERE
+			EKINO
+			 IN<iterate open="(" close=")" conjunction=",">#[]#</iterate> -->
+
+
+	<!-- 配布用データ沿線の取得 -->
+	<select id="selectDistributeEnsen" resultMap="ensenDistribute">
+		SELECT
+			ME.ENSENCD,
+			ME.AREACD,
+			ME.ENSENNAME
+		FROM
+			MST_ENSEN ME
+		WHERE
+			ME.DEL_KBN = '0'
+			AND NOT EXISTS (
+				SELECT * FROM MST_ENSEN_USE_STOP WHERE ENSENCD = ME.ENSENCD
+			)
+		ORDER BY
+			ENSENCD
+	</select>
+
+	<!-- 配布用データ駅の取得 -->
+	<select id="selectDistributeEki" resultMap="ekiDistribute">
+		SELECT
+			ME.ENSENCD,
+			ME.EKICD,
+			ME.EKINAME
+		FROM
+			MST_EKI ME
+		WHERE
+			ME.DEL_KBN = '0'
+			AND EXISTS (
+				SELECT * FROM MST_ENSEN WHERE ENSENCD = ME.ENSENCD
+			)
+			AND NOT EXISTS (
+				SELECT * FROM MST_ENSEN_USE_STOP WHERE ENSENCD = ME.ENSENCD
+			)
+			AND NOT EXISTS (
+				SELECT * FROM MST_EKI_USE_STOP WHERE ENSENCD = ME.ENSENCD AND EKICD = ME.EKICD
+			)
+		ORDER BY
+			ENSENCD, EKICD
+	</select>
+
+	<!-- 鉄道会社検索 -->
+	<select id="selectTetudoGaishaList"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.TetudoGaishaSearchParamBean"
+			resultMap="tetudoGaishaList">
+		SELECT
+			RAILWAYCO_NO RAILWAYCONO,
+			RAILWAYCO_NAME RAILWAYCONAME,
+			RAILWAYCO_KANA RAILWAYCOKANA,
+			RAILWAYCO_SEQ RAILWAYCOSEQ,
+			DEL_KBN DELKBN
+		FROM
+			MST_RAILWAY_COMPANY MRC
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="railwaycoNo">
+			RAILWAYCO_NO = #railwaycoNo#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="railwaycoName">
+			(RAILWAYCO_NAME LIKE '%'||#railwaycoName#||'%' OR
+				RAILWAYCO_KANA LIKE '%'||#railwaycoName#||'%')
+			</isNotEmpty>
+			<isNotEqual compareValue="999" prepend="AND" property="delKbn">
+			DEL_KBN = #delKbn#
+			</isNotEqual>
+		</dynamic>
+		<dynamic>
+		ORDER BY
+			<isEqual property="dispSortKey" compareValue="1">
+			RAILWAYCO_NO
+			</isEqual>
+			<isEqual property="dispSortKey" compareValue="2">
+			RAILWAYCO_NAME
+			</isEqual>
+			<isEqual property="dispSortKey" compareValue="3">
+			RAILWAYCO_KANA
+			</isEqual>
+			<isEqual property="dispSortKey" compareValue="4">
+			RAILWAYCO_SEQ
+			</isEqual>
+			<isEqual property="dispSortKey" compareValue="5">
+			DEL_KBN
+			</isEqual>
+			<isEqual property="orderBy" compareValue="asc">
+			ASC
+			</isEqual>
+			<isEqual property="orderBy" compareValue="desc">
+			DESC
+			</isEqual>
+		</dynamic>
+	</select>
+
+	<!-- 鉄道会社検索の件数 -->
+	<select id="selectTetudoGaishaCount"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.TetudoGaishaSearchParamBean"
+			resultMap="tetudoGaishaCount">
+		SELECT
+			COUNT(*) ROW_COUNT
+		FROM
+			MST_RAILWAY_COMPANY MRC
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="railwaycoNo">
+			RAILWAYCO_NO = #railwaycoNo#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="railwaycoName">
+			RAILWAYCO_NAME LIKE '%'||#railwaycoName#||'%' OR
+			RAILWAYCO_KANA LIKE '%'||#railwaycoName#||'%'
+
+			</isNotEmpty>
+			<isNotEqual compareValue="999" prepend="AND" property="delKbn">
+			DEL_KBN = #delKbn#
+			</isNotEqual>
+		</dynamic>
+	</select>
+
+	<!-- 市区町村検索 -->
+	<!-- 市区町村検索共通SQL -->
+	<sql id="shikutyosonListSql">
+		SELECT
+			MZ.ZIPCD,
+			MP.PREFNAME,
+			MC.CITYNAME,
+			MZ.ADDRESS,
+			MP.PREFCD,
+			MC.CITYCD
+		FROM
+			MST_ZIPCODE MZ
+			INNER JOIN MST_PREF MP
+				ON MP.PREFCD = MZ.PREFCD
+			INNER JOIN MST_CITY MC
+				ON MZ.CITYCD = MC.CITYCD
+	</sql>
+
+	<!-- 市区町村メンテナンス -->
+	<!-- 市区町村郵便局番号から検索 -->
+	<select id="selectShikutyosonByZipCd"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.ShikutyosonSearchParamBean"
+			resultMap="shikutyosonList">
+		<include refid="shikutyosonListSql"/>
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="zipCd" prepend="AND">
+				MZ.ZIPCD = #zipCd#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY MZ.SORT_KEY, MZ.PREFCD, MZ.CITYCD, MZ.ZIPCD
+	</select>
+
+	<!-- 市区町村メンテナンス -->
+	<!-- 市区町村住所から検索 -->
+	<select id="selectShikutyosonByAddress"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.ShikutyosonSearchParamBean"
+			resultMap="shikutyosonList">
+		<include refid="shikutyosonListSql"/>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="pref" >
+				MC.PREFCD = #pref#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="city">
+				MC.CITYCD = #city#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY MZ.SORT_KEY, MZ.PREFCD, MZ.CITYCD, MZ.ZIPCD
+	</select>
+
+	<!-- 市区町村メンテナンス -->
+	<!-- 市区町村登録 MST_CITYチェック -->
+	<select id="selectMstCity"
+			resultClass="java.lang.Integer"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.ShikutyosonAddParamBean">
+		SELECT
+			COUNT(CITYCD)
+		FROM
+			MST_CITY
+		WHERE
+			PREFCD = SUBSTR(#cityCd#, 0, 2)
+			AND
+			CITYCD = #cityCd#
+	</select>
+
+	<!-- 市区町村登録 MST_CITY -->
+ 	<insert id="insertMstCity"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.ShikutyosonAddParamBean">
+		INSERT INTO
+			MST_CITY (
+				PREFCD,
+				CITYCD,
+				CITYNAME,
+				DEL_KBN,
+				INS_DT,
+				INS_PG,
+				INS_ID,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID,
+				FUYOU_FLG,
+				SYS_INS_FLG
+			) VALUES (
+				SUBSTR(#cityCd#, 0, 2),
+				#cityCd#,
+				#cityName#,
+				'0',
+				SYSTIMESTAMP,
+				#insPg#,
+				#insId#,
+				SYSTIMESTAMP,
+				#updPg#,
+				#updId#,
+				'0',
+				'0'
+			)
+	</insert>
+
+	<!-- 市区町村メンテナンス -->
+	<!-- 市区町村登録 MST_ZIPCODEデータチェック -->
+	<select id="selectMstZipCode"
+			resultClass="java.lang.Integer"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.ShikutyosonAddParamBean">
+		SELECT
+			COUNT(*)
+		FROM
+			MST_ZIPCODE
+		WHERE
+			ZIPCD=#zipCd#
+			AND
+			PREFCD = SUBSTR(#cityCd#, 0,2)
+			AND
+			CITYCD = #cityCd#
+	</select>
+
+	<!-- 市区町村メンテナンス -->
+	<!-- 市区町村登録 MST_ZIPCODE -->
+	<update id="updateMstZipCode"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.ShikutyosonAddParamBean">
+		UPDATE
+			MST_ZIPCODE
+		SET
+			OLD_ZIPCD = #oldZipCd#,
+			ADDRESS = #address#,
+			DEL_KBN = '0',
+			INS_DT = SYSTIMESTAMP,
+			INS_PG = #insPg#,
+			INS_ID = #insId#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #updPg#,
+			UPD_ID = #updId#
+		WHERE
+			CITYCD = #cityCd#
+			AND
+			ZIPCD = #zipCd#
+	</update>
+
+	<!-- 市区町村メンテナンス -->
+	<!-- 市区町村登録 MST_ZIPCODE -->
+	<insert id="insertMstZipCode"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.ShikutyosonAddParamBean">
+		INSERT INTO
+			MST_ZIPCODE (
+				ZIP_SEQ,
+				ZIPCD,
+				OLD_ZIPCD,
+				ADDRESS,
+				PREFCD,
+				CITYCD,
+				DEL_KBN,
+				INS_DT,
+				INS_PG,
+				INS_ID,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID
+			) VALUES (
+				SEQ_ZIP_SEQ.NEXTVAL,
+				#zipCd#,
+				#oldZipCd#,
+				#address#,
+				SUBSTR(#cityCd#, 0,2),
+				#cityCd#,
+				'0',
+				SYSTIMESTAMP,
+				#insPg#,
+				#insId#,
+				SYSTIMESTAMP,
+				#updPg#,
+				#updId#
+		)
+	</insert>
+
+	<!-- 市区町村メンテナンス -->
+	<!-- 市区町村登録 MST_ZIPCODE -->
+	<delete id="deleteMstZipCode"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.ShikutyosonAddParamBean">
+		DELETE FROM
+			MST_ZIPCODE
+		WHERE
+			CITYCD = #cityCd#
+			AND
+			ZIPCD = #zipCd#
+	</delete>
+
+	<!-- 市区町村メンテナンス -->
+	<!-- 市区町村マスタテーブル更新 2009.06.04 Lee-Hosup追加 -->
+	<update id="updateMstCity"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.ShikutyosonAddParamBean">
+		UPDATE
+			MST_CITY
+		SET
+			CITYNAME = #cityName#,
+			UPD_PG   = #updPg#,
+			UPD_ID   = #updId#,
+			UPD_DT   = SYSTIMESTAMP
+		WHERE
+			PREFCD  = SUBSTR(#cityCd#, 0, 2) AND
+			CITYCD  = #cityCd#
+	</update>
+
+	<!-- 携帯ゲーム対応機種メンテナンス -->
+	<!-- CSV ファイルのダウンロード -->
+	<select id="selectMobileCSVDownload" resultMap="MobileCSVDownload">
+		SELECT
+			DL_SEQ,
+			ITEM_CD,
+			CARRIER_TYPE,
+			USER_AGENT,
+			FILE_NAME,
+			DISCRIPTION,
+			to_char(UPD_DT, 'YYYY-MM-DD HH24:MI:SS') UPD_DT
+		FROM
+			DOWNLOAD
+		ORDER BY
+			DL_SEQ
+	</select>
+
+	<!-- 携帯ゲーム対応機種メンテナンス -->
+	<!-- CSV ファイルのアップロード -->
+	<delete id="deleteAllMobileLists">
+		DELETE FROM DOWNLOAD
+	</delete>
+
+	<insert id="insertMobileCSVUpload"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.MobileMaintenanceParamBean">
+		INSERT INTO
+			DOWNLOAD (
+				DL_SEQ,
+				ITEM_CD,
+				CARRIER_TYPE,
+				USER_AGENT,
+				FILE_NAME,
+				DISCRIPTION,
+				UPD_DT
+			) VALUES (
+				#dlSeq#,
+				#itemCd#,
+				#carrierType#,
+				#userAgent#,
+				#fileName#,
+				#discription#,
+				to_date(#updDt#, 'YYYY-MM-DD HH24:MI:SS')
+			)
+	</insert>
+
+	<!-- 大学マスタメンテナンス -->
+	<!-- CSV ファイルのアップロード -->
+	<delete id="deleteAllSchoolLists">
+		DELETE FROM MST_SCHOOL
+	</delete>
+
+	<insert id="insertSchoolCSVUpload"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.SchoolMaintenanceParamBean">
+		INSERT INTO
+			MST_SCHOOL (
+				SCHOOL_ID,
+				SCHOOL_NAME,
+				INS_DT,
+				INS_PG,
+				INS_ID,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID
+			) VALUES (
+				#schoolId#,
+				#schoolName#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#
+
+			)
+	</insert>
+
+	<!-- メールマガジン用メールアドレスのCSV -->
+	<select id="selectMagazineMailForCsv" resultMap="magazineMail">
+		SELECT
+			EMAIL
+		FROM
+			MAILING_LIST
+		WHERE
+			SEND_FLG = '1'
+		ORDER BY
+			UPD_DT
+	</select>
+
+	<!-- 不動産会社メールアドレス用メールアドレスのCSV -->
+	<select id="selectShopMailForCsv" resultMap="shopMail">
+		SELECT
+			SR.AREACD,
+			MA.AREANAME,
+			SR.PREFCD,
+			MP.PREFNAME,
+			SK.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.ZIP,
+			SR.ADDRESS_1,
+			SR.ADDRESS_2,
+			SR.TEL,
+			SR.FAX,
+			SR.EMAIL_1,
+			SR.EMAIL_2,
+			SR.EMAIL_3,
+			SR.EMAIL_4,
+			SR.EMAIL_5,
+			SR.LIC_TRUST,
+			SR.TANTOU,
+			SR.CLIENTSYSTEM_TYPE,
+			SR.SHOP_STATUS
+		FROM
+			SHOP_KANRI SK
+				INNER JOIN SHOP_RIREKI SR
+					ON SK.PK_SHOP_RIREKI_LAST = SR.PK_SHOP_RIREKI
+				LEFT JOIN MST_AREA MA
+					ON MA.AREACD = SR.AREACD
+				LEFT JOIN MST_PREF MP
+					ON MP.PREFCD = SR.PREFCD
+		ORDER BY
+			AREACD, PREFCD, SHOPCD
+	</select>
+
+	<!-- 連動元出稿管理リスト取得 -->
+	<select id="selectRendoSendKanriList" resultMap="rendoSendKanriList"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.RendoSendParamBean">
+		SELECT
+			VRSK.RENDO_CD,
+			VRSK.RENDO_NAME,
+			VRSK.RENDO_COMPANY,
+			VRSK.KEIYAKU_CD,
+			VRSK.KEIYAKU_SUB_CD,
+			VRSK.RENDO_SEND_DISP_NAME,
+			VRSK.PERMIT_FLG,
+			CASE
+				WHEN RSK.RESERVE_CNT IS NULL THEN 0
+				ELSE RSK.RESERVE_CNT
+			END AS RESERVE_CNT
+		FROM
+			V_RENDO_SEND_KANRI VRSK
+			LEFT JOIN
+				(
+					SELECT
+						RENDO_CD,
+						KEIYAKU_CD,
+						KEIYAKU_SUB_CD,
+						COUNT(1) as RESERVE_CNT
+					FROM
+						RENDO_SEND_KANRI
+					WHERE
+						DEL_KBN = '0'
+					AND <![CDATA[ PERMIT_START_DT > TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISS')]]>
+					GROUP BY
+						RENDO_CD,
+						KEIYAKU_CD,
+						KEIYAKU_SUB_CD
+				) RSK
+			ON  (
+					VRSK.RENDO_CD = RSK.RENDO_CD
+				AND VRSK.KEIYAKU_CD = RSK.KEIYAKU_CD
+				AND VRSK.KEIYAKU_SUB_CD = RSK.KEIYAKU_SUB_CD
+				)
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="rendoCd">
+				VRSK.RENDO_CD = #rendoCd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keiyakuCd">
+				VRSK.KEIYAKU_CD = #keiyakuCd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keiyakuSubCd">
+				VRSK.KEIYAKU_SUB_CD = #keiyakuSubCd#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<!-- 連動元出稿管理取得 -->
+	<select id="selectRendoSendKanri" resultMap="rendoSendKanri"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.RendoSendParamBean">
+		SELECT
+			RENDO_SEND_NO,
+			RENDO_CD,
+			KEIYAKU_CD,
+			KEIYAKU_SUB_CD,
+			PERMIT_START_DT,
+			PERMIT_END_DT,
+			TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS UPD_DT,
+			NOTE
+		FROM
+			RENDO_SEND_KANRI
+		WHERE
+				DEL_KBN = '0'
+			<isNotEmpty prepend="AND" property="rendoCd">
+				RENDO_CD = #rendoCd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keiyakuCd">
+				KEIYAKU_CD = #keiyakuCd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keiyakuSubCd">
+				KEIYAKU_SUB_CD = #keiyakuSubCd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rendoSendNo">
+				RENDO_SEND_NO = #rendoSendNo#
+			</isNotEmpty>
+		ORDER BY
+			RENDO_CD, KEIYAKU_CD, KEIYAKU_SUB_CD, PERMIT_START_DT DESC
+	</select>
+
+	<select id="countRendoSendDtInvalid"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.RendoSendParamBean"
+			resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			RENDO_SEND_KANRI
+		WHERE
+				DEL_KBN = '0'
+			AND	RENDO_CD = #rendoCd#
+			AND	KEIYAKU_CD = #keiyakuCd#
+			AND	KEIYAKU_SUB_CD = #keiyakuSubCd#
+			AND	<![CDATA[RENDO_SEND_NO <> #rendoSendNo#]]>
+			AND
+			(
+				(
+					<![CDATA[ PERMIT_END_DT <> '99991231235959' ]]>
+					AND #permitStartDt# BETWEEN PERMIT_START_DT AND PERMIT_END_DT
+				)OR(
+					<![CDATA[ PERMIT_END_DT <> '99991231235959' ]]>
+					AND #permitEndDt# BETWEEN PERMIT_START_DT AND PERMIT_END_DT
+				)OR(
+					PERMIT_START_DT BETWEEN #permitStartDt# AND #permitEndDt#
+				)OR(
+					PERMIT_START_DT = #permitStartDt#
+				)
+			)
+	</select>
+
+	<insert id="insertRendoSend"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.RendoSendParamBean">
+		<selectKey resultClass="java.lang.String" keyProperty="rendoSendNo">
+			SELECT SEQ_RENDO_SEND_NO.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO
+			RENDO_SEND_KANRI
+		(
+			RENDO_SEND_NO,
+			RENDO_CD,
+			KEIYAKU_CD,
+			KEIYAKU_SUB_CD,
+			PERMIT_START_DT,
+			PERMIT_END_DT,
+			NOTE,
+			DEL_KBN,
+			INS_DT,
+			INS_PG,
+			INS_ID,
+			UPD_DT,
+			UPD_PG,
+			UPD_ID
+		) VALUES (
+			#rendoSendNo#,
+			#rendoCd#,
+			#keiyakuCd#,
+			#keiyakuSubCd#,
+			#permitStartDt#,
+			#permitEndDt#,
+			#note#,
+			'0',
+			SYSTIMESTAMP,
+			#insPg#,
+			#insId#,
+			SYSTIMESTAMP,
+			#updPg#,
+			#updId#
+		)
+	</insert>
+
+	<update id="updateRendoSend"
+			parameterClass="net.chintai.backend.sysadmin.master.dao.RendoSendParamBean">
+		UPDATE
+			RENDO_SEND_KANRI
+		SET
+			<isNotEmpty property="delKbn">
+			DEL_KBN = #delKbn#,
+			</isNotEmpty>
+			<isEmpty property="delKbn">
+			PERMIT_START_DT = #permitStartDt#,
+			PERMIT_END_DT = #permitEndDt#,
+			NOTE = #note#,
+			</isEmpty>
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #updPg#,
+			UPD_ID = #updId#
+		WHERE
+			RENDO_SEND_NO = #rendoSendNo#
+	</update>
+</sqlMap>

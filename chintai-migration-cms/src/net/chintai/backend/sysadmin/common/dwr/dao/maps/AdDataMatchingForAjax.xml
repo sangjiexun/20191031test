@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="adDataMatchingForAjax">
+
+	<!-- 該当対象年月データの総件数を取得 -->
+	<select id="countMonthyData"
+			resultClass="java.lang.String"
+			parameterClass="java.lang.String">
+		SELECT
+			COUNT(*)
+		FROM
+			AD_DATA_KANRI
+		WHERE
+			TAISYO_YM = #value# AND
+			DEL_KBN = '0'
+	</select>
+</sqlMap>

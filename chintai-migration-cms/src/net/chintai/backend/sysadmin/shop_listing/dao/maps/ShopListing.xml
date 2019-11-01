@@ -1,0 +1,1256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="shopListing">
+  <!-- ■procedure：基本契約有効フラグ更新 -->
+  <procedure id="callKihonFlgUpdate"
+             parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.CallProcedureDaoParamBean">
+    Declare
+      P_STATUS varchar2(20);
+      P_MSG varchar2(512);
+      P_CNT_KIHON_ON varchar2(10);
+      P_CNT_KIHON_OFF varchar2(10);
+    Begin
+    PKG_SHOP_LISTING_UPDATE.KIHON_YUKO_FLG_UPDATE (
+      P_STATUS,
+      P_MSG,
+      P_CNT_KIHON_ON,
+      P_CNT_KIHON_OFF,
+      #updId#,
+      #updPg#,
+      #shopCd#);
+    End;
+  </procedure>
+
+  <!-- ■procedure：クーポン有効フラグ更新 -->
+  <procedure id="callCouponFlgUpdate"
+             parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.CallProcedureDaoParamBean">
+    Declare
+      P_STATUS varchar2(20);
+      P_MSG varchar2(512);
+      P_CNT_KIHON_ON varchar2(10);
+      P_CNT_KIHON_OFF varchar2(10);
+    Begin
+    PKG_SHOP_LISTING_UPDATE.COUPON_YUKO_FLG_UPDATE (
+      P_STATUS,
+      P_MSG,
+      P_CNT_KIHON_ON,
+      P_CNT_KIHON_OFF,
+      #updId#,
+      #updPg#,
+      #shopCd#);
+    End;
+  </procedure>
+
+  <!-- ■procedure：リンク有効フラグ更新 -->
+  <procedure id="callLinkFlgUpdate"
+             parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.CallProcedureDaoParamBean">
+    Declare
+      P_STATUS varchar2(20);
+      P_MSG varchar2(512);
+      P_CNT_KIHON_ON varchar2(10);
+      P_CNT_KIHON_OFF varchar2(10);
+    Begin
+    PKG_SHOP_LISTING_UPDATE.LINK_YUKO_FLG_UPDATE (
+      P_STATUS,
+      P_MSG,
+      P_CNT_KIHON_ON,
+      P_CNT_KIHON_OFF,
+      #updId#,
+      #updPg#,
+      #shopCd#);
+    End;
+  </procedure>
+
+  <!-- ■契約店舗検索■ -->
+  <!-- 契約店舗検索機能の共通部 -->
+  <select id="searchSysdate"
+          resultClass="java.util.Date">
+    SELECT
+      SYSDATE
+    FROM
+      DUAL
+  </select>
+
+  <sql id="shopSearchCondition">
+    FROM
+      SHOP_KANRI SK
+    LEFT JOIN
+      SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LASTCOMP
+    LEFT JOIN
+      (
+        SELECT
+          TMP.*
+        FROM
+          SHOP_LISTING_KEIYAKU_RIREKI TMP
+        INNER JOIN
+          (
+            SELECT
+              SHOPCD, MAX(PK_SHOP_LISTING_SEQ) AS PK_SHOP_LISTING_SEQ
+            FROM
+              SHOP_LISTING_KEIYAKU_RIREKI
+            GROUP BY SHOPCD
+           ) TMP2 ON TMP.PK_SHOP_LISTING_SEQ = TMP2.PK_SHOP_LISTING_SEQ
+      )  SLKR ON SLKR.SHOPCD = SK.SHOPCD
+    LEFT JOIN
+     (SELECT
+        TMP.*
+      FROM
+       (SELECT
+          SHOPCD,
+          COUPON_START_YMD,
+          COUPON_END_YMD,
+          ROW_NUMBER() OVER (PARTITION BY SHOPCD ORDER BY COUPON_START_YMD DESC, SORT_KEY ASC) RN
+        FROM
+          SHOP_LISTING_COUPON
+        WHERE
+          DEL_KBN != '1'
+        ) TMP
+      WHERE
+        RN = 1
+      ) SLC1 ON SLC1.SHOPCD = SK.SHOPCD
+    LEFT JOIN
+     (SELECT
+        TMP.*
+      FROM
+       (SELECT
+          SHOPCD,
+          COUPON_START_YMD,
+          COUPON_END_YMD,
+          ROW_NUMBER() OVER (PARTITION BY SHOPCD ORDER BY COUPON_START_YMD DESC, SORT_KEY ASC) RN
+        FROM
+          SHOP_LISTING_COUPON
+        WHERE
+          DEL_KBN != '1'
+        ) TMP
+      WHERE
+        RN = 2
+      ) SLC2 ON SLC2.SHOPCD = SK.SHOPCD
+    LEFT JOIN
+     (SELECT
+        TMP.*
+      FROM
+       (SELECT
+          SHOPCD,
+          COUPON_START_YMD,
+          COUPON_END_YMD,
+          ROW_NUMBER() OVER (PARTITION BY SHOPCD ORDER BY COUPON_START_YMD DESC, SORT_KEY ASC) RN
+        FROM
+          SHOP_LISTING_COUPON
+        WHERE
+          DEL_KBN != '1'
+        ) TMP
+      WHERE
+        RN = 3
+      ) SLC3 ON SLC3.SHOPCD = SK.SHOPCD
+    <dynamic prepend="WHERE">
+      <isNotEmpty prepend="AND" property="shopCd">
+        SK.SHOPCD LIKE'%'||#shopCd#||'%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="companyBumon">
+        (SR.COMPANY || SR.BUMON LIKE'%'||#companyBumon#||'%')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="prefCd">
+        SR.PREFCD = #prefCd#
+      </isNotEmpty>
+      <isNotEmpty property="clientSystemType">
+        <isNotEqual prepend="AND" property="clientSystemType" compareValue="0">
+          SK.CLIENTSYSTEM_TYPE = #clientSystemType#
+        </isNotEqual>
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="shopStatus" >
+        SK.SHOP_STATUS = #shopStatus#
+      </isNotEmpty>
+      <isNotNull prepend="AND" removeFirstPrepend="true" open="(" close=")">
+        <isNotEmpty prepend="OR" property="keiyaku" >
+        <![CDATA[
+          SLKR.KIHON_KEIYAKU_FLG = #keiyaku# AND
+          NVL(SLKR.KEIYAKU_END_YM,'999999') >= to_char(SYSDATE,'yyyyMM')
+        ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend="OR" property="mikeiyaku">
+          NOT EXISTS
+            (
+              SELECT
+                *
+              FROM
+                SHOP_LISTING_KEIYAKU_RIREKI SLKR2
+              WHERE
+                SLKR2.SHOPCD = SK.SHOPCD
+            )
+        </isNotEmpty>
+        <isNotEmpty prepend="OR" property="kigengire">
+        <![CDATA[
+          SLKR.KEIYAKU_END_YM < to_char(SYSDATE,'yyyyMM') OR SLKR.KIHON_KEIYAKU_FLG = '0'
+        ]]>
+        </isNotEmpty>
+      </isNotNull>
+    </dynamic>
+
+    ORDER BY
+      <isEqual property="sortKey" compareValue="1">
+        SK.SHOPCD
+      </isEqual>
+      <isEqual property="sortKey" compareValue="2">
+        SR.COMPANY
+      </isEqual>
+      <isEqual property="sortKey" compareValue="3">
+        SR.BUMON
+      </isEqual>
+      <isEqual property="sortKey" compareValue="4">
+        SLKR.KEIYAKU_START_YM
+      </isEqual>
+      <isEqual property="orderBy" compareValue="asc">
+        ASC
+      </isEqual>
+      <isEqual property="orderBy" compareValue="desc">
+        DESC
+      </isEqual>
+  </sql>
+
+  <!-- 契約店舗検索：総件数取得 -->
+  <select id="selectTotalCount"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.KeiyakuShopSearchParamBean"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    <include refid="shopSearchCondition"/>
+  </select>
+
+  <!-- 契約店舗検索：契約店舗検索 -->
+  <select id="selectShopList"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.KeiyakuShopSearchParamBean"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.KeiyakuShopSearchDomain">
+    SELECT
+      SK.SHOPCD AS shopCd,
+      SLKR.KEIYAKU_SHUBETSU AS keiyakuShubetsu,<!-- 2008/07 李昊燮 エイブルリニューアル対応で追加 -->
+      SK.SHOP_STATUS AS shopStatus,
+      <!-- SK.CT_STATUS AS ctStatus, 2008/07 李昊燮 エイブルリニューアル対応でコメント処理 -->
+      SR.COMPANY AS company,
+      SR.BUMON AS bumon,
+      SLKR.KEIYAKU_START_YM AS keiyakuStartYm,
+      SLKR.KEIYAKU_END_YM AS keiyakuEndYm,
+      SLKR.COUPON_START_YM AS couponStartYm,
+      SLKR.COUPON_END_YM AS couponEndYm,
+      SLC1.COUPON_START_YMD AS coupon1StartYmd,
+      SLC1.COUPON_END_YMD AS coupon1EndYmd,
+      SLC2.COUPON_START_YMD AS coupon2StartYmd,
+      SLC2.COUPON_END_YMD AS coupon2EndYmd,
+      SLC3.COUPON_START_YMD AS coupon3StartYmd,
+      SLC3.COUPON_END_YMD AS coupon3EndYmd,
+      SLKR.LINK_START_YM AS linkStartYm,
+      SLKR.LINK_End_YM AS linkEndYm
+    <include refid="shopSearchCondition" />
+  </select>
+
+  <!-- ■契約店舗詳細■ -->
+  <!-- 契約店舗詳細：店舗基本情報取得 -->
+  <select id="selectShopBasicInfo"
+          parameterClass="java.lang.String"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopBasicInfoDomain">
+    SELECT
+      SR.COMPANY AS company,
+      SR.BUMON AS bumon,
+      SK.SHOPCD AS shopCd,
+      SR.PASSWORD AS password
+    FROM
+      SHOP_RIREKI SR
+    INNER JOIN
+      SHOP_KANRI SK on SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LASTCOMP
+    WHERE
+      SR.SHOPCD = #shopCd#
+  </select>
+
+  <!-- 契約店舗詳細：有効契約件数取得 -->
+  <select id="selectKihonKeiyakuYukouCnt"
+          parameterClass="java.lang.String"
+          resultClass="java.lang.String">
+    SELECT
+      COUNT(*)
+    FROM
+      SHOP_KANRI SK
+    LEFT JOIN
+      SHOP_LISTING_KEIYAKU_RIREKI SLKR ON SLKR.SHOPCD = SK.SHOPCD
+    WHERE
+      SK.SHOPCD = #shopCd# AND
+      SLKR.KIHON_KEIYAKU_FLG = '1' AND
+    <![CDATA[
+      NVL(KEIYAKU_END_YM,'999999') >= TO_CHAR(SYSDATE,'YYYYMM')
+    ]]>
+  </select>
+
+  <!-- 契約店舗詳細：店舗リスティング契約情報取得 -->
+  <select id="selectKeiyakuBasicInfo"
+          parameterClass="java.lang.String"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.KihonKeiyakuInfoDomin">
+    SELECT
+      SLKR.PK_SHOP_LISTING_SEQ AS pkShopListingSeq,
+      SLKR.KEIYAKU_SHUBETSU AS keiyakuShubetsu,
+      SLKR.KIHON_KEIYAKU_FLG AS kihonKeiyakuFlg,
+      SLKR.KEIYAKU_START_YM AS keiyakuStartYm,
+      SLKR.KEIYAKU_END_YM AS keiyakuEndYm,
+      SLKR.COUPON_KEIYAKU_FLG AS couponKeiyakuFlg,
+      SLKR.COUPON_START_YM AS couponStartYm,
+      SLKR.COUPON_END_YM AS couponEndYm,
+      SLKR.LINK_KEIYAKU_FLG AS linkKeiyakuFlg,
+      SLKR.LINK_START_YM AS linkStartYm,
+      SLKR.LINK_END_YM AS linkEndYm,
+      SLKR.NOTE AS note,
+      TO_CHAR(SLKR.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt,
+      CASE
+        WHEN
+          <![CDATA[
+          SLKR.KEIYAKU_SHUBETSU = '1' OR
+          (SLKR.KIHON_KEIYAKU_FLG='1' AND
+          NVL(KEIYAKU_END_YM,'999999') >= TO_CHAR(SYSDATE,'YYYYMM'))
+          ]]>
+        THEN 1
+        ELSE 0 END AS linkFlg,
+      CASE
+        WHEN
+            <![CDATA[
+            SLKR.KEIYAKU_SHUBETSU = '1' OR
+            (SLKR.KIHON_KEIYAKU_FLG='1' AND
+            KEIYAKU_START_YM <= TO_CHAR(SYSDATE,'YYYYMM') AND
+            NVL(KEIYAKU_END_YM,'999999') >=TO_CHAR(SYSDATE,'YYYYMM'))
+            ]]>
+        THEN 1
+        ELSE 0 END AS keiyakuchuuFlg
+    FROM
+      SHOP_KANRI SK
+    INNER JOIN
+      SHOP_LISTING_KEIYAKU_RIREKI SLKR ON SLKR.SHOPCD = SK.SHOPCD
+    WHERE
+      SK.SHOPCD = #shopCd#
+    ORDER BY
+      SLKR.PK_SHOP_LISTING_SEQ DESC
+  </select>
+
+  <!-- 契約店舗詳細：店舗位置情報取得 -->
+  <select id="selectShopLocationInfo"
+          parameterClass="java.lang.String"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopLocationInfoDomain">
+    SELECT
+      SK.SHOPCD AS shopCd,
+      SR.LOCATION_X AS locationX,
+      SR.LOCATION_Y AS locationY,
+      SR.PREFKEY  AS prefKey
+    FROM
+      SHOP_KANRI SK
+    INNER JOIN
+      SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LASTCOMP
+    WHERE
+      SK.SHOPCD = #shopCd#
+  </select>
+
+  <!-- 契約店舗詳細：店舗画像情報取得 -->
+  <select id="selectShopImgInfo"
+          parameterClass="java.lang.String"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopImageInfoDomain" >
+    SELECT
+      SK.SHOPCD            AS shopCd,
+      SK.SHOP_PHOTO_1_FLG  AS shopPhoto1Flg,
+      SK.SHOP_PHOTO_2_FLG  AS shopPhoto2Flg,
+      SK.CLIENTSYSTEM_TYPE AS clientSystemType
+    FROM
+      SHOP_KANRI SK
+    WHERE
+      SK.SHOPCD = #SHOPCD#
+  </select>
+
+  <!-- ■契約情報登録■ -->
+  <!-- 契約情報登録：SHOP_LISTING_KEIYAKUテーブルで該当店舗の最終更新日を取得 -->
+  <select id="searchKeiyakuShopUpdDt"
+          parameterClass="java.lang.String"
+          resultClass="java.lang.String">
+      SELECT
+        TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') AS updDt
+      FROM
+        SHOP_LISTING_KEIYAKU
+      WHERE
+        SHOPCD = #shopCd#
+  </select>
+
+  <!-- 契約情報登録：SHOP_LISTING_KEIYAKUテーブルに該当店舗の情報が登録されているのかを確認 -->
+  <select id="countKeiyakuCntByShopCd"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.KeiyakuRegisterCompleteParamBean"
+          resultClass="int">
+      SELECT
+        COUNT(*)
+      FROM
+        SHOP_LISTING_KEIYAKU
+      WHERE
+        SHOPCD = #shopCd#
+  </select>
+
+  <!-- 契約情報登録：契約情報登録 -->
+  <insert id="insertKeiyakuInfo"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.KeiyakuRegisterCompleteParamBean">
+      INSERT INTO
+        SHOP_LISTING_KEIYAKU (
+          SHOPCD,
+          KIHON_YUKO_FLG,
+          COUPON_YUKO_FLG,
+          LINK_YUKO_FLG,
+          KEIYAKU_SHUBETSU,
+          EKI_CNT,
+          CITY_CNT,
+          INS_DT,
+          INS_PG,
+          INS_ID,
+          UPD_DT,
+          UPD_PG,
+          UPD_ID
+        ) VALUES (
+          #shopCd#,
+          '0',
+          '0',
+          '0',
+          #keiyakuShubetsu#,
+          #ekiCnt#,
+          #cityCnt#,
+          SYSTIMESTAMP,
+          #insPg#,
+          #insId#,
+          SYSTIMESTAMP,
+          #updPg#,
+          #updId#
+        )
+  </insert>
+
+  <!-- 契約情報登録：契約情報更新 -->
+  <update id="updateKeiyakuInfo"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.KeiyakuRegisterCompleteParamBean">
+      UPDATE
+        SHOP_LISTING_KEIYAKU
+      SET
+          KEIYAKU_SHUBETSU   = #keiyakuShubetsu#,
+          EKI_CNT            = #ekiCnt#,
+          CITY_CNT           = #cityCnt#,
+          UPD_DT             = SYSTIMESTAMP,
+          UPD_PG             = #updPg#,
+          UPD_ID             = #updId#
+      WHERE
+          SHOPCD = #shopCd# AND
+          TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+
+  <!-- 契約情報登録：契約履歴情報登録 -->
+  <insert id="insertKeiyakuRireki"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.KeiyakuRegisterCompleteParamBean">
+    <selectKey keyProperty="pkShopListingSeq" resultClass="java.lang.String">
+      SELECT
+        SEQ_PK_SHOP_LISTING.nextVal
+      FROM
+        DUAL
+    </selectKey>
+      INSERT INTO
+        SHOP_LISTING_KEIYAKU_RIREKI(
+          PK_SHOP_LISTING_SEQ,
+          SHOPCD,
+          KEIYAKU_SHUBETSU,
+          KIHON_KEIYAKU_FLG,
+          KEIYAKU_START_YM,
+          KEIYAKU_END_YM,
+          COUPON_KEIYAKU_FLG,
+          COUPON_START_YM,
+          COUPON_END_YM,
+          LINK_KEIYAKU_FLG,
+          LINK_START_YM,
+          LINK_END_YM,
+          NOTE,
+          EKI_CNT,
+          CITY_CNT,
+          INS_DT,
+          INS_PG,
+          INS_ID,
+          UPD_DT,
+          UPD_PG,
+          UPD_ID
+        ) VALUES (
+          #pkShopListingSeq#,
+          #shopCd#,
+          #keiyakuShubetsu#,
+          #kihonKeiyakuFlg#,
+          #keiyakuStartYm#,
+          #keiyakuEndYm#,
+          #couponKeiyakuFlg#,
+          #couponStartYm#,
+          #couponEndYm#,
+          #linkKeiyakuFlg#,
+          #linkStartYm#,
+          #linkEndYm#,
+          #note#,
+          #ekiCnt#,
+          #cityCnt#,
+          SYSTIMESTAMP,
+          #insPg#,
+          #insId#,
+          SYSTIMESTAMP,
+          #updPg#,
+          #updId#
+          )
+  </insert>
+
+  <procedure id="updateKeiyakuInfoByProcedure"
+             parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.KeiyakuRegisterCompleteParamBean">
+    {call PKG_SHOP_LISTING_UPDATE (#updId#, #updPg#,#shopCd#) }
+  </procedure>
+
+  <!-- ■契約情報更新■ -->
+  <!-- 契約情報更新：契約情報取得 -->
+  <select id="selectKeiyakuInfoByListingSeq"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.KeiyakuUpdatePageParamBean"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.KihonKeiyakuInfoDomin">
+    SELECT
+      PK_SHOP_LISTING_SEQ AS pkShopListingSeq,
+      SHOPCD AS shopCd,
+      KEIYAKU_SHUBETSU AS keiyakuShubetsu,
+      KIHON_KEIYAKU_FLG AS kihonKeiyakuFlg,
+      KEIYAKU_START_YM AS keiyakuStartYm,
+      KEIYAKU_END_YM AS keiyakuEndYm,
+      COUPON_KEIYAKU_FLG AS couponKeiyakuFlg,
+      COUPON_START_YM AS couponStartYm,
+      COUPON_END_YM  AS couponEndYm,
+      LINK_KEIYAKU_FLG AS linkKeiyakuFlg,
+      LINK_START_YM AS linkStartYm,
+      LINK_END_YM AS linkEndYm,
+      NOTE AS note,
+      EKI_CNT AS ekiCnt,
+      CITY_CNT AS cityCnt,
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') AS updDt
+    FROM
+      SHOP_LISTING_KEIYAKU_RIREKI
+    WHERE
+      PK_SHOP_LISTING_SEQ = #pkShopListingSeq# AND
+      SHOPCD = #shopCd#
+  </select>
+
+  <!-- 契約情報更新：契約情報更新 -->
+  <update id="updateKeiyakuRireki"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.KeiyakuUpdateCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_KEIYAKU_RIREKI
+    SET
+      KIHON_KEIYAKU_FLG  = #kihonKeiyakuFlg#,
+    <isEqual property="kihonKeiyakuFlg" compareValue="1">
+      KEIYAKU_START_YM   = #keiyakuStartYm#,
+      KEIYAKU_END_YM     = #keiyakuEndYm#,
+      COUPON_KEIYAKU_FLG = #couponKeiyakuFlg#,
+      <isEqual property="couponKeiyakuFlg" compareValue="1">
+      COUPON_START_YM    = #couponStartYm#,
+      COUPON_END_YM      = #couponEndYm#,
+      </isEqual>
+      LINK_KEIYAKU_FLG   = #linkKeiyakuFlg#,
+      <isEqual property="linkKeiyakuFlg" compareValue="1">
+      LINK_START_YM      = #linkStartYm#,
+      LINK_END_YM        = #linkEndYm#,
+      </isEqual>
+    </isEqual>
+      NOTE               = #note#,
+      EKI_CNT            = #ekiCnt#,
+      CITY_CNT           = #cityCnt#,
+      UPD_DT             = SYSTIMESTAMP,
+      UPD_PG             = #updPg#,
+      UPD_ID             = #updId#
+    WHERE
+      PK_SHOP_LISTING_SEQ = #pkShopListingSeq# AND
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+
+  <!-- ■出稿情報登録■ -->
+  <!-- 出稿情報登録：出稿対象駅/市区町村上限数を取得 -->
+  <select id="selectMediaCntLimit"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.KihonKeiyakuInfoDomin"
+          parameterClass="java.lang.String">
+    SELECT
+      eki_cnt AS ekiCnt,
+      city_cnt AS cityCnt
+    From
+      shop_listing_keiyaku
+    where
+      shopcd = #shopCd#
+  </select>
+
+  <!-- 出稿情報登録：アピールアイコン情報を取得 -->
+  <select id="selectIconMaster"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingIconDomain">
+    SELECT
+      ICON_ID AS iconId,
+      ICON_NAME AS iconName,
+      ICON_SHUBETSU AS iconShubetsu,
+    <![CDATA[
+      REPLACE(REPLACE(ICON_COMMENT, CHR(10), '<BR>'), CHR(13), '<BR>') AS iconComment
+    ]]>
+    FROM
+      SHOP_LISTING_MST_ICON
+    WHERE
+      DEL_KBN = '0'
+    ORDER BY
+      SORT_KEY ASC
+  </select>
+
+  <select id="selectIconMasterByIconId"
+          parameterClass="java.util.List"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingIconDomain">
+    SELECT
+      ICON_ID AS iconId,
+      ICON_NAME AS iconName,
+      ICON_SHUBETSU AS iconShubetsu,
+      ICON_COMMENT AS iconComment
+    FROM
+      SHOP_LISTING_MST_ICON
+    WHERE
+      DEL_KBN = '0' AND
+      ICON_ID IN
+      <iterate open="(" close=")" conjunction=",">#[]#</iterate>
+    ORDER BY
+      SORT_KEY ASC
+  </select>
+
+  <!-- 出稿情報登録：現在Web掲載中の出稿情報が存在するのかを確認 -->
+  <select id="countWebDisplayInfo"
+          parameterClass="java.lang.String"
+          resultClass="java.lang.Integer" >
+    SELECT
+      COUNT(*)
+    FROM
+      SHOP_LISTING_DATA
+    WHERE
+      SHOPCD = #shopCd# AND
+      WEB_UP_FLG = '1' AND
+      DEL_KBN = '0'
+  </select>
+
+  <select id="selectedEkiInfo"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.EkiInfoSearchParamBean"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingEkiDomain">
+    SELECT
+      MES.ENSENNAME AS ensenName,
+      ME.EKINAME AS ekiName
+    FROM
+      MST_EKI ME
+    INNER JOIN
+      MST_ENSEN MES ON ME.ENSENCD = MES.ENSENCD
+    WHERE
+      ME.ENSENCD = #ensenCd# AND
+      ME.EKICD = #ekiCd#
+  </select>
+
+  <select id="selectedCityInfo"
+          parameterClass="java.lang.String"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingCityDomain">
+    SELECT
+      MP.PREFNAME AS prefName,
+      MC.PREFCD   AS prefCd,
+      MC.CITYCD   AS cityCd,
+      MC.CITYNAME AS cityName
+    FROM
+      MST_CITY MC
+    INNER JOIN
+      MST_PREF MP ON MC.PREFCD = MP.PREFCD
+    WHERE
+      CITYCD = #cityCd#
+  </select>
+
+  <select id="selectedCityInfos"
+          parameterClass="java.util.List"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingCityDomain">
+    SELECT
+      MP.PREFNAME AS prefName,
+      MC.PREFCD   AS prefCd,
+      MC.CITYCD   AS cityCd,
+      MC.CITYNAME AS cityName
+    FROM
+      MST_CITY MC
+    INNER JOIN
+      MST_PREF MP ON MC.PREFCD = MP.PREFCD
+    WHERE
+      CITYCD IN
+    <iterate open="(" close=")" conjunction=",">#[]#</iterate>
+  </select>
+
+  <!-- 出稿情報登録：店舗リスティング出稿情報テーブル登録 -->
+  <insert id="insertShopListingData"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.ShopListingDataParamBean">
+    <selectKey keyProperty="shopListingDataSeq" resultClass="java.lang.String">
+      SELECT
+        SEQ_SHOP_LISTING_DATA.nextVal
+      FROM
+        DUAL
+    </selectKey>
+      INSERT INTO
+        SHOP_LISTING_DATA (
+          SHOP_LISTING_DATA_SEQ,
+          SHOPCD,
+          WEB_UP_FLG,
+          CATCH_PHRASE,
+          APPEAL_COMMENT,
+          PIC_FLG,
+          COUPON_COMMENT1,
+          COUPON_COMMENT2,
+          COUPON_COMMENT3,
+          NOTE,
+          DEL_KBN,
+          INS_DT,
+          INS_PG,
+          INS_ID,
+          UPD_DT,
+          UPD_PG,
+          UPD_ID
+        ) VALUES (
+          #shopListingDataSeq#,
+          #shopCd#,
+          '0',
+          #catchPhrase#,
+          #appealComment#,
+          #picFlg#,
+          #couponComment1#,
+          #couponComment2#,
+          #couponComment3#,
+          #note#,
+          '0',
+          SYSTIMESTAMP,
+          #insPg#,
+          #insId#,
+          SYSTIMESTAMP,
+          #updPg#,
+          #updId#
+        )
+  </insert>
+
+  <!-- 出稿情報登録：店舗リスティングアイコン情報テーブル登録 -->
+  <insert id="insertShopListingIcon"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.ShopListingIconParamBean">
+    <selectKey keyProperty="shopListingIconSeq" resultClass="java.lang.String">
+      SELECT
+        SEQ_SHOP_LISTING_ICON.nextVal
+      FROM
+        DUAL
+    </selectKey>
+      INSERT INTO
+        SHOP_LISTING_ICON (
+          SHOP_LISTING_ICON_SEQ,
+          SHOPCD,
+          WEB_UP_FLG,
+          ICON_ID,
+          LISTING_FLG,
+          DEL_KBN,
+          INS_DT,
+          INS_PG,
+          INS_ID,
+          UPD_DT,
+          UPD_PG,
+          UPD_ID
+        ) VALUES (
+          #shopListingIconSeq#,
+          #shopCd#,
+          '0',
+          #iconId#,
+          #listingFlg#,
+          '0',
+          SYSTIMESTAMP,
+          #insPg#,
+          #insId#,
+          SYSTIMESTAMP,
+          #updPg#,
+          #updId#
+        )
+  </insert>
+
+  <!-- 出稿情報登録：店舗リスティング駅テーブル登録 -->
+  <insert id="insertShopListingEki"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.ShopListingEkiParamBean">
+    <selectKey keyProperty="shopListingEkiSeq" resultClass="java.lang.String">
+      SELECT
+        SEQ_SHOP_LISTING_EKI.nextVal
+      FROM
+        DUAL
+    </selectKey>
+      INSERT INTO
+        SHOP_LISTING_EKI (
+          SHOP_LISTING_EKI_SEQ,
+          SHOPCD,
+          WEB_UP_FLG,
+          ENSENCD,
+          EKICD,
+          DEL_KBN,
+          INS_DT,
+          INS_PG,
+          INS_ID,
+          UPD_DT,
+          UPD_PG,
+          UPD_ID
+        ) VALUES (
+          #shopListingEkiSeq#,
+          #shopCd#,
+          '0',
+          #ensenCd#,
+          #ekiCd#,
+          '0',
+          SYSTIMESTAMP,
+          #insPg#,
+          #insId#,
+          SYSTIMESTAMP,
+          #updPg#,
+          #updId#
+        )
+  </insert>
+
+  <!-- 出稿情報登録：店舗リスティング市区町村テーブル登録 -->
+  <insert id="insertShopListingCity"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.ShopListingCityParamBean">
+    <selectKey keyProperty="shopListingCitySeq" resultClass="java.lang.String">
+      SELECT
+        SEQ_SHOP_LISTING_CITY.nextVal
+      FROM
+        DUAL
+    </selectKey>
+        INSERT INTO
+        SHOP_LISTING_CITY (
+          SHOP_LISTING_CITY_SEQ,
+          SHOPCD,
+          WEB_UP_FLG,
+          PREFCD,
+          CITYCD,
+          DEL_KBN,
+          INS_DT,
+          INS_PG,
+          INS_ID,
+          UPD_DT,
+          UPD_PG,
+          UPD_ID
+        )
+        SELECT
+          #shopListingCitySeq#,
+          #shopCd#,
+          '0',
+          PREFCD,
+          CITYCD,
+          '0',
+          SYSTIMESTAMP,
+          #insPg#,
+          #insId#,
+          SYSTIMESTAMP,
+          #updPg#,
+          #updId#
+        FROM
+          MST_CITY
+        WHERE
+          CITYCD = #cityCd#
+  </insert>
+
+  <!-- 出稿情報登録：仮保存中の出稿情報確認 -->
+  <select id="cntTmpMediaInfo"
+          parameterClass="java.lang.String"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    FROM
+      SHOP_LISTING_DATA
+    WHERE
+      SHOPCD = #shopCd# AND
+      WEB_UP_FLG = '0' AND
+      DEL_KBN = '0'
+  </select>
+
+
+  <!-- ■出稿情報編集 -->
+  <!-- 出稿情報編集：出稿情報を取得 -->
+  <select id="searchMediaInfoData"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.ShopListingDataParamBean"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingDataDomain">
+    SELECT
+      SHOP_LISTING_DATA_SEQ AS shopListingDataSeq,
+      SHOPCD                AS shopCd,
+      WEB_UP_FLG            AS webUpFlg,
+      CATCH_PHRASE          AS catchPhrase,
+      APPEAL_COMMENT        AS appealComment,
+      PIC_FLG               AS picFlg,
+      COUPON_COMMENT1       AS couponComment1,
+      COUPON_COMMENT2       AS couponComment2,
+      COUPON_COMMENT3       AS couponComment3,
+      NOTE                  AS note,
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') AS updDt
+    FROM
+      SHOP_LISTING_DATA
+    WHERE
+      SHOPCD = #shopCd# AND
+      WEB_UP_FLG = #webUpFlg# AND
+      DEL_KBN = '0'
+  </select>
+
+  <!-- 出稿情報編集：出稿駅情報を取得 -->
+  <select id="selectAreaInfo"
+          parameterClass="java.lang.String"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopAreaInfoDomain">
+    SELECT
+      SK.SHOPCD,
+      SR.AREACD,
+      ME.ENSENTYPE AS ensenTypeCd,
+      SK.ENSENCD,
+      SK.EKICD,
+      SR.PREFCD,
+      SR.CITYCD
+    FROM
+      SHOP_KANRI SK
+    INNER JOIN
+      SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LASTCOMP
+    INNER JOIN
+      MST_ENSEN ME ON ME.ENSENCD = SK.ENSENCD
+    WHERE
+      SK.SHOPCD = #shopCd#
+  </select>
+
+  <!-- 出稿情報編集：出稿駅情報を取得 -->
+  <select id="searchMediaInfoEki"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.ShopListingEkiParamBean"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingEkiDomain">
+    SELECT
+      SLE.ENSENCD    AS ensenCd,
+      MES.ENSENNAME  AS ensenName,
+      SLE.EKICD      AS ekiCd,
+      ME.EKINAME     AS ekiName
+    FROM
+      SHOP_LISTING_EKI SLE
+    INNER JOIN
+      MST_EKI ME ON ME.EKICD = SLE.EKICD AND ME.ENSENCD = SLE.ENSENCD
+    INNER JOIN
+      MST_ENSEN MES ON MES.ENSENCD = SLE.ENSENCD
+    WHERE
+      SLE.SHOPCD = #shopCd# AND
+      SLE.WEB_UP_FLG = #webUpFlg# AND
+      SLE.DEL_KBN = '0'
+    ORDER BY
+      SHOP_LISTING_EKI_SEQ ASC
+  </select>
+
+  <!-- 出稿情報編集：出稿市区町村情報を取得 -->
+  <select id="searchMediaInfoCity"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.ShopListingCityParamBean"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingCityDomain">
+    SELECT
+      SLC.PREFCD    AS prefCd,
+      MP.PREFNAME   AS prefName,
+      SLC.CITYCD    AS cityCd,
+      MC.CITYNAME   AS cityName
+    FROM
+      SHOP_LISTING_CITY SLC
+    INNER JOIN
+      MST_PREF MP ON MP.PREFCD = SLC.PREFCD
+    INNER JOIN
+      MST_CITY MC ON MC.CITYCD = SLC.CITYCD
+    WHERE
+      SLC.SHOPCD = #shopCd# AND
+      SLC.WEB_UP_FLG = #webUpFlg# AND
+      SLC.DEL_KBN = '0'
+    ORDER BY
+      SHOP_LISTING_CITY_SEQ ASC
+
+  </select>
+
+  <!-- 出稿情報編集：アイコン情報を取得 -->
+  <select id="searchMediaInfoIcon"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.ShopListingIconParamBean"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingIconDomain">
+    SELECT
+      SLI.ICON_ID      AS iconId,
+      SLMI.ICON_NAME    AS iconName,
+      SLI.LISTING_FLG  AS listingFlg
+    FROM
+      SHOP_LISTING_ICON SLI
+    INNER JOIN
+      SHOP_LISTING_MST_ICON SLMI ON SLMI.ICON_ID = SLI.ICON_ID
+    WHERE
+      SLI.SHOPCD      = #shopCd# AND
+      SLI.WEB_UP_FLG  = #webUpFlg# AND
+      SLI.DEL_KBN     = '0' AND
+      SLMI.DEL_KBN    = '0'
+  </select>
+
+  <!-- 出稿情報編集：店舗リスティング出稿情報テーブル更新 -->
+  <update id="updateMediaInfo"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.ShopListingDataParamBean">
+    UPDATE
+      SHOP_LISTING_DATA
+    SET
+      CATCH_PHRASE    = #catchPhrase#,
+      APPEAL_COMMENT  = #appealComment#,
+      PIC_FLG         = #picFlg#,
+      COUPON_COMMENT1 = #couponComment1#,
+      COUPON_COMMENT2 = #couponComment2#,
+      COUPON_COMMENT3 = #couponComment3#,
+      NOTE            = #note#,
+      UPD_DT          = SYSTIMESTAMP,
+      UPD_PG          = #updPg#,
+      UPD_ID          = #updId#
+    WHERE
+      SHOPCD                  = #shopCd# AND
+      WEB_UP_FLG              = '0'      AND
+      DEL_KBN                 = '0'      AND
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+
+  <!-- 出稿情報編集：店舗リスティング出稿情報テーブル更新 -->
+    <delete id="deleteData">
+    DELETE
+      SHOP_LISTING_DATA
+    WHERE
+      SHOPCD = #shopCd# AND
+      WEB_UP_FLG = '0' AND
+      DEL_KBN = '0'
+    </delete>
+
+  <!-- 出稿情報編集：出稿駅テーブル物理削除 -->
+    <delete id="deleteEki">
+      DELETE
+        SHOP_LISTING_EKI
+      WHERE
+        SHOPCD = #shopCd# AND
+        WEB_UP_FLG = '0' AND
+        DEL_KBN = '0'
+    </delete>
+
+  <!-- 出稿情報編集：出稿市区町村テーブル物理削除 -->
+    <delete id="deleteCity">
+      DELETE
+        SHOP_LISTING_CITY
+      WHERE
+        SHOPCD = #shopCd# AND
+        WEB_UP_FLG = '0' AND
+        DEL_KBN = '0'
+    </delete>
+
+  <!-- 出稿情報編集：アイコン情報テーブル物理削除 -->
+    <delete id="deleteIcon">
+      DELETE
+        SHOP_LISTING_ICON
+      WHERE
+        SHOPCD = #shopCd# AND
+        WEB_UP_FLG = '0' AND
+        DEL_KBN = '0'
+    </delete>
+
+  <!-- ■クーポン情報編集 -->
+  <!-- クーポン情報編集：クーポン情報取得 -->
+  <select id="searchCouponInfo"
+          parameterClass="java.lang.String"
+          resultClass="net.chintai.backend.sysadmin.shop_listing.domain.ShopListingCouponDomain">
+    SELECT
+      SHOP_LISTING_COUPON_SEQ AS shopListingCouponSeq,
+      SHOPCD AS shopCd,
+      SORT_KEY AS sortKey,
+      COUPON_RIYOU_TAISYO AS couponRiyouTaisyo,
+      COUPON_TOKUTEN AS couponTokuten,
+      COUPON_JOUKEN AS couponJouken,
+      TO_CHAR(COUPON_START_YMD, 'yyyyMMdd') AS couponStartYmd,
+      TO_CHAR(COUPON_END_YMD, 'yyyyMMdd') AS couponEndYmd,
+      DEL_KBN AS delKbn,
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') AS updDt
+    FROM
+      SHOP_LISTING_COUPON
+    WHERE
+      SHOPCD = #shopCd#
+    ORDER BY
+      COUPON_START_YMD DESC,
+      SORT_KEY ASC
+  </select>
+
+  <!-- クーポン情報編集：クーポン情報登録 -->
+  <insert id="insertCouponInfo"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.CouponEditCompleteParamBean">
+    <selectKey keyProperty="shopListingCouponSeq" resultClass="java.lang.String">
+      SELECT
+        SEQ_SHOP_LISTING_COUPON.nextVal
+      FROM
+        dual
+    </selectKey>
+      INSERT INTO
+        SHOP_LISTING_COUPON (
+          SHOP_LISTING_COUPON_SEQ,
+          SHOPCD,
+          SORT_KEY,
+          COUPON_RIYOU_TAISYO,
+          COUPON_TOKUTEN,
+          COUPON_JOUKEN,
+          COUPON_START_YMD,
+          COUPON_END_YMD,
+          DEL_KBN,
+          INS_DT,
+          INS_PG,
+          INS_ID,
+          UPD_DT,
+          UPD_PG,
+          UPD_ID
+        ) VALUES (
+          #shopListingCouponSeq#,
+          #shopCd#,
+          #sortKey#,
+          #couponRiyouTaisyo#,
+          #couponTokuten#,
+          #couponJouken#,
+          to_date(#couponStartYmd#, 'YYYY-MM-DD'),
+          to_date(#couponEndYmd#, 'YYYY-MM-DD'),
+          #delKbn#,
+          SYSTIMESTAMP,
+          #insPg#,
+          #insId#,
+          SYSTIMESTAMP,
+          #updPg#,
+          #updId#
+        )
+  </insert>
+
+  <!-- クーポン情報編集：クーポン情報更新 -->
+  <update id="updateCouponInfo"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.CouponEditCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_COUPON
+    SET
+      SORT_KEY            = #sortKey#,
+      COUPON_RIYOU_TAISYO = #couponRiyouTaisyo#,
+      COUPON_TOKUTEN      = #couponTokuten#,
+      COUPON_JOUKEN       = #couponJouken#,
+      COUPON_START_YMD    = #couponStartYmd#,
+      COUPON_END_YMD      = #couponEndYmd#,
+      DEL_KBN             = #delKbn#,
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      SHOP_LISTING_COUPON_SEQ = #shopListingCouponSeq# AND
+      SHOPCD                  = #shopCd# AND
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+
+  <!-- ■本番反映 -->
+  <!-- 本番反映：データテーブル論理削除 -->
+  <update id="logicalDeleteMediaInfoData"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.MediaInfoWebRegisterCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_DATA
+    SET
+      DEL_KBN             = '1',
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      SHOPCD              = #shopCd# AND
+      WEB_UP_FLG          = '1' AND
+      DEL_KBN             = '0'
+  </update>
+
+  <!-- 本番反映：データテーブル更新 -->
+  <update id="updateMediaInfoData"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.MediaInfoWebRegisterCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_DATA
+    SET
+      WEB_UP_FLG          = '1',
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      SHOPCD              = #shopCd# AND
+      WEB_UP_FLG          = '0' AND
+      DEL_KBN             = '0' AND
+      TO_CHAR(UPD_DT,'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+
+  <!-- 本番反映：駅テーブル論理削除 -->
+  <update id="logicalDeleteMediaInfoEki"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.MediaInfoWebRegisterCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_EKI
+    SET
+      DEL_KBN             = '1',
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      SHOPCD              = #shopCd# AND
+      WEB_UP_FLG          = '1' AND
+      DEL_KBN             = '0'
+  </update>
+
+  <!-- 本番反映：駅テーブル更新 -->
+  <update id="updateMediaInfoEki"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.MediaInfoWebRegisterCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_EKI
+    SET
+      WEB_UP_FLG          = '1',
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      SHOPCD              = #shopCd# AND
+      WEB_UP_FLG          = '0' AND
+      DEL_KBN             = '0'
+  </update>
+
+  <!-- 本番反映：市区町村テーブル論理削除 -->
+  <update id="logicalDeleteMediaInfoCity"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.MediaInfoWebRegisterCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_CITY
+    SET
+      DEL_KBN             = '1',
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      SHOPCD              = #shopCd# AND
+      WEB_UP_FLG          = '1' AND
+      DEL_KBN             = '0'
+  </update>
+
+  <!-- 本番反映：市区町村テーブル更新 -->
+  <update id="updateMediaInfoCity"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.MediaInfoWebRegisterCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_CITY
+    SET
+      WEB_UP_FLG          = '1',
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      SHOPCD              = #shopCd# AND
+      WEB_UP_FLG          = '0' AND
+      DEL_KBN             = '0'
+  </update>
+
+  <!-- 本番反映：アイコンテーブル更新 -->
+  <update id="logicalDeleteMediaInfoIcon"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.MediaInfoWebRegisterCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_ICON
+    SET
+      DEL_KBN             = '1',
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      SHOPCD              = #shopCd# AND
+      WEB_UP_FLG          = '1' AND
+      DEL_KBN             = '0'
+  </update>
+
+  <!-- 本番反映：アイコンテーブル更新 -->
+  <update id="updateMediaInfoIcon"
+          parameterClass="net.chintai.backend.sysadmin.shop_listing.dao.MediaInfoWebRegisterCompleteParamBean">
+    UPDATE
+      SHOP_LISTING_ICON
+    SET
+      WEB_UP_FLG          = '1',
+      UPD_DT              = SYSTIMESTAMP,
+      UPD_PG              = #updPg#,
+      UPD_ID              = #updId#
+    WHERE
+      SHOPCD              = #shopCd# AND
+      WEB_UP_FLG          = '0' AND
+      DEL_KBN             = '0'
+  </update>
+</sqlMap>

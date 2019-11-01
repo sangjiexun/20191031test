@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- Properties File Path -->
+	<!-- プロパティファイルの位置を指定します --><!--
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/classes/resources/datasource.properties</value>
+				<value>/WEB-INF/classes/resources/velocity-template.properties</value>
+			</list>
+		</property>
+	</bean>
+ -->
+	<!-- DataSource Settings -->
+	<!-- データソースの設定を記述します -->
+	<!-- <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource" destroy-method="close"> -->
+	<bean id="dataSource" class="net.chintai.backend.sysadmin.common.db.OracleDataSourceWrapper" destroy-method="close">
+		<property name="URL">
+			<value>${jdbc.oracle.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.oracle.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.oracle.password}</value>
+		</property>
+		<property name="connectionCachingEnabled">
+			<value>${jdbc.oracle.connectionCachingEnabled}</value>
+		</property>
+		<property name="connectionCacheProperties">
+			<props>
+				<prop key="MaxLimit">${jdbc.oracle.maxLimit}</prop>
+				<prop key="InitialLimit">${jdbc.oracle.initialLimit}</prop>
+				<prop key="ConnectionWaitTimeout">${jdbc.oracle.connectionWaitTimeout}</prop>
+				<prop key="ValidateConnection">${jdbc.oracle.validateConnection}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<!-- TransactionManager の設定を記述します -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource"><ref local="dataSource" /></property>
+	</bean>
+
+	<!-- SqlMap setup for iBATIS Database Layer -->
+	<!-- iBATIS SqlMap の設定を記述します -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation"><value>/WEB-INF/conf/sqlMapConfig.xml</value></property>
+		<property name="dataSource"><ref local="dataSource" /></property>
+	</bean>
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="authDao" class="net.chintai.backend.sysadmin.common.dao.impl.AuthDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient" /></property>
+	</bean>
+
+	<bean id="customTagDao" class="net.chintai.backend.sysadmin.common.dao.impl.CustomTagDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient" /></property>
+	</bean>
+
+	<bean id="systemControlDao" class="net.chintai.backend.sysadmin.common.dao.impl.SystemControlDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient" /></property>
+	</bean>
+
+	<bean id="addressEnsenDao" class="net.chintai.backend.sysadmin.common.dwr.dao.impl.AddressEnsenDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="operationDao" class="net.chintai.backend.sysadmin.common.dwr.dao.impl.OperationDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<!-- 該当対象年月のADデータ総件数を取得 -->
+	<bean id="adDataMatchingDao" class="net.chintai.backend.sysadmin.common.dwr.dao.impl.AdDataMatchingDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<!-- 他社データ連携出力設定用 -->
+	<bean id="dcoTypeDao" class="net.chintai.backend.sysadmin.common.dwr.dao.impl.DcoTypeDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<!-- Service Definitions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="authService" class="net.chintai.backend.sysadmin.common.service.impl.AuthServiceImpl">
+		<property name="authDao"><ref bean="authDao" /></property>
+	</bean>
+
+	<bean id="customTagService" class="net.chintai.backend.sysadmin.common.service.impl.CustomTagServiceImpl">
+		<property name="customTagDao"><ref bean="customTagDao" /></property>
+	</bean>
+
+	<bean id="addressEnsenService" class="net.chintai.backend.sysadmin.common.dwr.service.impl.AddressEnsenServiceImpl">
+		<property name="addressEnsenDao"><ref bean="addressEnsenDao"/></property>
+	</bean>
+
+	<bean id="operationService" class="net.chintai.backend.sysadmin.common.dwr.service.impl.OperationServiceImpl">
+		<property name="operationDao"><ref bean="operationDao"/></property>
+	</bean>
+
+	<bean id="codeConvertService" class="net.chintai.backend.sysadmin.common.service.impl.CodeConvertServiceImpl" />
+
+	<!-- 該当対象年月のADデータ総件数を取得 -->
+	<bean id="adDataMatchingService" class="net.chintai.backend.sysadmin.common.dwr.service.impl.AdDataMatchingServiceImpl" >
+		<property name="adDataMatchingDao"><ref bean="adDataMatchingDao"/></property>
+	</bean>
+
+	<!-- 他社データ連携出力設定用 -->
+	<bean id="dcoTypeService" class="net.chintai.backend.sysadmin.common.dwr.service.impl.DcoTypeServiceImpl">
+		<property name="dcoTypeDao"><ref bean="dcoTypeDao"/></property>
+	</bean>
+
+	<!-- Velocity Settings -->
+	<!-- Velocity の設定を記述します -->
+	<bean id="velocityMerger"
+			class="net.chintai.backend.sysadmin.common.velocity.impl.VelocityMergerImpl"
+			dependency-check="objects"
+			init-method="initialize"
+			destroy-method="dispose"
+			autowire="byName">
+		<constructor-arg index="0">
+			<value>classpath:resources/velocity-template.properties</value>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<value>true</value>
+		</constructor-arg>
+		<property name="configLocation" value="classpath:resources/velocity.properties" />
+		<property name="toolBox">
+			<map>
+				<entry key="NumberTool">
+					<bean class="org.apache.velocity.tools.generic.NumberTool"/>
+				</entry>
+				<entry key="DateTool">
+					<bean class="org.apache.velocity.tools.generic.DateTool"/>
+				</entry>
+				<entry key="MathTool">
+					<bean class="org.apache.velocity.tools.generic.MathTool"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- aop-autoproxy -->
+	<bean id="logDebugAutoProxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="interceptorNames">
+			<list>
+				<value>loggingInterceptor</value>
+			</list>
+		</property>
+		<property name="beanNames">
+			<list>
+				<value>*Service</value>
+				<value>*Dao</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- logging -->
+	<bean id="loggingInterceptor" class="net.chintai.backend.sysadmin.common.aop.LoggingInterceptor"/>
+</beans>

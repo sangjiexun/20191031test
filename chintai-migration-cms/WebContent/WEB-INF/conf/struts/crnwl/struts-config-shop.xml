@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+    PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions ================================== -->
+  <form-beans>
+    <!-- crnwl -->
+    <!-- 1.1.1.1. 店舗検索（初期画面） shopSearchByShopInfoForm -->
+    <form-bean name="shopSearchForm" extends="shopSearchByShopInfoForm">
+      <form-property name="area" type="java.lang.String"/>
+      <form-property name="kbnAreaRosen" type="java.lang.String"/>
+      <form-property name="pref" type="java.lang.String"/>
+      <form-property name="city" type="java.lang.String"/>
+      <form-property name="ensenType" type="java.lang.String"/>
+      <form-property name="ensen" type="java.lang.String"/>
+      <form-property name="eki" type="java.lang.String"/>
+      <form-property name="sortKey" type="java.lang.String"/>
+      <form-property name="orderBy" type="java.lang.String"/>
+      <form-property name="displayNum" type="java.lang.String"/>
+      <form-property name="outputMode" type="java.lang.String"/>
+      <form-property name="offSet" type="java.lang.Integer" />
+
+      <form-property name="rendoCd" type="java.lang.String"/>
+      <form-property name="shopKeiyakus" type="java.util.HashMap"/>
+    </form-bean>
+
+    <!-- 店舗情報予約 -->
+    <form-bean name="ShopReserveForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="rendoCd"            type="java.lang.String"/>
+      <form-property name="shopCd"             type="java.lang.String" />
+      <form-property name="kaishaMeiBushoMei"  type="java.lang.String" />
+
+      <form-property name="applyFrom" type="java.lang.String"/>
+      <form-property name="applyDtFromYear" type="java.lang.String"/>
+      <form-property name="applyDtFromMonth" type="java.lang.String"/>
+      <form-property name="applyDtFromDay" type="java.lang.String"/>
+      <form-property name="applyDtFromTime" type="java.lang.String"/>
+      <form-property name="applyTo" type="java.lang.String"/>
+      <form-property name="applyDtToYear" type="java.lang.String"/>
+      <form-property name="applyDtToMonth" type="java.lang.String"/>
+      <form-property name="applyDtToDay" type="java.lang.String"/>
+      <form-property name="applyDtToTime" type="java.lang.String"/>
+      <form-property name="reserveFrom" type="java.lang.String"/>
+      <form-property name="reserveDtFromYear" type="java.lang.String"/>
+      <form-property name="reserveDtFromMonth" type="java.lang.String"/>
+      <form-property name="reserveDtFromDay" type="java.lang.String"/>
+      <form-property name="reserveDtFromTime" type="java.lang.String"/>
+      <form-property name="reserveTo" type="java.lang.String"/>
+      <form-property name="reserveDtToYear" type="java.lang.String"/>
+      <form-property name="reserveDtToMonth" type="java.lang.String"/>
+      <form-property name="reserveDtToDay" type="java.lang.String"/>
+      <form-property name="reserveDtToTime" type="java.lang.String"/>
+
+      <form-property name="reserveKbn" type="java.lang.String"/>
+    </form-bean>
+    <!-- 店舗予約ダウンロード -->
+    <form-bean name="ShopDownloadForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="reserveFlg"         type="java.lang.String"/>
+
+      <form-property name="rendoCd"            type="java.lang.String"/>
+      <form-property name="shopCd"             type="java.lang.String" />
+      <form-property name="kaishaMeiBushoMei"  type="java.lang.String" />
+
+      <form-property name="applyFrom" type="java.lang.String"/>
+      <form-property name="applyDtFromYear" type="java.lang.String"/>
+      <form-property name="applyDtFromMonth" type="java.lang.String"/>
+      <form-property name="applyDtFromDay" type="java.lang.String"/>
+      <form-property name="applyDtFromTime" type="java.lang.String"/>
+      <form-property name="applyTo" type="java.lang.String"/>
+      <form-property name="applyDtToYear" type="java.lang.String"/>
+      <form-property name="applyDtToMonth" type="java.lang.String"/>
+      <form-property name="applyDtToDay" type="java.lang.String"/>
+      <form-property name="applyDtToTime" type="java.lang.String"/>
+      <form-property name="reserveFrom" type="java.lang.String"/>
+      <form-property name="reserveDtFromYear" type="java.lang.String"/>
+      <form-property name="reserveDtFromMonth" type="java.lang.String"/>
+      <form-property name="reserveDtFromDay" type="java.lang.String"/>
+      <form-property name="reserveDtFromTime" type="java.lang.String"/>
+      <form-property name="reserveTo" type="java.lang.String"/>
+      <form-property name="reserveDtToYear" type="java.lang.String"/>
+      <form-property name="reserveDtToMonth" type="java.lang.String"/>
+      <form-property name="reserveDtToDay" type="java.lang.String"/>
+      <form-property name="reserveDtToTime" type="java.lang.String"/>
+
+      <form-property name="reserveKbn" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 店舗予約アップロード -->
+    <form-bean name="ShopUploadForm" type="org.apache.struts.validator.DynaValidatorForm">
+           <form-property name="uploadFile" type="org.apache.struts.upload.FormFile" />
+    </form-bean>
+
+  </form-beans>
+
+  <!-- ========== Action Mapping Definitions ============================= -->
+  <action-mappings>
+
+    <!-- 店舗検索ページへ -->
+    <action path="/shop_bukken/ShopSearchPage"
+        name="shopSearchForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopSearchPageAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopSearch.jsp" />
+    </action>
+	<!-- crnwl -->
+     <action path="/shop_bukken/ShopSearch"
+        name="shopSearchForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopSearchAction"
+        scope="request"
+        validate="true"
+        input="/shop_bukken/ShopSearchPage.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopSearch.jsp" />
+    </action>
+
+    <!-- 店舗情報予約 -->
+    <action path="/shop_bukken/ShopReserve"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopReserveAction"
+        scope="request"
+        name="ShopReserveForm"
+        validate="false">
+    <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopReserve.jsp"></forward>
+    </action>
+    <!-- 店舗予約ダウンロード -->
+    <action path="/shop_bukken/ShopDownload"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopDownloadAction"
+        name="ShopDownloadForm"
+        scope="request"
+        validate="true"
+        input="/shop_bukken/ShopReserve.do">
+        <forward name="success" path="/shop_bukken/ShopReserve.do" />
+        <forward name="failure" path="/shop_bukken/ShopReserve.do" />
+    </action>
+    <!-- 店舗予約アップロード -->
+    <action path="/shop_bukken/ShopUpload"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopUploadAction"
+        name="ShopUploadForm"
+        scope="request"
+        validate="true"
+        input="/shop_bukken/ShopReserve.do">
+        <forward name="success" path="/shop_bukken/ShopReserve.do" />
+        <forward name="failure" path="/shop_bukken/ShopReserve.do" />
+    </action>
+
+  </action-mappings>
+
+	<controller processorClass="org.springframework.web.struts.AutowiringRequestProcessor" />
+
+</struts-config>

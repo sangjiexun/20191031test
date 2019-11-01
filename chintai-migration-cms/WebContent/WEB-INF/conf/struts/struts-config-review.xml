@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+    PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions ================================== -->
+  <form-beans>
+    <!-- ReviewShopSearchActionで使われる -->
+    <form-bean name="ReviewShopSearhForm"    type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"           type="java.lang.String" />
+      <form-property name="companyBumon"     type="java.lang.String" />
+      <form-property name="prefCd"           type="java.lang.String" />
+      <form-property name="bukkenCntFrom"    type="java.lang.String" />
+      <form-property name="bukkenCntTo"      type="java.lang.String" />
+      <form-property name="clientSystemType" type="java.lang.String" />
+      <form-property name="shopStatus"       type="java.lang.String" />
+      <form-property name="syokaiShinsaCnt"  type="java.lang.String" />
+      <form-property name="teikiShinsaCnt"   type="java.lang.String" />
+      <form-property name="shinsaNoCnt"      type="java.lang.String" />
+      <form-property name="returnRateFrom"   type="java.lang.String" />
+      <form-property name="returnRateTo"     type="java.lang.String" />
+      <form-property name="sortKey"          type="java.lang.String" />
+      <form-property name="orderBy"          type="java.lang.String" />
+      <form-property name="displayNum"       type="java.lang.String" />
+      <form-property name="offSet"           type="java.lang.Integer" />
+      <form-property name="rendoCd"          type="java.lang.String" />
+      <form-property name="licNum"           type="java.lang.String" />
+      <form-property name="bkKanri"          type="java.lang.String"/>
+    </form-bean>
+    <!-- ReviewShopStatusUpdate機能で使われる -->
+    <form-bean name="ReviewShopStatusUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="syokaiShinsaSkipFlg" type="java.lang.String" />
+      <form-property name="teikiShinsaSkipFlg"  type="java.lang.String" />
+      <form-property name="mailSendSkipFlg"     type="java.lang.String" />
+      <form-property name="autoDelSkipFlg"      type="java.lang.String" />
+      <form-property name="shinsaSkipBikou"     type="java.lang.String" />
+      <form-property name="updDt"               type="java.lang.String" />
+      <form-property name="shopCd"              type="java.lang.String" />
+    </form-bean>
+
+    <!-- ReviewBukkenSearchActionで使われる -->
+    <form-bean name="ReviewBukkneSearhForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <!-- <form-property name="shopCd"          type="java.lang.String" /> -->
+      <form-property name="companyBumon"    type="java.lang.String" />
+      <form-property name="shopStatus"      type="java.lang.String" />
+      <form-property name="shopCd"        type="java.lang.String" />
+      <form-property name="bkCd"            type="java.lang.String" />
+      <form-property name="roomNo"          type="java.lang.String" />
+      <form-property name="uketsukeCd"      type="java.lang.String" />
+      <form-property name="prefCd"          type="java.lang.String" />
+      <form-property name="sendDtFrom"      type="java.lang.String" />
+      <form-property name="fromYear"        type="java.lang.String" />
+      <form-property name="fromMonth"       type="java.lang.String" />
+      <form-property name="fromDay"         type="java.lang.String" />
+      <form-property name="sendDtTo"        type="java.lang.String" />
+      <form-property name="toYear"          type="java.lang.String" />
+      <form-property name="toMonth"         type="java.lang.String" />
+      <form-property name="toDay"           type="java.lang.String" />
+      <form-property name="fieldCheck"      type="java.lang.String" />
+      <form-property name="warningCd01statusKbn01" type="java.lang.String" />
+      <form-property name="warningCd01statusKbn02" type="java.lang.String" />
+      <form-property name="warningCd01statusKbn03" type="java.lang.String" />
+      <form-property name="warningCd01statusKbn04" type="java.lang.String" />
+      <form-property name="warningCd02statusKbn01" type="java.lang.String" />
+      <form-property name="warningCd02statusKbn02" type="java.lang.String" />
+      <form-property name="warningCd02statusKbn03" type="java.lang.String" />
+      <form-property name="warningCd02statusKbn04" type="java.lang.String" />
+      <form-property name="warningCd03statusKbn01" type="java.lang.String" />
+      <form-property name="warningCd03statusKbn02" type="java.lang.String" />
+      <form-property name="warningCd03statusKbn03" type="java.lang.String" />
+      <form-property name="warningCd03statusKbn04" type="java.lang.String" />
+      <form-property name="shinsaStartDtFrom"      type="java.lang.String" />
+      <form-property name="shinsaStartDtTo"        type="java.lang.String" />
+      <form-property name="offSet" type="java.lang.Integer" />
+      <form-property name="roomCd"                 type="java.lang.String"/>
+      <form-property name="bkName"                 type="java.lang.String"/>
+      <form-property name="searchType"  type="java.lang.String" />
+      <form-property name="bkKanri"          type="java.lang.String"/>
+    </form-bean>
+
+    <!-- ReviewBukkenStatusUpdate機能で使われる -->
+    <form-bean name="ReviewBukkenStatusUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="syokaiShinsaSkipFlg" type="java.lang.String" />
+      <form-property name="teikiShinsaSkipFlg"  type="java.lang.String" />
+      <form-property name="autoDelSkipFlg"      type="java.lang.String" />
+      <form-property name="shinsaSkipBikou"     type="java.lang.String" />
+      <form-property name="updDt"               type="java.lang.String" />
+      <form-property name="kanriCd"             type="java.lang.String" />
+      <form-property name="roomKey"             type="java.lang.String" />
+    </form-bean>
+
+    <!-- ReviewBukkenWebStatusUpdate機能で使われる -->
+    <form-bean name="ReviewBukkenWebStatusUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="bukkenStatusShinsaInput" type="java.lang.String" />
+      <form-property name="shinsaBukkenStatusBikou" type="java.lang.String" />
+      <form-property name="updDt"                   type="java.lang.String" />
+      <form-property name="kanriCd"                 type="java.lang.String" />
+      <form-property name="roomKey"             type="java.lang.String" />
+    </form-bean>
+
+    <!-- ReviewReplay機能で使われる -->
+    <form-bean name="ReviewReplayForm"       type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shinchikuFlg"     type="java.lang.String" />
+      <form-property name="vacantYmd"        type="java.lang.String" />
+      <form-property name="vacantYear"       type="java.lang.String" />
+      <form-property name="vacantMonth"      type="java.lang.String" />
+      <form-property name="vacantDay"        type="java.lang.String" />
+      <form-property name="lastConfirmYmd"   type="java.lang.String" />
+      <form-property name="lastConfirmYear"  type="java.lang.String" />
+      <form-property name="lastConfirmMonth" type="java.lang.String" />
+      <form-property name="lastConfirmDay"   type="java.lang.String" />
+      <form-property name="syoriKbn"         type="java.lang.String" />
+      <form-property name="bikou"            type="java.lang.String" />
+      <form-property name="updDt"            type="java.lang.String" />
+      <form-property name="kanriUpdDt"       type="java.lang.String" />
+      <form-property name="warningCd"        type="java.lang.String" />
+      <form-property name="kanriCd"          type="java.lang.String" />
+      <form-property name="warningRirekiSeq" type="java.lang.String" />
+      <form-property name="roomKey"          type="java.lang.String" />
+    </form-bean>
+
+
+    <!-- ReviewShopMediaCountActionで使われる -->
+    <form-bean name="ShopMediaCountForm"    type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="sumYmdFromYear"  type="java.lang.Integer" />
+      <form-property name="sumYmdFromMonth" type="java.lang.Integer" />
+      <form-property name="shopCd"          type="java.lang.String" />
+      <form-property name="companyBumon"    type="java.lang.String" />
+      <form-property name="prefCd"          type="java.lang.String" />
+      <form-property name="outPut"          type="java.lang.String" />
+      <form-property name="offSet"          type="java.lang.Integer" />
+    </form-bean>
+
+    <!-- ReviewTodofukenMediaCountActionで使われる -->
+    <form-bean name="TodofukenMediaCountForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="sumYmdFromYear"    type="java.lang.Integer" />
+      <form-property name="sumYmdFromMonth"   type="java.lang.Integer" />
+      <form-property name="prefCd"            type="java.lang.String" />
+      <form-property name="outPut"            type="java.lang.String" />
+    </form-bean>
+
+    <form-bean name="AlertCountForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"        type="java.lang.String" />
+      <form-property name="companyBumon"  type="java.lang.String" />
+      <form-property name="prefCd"        type="java.lang.String" />
+      <form-property name="sendDtFrom"    type="java.lang.String" />
+      <form-property name="fromYear"      type="java.lang.String" />
+      <form-property name="fromMonth"     type="java.lang.String" />
+      <form-property name="fromDay"       type="java.lang.String" />
+      <form-property name="sendDtTo"      type="java.lang.String" />
+      <form-property name="toYear"        type="java.lang.String" />
+      <form-property name="toMonth"       type="java.lang.String" />
+      <form-property name="toDay"         type="java.lang.String" />
+      <form-property name="warningCd0"    type="java.lang.String" />
+      <form-property name="warningCd1"    type="java.lang.String" />
+      <form-property name="warningCd2"    type="java.lang.String" />
+      <form-property name="sortKey"       type="java.lang.String" />
+      <form-property name="orderBy"       type="java.lang.String" />
+      <form-property name="outPut"        type="java.lang.String" />
+      <form-property name="offSet"        type="java.lang.Integer" />
+    </form-bean>
+  </form-beans>
+
+
+  <!-- ========== Action Mapping Definitions ============================= -->
+
+  <action-mappings>
+
+    <!-- ■Web審査店舗検索画面表示アクション -->
+    <action path="/review/ReviewShopSearchPage"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopSearchPageAction"
+            scope="request"
+            name="ReviewShopSearhForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopSearch.jsp" />
+    </action>
+
+    <!-- 店舗検索アクション -->
+    <action path="/review/ReviewShopSearch" name="ReviewShopSearhForm"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopSearchAction"
+            scope="request"
+            validate="true"
+            input="/review/ReviewShopSearchPage.do">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopSearch.jsp" />
+    </action>
+
+    <!-- 店舗検索アクション(ページング用) -->
+    <action path="/review/ReviewShopSearchPaging" name="ReviewShopSearhForm"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopSearchAction"
+            scope="request"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopSearch.jsp" />
+    </action>
+
+    <!-- 店舗詳細アクション -->
+    <action path="/review/ReviewShopInfo"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopInfoAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopInfo.jsp" />
+    </action>
+
+    <!-- 一覧表示アクション -->
+    <action path="/review/ReviewShopBukkenSearch"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopBukkenSearchAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenSearch.jsp" />
+    </action>
+
+    <!-- 店舗対象外設定変更画面表示アクション -->
+    <action path="/review/ReviewShopStatusUpdatePage"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopStatusUpdatePageAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopStatusUpdate.jsp" />
+    </action>
+
+    <!-- 店舗対象外設定変更確認アクション -->
+    <action path="/review/ReviewShopStatusUpdateConfirm"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopStatusUpdateConfirmAction"
+            scope="request"
+            name="ReviewShopStatusUpdateForm"
+            validate="true"
+            input="/review/ReviewShopStatusUpdatePageBack.do" >
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopStatusUpdateConfirm.jsp" />
+    </action>
+
+    <!-- 店舗対象外設定変更画面に戻るアクション -->
+    <action path="/review/ReviewShopStatusUpdatePageBack"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopStatusUpdatePageBackAction"
+            scope="request"
+            name="ReviewShopStatusUpdateForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopStatusUpdate.jsp" />
+    </action>
+
+    <!-- 店舗対象外設定更新アクション -->
+    <action path="/review/ReviewShopStatusUpdateCommit"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopStatusUpdateCommitAction"
+            scope="request"
+            name="ReviewShopStatusUpdateForm"
+            validate="false">
+      <forward name="success" path="/review/ReviewShopInfo.do" />
+    </action>
+
+    <!-- ■Web審査-物件検索画面表示アクション -->
+    <action path="/review/ReviewBukkenSearchPage"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenSearchPageAction"
+            scope="request"
+            name="ReviewBukkneSearhForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenSearch.jsp" />
+    </action>
+
+    <!-- 物件検索アクション -->
+    <action path="/review/ReviewBukkenSearch"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenSearchAction"
+            scope="request"
+            name="ReviewBukkneSearhForm"
+            validate="true"
+            input="/review/ReviewBukkenSearchPage.do">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenSearch.jsp" />
+    </action>
+
+    <!-- 物件検索アクション -->
+    <action path="/review/ReviewBukkenSearchPaging"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenSearchAction"
+            scope="request"
+            name="ReviewBukkneSearhForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenSearch.jsp" />
+    </action>
+
+    <!-- 物件詳細アクション -->
+    <action path="/review/ReviewBukkenInfo"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenInfoAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenInfo.jsp" />
+    </action>
+
+    <!-- 物件対象外設定を変更画面表示アクション -->
+    <action path="/review/ReviewBukkenStatusUpdatePage"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenStatusUpdatePageAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenStatusUpdate.jsp" />
+    </action>
+
+    <!-- 物件対象外設定を変更確認アクション -->
+    <action path="/review/ReviewBukkenStatusUpdateConfirm"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenStatusUpdateConfirmAction"
+            scope="request"
+            name="ReviewBukkenStatusUpdateForm"
+            validate="true"
+            input="/review/ReviewBukkenStatusUpdatePageBack.do">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenStatusUpdateConfirm.jsp" />
+    </action>
+
+    <!-- 物件対象外設定更新アクション -->
+    <action path="/review/ReviewBukkenStatusUpdateCommit"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenStatusUpdateCommitAction"
+            scope="request"
+            name="ReviewBukkenStatusUpdateForm"
+            validate="false">
+      <forward name="success" path="/review/ReviewBukkenInfo.do" />
+    </action>
+
+    <!-- 物件対象外変更画面に戻るアクション -->
+    <action path="/review/ReviewBukkenStatusUpdatePageBack"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenStatusUpdatePageBackAction"
+            scope="request"
+            name="ReviewBukkenStatusUpdateForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenStatusUpdate.jsp" />
+    </action>
+
+    <!-- CHINTAI NET掲載状態変更画面表示アクション -->
+    <action path="/review/ReviewBukkenWebStatusUpdatePage"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenWebStatusUpdatePageAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenWebStatusUpdate.jsp" />
+    </action>
+
+    <!-- CHINTAI NET掲載状態変更確認アクション -->
+    <action path="/review/ReviewBukkenWebStatusUpdateConfirm"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenWebStatusUpdateConfirmAction"
+            scope="request"
+            name="ReviewBukkenWebStatusUpdateForm"
+            validate="true"
+            input="/review/ReviewBukkenWebStatusUpdatePageBack.do">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenWebStatusUpdateConfirm.jsp" />
+    </action>
+
+    <!-- CHINTAI NET掲載状態更新アクション -->
+    <action path="/review/ReviewBukkenWebStatusUpdateCommit"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenWebStatusUpdateCommitAction"
+            scope="request"
+            name="ReviewBukkenWebStatusUpdateForm">
+      <forward name="success" path="/review/ReviewBukkenInfo.do" />
+    </action>
+
+    <!-- CHINTAI NET掲載状態変更画面に戻るアクション -->
+    <action path="/review/ReviewBukkenWebStatusUpdatePageBack"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenWebStatusUpdatePageBackAction"
+            scope="request"
+            name="ReviewBukkenWebStatusUpdateForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenWebStatusUpdate.jsp" />
+    </action>
+
+    <!-- 返信入力画面表示アクション -->
+    <action path="/review/ReviewReplayPage"
+            type="net.chintai.backend.sysadmin.review.action.ReviewReplayPageAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewReplay.jsp" />
+    </action>
+
+    <!-- 返信入力確認アクション -->
+    <action path="/review/ReviewReplayConfirm"
+            type="net.chintai.backend.sysadmin.review.action.ReviewReplayConfirmAction"
+            scope="request"
+            name="ReviewReplayForm"
+            validate="true"
+            input="/review/ReviewReplayPageBack.do">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewReplayConfirm.jsp" />
+    </action>
+
+    <!-- 返信入力更新アクション -->
+    <action path="/review/ReviewReplayCommit"
+            type="net.chintai.backend.sysadmin.review.action.ReviewReplayCommitAction"
+            scope="request"
+            name="ReviewReplayForm"
+            validate="false">
+      <forward name="success" path="/review/ReviewBukkenInfo.do" />
+    </action>
+
+
+    <!-- 返信入力画面に戻るアクション -->
+    <action path="/review/ReviewReplayPageBack"
+            type="net.chintai.backend.sysadmin.review.action.ReviewReplayPageBackAction"
+            scope="request"
+            name="ReviewReplayForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewReplay.jsp" />
+    </action>
+
+
+
+
+    <!-- ■Web審査-店舗別出稿状況集計画面表示アクション -->
+    <action path="/review/ReviewShopMediaCountPage"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopMediaCountPageAction"
+            scope="request"
+            name="ShopMediaCountForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopMediaCount.jsp" />
+    </action>
+
+    <!-- 店舗別出稿状況集計アクション -->
+    <action path="/review/ReviewShopMediaCount"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopMediaCountAction"
+            scope="request"
+            name="ShopMediaCountForm"
+            validate="true"
+            input="/review/ReviewShopMediaCountPage.do">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopMediaCount.jsp" />
+    </action>
+
+    <!-- 店舗別出稿状況集計ページングアクション -->
+    <action path="/review/ReviewShopMediaCountPaging"
+            type="net.chintai.backend.sysadmin.review.action.ReviewShopMediaCountPagingAction"
+            scope="request"
+            name="ShopMediaCountForm"
+            validate="true"
+            input="/WEB-INF/jsp/review/ReviewShopMediaCount.jsp">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewShopMediaCount.jsp" />
+    </action>
+
+
+    <!-- ■Web審査-都道府県別出稿状況集計画面表示アクション -->
+    <action path="/review/ReviewTodofukenMediaCountPage"
+            type="net.chintai.backend.sysadmin.review.action.ReviewTodofukenMediaCountPageAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewTodofukenMediaCount.jsp" />
+    </action>
+
+    <action path="/review/ReviewTodofukenMediaCount"
+            type="net.chintai.backend.sysadmin.review.action.ReviewTodofukenMediaCountAction"
+            scope="request"
+            name="TodofukenMediaCountForm"
+            validate="true"
+            input="/WEB-INF/jsp/review/ReviewTodofukenMediaCount.jsp">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewTodofukenMediaCount.jsp" />
+    </action>
+
+    <!-- ■警告対象物件一覧画面表示アクション -->
+    <action path="/review/ReviewBukkenAlertCountPage"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenAlertCountPageAction"
+            scope="request"
+            name="AlertCountForm"
+            validate="false">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenAlertCount.jsp" />
+    </action>
+
+    <action path="/review/ReviewBukkenAlertCount"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenAlertCountAction"
+            name="AlertCountForm"
+            scope="request"
+            validate="true"
+            input="/review/ReviewBukkenAlertCountPage.do">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenAlertCount.jsp" />
+    </action>
+
+    <action path="/review/ReviewBukkenAlertCountPaging" name="AlertCountForm"
+            type="net.chintai.backend.sysadmin.review.action.ReviewBukkenAlertCountAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewBukkenAlertCount.jsp" />
+    </action>
+
+
+
+    <!-- ■Web審査設定内容表示画面表示アクション -->
+    <action path="/review/ReviewConfig"
+            type="net.chintai.backend.sysadmin.review.action.ReviewConfigAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewConfig.jsp" />
+    </action>
+    <action path="/review/ReviewConfigCity"
+            type="net.chintai.backend.sysadmin.review.action.ReviewConfigCityAction"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/review/ReviewConfigCity.jsp" />
+    </action>
+  </action-mappings>
+</struts-config>

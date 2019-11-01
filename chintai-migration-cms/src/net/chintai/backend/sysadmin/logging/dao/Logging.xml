@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<!-- $Id: Logging.xml,v 1.2 2007/10/10 05:55:51 t-kojima Exp $  -->
+<sqlMap namespace="logging">
+
+	<!-- 操作ログ記録 -->
+	<insert id="insertOperationLog"
+			parameterClass="net.chintai.backend.sysadmin.logging.dao.OperationLoggingParamBean">
+		<selectKey keyProperty="sessionSeq" resultClass="int" type="pre">
+			SELECT SEQ_SESSION_SEQ.NEXTVAL AS SESSION_SEQ FROM DUAL
+		</selectKey>
+		INSERT INTO
+			MNG_SESSION_HISTORY (
+				OPERATION_ID,
+				SESSION_SEQ,
+				SESSION_STATUS,
+				TARGET,
+				INS_DT,
+				INS_PG,
+				INS_ID,
+				UPD_DT,
+				UPD_PG,
+				UPD_ID
+			) VALUES (
+				#operationId#,
+				#sessionSeq#,
+				#sessionStatus#,
+				#target#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#,
+				SYSTIMESTAMP,
+				#pgName#,
+				#operUserId#
+			)
+	</insert>
+</sqlMap>

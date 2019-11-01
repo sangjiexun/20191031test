@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+    PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions ================================== -->
+  <form-beans>
+
+    <!-- 物件管理コードで検索フォーム -->
+    <form-bean name="bukkenCodeSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="bkCd" type="java.lang.String"/>
+      <form-property name="roomNo"  type="java.lang.String"/>
+      <form-property name="roomCd"  type="java.lang.String"/>
+      <form-property name="uketukeCd"  type="java.lang.String"/>
+      <form-property name="bkKanri"  type="java.lang.String"/>
+      <form-property name="bkName"  type="java.lang.String"/>
+      <form-property name="searchType"  type="java.lang.String" />
+    </form-bean>
+
+    <!-- 問合せ番号で検索フォーム -->
+    <form-bean name="bukkenQueryIdSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="uketukeCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 物件詳細フォーム -->
+    <form-bean name="bukkenInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="bkCd" type="java.lang.String"/>
+      <form-property name="roomNo"  type="java.lang.String"/>
+      <form-property name="roomKey"  type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 物件掲載状態変更画面に遷移フォーム -->
+    <form-bean name="bukkenPublishStatusUpdatePageForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="bkCd" type="java.lang.String"/>
+      <form-property name="roomNo"  type="java.lang.String"/>
+      <form-property name="roomKey"  type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 物件掲載状態変更確認フォーム -->
+    <form-bean name="bukkenPublishStatusUpdateConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="bkCd" type="java.lang.String"/>
+      <form-property name="roomNo"  type="java.lang.String"/>
+      <form-property name="bukkenStatus"  type="java.lang.String"/>
+      <form-property name="roomKey"  type="java.lang.String"/>
+      <form-property name="bukkenKanriLastUpdate"  type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 物件掲載状態変更完了フォーム -->
+    <form-bean name="bukkenPublishStatusUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="bkCd" type="java.lang.String"/>
+      <form-property name="roomNo"  type="java.lang.String"/>
+      <form-property name="bukkenStatus"  type="java.lang.String"/>
+      <form-property name="roomKey"  type="java.lang.String"/>
+      <form-property name="bukkenKanriLastUpdate"  type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 入稿履歴一覧CSVダウンロードアクションフォーム -->
+    <form-bean name="bukkenRirekiInfoCsvDownloadForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="roomKey"  type="java.lang.String"/>
+      <form-property name="tableNo" type="java.lang.String[]"/>
+    </form-bean>
+  </form-beans>
+
+  <!-- ========== Action Mapping Definitions ============================= -->
+  <action-mappings>
+
+    <!-- 物件検索画面ページへ -->
+    <action path="/shop_bukken/BukkenSearchPage"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenSearchPageAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/BukkenSearch.jsp" />
+    </action>
+
+    <!-- 物件管理コードで検索-->
+    <action path="/shop_bukken/BukkenCodeSearch"
+        name="bukkenCodeSearchForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenCodeSearchAction"
+        scope="request"
+        validate="true"
+        input="/WEB-INF/jsp/shop_bukken/BukkenSearch.jsp">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/BukkenSearch.jsp" />
+    </action>
+
+    <!-- 問合せ番号で検索 -->
+    <action path="/shop_bukken/BukkenQueryIdSearch"
+        name="bukkenQueryIdSearchForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenQueryIdSearchAction"
+        scope="request"
+        validate="true"
+        input="/WEB-INF/jsp/shop_bukken/BukkenSearch.jsp">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/BukkenSearch.jsp" />
+    </action>
+
+    <!-- 物件詳細 -->
+    <action path="/shop_bukken/BukkenInfo"
+        name="bukkenInfoForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenInfoAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/BukkenInfo.jsp" />
+    </action>
+
+    <!-- 掲載状態変更画面に遷移 -->
+    <action path="/shop_bukken/BukkenPublishStatusUpdatePage"
+        name="bukkenPublishStatusUpdatePageForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenPublishStatusUpdatePageAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/BukkenPublishStatusUpdatePage.jsp" />
+    </action>
+
+    <!-- 掲載状態変更確認 -->
+    <action path="/shop_bukken/BukkenPublishStatusUpdateConfirm"
+        name="bukkenPublishStatusUpdateConfirmForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenPublishStatusUpdateConfirmAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/BukkenPublishStatusUpdateConfirm.jsp" />
+      <forward name="error" path="/shop_bukken/BukkenPublishStatusUpdatePage.do" />
+    </action>
+
+    <!-- 掲載状態変更完了 -->
+    <action path="/shop_bukken/BukkenPublishStatusUpdateCommit"
+        name="bukkenPublishStatusUpdateCommitForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenPublishStatusUpdateCommitAction"
+        scope="request">
+      <forward name="success" path="/shop_bukken/BukkenInfo.do" />
+    </action>
+
+    <!-- 物件詳細画面に戻る -->
+    <action path="/shop_bukken/BukkenInfoPageBack"
+        name="bukkenPublishStatusUpdateConfirmForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenInfoAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/BukkenInfo.jsp" />
+    </action>
+
+    <!-- 物件掲載状態変更画面に戻る -->
+    <action path="/shop_bukken/BukkenPublishStatusUpdatePageBack"
+        name="bukkenPublishStatusUpdateCommitForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenPublishStatusUpdateConfirmAction"
+        scope="request"
+        input="/WEB-INF/jsp/shop_bukken/BukkenPublishStatusUpdateConfirm.jsp">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/BukkenPublishStatusUpdatePage.jsp" />
+    </action>
+
+    <!-- 入稿履歴一覧画面に遷移 2008.05.16 李昊燮追加 -->
+    <action path="/shop_bukken/BukkenRirekiInfo"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenRirekiInfoAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/BukkenRirekiInfo.jsp" />
+    </action>
+
+    <!-- 入稿履歴一覧CSVダウンロードアクション  2008.05.16 李昊燮追加 -->
+    <action path="/shop_bukken/BukkenRirekiInfoCsvDownloadAction"
+    		name="bukkenRirekiInfoCsvDownloadForm"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.BukkenRirekiInfoCsvDownloadAction"
+            scope="request">
+    </action>
+
+
+  </action-mappings>
+
+</struts-config>

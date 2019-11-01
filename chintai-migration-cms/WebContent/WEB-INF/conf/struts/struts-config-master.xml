@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+		PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<!-- $Id: struts-config-master.xml 4535 2011-11-04 05:46:53Z e-ishii $ -->
+<struts-config>
+
+	<!-- ========== Form Bean Definitions ================================== -->
+
+	<form-beans>
+
+		<!-- 沿線・駅検索フォーム -->
+		<form-bean name="rosenSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="areaCd" type="java.lang.String" />
+			<form-property name="ensenType" type="java.lang.String" />
+			<form-property name="searchFlg" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 沿線・駅 名称から検索フォーム -->
+		<form-bean name="rosenNameSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="ensenNameParam" type="java.lang.String" />
+			<form-property name="ekiNameParam" type="java.lang.String" />
+			<form-property name="searchFlg" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 沿線・駅詳細フォーム -->
+		<form-bean name="rosenInfoSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="ensenCd" type="java.lang.String" />
+			<form-property name="ensenType" type="java.lang.String" />
+			<form-property name="ensenName" type="java.lang.String" />
+			<form-property name="ensenKana" type="java.lang.String" />
+			<form-property name="ensenSeq" type="java.lang.String" />
+			<form-property name="railwaycoName" type="java.lang.String" />
+			<form-property name="areaCd" type="java.lang.String" />
+			<form-property name="areaName" type="java.lang.String" />
+			<form-property name="ensennameShort" type="java.lang.String" />
+			<form-property name="ensenkanaShort" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 沿線・駅の登録／変更／削除用フォーム -->
+		<form-bean name="rosenUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="uploadFile" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+
+		<!-- 統一駅登録用フォーム -->
+		<form-bean name="nodeUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="uploadFile" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+
+		<form-bean name="ensenDistributeCsvDownloadForm" type="org.apache.struts.validator.DynaValidatorForm">
+		</form-bean>
+		<form-bean name="ekiDistributeCsvDownloadForm" type="org.apache.struts.validator.DynaValidatorForm">
+		</form-bean>
+
+		<!-- 鉄道会社検索 -->
+		<form-bean name="tetudoGaishaSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="railwaycoNo" type="java.lang.String" />
+			<form-property name="railwaycoName" type="java.lang.String" />
+			<form-property name="delKbn" type="java.lang.String" />
+			<form-property name="dispSortKey" type="java.lang.String" />
+			<form-property name="orderBy" type="java.lang.String" />
+			<form-property name="displayNum" type="java.lang.String" />
+			<form-property name="outputMode" type="java.lang.String" />
+			<form-property name="offSet" type="java.lang.Integer" />
+		</form-bean>
+
+		<!-- 鉄道会社検索 -->
+		<form-bean name="tetudoGaishaSearchPagingForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="offSet" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+
+		<!-- 市区町村検索(郵便番号から検索フォーム) -->
+		<form-bean name="shikutyosonPostSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="zipCd" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 市区町村検索(住所から検索フォーム) -->
+		<form-bean name="shikutyosonAddressSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="pref" type="java.lang.String" />
+			<form-property name="city" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 市区町村登録(アップロードフォーム) -->
+		<form-bean name="shikutyosonAddressUploadForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="fileUp" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+
+		<!-- 国土地理協会住所データ登録(アップロードフォーム) -->
+		<form-bean name="jgdcShikutyosonAddressUploadForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="fileUp" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+
+		<!-- 携帯ゲーム対応機種メンテナンス Upload用フォーム -->
+		<form-bean name="mobileMaintenanceUploadForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="fileUp" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+
+		<!-- 大学マスタメンテナンス Upload用フォーム -->
+		<form-bean name="schoolMaintenanceUploadForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="fileUp" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+
+		<!-- 連動元出稿情報フォーム -->
+		<form-bean name="rendoSendInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="rendoCd" type="java.lang.String" />
+			<form-property name="keiyakuCd" type="java.lang.String" />
+			<form-property name="keiyakuSubCd" type="java.lang.String" />
+			<form-property name="rendoSendNo" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 連動元出稿更新フォーム -->
+		<form-bean name="rendoSendUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="rendoCd" type="java.lang.String" />
+			<form-property name="keiyakuCd" type="java.lang.String" />
+			<form-property name="keiyakuSubCd" type="java.lang.String" />
+			<form-property name="permitStartDt" type="java.lang.String" />
+			<form-property name="permitEndDt" type="java.lang.String" />
+			<form-property name="procKbn" type="java.lang.String" />
+			<form-property name="rendoSendNo" type="java.lang.String" />
+			<form-property name="note" type="java.lang.String" />
+			<form-property name="repeatFlg" type="java.lang.String" />
+			<form-property name="nowDate" type="java.lang.String" />
+		</form-bean>
+
+	</form-beans>
+
+	<!-- ========== Action Mapping Definitions ============================= -->
+
+	<action-mappings>
+
+		<!-- 沿線・駅メンテナンスIndexページアクション -->
+		<action path="/master/RosenIndex"
+			type="net.chintai.backend.sysadmin.master.action.RosenIndexAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/RosenIndex.jsp" />
+		</action>
+
+		<!-- 沿線・駅検索画面に遷移するアクション -->
+		<action path="/master/RosenSearchPage"
+			type="net.chintai.backend.sysadmin.master.action.RosenSearchPageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/RosenSearch.jsp" />
+		</action>
+
+		<!-- 沿線・駅検索するアクション -->
+		<action path="/master/RosenSearch"
+			type="net.chintai.backend.sysadmin.master.action.RosenSearchAction"
+			name="rosenSearchForm"
+			scope="request"
+			validate="true"
+			input="/master/RosenSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/master/RosenSearch.jsp" />
+		</action>
+
+		<!-- 沿線・駅を名称から検索するアクション -->
+		<action path="/master/RosenNameSearch"
+			type="net.chintai.backend.sysadmin.master.action.RosenNameSearchAction"
+			name="rosenNameSearchForm"
+			scope="request"
+			validate="true"
+			input="/master/RosenSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/master/RosenNameSearch.jsp" />
+		</action>
+
+		<!-- 沿線・駅詳細画面に遷移するアクション -->
+		<action path="/master/RosenInfo"
+			type="net.chintai.backend.sysadmin.master.action.RosenInfoAction"
+			name="rosenInfoSearchForm"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/RosenInfo.jsp" />
+		</action>
+
+		<!-- 沿線・駅の登録／変更／削除画面に遷移するアクション -->
+		<action path="/master/RosenUpdatePage"
+			type="net.chintai.backend.sysadmin.master.action.RosenUpdatePageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/RosenUpdate.jsp" />
+		</action>
+
+		<!-- 沿線・駅 CSVDownLoad アクション-->
+		<action path="/master/RosenEkiCsvDownload"
+			type="net.chintai.backend.sysadmin.master.action.RosenEkiCsvDownloadAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/master/RosenUpdatePage.do" />
+			<forward name="fail" path="/master/RosenUpdatePage.do" />
+		</action>
+
+		<!-- 沿線・駅 CSVUpload アクション-->
+		<action path="/master/RosenUpdateCommit"
+			type="net.chintai.backend.sysadmin.master.action.RosenUpdateCommitAction"
+			name="rosenUpdateCommitForm"
+			scope="request"
+			input="/master/RosenUpdatePage.do">
+			<forward name="success" path="/master/RosenUpdatePage.do" />
+			<forward name="fail" path="/master/RosenUpdatePage.do" />
+		</action>
+
+		<!-- 配布用CSVダウンロードページ表示アクション -->
+		<action path="/master/RosenDistributeCsvDownloadPage"
+			type="net.chintai.backend.sysadmin.master.action.RosenDistributeCsvDownloadPageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/RosenDistributeCsvDownload.jsp"></forward>
+		</action>
+
+		<!-- 沿線・配布用CSVダウンロードアクション-->
+		<action path="/master/EnsenDistributeCsvDownload"
+			type="net.chintai.backend.sysadmin.master.action.RosenDistributeCsvDownloadAction"
+			name="ensenDistributeCsvDownloadForm"
+			scope="request"
+			validate="false">
+			<forward name="fail" path="/master/RosenDistributeCsvDownloadPage.do" />
+		</action>
+
+		<!-- 駅・配布用CSVダウンロードアクション-->
+		<action path="/master/EkiDistributeCsvDownload"
+			type="net.chintai.backend.sysadmin.master.action.RosenEkiDistributeCsvDownloadAction"
+			name="ekiDistributeCsvDownloadForm"
+			scope="request"
+			validate="false">
+			<forward name="fail" path="/master/RosenDistributeCsvDownloadPage.do" />
+		</action>
+
+		<!-- 統一駅登録画面に遷移するアクション -->
+		<action path="/master/NodeUpdatePage"
+			type="net.chintai.backend.sysadmin.master.action.NodeUpdatePageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/NodeUpdate.jsp" />
+		</action>
+
+		<!-- 統一駅登録 CSVUpload アクション-->
+		<action path="/master/NodeUpdateCommit"
+			type="net.chintai.backend.sysadmin.master.action.NodeUpdateCommitAction"
+			name="nodeUpdateCommitForm"
+			scope="request"
+			input="/master/NodeUpdatePage.do">
+			<forward name="success" path="/master/NodeUpdatePage.do" />
+			<forward name="fail" path="/master/NodeUpdatePage.do" />
+		</action>
+
+		<!-- 鉄道会社検索画面に遷移するアクション -->
+		<action path="/master/TetudoGaishaSearchPage"
+			type="net.chintai.backend.sysadmin.master.action.TetudoGaishaSearchPageAction"
+        	name="tetudoGaishaSearchForm"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/TetudoGaishaSearch.jsp" />
+		</action>
+
+		<!-- 鉄道会社検索アクション -->
+		<action path="/master/TetudoGaishaSerach"
+			type="net.chintai.backend.sysadmin.master.action.TetudoGaishaSearchAction"
+			name="tetudoGaishaSearchForm"
+			scope="request"
+			validate="true"
+			input="/master/TetudoGaishaSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/master/TetudoGaishaSearch.jsp" />
+		</action>
+
+		<!-- 鉄道会社検索アクション -->
+		<action path="/master/TetudoGaishaSearchPaging"
+			type="net.chintai.backend.sysadmin.master.action.TetudoGaishaSearchPagingAction"
+        	name="tetudoGaishaSearchPagingForm"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/TetudoGaishaSearch.jsp" />
+		</action>
+
+		<!-- 市区町村Indexページアクション -->
+		<action path="/master/ShikutyosonIndexPage"
+			type="net.chintai.backend.sysadmin.master.action.ShikutyosonIndexPageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/ShikutyosonIndex.jsp" />
+		</action>
+
+		<!-- 市区町村の検索ページアクション -->
+		<action path="/master/ShikutyosonSearchPage"
+			type="net.chintai.backend.sysadmin.master.action.ShikutyosonSearchPageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/ShikutyosonSearch.jsp" />
+		</action>
+
+		<!-- 市区町村の検索(郵便番号から検索)アクション -->
+		<action path="/master/ShikutyosonPostSearch"
+			type="net.chintai.backend.sysadmin.master.action.ShikutyosonSearchByPostAction"
+			name="shikutyosonPostSearchForm"
+			scope="request"
+			validate="true"
+			input="/master/ShikutyosonSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/master/ShikutyosonSearch.jsp" />
+		</action>
+
+		<!-- 市区町村の検索(住所から検索)アクション -->
+		<action path="/master/ShikutyosonAddressSearch"
+			type="net.chintai.backend.sysadmin.master.action.ShikutyosonSearchByAddressAction"
+			name="shikutyosonAddressSearchForm"
+			scope="request"
+			validate="true"
+			input="/master/ShikutyosonSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/master/ShikutyosonSearch.jsp" />
+		</action>
+
+		<!-- 市区町村の登録ページアクション -->
+		<action path="/master/ShikutyosonAddPage"
+			type="net.chintai.backend.sysadmin.master.action.ShikutyosonAddPageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/ShikutyosonAdd.jsp" />
+		</action>
+
+		<!-- 市区町村の登録アクション -->
+		<action path="/master/ShikutyosonAdd"
+			type="net.chintai.backend.sysadmin.master.action.ShikutyosonAddAction"
+			name="shikutyosonAddressUploadForm"
+			scope="request"
+			validate="true"
+			input="/master/ShikutyosonAddPage.do">
+			<forward name="success" path="/master/ShikutyosonAddPage.do" />
+			<forward name="failure" path="/master/ShikutyosonAddPage.do" />
+		</action>
+
+		<!-- 国土地理協会住所アップロードページアクション -->
+		<action path="/master/JgdcShikutyosonAddPage"
+			type="net.chintai.backend.sysadmin.master.action.JgdcShikutyosonAddPageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/JgdcShikutyosonAdd.jsp" />
+		</action>
+
+		<!-- 国土地理協会住所ファイルの登録アクション -->
+		<action path="/master/JgdcShikutyosonAdd"
+			type="net.chintai.backend.sysadmin.master.action.JgdcShikutyosonAddAction"
+			name="jgdcShikutyosonAddressUploadForm"
+			scope="request"
+			validate="true"
+			input="/master/JgdcShikutyosonAddPage.do">
+			<forward name="success" path="/master/JgdcShikutyosonAddPage.do" />
+			<forward name="failure" path="/master/JgdcShikutyosonAddPage.do" />
+		</action>
+
+		<!-- 携帯ゲーム対応機種メンテナンス ページアクション-->
+		<action path="/master/MobileMaintenancePage"
+			type="net.chintai.backend.sysadmin.master.action.MobileMaintenancePageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/MobileMaintenance.jsp" />
+		</action>
+
+		<!-- 携帯ゲーム対応機種メンテナンス CSVDownLoad アクション-->
+		<action path="/master/MobileMaintenanceCsvDownload"
+			type="net.chintai.backend.sysadmin.master.action.MobileMaintenanceCsvDownloadAction"
+			scope="request"
+			validate="false">
+			<forward name="failure" path="/master/MobileMaintenancePage.do" />
+			<forward name="success" path="/master/MobileMaintenancePage.do" />
+		</action>
+
+		<!-- 携帯ゲーム対応機種メンテナンス CSVUpload アクション-->
+		<action path="/master/MobileMaintenanceCsvUpload"
+			type="net.chintai.backend.sysadmin.master.action.MobileMaintenanceCsvUploadAction"
+			name="mobileMaintenanceUploadForm"
+			scope="request"
+			validate="true"
+			input="/master/MobileMaintenancePage.do">
+			<forward name="failure" path="/master/MobileMaintenancePage.do" />
+			<forward name="success" path="/master/MobileMaintenancePage.do" />
+		</action>
+
+		<!-- 大学マスタメンテナンス ページアクション-->
+		<action path="/master/SchoolMaintenancePage"
+			type="net.chintai.backend.sysadmin.master.action.SchoolMaintenancePageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/SchoolMaintenance.jsp" />
+		</action>
+
+		<!-- 大学マスタメンテナンス CSVUpload アクション-->
+		<action path="/master/SchoolMaintenanceCsvUpload"
+			type="net.chintai.backend.sysadmin.master.action.SchoolMaintenanceCsvUploadAction"
+			name="schoolMaintenanceUploadForm"
+			scope="request"
+			validate="true"
+			input="/master/SchoolMaintenancePage.do">
+			<forward name="failure" path="/master/SchoolMaintenancePage.do" />
+			<forward name="success" path="/master/SchoolMaintenancePage.do" />
+		</action>
+
+		<!-- メールマガジン用メールアドレス,
+			 不動産会社メールアドレスダウンロードするページに遷移するアクションン -->
+		<action path="/master/EmailListDownloadPage"
+			type="net.chintai.backend.sysadmin.master.action.EmailListDownloadPageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/EmailListDownload.jsp" />
+		</action>
+
+		<!-- メールマガジン用メールアドレスをダウンロードするアクションン -->
+		<action path="/master/MailMagazineDownload"
+			type="net.chintai.backend.sysadmin.master.action.MailMagazineDownloadAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/master/EmailListDownloadPage.do" />
+			<forward name="fail" path="/master/EmailListDownloadPage.do" />
+		</action>
+
+		<!-- 不動産会社メールアドレスのCSVをダウンロードするアクション -->
+		<action path="/master/ShopMailAddressListDownload"
+			type="net.chintai.backend.sysadmin.master.action.ShopMailAddressListDownloadAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/master/EmailListDownloadPage.do" />
+			<forward name="fail" path="/master/EmailListDownloadPage.do" />
+		</action>
+
+		<!-- 連動元出稿管理一覧ページに遷移するアクション -->
+		<action path="/master/RendoSendList"
+			type="net.chintai.backend.sysadmin.master.action.RendoSendListAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/RendoSendList.jsp" />
+		</action>
+
+		<!-- 連動元出稿管理詳細ページに遷移するアクション -->
+		<action path="/master/RendoSendInfo"
+			type="net.chintai.backend.sysadmin.master.action.RendoSendInfoAction"
+			name="rendoSendInfoForm"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/RendoSendInfo.jsp" />
+		</action>
+
+		<!-- 連動元出稿更新確認ページへ -->
+    	<action path="/master/RendoSendUpdateConfirm"
+			type="net.chintai.backend.sysadmin.master.action.RendoSendUpdateConfirmAction"
+			scope="request"
+			name="rendoSendUpdateForm"
+			validate="true"
+			input="/master/RendoSendUpdatePage.do">
+			<forward name="success" path="/WEB-INF/jsp/master/RendoSendUpdateConfirm.jsp"/>
+			<forward name="fail" path="/master/RendoSendUpdatePage.do"/>
+		</action>
+
+		<!-- 連動元契約削除確認ページへ(validateなし) -->
+    	<action path="/master/RendoSendDeleteConfirm"
+			type="net.chintai.backend.sysadmin.master.action.RendoSendUpdateConfirmAction"
+			scope="request"
+			name="rendoSendUpdateForm"
+			validate="false"
+			input="/master/RendoSendUpdatePage.do">
+			<forward name="success" path="/WEB-INF/jsp/master/RendoSendUpdateConfirm.jsp"/>
+		</action>
+
+		<!-- 連動元出稿編集ページへ -->
+    	<action path="/master/RendoSendUpdatePage"
+			type="net.chintai.backend.sysadmin.master.action.RendoSendUpdatePageAction"
+			scope="request"
+			name="rendoSendUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/master/RendoSendUpdatePage.jsp"/>
+		</action>
+
+		<!-- 連動元出稿更新処理へ -->
+    	<action path="/master/RendoSendUpdateCommit"
+			type="net.chintai.backend.sysadmin.master.action.RendoSendUpdateCommitAction"
+			scope="request"
+			name="rendoSendUpdateForm"
+			validate="true"
+			input="/master/RendoSendUpdateConfirm.do">
+			<forward name="success" path="/master/RendoSendInfo.do"/>
+			<forward name="fail" path="/master/RendoSendDeleteConfirm.do"/>
+		</action>
+	</action-mappings>
+</struts-config>

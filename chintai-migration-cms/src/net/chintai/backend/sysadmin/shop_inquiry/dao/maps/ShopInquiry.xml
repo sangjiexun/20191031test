@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="shop_inquiry">
+
+	<!-- Result Map -->
+	<!-- 問い合せ情報検索リスト -->
+	<resultMap id="inquiryRecentListMap"
+			class="net.chintai.backend.sysadmin.shop_inquiry.domain.InquiryRecent">
+		<result property="shopCd" column="SHOPCD" />
+		<result property="company" column="COMPANY" />
+		<result property="bumon" column="BUMON" />
+		<result property="insDt" column="INS_DT" />
+		<result property="inqId" column="INQID" />
+		<result property="inqFlg" column="INQ_FLG" />
+		<result property="sysFlg" column="SYS_FLG" />
+		<result property="carrierType" column="CARRIER_TYPE" />
+		<result property="refFlg" column="REF_FLG" />
+		<result property="inquiryStatus" column="INQUIRY_STATUS" />
+		<result property="updDt" column="UPD_DT" />
+
+		<result property="refFlgName" column="REF_FLG_NAME" />
+		<result property="inquiryStatusName" column="INQUIRY_STATUS_NAME" />
+		<result property="carrierTypeName" column="CARRIER_TYPE_NAME" />
+		<result property="inqFlgName" column="INQ_FLG_NAME" />
+		<result property="sysFlgName" column="SYS_FLG_NAME" />
+		<result property="siteTypeName" column="SITE_TYPE_NAME" />
+	</resultMap>
+
+	<resultMap id="inquiryRecentForCsvListMap"
+			class="net.chintai.backend.sysadmin.shop_inquiry.domain.InquiryRecent">
+
+		<result property="shopCd" column="SHOPCD" />
+		<result property="company" column="COMPANY" />
+		<result property="bumon" column="BUMON" />
+		<result property="insDt" column="INS_DT" />
+		<result property="inqId" column="INQID" />
+		<result property="inqFlg" column="INQ_FLG" />
+		<result property="sysFlg" column="SYS_FLG" />
+		<result property="carrierType" column="CARRIER_TYPE" />
+		<result property="inquiryStatus" column="INQUIRY_STATUS" />
+		<result property="upInquiry" column="UP_INQUIRY" />
+		<result property="bkInfo" column="BK_INFO" />
+
+		<result property="carrierTypeName" column="CARRIER_TYPE_NAME" />
+		<result property="inqFlgName" column="INQ_FLG_NAME" />
+		<result property="sysFlgName" column="SYS_FLG_NAME" />
+		<result property="siteTypeName" column="SITE_TYPE_NAME" />
+	</resultMap>
+
+
+
+	<!-- 問い合せ履歴詳細 -->
+	<resultMap id="inquiryRecentInfoMap"
+			class="net.chintai.backend.sysadmin.shop_inquiry.domain.InquiryRecent">
+		<result property="shopCd" column="SHOPCD" />
+		<result property="password" column="PASSWORD" />
+		<result property="company" column="COMPANY" />
+		<result property="bumon" column="BUMON" />
+		<result property="address1" column="ADDRESS_1" />
+		<result property="address2" column="ADDRESS_2" />
+		<result property="tel" column="TEL" />
+		<result property="fax" column="FAX" />
+		<result property="email1" column="EMAIL_1" />
+		<result property="email2" column="EMAIL_2" />
+		<result property="email3" column="EMAIL_3" />
+		<result property="email4" column="EMAIL_4" />
+		<result property="email5" column="EMAIL_5" />
+		<result property="emailUseKbn1" column="EMAIL_USE_KBN_1" />
+		<result property="emailUseKbn2" column="EMAIL_USE_KBN_2" />
+		<result property="emailUseKbn3" column="EMAIL_USE_KBN_3" />
+		<result property="emailUseKbn4" column="EMAIL_USE_KBN_4" />
+		<result property="emailUseKbn5" column="EMAIL_USE_KBN_5" />
+		<result property="insDt" column="INS_DT" />
+		<result property="inqId" column="INQID" />
+		<result property="inqFlg" column="INQ_FLG" />
+		<result property="sysFlg" column="SYS_FLG" />
+		<result property="carrierType" column="CARRIER_TYPE" />
+		<result property="refFlg" column="REF_FLG" />
+		<result property="inquiryStatus" column="INQUIRY_STATUS" />
+		<result property="updDt" column="UPD_DT" />
+		<result property="sendCompanyNm" column="SEND_COMPANYNM" />
+		<result property="sendOfficeNm" column="SEND_OFFICENM" />
+		<result property="sendEmail" column="SEND_EMAIL" />
+		<result property="upName" column="UP_NAME" />
+		<result property="upNameKana" column="UP_NAMEKANA" />
+		<result property="upSex" column="UP_SEX" />
+		<result property="upBirthday" column="UP_BIRTHDAY" />
+		<result property="upResTime" column="UP_RES_TIME" />
+		<result property="upResEmail" column="UP_RES_EMAIL" />
+		<result property="upResTel" column="UP_RES_TEL" />
+		<result property="upResFax" column="UP_RES_FAX" />
+		<result property="upResOther" column="UP_RES_OTHER" />
+		<result property="upInquiry" column="UP_INQUIRY" />
+		<result property="ubMoveTime" column="UB_MOVE_TIME" />
+		<result property="ubMoveReason" column="UB_MOVE_REASON" />
+		<result property="ubHopeArea" column="UB_HOPE_AREA" />
+		<result property="ubHopeRoom" column="UB_HOPE_ROOM" />
+		<result property="ubHopeRentDown" column="UB_HOPE_RENT_DOWN" />
+		<result property="ubHopeRentUp" column="UB_HOPE_RENT_UP" />
+		<result property="ubNowRent" column="UB_NOW_RENT" />
+		<result property="ubHopeBody" column="UB_HOPE_BODY" />
+		<result property="bkInfo" column="BK_INFO" />
+		<result property="upResFlgEmail" column="UP_RES_FLG_EMAIL" />
+		<result property="upResFlgTel" column="UP_RES_FLG_TEL" />
+		<result property="upResFlgFax" column="UP_RES_FLG_FAX" />
+		<result property="upResFlgOther" column="UP_RES_FLG_OTHER" />
+
+		<result property="refFlgName" column="REF_FLG_NAME" />
+		<result property="inquiryStatusName" column="INQUIRY_STATUS_NAME" />
+		<result property="carrierTypeName" column="CARRIER_TYPE_NAME" />
+		<result property="inqFlgName" column="INQ_FLG_NAME" />
+		<result property="sysFlgName" column="SYS_FLG_NAME" />
+		<result property="siteTypeName" column="SITE_TYPE_NAME" />
+	</resultMap>
+
+	<!-- 問い合せ履歴詳細 -->
+	<resultMap id="inquiryLogOperationListMap"
+			class="net.chintai.backend.sysadmin.shop_inquiry.domain.InquiryLogOperation">
+		<result property="shopCd" column="SHOPCD" />
+		<result property="company" column="COMPANY" />
+		<result property="bumon" column="BUMON" />
+		<result property="sessionStatus" column="SESSION_STATUS" />
+		<result property="inqId" column="INQID" />
+		<result property="updDt" column="UPD_DT" />
+	</resultMap>
+
+	<!-- 問い合せ情報検索WHERE条件sql -->
+	<sql id="inquiryRecentSearchWhere">
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="shopCd">
+				SI.SHOPCD LIKE'%'||#shopCd#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="companyBumonName">
+				(SR.COMPANY LIKE'%'||#companyBumonName#||'%' or SR.BUMON LIKE'%'||#companyBumonName#||'%')
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="inqId">
+			 	SI.INQID LIKE'%'||#inqId#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="inqFlg">
+				SI.INQ_FLG = #inqFlg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="sysFlg">
+				SI.SYS_FLG = #sysFlg#
+				<isEqual property="sysFlg" compareValue="2">
+					<isNotEmpty prepend="AND" property="carrierType" >
+						<isNotEqual property="carrierType" compareValue="9">
+							SI.CARRIER_TYPE = #carrierType#
+						</isNotEqual>
+						<isEqual property="carrierType" compareValue="9">
+							SI.CARRIER_TYPE IS NULL
+						</isEqual>
+					</isNotEmpty>
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="refFlg">
+				SI.REF_FLG = #refFlg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="inquiryStatus">
+				SI.INQUIRY_STATUS = #inquiryStatus#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="insDtFrom">
+			<![CDATA[
+				to_char(SI.INS_DT, 'YYYYMMDDHH24') >= #insDtFrom#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="insDtTo">
+			<![CDATA[
+				to_char(SI.INS_DT, 'YYYYMMDDHH24') <= #insDtTo#
+			]]>
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="siteType">
+				SI.SITE_TYPE = #siteType#
+			</isNotEmpty>
+
+			<isNotEmpty property="keywordMode">
+				<isEqual prepend="AND" compareValue="0" property="keywordMode">
+				<iterate property="keywordList" open="(" close=")" conjunction="AND">
+					(PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_NAME) LIKE '%' || #keywordList[]# || '%' OR
+					PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_NAMEKANA) LIKE '%' || #keywordList[]# || '%' OR
+					PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_RES_EMAIL) LIKE '%' || #keywordList[]# || '%')
+				</iterate>
+				</isEqual>
+				<isEqual prepend="AND" compareValue="1" property="keywordMode">
+				<iterate property="keywordList" open="(" close=")" conjunction="OR">
+					(PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_NAME) LIKE '%' || #keywordList[]# || '%' OR
+					PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_NAMEKANA) LIKE '%' || #keywordList[]# || '%' OR
+					PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_RES_EMAIL) LIKE '%' || #keywordList[]# || '%')
+				</iterate>
+			</isEqual>
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<!-- 問い合せ情報検索WHERE条件sql -->
+	<sql id="inquiryLogOperationWhere">
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="shopCd">
+				SH.SHOPCD LIKE'%'||#shopCd#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="companyBumonName">
+				(SR.COMPANY LIKE'%'||#companyBumonName#||'%' or SR.BUMON LIKE'%'||#companyBumonName#||'%')
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="sessionStatus">
+				SH.SESSION_STATUS = #sessionStatus#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="inqId">
+				SH.INQID LIKE'%'||#inqId#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="insDtFrom">
+			<![CDATA[
+				SH.UPD_DT >= TO_DATE(#insDtFrom#, 'YYYYMMDDHH24')
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="insDtTo">
+			<![CDATA[
+				SH.UPD_DT <= TO_DATE(#insDtTo#, 'YYYYMMDDHH24')
+			]]>
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+	<!-- Statements -->
+
+	<sql id="inquiryRecentSearchFrom">
+		FROM
+			SHOP_KANRI SK
+		INNER JOIN
+			SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+		INNER JOIN
+		 	SHOP_INQUIRY SI
+		ON SK.SHOPCD = SI.SHOPCD
+	</sql>
+
+		<!-- 問い合せ情報検索(CSV出力) -->
+		<select id="inquiryRecentSearchForCsv"
+		parameterClass="net.chintai.backend.sysadmin.shop_inquiry.dao.InquiryRecentSearchParamBean"
+		resultMap="inquiryRecentForCsvListMap">
+		SELECT
+			SI.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SI.INQID,
+			to_char(SI.INS_DT, 'YYYY/MM/DD HH24:MI:SS') as INS_DT,
+			SI.INQ_FLG,
+			SI.SYS_FLG,
+			null AS CARRIER_TYPE,
+			SI.INQUIRY_STATUS,
+			SI.UP_INQUIRY,
+			null AS SCHOOL_ID,
+			SI.BK_INFO,
+			null AS CARRIER_TYPE_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'INQ_FLG'        AND INQ_KBN = SI.INQ_FLG) AS INQ_FLG_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'SYS_FLG'        AND INQ_KBN = SI.SYS_FLG) AS SYS_FLG_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'SITE_TYPE'      AND INQ_KBN = SI.SITE_TYPE) AS SITE_TYPE_NAME
+		<include refid="inquiryRecentSearchFrom"/>
+		<include refid="inquiryRecentSearchWhere"/>
+		<dynamic>
+			ORDER BY
+			<isEqual property="orderByItem" compareValue="0">
+				SI.INS_DT
+			</isEqual>
+			<isEqual property="orderByItem" compareValue="1">
+				SI.UPD_DT
+			</isEqual>
+			<isEqual property="orderByItem" compareValue="2">
+				SI.REF_FLG
+			</isEqual>
+			<isEqual property="orderByItem" compareValue="3">
+				SI.INQUIRY_STATUS
+			</isEqual>
+			<isEqual property="orderBy" compareValue="asc">
+				ASC
+			</isEqual>
+			<isEqual property="orderBy" compareValue="desc">
+				DESC
+			</isEqual>
+		</dynamic>
+	</select>
+
+
+
+	<!-- 問い合せ情報検索 -->
+		<select id="inquiryRecentSearch"
+		parameterClass="net.chintai.backend.sysadmin.shop_inquiry.dao.InquiryRecentSearchParamBean"
+		resultMap="inquiryRecentListMap">
+		SELECT
+			SI.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			to_char(SI.INS_DT, 'YYYY/MM/DD HH24:MI:SS') as INS_DT,
+			SI.INQID,
+			SI.INQ_FLG,
+			SI.SYS_FLG,
+			null AS CARRIER_TYPE,
+			SI.REF_FLG,
+			SI.INQUIRY_STATUS,
+			to_char(SI.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') as UPD_DT,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'REF_FLG'        AND INQ_KBN = SI.REF_FLG) AS REF_FLG_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'INQUIRY_STATUS' AND INQ_KBN = SI.INQUIRY_STATUS) AS INQUIRY_STATUS_NAME,
+			null AS CARRIER_TYPE_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'INQ_FLG'        AND INQ_KBN = SI.INQ_FLG) AS INQ_FLG_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'SYS_FLG'        AND INQ_KBN = SI.SYS_FLG) AS SYS_FLG_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'SITE_TYPE'      AND INQ_KBN = SI.SITE_TYPE) AS SITE_TYPE_NAME
+		<include refid="inquiryRecentSearchFrom"/>
+		<include refid="inquiryRecentSearchWhere"/>
+		<dynamic>
+			ORDER BY
+			<isEqual property="orderByItem" compareValue="0">
+				SI.INS_DT
+			</isEqual>
+			<isEqual property="orderByItem" compareValue="1">
+				SI.UPD_DT
+			</isEqual>
+			<isEqual property="orderByItem" compareValue="2">
+				SI.REF_FLG
+			</isEqual>
+			<isEqual property="orderByItem" compareValue="3">
+				SI.INQUIRY_STATUS
+			</isEqual>
+			<isEqual property="orderBy" compareValue="asc">
+				ASC
+			</isEqual>
+			<isEqual property="orderBy" compareValue="desc">
+				DESC
+			</isEqual>
+		</dynamic>
+	</select>
+
+	<!-- 問い合せ情報検索総件数 -->
+	<select id="inquiryRecentListCount"
+					parameterClass="net.chintai.backend.sysadmin.shop_inquiry.dao.InquiryRecentSearchParamBean"
+					resultClass="int">
+		SELECT
+			COUNT(SI.SHOPCD)
+		FROM
+			SHOP_INQUIRY SI INNER JOIN
+				(SHOP_KANRI SK INNER JOIN
+					SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST)
+					ON SK.SHOPCD = SI.SHOPCD
+
+		<include refid="inquiryRecentSearchWhere"/>
+	</select>
+
+	<!-- 問い合せ詳細情報 -->
+	<select id="inquiryRecentInfo"
+		parameterClass="net.chintai.backend.sysadmin.shop_inquiry.dao.InquiryRecentInfoParamBean"
+		resultMap="inquiryRecentInfoMap">
+		SELECT
+			SK.SHOPCD,
+			SR.PASSWORD_ENC AS PASSWORD,
+			SR.COMPANY,
+			SR.BUMON,
+			SR.ADDRESS_1,
+			SR.ADDRESS_2,
+			SR.TEL,
+			SR.FAX,
+			SR.EMAIL_1,
+			SR.EMAIL_2,
+			SR.EMAIL_3,
+			SR.EMAIL_4,
+			SR.EMAIL_5,
+			EMAIL_USE_KBN_1,
+			EMAIL_USE_KBN_2,
+			EMAIL_USE_KBN_3,
+			EMAIL_USE_KBN_4,
+			EMAIL_USE_KBN_5,
+			to_char(SI.INS_DT, 'YYYY/MM/DD HH24:MI:SS') as INS_DT,
+			SI.INQID,
+			SI.INQ_FLG,
+			SI.SYS_FLG,
+			null AS CARRIER_TYPE,
+			SI.REF_FLG,
+			SI.INQUIRY_STATUS,
+			to_char(SI.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') as UPD_DT,
+			SI.SEND_COMPANYNM,
+			SI.SEND_OFFICENM,
+			SI.SEND_EMAIL,
+			CASE
+				WHEN SI.UP_NAME IS NOT NULL THEN PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_NAME)
+				ELSE SI.UP_NAME
+			END UP_NAME,
+			CASE
+				WHEN SI.UP_NAMEKANA IS NOT NULL THEN PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_NAMEKANA)
+				ELSE SI.UP_NAMEKANA
+			END UP_NAMEKANA,
+			SIS.UP_SEX,
+			CASE
+				WHEN SIS.UP_BIRTHDAY IS NOT NULL THEN PKG_CRYPTO.GET_DECRYPT_DATA(SIS.UP_BIRTHDAY)
+				ELSE SIS.UP_BIRTHDAY
+			END UP_BIRTHDAY,
+			SIS.UP_RES_TIME,
+			CASE
+				WHEN UP_RES_EMAIL IS NOT NULL THEN PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_RES_EMAIL)
+				ELSE SI.UP_RES_EMAIL
+			END UP_RES_EMAIL,
+			CASE
+				WHEN UP_RES_TEL IS NOT NULL THEN PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_RES_TEL)
+				ELSE SI.UP_RES_TEL
+			END UP_RES_TEL,
+			CASE
+				WHEN UP_RES_FAX IS NOT NULL THEN PKG_CRYPTO.GET_DECRYPT_DATA(SI.UP_RES_FAX)
+				ELSE SI.UP_RES_FAX
+			END UP_RES_FAX,
+			CASE
+				WHEN SIS.UP_RES_OTHER IS NOT NULL THEN PKG_CRYPTO.GET_DECRYPT_DATA(SIS.UP_RES_OTHER)
+				ELSE SIS.UP_RES_OTHER
+			END UP_RES_OTHER,
+			SI.UP_INQUIRY,
+			SIS.UB_MOVE_TIME,
+			SIS.UB_MOVE_REASON,
+			SIS.UB_HOPE_AREA,
+			SIS.UB_HOPE_ROOM,
+			SIS.UB_HOPE_RENT_DOWN,
+			SIS.UB_HOPE_RENT_UP,
+			SIS.UB_NOW_RENT,
+			SIS.UB_HOPE_BODY,
+			SI.BK_INFO,
+			SI.UP_RES_FLG_EMAIL,
+			SI.UP_RES_FLG_TEL,
+			SI.UP_RES_FLG_FAX,
+			SI.UP_RES_FLG_OTHER,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'REF_FLG'        AND INQ_KBN = SI.REF_FLG) AS REF_FLG_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'INQUIRY_STATUS' AND INQ_KBN = SI.INQUIRY_STATUS) AS INQUIRY_STATUS_NAME,
+			null AS CARRIER_TYPE_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'INQ_FLG'        AND INQ_KBN = SI.INQ_FLG) AS INQ_FLG_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'SYS_FLG'        AND INQ_KBN = SI.SYS_FLG) AS SYS_FLG_NAME,
+			(SELECT INQ_KBN_NAME from MST_INQUIRY_KBN MIK WHERE MIK.INQ_KBN_COL_NAME = 'SITE_TYPE'      AND INQ_KBN = SI.SITE_TYPE) AS SITE_TYPE_NAME
+		FROM
+			SHOP_INQUIRY SI INNER JOIN
+				(SHOP_KANRI SK INNER JOIN
+					SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST)
+					ON SK.SHOPCD = SI.SHOPCD
+			LEFT JOIN SHOP_INQUIRY_SUB SIS
+			ON SIS.SHOPCD = SI.SHOPCD AND
+			   SIS.INQID = SI.INQID
+		WHERE
+			SI.INQID = #inqId#
+	</select>
+
+	<!-- システム操作履歴検索総件数 -->
+	<select id="inquiryLogOperationListCount"
+					parameterClass="net.chintai.backend.sysadmin.shop_inquiry.dao.InquiryLogOperationSearchParamBean"
+					resultClass="int">
+		SELECT
+	    COUNT(SH.SHOPCD)
+		FROM
+			SHOP_KANRI SK
+				INNER JOIN SHOP_SESSION_HISTORY SH
+					ON SK.SHOPCD = SH.SHOPCD
+				INNER JOIN SHOP_RIREKI SR
+					ON SK.PK_SHOP_RIREKI_LAST =SR.PK_SHOP_RIREKI
+		<include refid="inquiryLogOperationWhere"/>
+	</select>
+
+	<!-- システム操作履歴検索 -->
+	<select id="inquiryLogOperationSearch"
+		parameterClass="net.chintai.backend.sysadmin.shop_inquiry.dao.InquiryLogOperationSearchParamBean"
+		resultMap="inquiryLogOperationListMap">
+		SELECT
+			SH.SHOPCD,
+			SR.COMPANY,
+			SR.BUMON,
+			SH.SESSION_STATUS,
+			SH.INQID,
+			to_char(SH.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') as UPD_DT
+		FROM
+			SHOP_KANRI SK
+				INNER JOIN SHOP_SESSION_HISTORY SH
+					ON SK.SHOPCD = SH.SHOPCD
+				INNER JOIN SHOP_RIREKI SR
+					ON SK.PK_SHOP_RIREKI_LAST =SR.PK_SHOP_RIREKI
+		<include refid="inquiryLogOperationWhere"/>
+	</select>
+</sqlMap>

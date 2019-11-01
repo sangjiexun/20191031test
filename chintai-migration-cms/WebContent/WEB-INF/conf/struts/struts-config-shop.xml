@@ -1,0 +1,1224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+    PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions ================================== -->
+  <form-beans>
+
+    <!-- 店舗情報から検索のフォーム -->
+    <form-bean name="shopSearchByShopInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="shopEmail" type="java.lang.String"/>
+      <form-property name="licTrustName" type="java.lang.String"/>
+      <form-property name="shopTelFax" type="java.lang.String"/>
+      <form-property name="companyBumonName" type="java.lang.String"/>
+      <form-property name="andOrmode" type="java.lang.String"/>
+      <form-property name="noBukkenShop" type="java.lang.String"/>
+      <form-property name="updateFrom" type="java.lang.String"/>
+      <form-property name="updDtFromYear" type="java.lang.String"/>
+      <form-property name="updDtFromMonth" type="java.lang.String"/>
+      <form-property name="updDtFromDay" type="java.lang.String"/>
+      <form-property name="updDtFromTime" type="java.lang.String"/>
+      <form-property name="updateTo" type="java.lang.String"/>
+      <form-property name="updDtToYear" type="java.lang.String"/>
+      <form-property name="updDtToMonth" type="java.lang.String"/>
+      <form-property name="updDtToDay" type="java.lang.String"/>
+      <form-property name="updDtToTime" type="java.lang.String"/>
+      <form-property name="certifyFlg" type="java.lang.String"/>
+      <form-property name="shopStatus" type="java.lang.String"/>
+      <form-property name="ctFlg" type="java.lang.String"/>
+      <form-property name="ablFlg" type="java.lang.String"/>
+      <form-property name="clientSystemType" type="java.lang.String"/>
+      <form-property name="aspFlg" type="java.lang.String"/>
+      <form-property name="adparkFlg" type="java.lang.String"/>
+      <form-property name="sortKey" type="java.lang.String"/>
+      <form-property name="orderBy" type="java.lang.String"/>
+      <form-property name="displayNum" type="java.lang.String"/>
+      <form-property name="outputMode" type="java.lang.String"/>
+      <form-property name="sendDtFrom" type="java.lang.String"/>
+      <form-property name="sendDtTo" type="java.lang.String"/>
+      <form-property name="offSet" type="java.lang.Integer" />
+    </form-bean>
+
+    <!-- 地域・沿線から検索のフォーム -->
+    <form-bean name="shopSearchByAreaForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="area" type="java.lang.String"/>
+      <form-property name="kbnAreaRosen" type="java.lang.String"/>
+      <form-property name="pref" type="java.lang.String"/>
+      <form-property name="city" type="java.lang.String"/>
+      <form-property name="ensenType" type="java.lang.String"/>
+      <form-property name="ensen" type="java.lang.String"/>
+      <form-property name="eki" type="java.lang.String"/>
+      <form-property name="sortKey" type="java.lang.String"/>
+      <form-property name="orderBy" type="java.lang.String"/>
+      <form-property name="displayNum" type="java.lang.String"/>
+      <form-property name="outputMode" type="java.lang.String"/>
+      <form-property name="offSet" type="java.lang.Integer" />
+    </form-bean>
+
+    <!-- 店舗詳細フォーム -->
+    <form-bean name="shopInfoSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 店舗詳細フォーム -->
+    <form-bean name="shopDetailInfoSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 店舗基本情報更新フォーム 2009/05/22 李昊燮 追加 -->
+    <form-bean name="ShopBasicInfoUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"                type="java.lang.String"/>
+      <form-property name="company"               type="java.lang.String"/>
+      <form-property name="bumon"                 type="java.lang.String"/>
+      <form-property name="password"              type="java.lang.String"/>
+      <form-property name="dantai"                type="java.lang.String"/>
+      <form-property name="licTrust"              type="java.lang.String"/>
+      <form-property name="groupName"             type="java.lang.String"/>
+      <form-property name="zipCd"                 type="java.lang.String"/>
+      <form-property name="address1"              type="java.lang.String"/>
+      <form-property name="address2"              type="java.lang.String"/>
+      <form-property name="tel"                   type="java.lang.String"/>
+
+      <!-- 2013/07/26 店舗電話番号変更対応２次リリース分 ３項目追加 -->
+      <form-property name="shopTelFree"           type="java.lang.String"/>
+      <form-property name="shopTelKbn"            type="java.lang.String"/>
+      <form-property name="shopTelMagazine"       type="java.lang.String"/>
+      <!-- 2013/7/26 end -->
+
+      <form-property name="fax"                   type="java.lang.String"/>
+
+      <form-property name="areaCd"                type="java.lang.String"/>
+      <form-property name="areaName"              type="java.lang.String"/>
+      <form-property name="prefCd"                type="java.lang.String"/>
+      <form-property name="prefName"              type="java.lang.String"/>
+      <form-property name="cityCd"                type="java.lang.String"/>
+      <form-property name="cityName"              type="java.lang.String"/>
+
+      <form-property name="ensenAreaCd"           type="java.lang.String"/>
+      <form-property name="ensenType"             type="java.lang.String"/>
+      <form-property name="ensenCd"               type="java.lang.String"/>
+      <form-property name="ekiCd"                 type="java.lang.String"/>
+
+      <form-property name="licNum"                type="java.lang.String"/>
+      <form-property name="licEntry"              type="java.lang.String"/>
+      <form-property name="licValid"              type="java.lang.String"/>
+      <form-property name="licChief"              type="java.lang.String"/>
+      <form-property name="tantou"                type="java.lang.String"/>
+      <form-property name="hpName"                type="java.lang.String"/>
+      <form-property name="hpUrl"                 type="java.lang.String"/>
+      <form-property name="email"                 type="java.lang.String"/>
+
+      <form-property name="fmKbn"                 type="java.lang.String"/>
+
+      <form-property name="businessHours"         type="java.lang.String"/>
+      <form-property name="businessHoursCustom"   type="java.lang.String"/>
+      <form-property name="businessHoursType"     type="java.lang.String"/>
+      <form-property name="fromHour"              type="java.lang.String"/>
+      <form-property name="fromMin"               type="java.lang.String"/>
+      <form-property name="toHour"                type="java.lang.String"/>
+      <form-property name="toMin"                 type="java.lang.String"/>
+      <form-property name="fromTime"              type="java.lang.String"/>
+      <form-property name="toTime"                type="java.lang.String"/>
+
+      <form-property name="holidayType"           type="java.lang.String"/>
+      <form-property name="holidayOption"         type="java.lang.String"/>
+      <form-property name="holidayCustom"         type="java.lang.String"/>
+
+      <form-property name="busyComment"           type="java.lang.String"/>
+      <form-property name="updDt"                 type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 登録状況更新ページ用フォーム -->
+    <form-bean name="shopRegistrationStautsUpdatePageForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 登録状況更新の戻る用フォーム -->
+    <form-bean name="shopRegistrationStautsUpdatePageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 登録状況更新確認ページ用フォーム -->
+    <form-bean name="shopRegistrationStautsUpdateConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="torihikisakiCd" type="java.lang.String"/>
+      <form-property name="torihikisakiName" type="java.lang.String"/>
+      <form-property name="torihikisakiSeq" type="java.lang.String"/>
+      <form-property name="certifyFlg" type="java.lang.String"/>
+      <form-property name="shopStatus" type="java.lang.String"/>
+      <form-property name="ctFlg" type="java.lang.String"/>
+      <form-property name="ablFlg" type="java.lang.String"/>
+      <form-property name="clientSystemType" type="java.lang.String"/>
+      <form-property name="shopSiteRole" type="java.lang.String"/>
+      <form-property name="adminNote" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="bumonKana" type="java.lang.String"/>
+      <!-- form-property name="shopIconDelFlg" type="java.lang.String"/ -->
+      <!-- 2009/03/23 李昊燮 「地図上の店舗アイコン表示状態」コメント処理 -->
+    </form-bean>
+
+    <!-- 登録状況更新確認の戻る用フォーム -->
+    <form-bean name="shopRegistrationStautsUpdateConfirmBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="torihikisakiCd" type="java.lang.String"/>
+      <form-property name="torihikisakiName" type="java.lang.String"/>
+      <form-property name="torihikisakiSeq" type="java.lang.String"/>
+      <form-property name="certifyFlg" type="java.lang.String"/>
+      <form-property name="shopStatus" type="java.lang.String"/>
+      <form-property name="ctFlg" type="java.lang.String"/>
+      <form-property name="ablFlg" type="java.lang.String"/>
+      <form-property name="clientSystemType" type="java.lang.String"/>
+      <form-property name="shopSiteRole" type="java.lang.String"/>
+      <form-property name="adminNote" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="bumonKana" type="java.lang.String"/>
+      <!-- form-property name="shopIconDelFlg" type="java.lang.String"/ -->
+      <!-- 2009/03/23 李昊燮 「地図上の店舗アイコン表示状態」コメント処理 -->
+    </form-bean>
+
+    <!-- 登録状況更新完了用フォーム -->
+    <form-bean name="shopRegistrationStautsUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="torihikisakiCd" type="java.lang.String"/>
+      <form-property name="torihikisakiName" type="java.lang.String"/>
+      <form-property name="torihikisakiSeq" type="java.lang.String"/>
+      <form-property name="certifyFlg" type="java.lang.String"/>
+      <form-property name="shopStatus" type="java.lang.String"/>
+      <form-property name="ctFlg" type="java.lang.String"/>
+      <form-property name="ablFlg" type="java.lang.String"/>
+      <form-property name="shopSiteRole" type="java.lang.String"/>
+      <form-property name="adminNote" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="bumonKana" type="java.lang.String"/>
+      <!-- form-property name="shopIconDelFlg" type="java.lang.String"/ -->
+      <!-- 2009/03/23 李昊燮 「地図上の店舗アイコン表示状態」コメント処理 -->
+    </form-bean>
+
+    <!-- 契約明細（数量なし）画面に遷移フォーム -->
+    <form-bean name="ContractNormalUpdatePageForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="keiyakuCd" type="java.lang.String"/>
+      <form-property name="keiyakuSubCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 契約明細（数量なし）確認フォーム -->
+    <form-bean name="ContractNormalUpdateConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="keiyakuName" type="java.lang.String"/>
+      <form-property name="keiyakuComment" type="java.lang.String"/>
+      <form-property name="keiyakuFlag" type="java.lang.String"/>
+      <form-property name="keiyakuCd" type="java.lang.String"/>
+      <form-property name="keiyakuSubCd" type="java.lang.String"/>
+      <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+    </form-bean>
+
+    <!--  契約明細（数量なし）画面に戻るフォーム -->
+    <form-bean name="ContractNormalUpdatePageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="keiyakuName" type="java.lang.String"/>
+      <form-property name="keiyakuComment" type="java.lang.String"/>
+      <form-property name="keiyakuFlag" type="java.lang.String"/>
+      <form-property name="keiyakuCd" type="java.lang.String"/>
+      <form-property name="keiyakuSubCd" type="java.lang.String"/>
+      <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 契約明細（数量なし）画面否完了フォーム -->
+    <form-bean name="ContractNormalUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="keiyakuName" type="java.lang.String"/>
+      <form-property name="keiyakuComment" type="java.lang.String"/>
+      <form-property name="keiyakuFlag" type="java.lang.String"/>
+      <form-property name="keiyakuCd" type="java.lang.String"/>
+      <form-property name="keiyakuSubCd" type="java.lang.String"/>
+      <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 店舗画像更新フォーム -->
+    <form-bean name="shopImageUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="shopMapPctFlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto1FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto2FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto3FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto4FlgOrg" type="java.lang.String"/>
+
+      <form-property name="shopMapPctComment" type="java.lang.String"/>
+      <form-property name="shopPhoto1Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto2Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto3Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto4Comment" type="java.lang.String"/>
+
+      <form-property name="editedMapPctComment" type="java.lang.String"/>
+      <form-property name="editedPhoto1Comment" type="java.lang.String"/>
+      <form-property name="editedPhoto2Comment" type="java.lang.String"/>
+      <form-property name="editedPhoto3Comment" type="java.lang.String"/>
+      <form-property name="editedPhoto4Comment" type="java.lang.String"/>
+
+      <form-property name="shopMapPctFilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto1FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto2FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto3FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto4FilePath" type="java.lang.String"/>
+
+      <form-property name="shopMapPctFileLogicalPath" type="java.lang.String"/>
+      <form-property name="shopPhoto1FileLogicalPath" type="java.lang.String"/>
+      <form-property name="shopPhoto2FileLogicalPath" type="java.lang.String"/>
+      <form-property name="shopPhoto3FileLogicalPath" type="java.lang.String"/>
+      <form-property name="shopPhoto4FileLogicalPath" type="java.lang.String"/>
+
+      <form-property name="shopMapPctFile" type="org.apache.struts.upload.FormFile"/>
+      <form-property name="shopPhoto1File" type="org.apache.struts.upload.FormFile"/>
+      <form-property name="shopPhoto2File" type="org.apache.struts.upload.FormFile"/>
+      <form-property name="shopPhoto3File" type="org.apache.struts.upload.FormFile"/>
+      <form-property name="shopPhoto4File" type="org.apache.struts.upload.FormFile"/>
+
+      <form-property name="updDt" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 店舗画像削除画面を表示するフォーム -->
+    <form-bean name="shopImageDeleteForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 店舗画像削除画面の店舗画像更新画面に戻るフォーム
+    <form-bean name="shopImageDeleteBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+     2009/08/19 戻るボタンのアクションを削除し、戻るボタン押下時の実行されるアクションを店舗詳細アクションに修正 -->
+
+    <!-- 店舗画像削除確認画面を表示するフォーム -->
+    <form-bean name="shopImageDeleteConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="shopMapPctFileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto1FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto2FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopMapPctFlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto1FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto2FlgOrg" type="java.lang.String"/>
+      <form-property name="shopMapPctFilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto1FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto2FilePath" type="java.lang.String"/>
+      <!-- 2009/06 李昊燮追加開始 -->
+      <form-property name="shopPhoto3FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto4FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto3FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto4FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto3FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto4FilePath" type="java.lang.String"/>
+      <form-property name="shopMapPctComment" type="java.lang.String"/>
+      <form-property name="shopPhoto1Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto2Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto3Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto4Comment" type="java.lang.String"/>
+      <!-- 2009/06 李昊燮追加終了 -->
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="updId" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 店舗画像削除確認画面の店舗画像削除画面に戻るフォーム -->
+    <form-bean name="shopImageDeleteConfirmBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <!-- 2009/06 李昊燮追加開始 -->
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="shopMapPctFileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto1FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto2FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopMapPctFlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto1FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto2FlgOrg" type="java.lang.String"/>
+      <form-property name="shopMapPctFilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto1FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto2FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto3FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto4FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto3FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto4FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto3FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto4FilePath" type="java.lang.String"/>
+      <form-property name="shopMapPctComment" type="java.lang.String"/>
+      <form-property name="shopPhoto1Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto2Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto3Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto4Comment" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="updId" type="java.lang.String"/>
+      <!-- 2009/06 李昊燮追加終了 -->
+    </form-bean>
+
+    <!-- 店舗画像削除完了して、店舗詳細画面を表示するフォーム -->
+    <form-bean name="shopImageDeleteCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="shopMapPctFileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto1FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto2FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopMapPctFlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto1FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto2FlgOrg" type="java.lang.String"/>
+      <form-property name="shopMapPctFilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto1FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto2FilePath" type="java.lang.String"/>
+      <!-- 2009/06 李昊燮追加開始 -->
+      <form-property name="shopPhoto3FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto4FileDeleteCheck" type="java.lang.String"/>
+      <form-property name="shopPhoto3FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto4FlgOrg" type="java.lang.String"/>
+      <form-property name="shopPhoto3FilePath" type="java.lang.String"/>
+      <form-property name="shopPhoto4FilePath" type="java.lang.String"/>
+      <form-property name="shopMapPctComment" type="java.lang.String"/>
+      <form-property name="shopPhoto1Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto2Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto3Comment" type="java.lang.String"/>
+      <form-property name="shopPhoto4Comment" type="java.lang.String"/>
+      <!-- 2009/06 李昊燮追加終了 -->
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="updId" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- Webログ利用可否画面に遷移フォーム -->
+    <form-bean name="webLogUpdatePageForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- Webログ利用可否確認フォーム -->
+    <form-bean name="webLogUpdateConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="webLogFlg" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- Webログ利用可否画面に戻るフォーム -->
+    <form-bean name="webLogUpdatePageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="webLogFlg" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- Webログ利用可否完了フォーム -->
+    <form-bean name="webLogUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="webLogFlg" type="java.lang.String"/>
+    </form-bean>
+
+	<!-- 名寄せ処理対象外店舗一覧フォーム -->
+    <form-bean name="NayoseSkipShopDownloadForm" type="org.apache.struts.validator.DynaValidatorForm">
+    	<form-property name="offSet"           type="java.lang.Integer" />
+
+    </form-bean>
+
+    <!-- 契約明細（数量あり）情報 -->
+    <form-bean name="ContractAmountInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"             type="java.lang.String" />
+      <form-property name="keiyakuCd"          type="java.lang.String" />
+      <form-property name="keiyakuSubCd"       type="java.lang.String" />
+    </form-bean>
+
+    <!-- 契約明細（数量あり）登録 -->
+    <form-bean name="ContractAmountAddForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"             type="java.lang.String" />
+      <form-property name="keiyakuCd"          type="java.lang.String" />
+      <form-property name="keiyakuSubCd"       type="java.lang.String" />
+      <!--
+      <form-property name="applyYear"          type="java.lang.String" />
+      <form-property name="applyMonth"         type="java.lang.String" />
+      <form-property name="applyDay"           type="java.lang.String" />
+      <form-property name="applyHour"          type="java.lang.String" />
+      <form-property name="inputDate"          type="java.lang.String" />
+       -->
+      <form-property name="wakuCnt"            type="java.lang.String" />
+      <form-property name="wakuCntNote"        type="java.lang.String" />
+      <form-property name="wakuCntChecker"     type="java.lang.String" />
+      <form-property name="wakuCntLength"      type="java.lang.Integer" />
+      <form-property name="nowDate"            type="java.lang.String" />
+      <form-property name="keiyakuName"        type="java.lang.String" />
+      <form-property name="shopKanriUpdDt"     type="java.lang.String"/>
+      <form-property name="maxNum"             type="java.lang.String"/>
+
+      <!-- 追加要望12月対応 -->
+      <form-property name="keiyakuNote"            type="java.lang.String" />
+      <form-property name="keiyakuStartYear"       type="java.lang.String" />
+      <form-property name="keiyakuStartMonth"      type="java.lang.String" />
+      <form-property name="keiyakuStartDay"        type="java.lang.String" />
+      <form-property name="keiyakuStartHour"       type="java.lang.String" />
+      <form-property name="keiyakuEndYear"         type="java.lang.String" />
+      <form-property name="keiyakuEndMonth"        type="java.lang.String" />
+      <form-property name="keiyakuEndDay"          type="java.lang.String" />
+      <form-property name="keiyakuEndHour"         type="java.lang.String" />
+      <form-property name="inputDateFrom"          type="java.lang.String" />
+      <form-property name="inputDateTo"            type="java.lang.String" />
+    </form-bean>
+
+    <!-- 契約明細（数量あり）更新 -->
+    <form-bean name="ContractAmountUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"             type="java.lang.String" />
+      <form-property name="keiyakuCd"          type="java.lang.String" />
+      <form-property name="keiyakuSubCd"       type="java.lang.String" />
+      <form-property name="startYmdh"          type="java.lang.String" />
+      <form-property name="wakuCnt"            type="java.lang.String" />
+      <form-property name="wakuCntNote"        type="java.lang.String" />
+      <form-property name="wakuCntChecker"     type="java.lang.String" />
+      <form-property name="wakuCntLength"      type="java.lang.Integer" />
+      <form-property name="nowDate"            type="java.lang.String" />
+      <!--
+      <form-property name="inputDate"          type="java.lang.String" />
+       -->
+      <form-property name="appStartDt"         type="java.lang.String" />
+      <form-property name="keiyakuName"        type="java.lang.String" />
+      <form-property name="updateAppStartDt"   type="java.lang.String" />
+      <form-property name="shopKanriUpdDt"     type="java.lang.String"/>
+      <form-property name="maxNum"             type="java.lang.String"/>
+
+      <!-- 追加要望12月対応 -->
+      <form-property name="keiyakuNote"            type="java.lang.String" />
+      <form-property name="keiyakuStartYear"       type="java.lang.String" />
+      <form-property name="keiyakuStartMonth"      type="java.lang.String" />
+      <form-property name="keiyakuStartDay"        type="java.lang.String" />
+      <form-property name="keiyakuStartHour"       type="java.lang.String" />
+      <form-property name="keiyakuEndYear"         type="java.lang.String" />
+      <form-property name="keiyakuEndMonth"        type="java.lang.String" />
+      <form-property name="keiyakuEndDay"          type="java.lang.String" />
+      <form-property name="keiyakuEndHour"         type="java.lang.String" />
+      <form-property name="inputDateFrom"          type="java.lang.String" />
+      <form-property name="inputDateTo"            type="java.lang.String" />
+    </form-bean>
+
+    <!-- 契約明細（数量あり）削除 -->
+    <form-bean name="ContractAmountDeleteForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"             type="java.lang.String" />
+      <form-property name="keiyakuCd"          type="java.lang.String" />
+      <form-property name="keiyakuSubCd"       type="java.lang.String" />
+      <form-property name="delFlgList"         type="java.lang.String[]"/>
+      <form-property name="keiyakuName"        type="java.lang.String" />
+      <form-property name="shopKanriUpdDt"     type="java.lang.String"/>
+    </form-bean>
+
+
+    <!-- 店舗リスティング情報 -->
+    <form-bean name="ShopListingInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"             type="java.lang.String" />
+      <form-property name="keiyakuCd"          type="java.lang.String" />
+      <form-property name="keiyakuSubCd"       type="java.lang.String" />
+      <form-property name="delFlgList"         type="java.lang.String[]"/>
+    </form-bean>
+
+    <!-- 店舗リスティング登録 -->
+    <form-bean name="ShopListingAddForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"                 type="java.lang.String" />
+      <form-property name="keiyakuCd"              type="java.lang.String" />
+      <form-property name="keiyakuSubCd"           type="java.lang.String" />
+      <form-property name="keiyakuNote"            type="java.lang.String" />
+      <form-property name="keiyakuStartYear"       type="java.lang.String" />
+      <form-property name="keiyakuStartMonth"      type="java.lang.String" />
+      <form-property name="keiyakuStartDay"        type="java.lang.String" />
+      <form-property name="keiyakuStartHour"       type="java.lang.String" />
+      <form-property name="keiyakuStartMinute"     type="java.lang.String" />
+      <form-property name="keiyakuStartSecond"     type="java.lang.String" />
+      <form-property name="keiyakuEndYear"         type="java.lang.String" />
+      <form-property name="keiyakuEndMonth"        type="java.lang.String" />
+      <form-property name="keiyakuEndDay"          type="java.lang.String" />
+      <form-property name="keiyakuEndHour"         type="java.lang.String" />
+      <form-property name="keiyakuEndMinute"       type="java.lang.String" />
+      <form-property name="keiyakuEndSecond"       type="java.lang.String" />
+      <form-property name="inputDateFrom"          type="java.lang.String" />
+      <form-property name="inputDateTo"            type="java.lang.String" />
+      <form-property name="nowDate"                type="java.lang.String" />
+      <form-property name="keiyakuName"            type="java.lang.String" />
+      <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+
+      <!-- 追加要望12月対応 -->
+      <form-property name="wakuCnt"            type="java.lang.String" />
+      <form-property name="wakuCntNote"        type="java.lang.String" />
+      <form-property name="wakuCntChecker"     type="java.lang.String" />
+      <form-property name="wakuCntLength"      type="java.lang.Integer" />
+      <form-property name="maxNum"             type="java.lang.String"/>
+      <form-property name="isWakuDisp"             type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 店舗リスティング更新 -->
+    <form-bean name="ShopListingUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"                 type="java.lang.String" />
+      <form-property name="keiyakuCd"              type="java.lang.String" />
+      <form-property name="keiyakuSubCd"           type="java.lang.String" />
+      <form-property name="keiyakuNote"            type="java.lang.String" />
+      <form-property name="keiyakuStartYear"       type="java.lang.String" />
+      <form-property name="keiyakuStartMonth"      type="java.lang.String" />
+      <form-property name="keiyakuStartDay"        type="java.lang.String" />
+      <form-property name="keiyakuStartHour"       type="java.lang.String" />
+      <form-property name="keiyakuStartMinute"     type="java.lang.String" />
+      <form-property name="keiyakuStartSecond"     type="java.lang.String" />
+      <form-property name="keiyakuEndYear"         type="java.lang.String" />
+      <form-property name="keiyakuEndMonth"        type="java.lang.String" />
+      <form-property name="keiyakuEndDay"          type="java.lang.String" />
+      <form-property name="keiyakuEndHour"         type="java.lang.String" />
+      <form-property name="keiyakuEndMinute"       type="java.lang.String" />
+      <form-property name="keiyakuEndSecond"       type="java.lang.String" />
+      <form-property name="inputDateFrom"          type="java.lang.String" />
+      <form-property name="inputDateTo"            type="java.lang.String" />
+      <form-property name="keiyakuNo"              type="java.lang.String" />
+      <form-property name="nowDate"                type="java.lang.String" />
+      <form-property name="keiyakuName"            type="java.lang.String" />
+      <form-property name="shopKanriUpdDt"         type="java.lang.String"/>
+      <form-property name="keiyakuStartDt"         type="java.lang.String"/>
+
+
+      <!-- 追加要望12月対応 -->
+      <form-property name="wakuCnt"            type="java.lang.String" />
+      <form-property name="wakuCntNote"        type="java.lang.String" />
+      <form-property name="wakuCntChecker"     type="java.lang.String" />
+      <form-property name="wakuCntLength"      type="java.lang.Integer" />
+      <form-property name="maxNum"             type="java.lang.String"/>
+      <form-property name="isWakuDisp"             type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 店舗リスティング削除 -->
+    <form-bean name="ShopListingDeleteForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"             type="java.lang.String" />
+      <form-property name="keiyakuCd"          type="java.lang.String" />
+      <form-property name="keiyakuSubCd"       type="java.lang.String" />
+      <form-property name="delFlgList"         type="java.lang.String[]"/>
+      <form-property name="keiyakuName"        type="java.lang.String" />
+      <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+    </form-bean>
+
+  </form-beans>
+
+
+
+
+  <!-- ========== Action Mapping Definitions ============================= -->
+  <action-mappings>
+
+    <!-- 店舗検索ページへ
+    <action path="/shop_bukken/ShopSearchPage"
+        name="shopSearchByShopInfoForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopSearchPageAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopSearch.jsp" />
+    </action>
+ -->
+    <!-- 店舗情報から検索(General)
+    <action path="/shop_bukken/ShopSearchByShopInfo"
+        name="shopSearchByShopInfoForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopSearchByShopInfoAction"
+        scope="request"
+        validate="true"
+        input="/shop_bukken/ShopSearchPage.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopSearch.jsp" />
+    </action>
+-->
+    <!-- 店舗情報から検索(For Paging)
+    <action path="/shop_bukken/ShopSearchByShopInfoPaging"
+        name="shopSearchByShopInfoForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopSearchByShopInfoPagingAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopSearch.jsp" />
+    </action>
+-->
+    <!-- 地域・沿線から検索(General)
+    <action path="/shop_bukken/ShopSearchByArea"
+        name="shopSearchByAreaForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopSearchByAreaAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopSearch.jsp" />
+    </action>
+ -->
+    <!-- 地域・沿線から検索(For Paging)
+    <action path="/shop_bukken/ShopSearchByAreaPaging"
+        name="shopSearchByAreaForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopSearchByAreaPagingAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopSearch.jsp" />
+    </action>
+ -->
+    <!-- 店舗詳細ページへ -->
+    <action path="/shop_bukken/ShopInfo"
+        name="shopDetailInfoSearchForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopDetailInfoSearchAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopDetailInfo.jsp" />
+    </action>
+
+    <!-- 店舗基本情報更新ページへ 2009/5/22 李ホソップ追加-->
+<!--     <action path="/shop_bukken/ShopBasicInfoUpdatePage"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopBasicInfoUpdatePageAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopBasicInfoUpdate.jsp" />
+    </action> -->
+
+    <!-- 店舗基本情報更新に戻る 2009/5/22 李ホソップ追加-->
+<!--     <action path="/shop_bukken/ShopBasicInfoUpdatePageBack"
+        name="ShopBasicInfoUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopBasicInfoUpdatePageBackAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopBasicInfoUpdate.jsp" />
+    </action> -->
+
+    <!-- 店舗基本情報更新確認 2009/5/22 李ホソップ追加-->
+<!--     <action path="/shop_bukken/ShopBasicInfoUpdateConfirm"
+        name="ShopBasicInfoUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopBasicInfoUpdateConfirmAction"
+        scope="request"
+        validate="true"
+        input="/shop_bukken/ShopBasicInfoUpdatePageBack.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopBasicInfoUpdateConfirm.jsp" />
+    </action> -->
+
+    <!-- 店舗基本情報更新完了 2009/5/22 李ホソップ追加-->
+<!--     <action path="/shop_bukken/ShopBasicInfoUpdateCommit"
+        name="ShopBasicInfoUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopBasicInfoUpdateCommitAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/shop_bukken/ShopInfo.do" />
+    </action> -->
+
+    <!-- 登録状況更新画面へ -->
+    <action path="/shop_bukken/ShopRegistrationStatusUpdatePage"
+        name="shopRegistrationStautsUpdatePageForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopRegistrationStatusUpdatePageAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopRegistrationStatusUpdate.jsp" />
+    </action>
+
+    <!-- 登録状況更新画面の戻るアクション -->
+    <action path="/shop_bukken/ShopRegistrationStatusUpdatePageBack"
+        name="shopRegistrationStautsUpdatePageBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopRegistrationStatusUpdatePageBackAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopDetailInfo.jsp" />
+    </action>
+
+    <!-- 登録状況更新確認画面へ -->
+    <action path="/shop_bukken/ShopRegistrationStatusUpdateConfirm"
+        name="shopRegistrationStautsUpdateConfirmForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopRegistrationStatusUpdateConfirmAction"
+        scope="request"
+        validate="true"
+        input="/shop_bukken/ShopRegistrationStatusUpdateConfirmBack.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopRegistrationStatusUpdateConfirm.jsp" />
+      <forward name="failure" path="/shop_bukken/ShopRegistrationStatusUpdateConfirmBack.do" />
+    </action>
+
+    <!-- 登録状況更新完了 -->
+    <action path="/shop_bukken/ShopRegistrationStatusUpdateCommit"
+        name="shopRegistrationStautsUpdateCommitForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopRegistrationStatusUpdateCommitAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/shop_bukken/ShopInfo.do" />
+      <forward name="failure" path="/shop_bukken/ShopInfo.do" />
+    </action>
+
+    <!-- 登録状況更新確認画面の戻るアクション -->
+    <action path="/shop_bukken/ShopRegistrationStatusUpdateConfirmBack"
+        name="shopRegistrationStautsUpdateConfirmBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopRegistrationStatusUpdateConfirmBackAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopRegistrationStatusUpdate.jsp" />
+    </action>
+
+    <!-- 契約明細（数量なし）画面に遷移 -->
+    <!--
+    <action path="/shop_bukken/ContractNormalUpdatePage"
+        name="ContractNormalUpdatePageForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ContractNormalUpdatePageAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractNormalUpdate.jsp" />
+    </action>
+    -->
+
+    <!-- 契約明細（数量なし）確認 -->
+    <!--
+    <action path="/shop_bukken/ContractNormalUpdateConfirm"
+        name="ContractNormalUpdateConfirmForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ContractNormalUpdateConfirmAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractNormalUpdateConfirm.jsp" />
+    </action>
+    -->
+
+    <!-- 契約明細（数量なし）に遷移 -->
+    <!--
+    <action path="/shop_bukken/ContractNormalUpdatePageBack"
+        name="ContractNormalUpdatePageBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ContractNormalUpdatePageBackAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractNormalUpdate.jsp" />
+    </action>
+    -->
+
+    <!-- 契約明細（数量なし）完了 -->
+    <!--
+    <action path="/shop_bukken/ContractNormalUpdateCommit"
+        name="ContractNormalUpdateCommitForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ContractNormalUpdateCommitAction"
+        scope="request">
+      <forward name="success" path="/shop_bukken/ShopInfo.do" />
+    </action>
+    -->
+
+    <!-- Webログ利用可否画面に遷移 -->
+    <action path="/shop_bukken/WebLogUpdatePage"
+        name="webLogUpdatePageForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.WebLogUpdatePageAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/WebLogUpdate.jsp" />
+    </action>
+
+        <!-- Webログ利用可否確認 -->
+    <action path="/shop_bukken/WebLogUpdateConfirm"
+        name="webLogUpdateConfirmForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.WebLogUpdateConfirmAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/WebLogUpdateConfirm.jsp" />
+    </action>
+
+        <!-- Webログ利用可否画面に戻る -->
+    <action path="/shop_bukken/WebLogUpdatePageBack"
+        name="webLogUpdatePageBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.WebLogUpdatePageBackAction"
+        scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/WebLogUpdate.jsp" />
+    </action>
+
+    <!-- Webログ利用可否完了 -->
+    <action path="/shop_bukken/WebLogUpdateCommit"
+        name="webLogUpdateCommitForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.WebLogUpdateCommitAction"
+        scope="request">
+      <forward name="success" path="/shop_bukken/ShopInfo.do" />
+    </action>
+
+    <!-- 店舗画像更新画面を表示するアクション
+    <action path="/shop_bukken/ShopImageUpdate"
+        name="shopImageUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageUpdateAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopImageUpdate.jsp" />
+    </action>
+ -->
+    <!-- 店舗画像更新画面の店舗詳細画面に戻るアクション
+    <action path="/shop_bukken/ShopImageUpdateBack"
+        name="shopImageUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageUpdateBackAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopDetailInfo.jsp" />
+    </action>
+    2009/08/19 戻るボタンのアクションを削除し、戻るボタン押下時の実行されるアクションを店舗詳細アクションに修正 -->
+
+    <!-- 店舗画像更新確認画面を表示するアクション
+    <action path="/shop_bukken/ShopImageUpdateConfirm"
+        name="shopImageUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageUpdateConfirmAction"
+        scope="request"
+        validate="false"
+        input="/shop_bukken/ShopImageUpdate.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopImageUpdateConfirm.jsp" />
+      <forward name="fail" path="/shop_bukken/ShopImageUpdateConfirmBack.do" />
+    </action>
+ -->
+    <!-- 店舗画像更新確認画面の店舗画像更新画面に戻るアクション
+    <action path="/shop_bukken/ShopImageUpdateConfirmBack"
+        name="shopImageUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageUpdateConfirmBackAction"
+        scope="request"
+        validate="false"
+        input="">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopImageUpdate.jsp" />
+    </action>
+ -->
+    <!-- 店舗画像更新確認画面のパンくず(店舗詳細)アクション
+    <action path="/shop_bukken/ShopImageUpdateConfirmTopicPath"
+        name="shopImageUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageUpdateConfirmTopicPathAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/shop_bukken/ShopInfo.do" />
+    </action>
+ -->
+    <!-- 店舗画像を更新完了して、店舗詳細画面を表示するアクション
+    <action path="/shop_bukken/ShopImageUpdateCommit"
+        name="shopImageUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageUpdateCommitAction"
+        scope="request"
+        validate="false"
+        input="">
+      <forward name="success" path="/shop_bukken/ShopInfo.do" />
+      <forward name="fail" path="/WEB-INF/jsp/shop_bukken/ShopImageUpdateConfirm.jsp" />
+    </action>
+ -->
+    <!-- 店舗画像削除画面を表示するアクション
+    <action path="/shop_bukken/ShopImageDelete"
+        name="shopImageDeleteForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageDeleteAction"
+        scope="request"
+        validate="false"
+        input="">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopImageDelete.jsp" />
+      <forward name="fail" path="/shop_bukken/ShopInfo.do" />
+    </action>
+
+     店舗画像削除画面の店舗画像更新画面に戻るアクション
+    <action path="/shop_bukken/ShopImageDeleteBack"
+        name="shopImageDeleteBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageDeleteBackAction"
+        scope="request"
+        validate="false"
+        input="">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopDetailInfo.jsp" />
+    </action>
+    2009/08/19 戻るボタンのアクションを削除し、戻るボタン押下時の実行されるアクションを店舗詳細アクションに修正
+
+   店舗画像削除確認画面を表示するアクション
+    <action path="/shop_bukken/ShopImageDeleteConfirm"
+        name="shopImageDeleteConfirmForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageDeleteConfirmAction"
+        scope="request"
+        validate="false"
+        input="">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopImageDeleteConfirm.jsp" />
+      <forward name="fail" path="/shop_bukken/ShopImageDelete.do" />
+    </action>
+
+     店舗画像削除確認画面の店舗画像削除画面に戻るアクション
+    <action path="/shop_bukken/ShopImageDeleteConfirmBack"
+        name="shopImageDeleteConfirmBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageDeleteConfirmBackAction"
+        scope="request"
+        validate="false"
+        input="">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopImageDelete.jsp" />
+    </action>
+
+    店舗画像削除完了して、店舗詳細画面を表示するアクション
+    <action path="/shop_bukken/ShopImageDeleteCommit"
+        name="shopImageDeleteCommitForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.ShopImageDeleteCommitAction"
+        scope="request"
+        validate="false"
+        input="">
+      <forward name="success" path="/shop_bukken/ShopInfo.do" />
+      <forward name="fail" path="/shop_bukken/ShopImageDeleteConfirm.do" />
+    </action>
+ -->
+    <!-- 免許証有効期限切れ店舗一覧 -->
+    <action path="/shop_bukken/LicenseExpiredShopList"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.LicenseExpiredShopListAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/LicenseExpiredShopList.jsp" />
+    </action>
+
+
+    <!-- 名寄せ処理対象外店舗一覧画面へ -->
+    <action path="/shop_bukken/NayoseSkipShopDownloadPage"
+			type="net.chintai.backend.sysadmin.shop_bukken.action.NayoseSkipShopDownloadPageAction"
+			name="NayoseSkipShopDownloadForm"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/shop_bukken/NayoseSkipShopDownload.jsp" />
+	</action>
+
+	<!-- 名寄せ処理対象外店舗ダウンロード処理 -->
+    <action path="/shop_bukken/NayoseSkipShopCsvDownload"
+			type="net.chintai.backend.sysadmin.shop_bukken.action.NayoseSkipShopCsvDownloadAction"
+			name="NayoseSkipShopDownloadForm"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/shop_bukken/NayoseSkipShopDownload.jsp" />
+	</action>
+
+
+    <!-- 契約明細（数量あり）画面 -->
+    <!--
+    <action path="/shop_bukken/ContractAmountInfo"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountInfoAction"
+            name="ContractAmountInfoForm"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractAmountInfo.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）登録ページへ -->
+    <!--
+    <action path="/shop_bukken/ContractAmountAddPage"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountAddPageAction"
+            scope="request"
+            name="ContractAmountAddForm"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractAmountAdd.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）登録確認 -->
+    <!--
+    <action path="/shop_bukken/ContractAmountAddConfirm"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountAddConfirmAction"
+            scope="request"
+            name="ContractAmountAddForm"
+            validate="true"
+            input="/shop_bukken/ContractAmountAddPage.do">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractAmountAddConfirm.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/shop_bukken/ContractAmountAdd.jsp"></forward>
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）登録 -->
+    <!--
+    <action path="/shop_bukken/ContractAmountAddCommit"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountAddCommitAction"
+            scope="request"
+            name="ContractAmountAddForm"
+            validate="false">
+        <forward name="success" path="/shop_bukken/ContractAmountInfo.do"></forward>
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）更新ページへ -->
+    <!--
+    <action path="/shop_bukken/ContractAmountUpdatePage"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountUpdatePageAction"
+            name="ContractAmountUpdateForm"
+            scope="request">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractAmountUpdate.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）更新確認 -->
+    <!--
+    <action path="/shop_bukken/ContractAmountUpdateConfirm"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountUpdateConfirmAction"
+            scope="request"
+            name="ContractAmountUpdateForm"
+            validate="true"
+            input="/shop_bukken/ContractAmountUpdatePageBack.do">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractAmountUpdateConfirm.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/shop_bukken/ContractAmountUpdate.jsp"></forward>
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）更新 -->
+    <!--
+    <action path="/shop_bukken/ContractAmountUpdateCommit"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountUpdateCommitAction"
+            scope="request"
+            name="ContractAmountUpdateForm"
+            validate="false">
+        <forward name="success" path="/shop_bukken/ContractAmountInfo.do"></forward>
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）更新ページへ -->
+    <!--
+    <action path="/shop_bukken/ContractAmountUpdatePageBack"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountUpdatePageBackAction"
+            scope="request"
+            name="ContractAmountUpdateForm"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractAmountUpdate.jsp"></forward>
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）削除確認ページへ -->
+    <!--
+    <action path="/shop_bukken/ContractAmountDeleteConfirm"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountDeleteConfirmAction"
+            scope="request"
+            name="ContractAmountDeleteForm"
+            validate="true"
+            input="/shop_bukken/ContractAmountInfo.do">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractAmountDeleteConfirm.jsp"></forward>
+        <forward name="fail" path="/shop_bukken/ContractAmountInfo.do"></forward>
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）削除画面から契約明細（数量あり）画面へ戻る -->
+    <!--
+    <action path="/shop_bukken/ContractAmountDeleteBack"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountDeleteBackAction"
+            scope="request"
+            name="ContractAmountDeleteForm"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ContractAmountInfo.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+    -->
+
+    <!-- 契約明細（数量あり）削除 -->
+    <!--
+    <action path="/shop_bukken/ContractAmountDeleteCommit"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ContractAmountDeleteCommitAction"
+            scope="request"
+            name="ContractAmountDeleteForm"
+            validate="false">
+        <forward name="success" path="/shop_bukken/ContractAmountInfo.do"></forward>
+    </action>
+    -->
+
+
+
+    <!-- 店舗リスティング画面 -->
+    <action path="/shop_bukken/ContractInfo"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingInfoAction"
+            name="ShopListingInfoForm"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopListingInfo.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/shop_bukken/ShopListingAdd.jsp" />
+    </action>
+
+    <!-- 店舗リスティング登録ページへ -->
+    <action path="/shop_bukken/ContractAddPage"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingAddPageAction"
+            scope="request"
+            name="ShopListingAddForm"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopListingAdd.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- 店舗リスティング登録確認 -->
+    <action path="/shop_bukken/ContractAddConfirm"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingAddConfirmAction"
+            scope="request"
+            name="ShopListingAddForm"
+            validate="true"
+            input="/shop_bukken/ContractAddPage.do">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopListingAddConfirm.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/shop_bukken/ShopListingAdd.jsp"></forward>
+    </action>
+
+    <!-- 店舗リスティング登録 -->
+    <action path="/shop_bukken/ContractAddCommit"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingAddCommitAction"
+            scope="request"
+            name="ShopListingAddForm"
+            validate="false">
+        <forward name="success" path="/shop_bukken/ContractInfo.do"></forward>
+    </action>
+
+    <!-- 店舗リスティング更新ページへ -->
+    <action path="/shop_bukken/ContractUpdatePage"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingUpdatePageAction"
+            name="ShopListingUpdateForm"
+            scope="request"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopListingUpdate.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+
+    <!-- 店舗リスティング更新確認 -->
+    <action path="/shop_bukken/ContractUpdateConfirm"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingUpdateConfirmAction"
+            scope="request"
+            name="ShopListingUpdateForm"
+            validate="true"
+            input="/shop_bukken/ContractUpdatePageBack.do">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopListingUpdateConfirm.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/shop_bukken/ShopListingUpdate.jsp"></forward>
+    </action>
+
+    <!-- 店舗リスティング更新 -->
+    <action path="/shop_bukken/ContractUpdateCommit"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingUpdateCommitAction"
+            scope="request"
+            name="ShopListingUpdateForm"
+            validate="false">
+        <forward name="success" path="/shop_bukken/ContractInfo.do"></forward>
+    </action>
+
+    <!-- 店舗リスティング更新ページへ -->
+    <action path="/shop_bukken/ContractUpdatePageBack"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingUpdatePageBackAction"
+            scope="request"
+            name="ShopListingUpdateForm"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopListingUpdate.jsp"></forward>
+    </action>
+
+    <!-- 店舗リスティング削除確認ページへ -->
+    <action path="/shop_bukken/ContractDeleteConfirm"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingDeleteConfirmAction"
+            scope="request"
+            name="ShopListingDeleteForm"
+            validate="true"
+            input="/shop_bukken/ContractInfo.do">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopListingDeleteConfirm.jsp"></forward>
+        <forward name="fail" path="/shop_bukken/ContractInfo.do"></forward>
+    </action>
+
+    <!-- 店舗リスティング削除画面から契約明細（数量あり）画面へ戻る -->
+<!--
+    <action path="/shop_bukken/ContractDeleteBack"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingDeleteBackAction"
+            scope="request"
+            name="ShopListingDeleteForm"
+            validate="false">
+        <forward name="success" path="/WEB-INF/jsp/shop_bukken/ShopListingInfo.jsp"></forward>
+        <forward name="fail" path="/WEB-INF/jsp/error/PopUpApplicationException.jsp" />
+    </action>
+-->
+    <!-- 店舗リスティング削除 -->
+    <action path="/shop_bukken/ContractDeleteCommit"
+            type="net.chintai.backend.sysadmin.shop_bukken.action.ShopListingDeleteCommitAction"
+            scope="request"
+            name="ShopListingDeleteForm"
+            validate="false">
+        <forward name="success" path="/shop_bukken/ContractInfo.do"></forward>
+    </action>
+
+  </action-mappings>
+
+</struts-config>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="chintai-migration-cms">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="Web App ライブラリー.libraryclasspath">
+        <fileset dir="WebContent/WEB-INF/lib">
+          <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    <path id="EAR ライブラリー.libraryclasspath"/>
+    <path id="Apache Tomcat v7.0 [Apache Tomcat v7.0].libraryclasspath">
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/annotations-api.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/catalina-ant.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/catalina-ha.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/catalina-tribes.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/catalina.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/ecj-4.2.1.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/el-api.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/jasper-el.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/jasper.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/jsp-api.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/servlet-api.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/tomcat-api.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/tomcat-coyote.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/tomcat-dbcp.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/tomcat-i18n-es.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/tomcat-i18n-fr.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/tomcat-i18n-ja.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/tomcat-jdbc.jar"/>
+        <pathelement location="/usr/local/apache-tomcat-7.0.53-sysadmin/lib/tomcat-util.jar"/>
+    </path>
+    <path id="chintai-migration-cms.classpath">
+        <pathelement location="WebContent/WEB-INF/classes"/>
+        <path refid="Web App ライブラリー.libraryclasspath"/>
+        <path refid="EAR ライブラリー.libraryclasspath"/>
+        <path refid="Apache Tomcat v7.0 [Apache Tomcat v7.0].libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="WebContent/WEB-INF/classes"/>
+        <copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="WebContent/WEB-INF/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="WebContent/WEB-INF/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="chintai-migration-cms.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+</project>

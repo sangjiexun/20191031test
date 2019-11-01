@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="dcotype">
+
+	<resultMap id="mstDcoType"
+		class="net.chintai.backend.sysadmin.common.dwr.domain.DcoType">
+		<result property="dcoType" column="DCO_TYPE"/>
+		<result property="dcoName" column="DCO_NAME"/>
+	</resultMap>
+
+	<resultMap id="dcoName"
+		class="net.chintai.backend.sysadmin.common.dwr.domain.DcoType">
+		<result property="dcoName" column="DCO_NAME"/>
+	</resultMap>
+
+
+	<select id="selectMstDcoTypeList"
+			resultMap="mstDcoType"
+			parameterClass="java.lang.String">
+		SELECT
+			MD.DCO_TYPE AS DCO_TYPE,
+			MD.DCO_NAME AS DCO_NAME
+		FROM
+			MST_DCO MD
+		WHERE
+			MD.DCO_TYPE IN ($value$)
+		ORDER BY
+			MD.DCO_TYPE
+	</select>
+
+</sqlMap>

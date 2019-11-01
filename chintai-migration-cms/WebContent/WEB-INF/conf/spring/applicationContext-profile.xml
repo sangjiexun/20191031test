@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="profileInfoDao"
+		class="net.chintai.backend.sysadmin.profile.dao.impl.ProfileInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="profileUpdatePageDao"
+		class="net.chintai.backend.sysadmin.profile.dao.impl.ProfileUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="profileUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.profile.dao.impl.ProfileUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="profilePasswordChangePageDao"
+		class="net.chintai.backend.sysadmin.profile.dao.impl.ProfilePasswordChangePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="profilePasswordChangeCommitDao"
+		class="net.chintai.backend.sysadmin.profile.dao.impl.ProfilePasswordChangeCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="profilePasswordCheckDao"
+		class="net.chintai.backend.sysadmin.profile.dao.impl.ProfilePasswordCheckDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- Service Definecions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="ProfileInfoService"
+		class="net.chintai.backend.sysadmin.profile.service.impl.ProfileInfoServiceImpl">
+		<property name="profileInfoDao">
+			<ref local="profileInfoDao"/>
+		</property>
+	</bean>
+
+	<bean id="ProfileUpdatePageService"
+		class="net.chintai.backend.sysadmin.profile.service.impl.ProfileUpdatePageServiceImpl">
+		<property name="profileUpdatePageDao">
+			<ref local="profileUpdatePageDao"/>
+		</property>
+	</bean>
+
+	<bean id="ProfileUpdateCommitSerivce"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="ProfileUpdateCommitSerivceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="profileUpdateCommit">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException, -org.springframework.dao.DataAccessException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="ProfileUpdateCommitSerivceTarget"
+		class="net.chintai.backend.sysadmin.profile.service.impl.ProfileUpdateCommitServiceImpl">
+		<property name="profileUpdateCommitDao">
+			<ref local="profileUpdateCommitDao"/>
+		</property>
+	</bean>
+
+	<bean id="ProfilePasswordChangePageService"
+		class="net.chintai.backend.sysadmin.profile.service.impl.ProfilePasswordChangePageServiceImpl">
+		<property name="profilePasswordChangePageDao">
+			<ref local="profilePasswordChangePageDao"/>
+		</property>
+	</bean>
+
+	<bean id="ProfilePasswordChangeCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="ProfilePasswordChangeCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="profilePasswordChangeCommit">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException, -org.springframework.dao.DataAccessException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="ProfilePasswordChangeCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.profile.service.impl.ProfilePasswordChangeCommitServiceImpl">
+		<property name="profilePasswordChangeCommitDao">
+			<ref local="profilePasswordChangeCommitDao"/>
+		</property>
+	</bean>
+
+	<bean id="ProfilePasswordCheckService"
+		class="net.chintai.backend.sysadmin.profile.service.impl.ProfilePasswordCheckServiceImpl">
+		<property name="profilePasswordCheckDao">
+			<ref bean="profilePasswordCheckDao"/>
+		</property>
+	</bean>
+</beans>

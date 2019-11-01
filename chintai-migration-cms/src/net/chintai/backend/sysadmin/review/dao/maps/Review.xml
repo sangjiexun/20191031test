@@ -1,0 +1,1775 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="review">
+
+  <!-- (共通)現在有効な物件サマリテーブルを取得 -->
+  <select id="selectValidTable" resultClass="java.lang.String">
+    SELECT PKG_COMMON_FUNCTION.GET_BUKKEN_COUNT_TABLE_NAME FROM DUAL
+  </select>
+
+  <!-- (共通)物件テーブルの現在有効なテーブル名を取得する -->
+  <select id="getChintaiBukkenTableName" resultClass="java.lang.String">
+    SELECT PKG_COMMON_FUNCTION.GET_BUKKEN_TABLE_NAME('C') FROM DUAL
+  </select>
+
+  <!-- (共通)自動削除期間情報を取得(初回) -->
+  <select id="selectAutoDelterm"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewAutoDelInfoParamBean"
+          resultClass="int">
+    SELECT
+      AUTO_DEL_KIKAN
+    FROM
+      WEB_MST_SHINSA
+    WHERE
+     SHINSACD = #shinsaCd#
+  </select>
+
+  <!-- 店舗検索(一覧、Where節の公用部) -->
+  <sql id="returnRate">
+    CASE WHEN NVL(BK_CNT.CNT,0) = 0 THEN 0
+        ELSE ROUND((NVL(WR_CNT.SYOKAI_SHINSA_CNT,0)+NVL(WR_CNT.TEIKI_SHINSA_CNT,0))/NVL(BK_CNT.CNT,0)*100,0) END
+  </sql>
+  <sql id="shopSearchCondition">
+    <dynamic prepend="AND" open="(" close=")">
+      <isNotEmpty prepend="OR" property="syokaiShinsaCnt">
+        <![CDATA[
+        NVL(WR_CNT.SYOKAI_SHINSA_CNT,0) > 0
+        ]]>
+      </isNotEmpty>
+      <isNotEmpty prepend="OR" property="teikiShinsaCnt">
+        <![CDATA[
+        NVL(WR_CNT.TEIKI_SHINSA_CNT,0) > 0
+        ]]>
+      </isNotEmpty>
+      <isNotEmpty prepend="OR" property="shinsaNoCnt">
+        <![CDATA[
+        NVL(WR_CNT.TEIKI_SHINSA_CNT,0) + NVL(WR_CNT.SYOKAI_SHINSA_CNT,0) = 0
+        ]]>
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+  <!-- 店舗検索(一覧、総件数取得の公用部) -->
+  <sql id="shopSearch">
+      FROM
+      SHOP_KANRI SK
+    INNER JOIN
+      SHOP_RIREKI SR ON SK.PK_SHOP_RIREKI_LAST=SR.PK_SHOP_RIREKI
+    LEFT OUTER JOIN
+      MST_RENDO MR ON MR.RENDO_CD = SR.RENDO_CD
+    LEFT OUTER JOIN
+      (
+      SELECT SHOPCD, COUNT(*) AS CNT
+        FROM
+          (
+          SELECT CASE WHEN BRS.AGENCY_SHOPCD IS NULL THEN CKB.SHOPCD ELSE BRS.AGENCY_SHOPCD END AS SHOPCD
+            FROM CT_KEISAI_BUKKEN CKB
+          LEFT JOIN BUKKEN_RIREKI_SHOP  BRS
+                 ON CKB.PK_BUKKEN_RIREKI = BRS.PK_BUKKEN_RIREKI
+          )S
+        GROUP BY S.SHOPCD
+      )BK_CNT ON SK.SHOPCD = BK_CNT.SHOPCD
+    LEFT OUTER JOIN
+      (
+        SELECT
+          SK1.SHOPCD SHOPCD,
+          SUM(CASE WHEN WR.WARNINGCD='0' THEN 1 ELSE 0 END) SYOKAI_SHINSA_CNT,
+          SUM(CASE WHEN WR.WARNINGCD!='0' THEN 1 ELSE 0 END) TEIKI_SHINSA_CNT
+        FROM
+        SHOP_KANRI SK1
+        INNER JOIN
+          WEB_WARNING_RIREKI WR ON SK1.SHOPCD = WR.SHOPCD
+        WHERE
+          (WR.STATUS_KBN='1' OR WR.STATUS_KBN='0')
+        GROUP BY
+          SK1.SHOPCD
+      ) WR_CNT ON SK.SHOPCD = WR_CNT.SHOPCD
+    <dynamic prepend="WHERE">
+      <isNotEmpty prepend="AND" property="shopCd">
+        SK.SHOPCD LIKE'%'||#shopCd#||'%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="companyBumon">
+        (SR.COMPANY || SR.BUMON LIKE'%'||#companyBumon#||'%')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="shopStatus">
+        SR.SHOP_STATUS = #shopStatus#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="prefCd">
+        SR.PREFCD = #prefCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="bukkenCntFrom">
+        <![CDATA[
+          NVL(BK_CNT.CNT,0) >= #bukkenCntFrom:NUMBER#
+        ]]>
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="bukkenCntTo">
+        <![CDATA[
+          NVL(BK_CNT.CNT,0) <= #bukkenCntTo:NUMBER#
+        ]]>
+      </isNotEmpty>
+      <isNotEmpty property="clientSystemType">
+        <isNotEqual prepend="AND" property="clientSystemType" compareValue="0">
+          SR.CLIENTSYSTEM_TYPE = #clientSystemType#
+        </isNotEqual>
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="returnRateFrom">
+        <include refid="returnRate"/>
+        <![CDATA[
+           >= #returnRateFrom:NUMBER#
+        ]]>
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="returnRateTo">
+        <include refid="returnRate"/>
+        <![CDATA[
+          <= #returnRateTo:NUMBER#
+        ]]>
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="rendoCd">
+        SR.RENDO_CD = #rendoCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="licNum">
+        TO_MULTI_BYTE(SR.LIC_NUM) LIKE '%'|| TO_MULTI_BYTE(#licNum#) ||'%'
+      </isNotEmpty>
+
+      <include refid="shopSearchCondition"/>
+    </dynamic>
+    ORDER BY
+      <isEqual property="sortKey" compareValue="1">
+        NVL(BK_CNT.CNT,0)
+      </isEqual>
+      <isEqual property="sortKey" compareValue="2">
+        SK.SHOPCD
+      </isEqual>
+      <isEqual property="sortKey" compareValue="3">
+        NVL(WR_CNT.SYOKAI_SHINSA_CNT,0)
+      </isEqual>
+      <isEqual property="sortKey" compareValue="4">
+        NVL(WR_CNT.TEIKI_SHINSA_CNT,0)
+      </isEqual>
+      <isEqual property="orderBy" compareValue="asc">
+        ASC
+      </isEqual>
+      <isEqual property="orderBy" compareValue="desc">
+        DESC
+      </isEqual>
+  </sql>
+
+  <!-- 店舗検索(総件数取得) -->
+  <select id="selectShopTotalCnt"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopSearchParamBean"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    <include refid="shopSearch"/>
+  </select>
+
+  <!-- 店舗検索(一覧取得) -->
+  <select id="selectShopSearch"
+      remapResults="true"
+      parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopSearchParamBean"
+      resultClass="net.chintai.backend.sysadmin.review.domain.ReviewShopSearchDomain">
+    SELECT
+      SK.SHOPCD AS shopCd,
+      SR.SHOP_STATUS AS shopStatus,
+      SR.COMPANY AS company,
+      SR.BUMON AS bumon,
+      SK.CT_KEISAI_FLG AS ctKeisaiFlg,
+      SK.ABL_KEISAI_FLG AS ablKeisaiFlg,
+      SR.CLIENTSYSTEM_TYPE AS clientSystemType,
+      SR.FM_KBN AS fmKbn,
+      SR.SYOKAI_SHINSA_SKIP_FLG AS syokaiShinsaSkipFlg,
+      SR.TEIKI_SHINSA_SKIP_FLG AS teikiShinsaSkipFlg,
+      SR.MAIL_SEND_SKIP_FLG AS mailSendSkipFlg,
+      SR.AUTODEL_SKIP_FLG AS autoDelSkipFlg,
+      NVL(BK_CNT.CNT,0) as bukkenCnt,
+      NVL(WR_CNT.SYOKAI_SHINSA_CNT,0) syokaiShinsaCnt,
+      NVL(WR_CNT.TEIKI_SHINSA_CNT,0) teikiShinsaCnt,
+      MR.RENDO_NAME AS rendoName,
+      SR.CT_STATUS AS ctStatus,
+      SR.ABL_STATUS AS ablStatus,
+      <include refid="returnRate"/> returnRate
+    <include refid="shopSearch"/>
+  </select>
+
+  <!-- 店舗詳細取得 -->
+  <select id="selectShopInfo"
+      remapResults="true"
+      parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopInfoParamBean"
+      resultClass="net.chintai.backend.sysadmin.review.domain.ReviewShopInfoDomain">
+  SELECT
+    SR.SYOKAI_SHINSA_SKIP_FLG AS syokaiShinsa,
+    SR.TEIKI_SHINSA_SKIP_FLG AS teikiShinsa,
+    SR.MAIL_SEND_SKIP_FLG AS mailSend,
+    SR.AUTODEL_SKIP_FLG AS autoDelete,
+    SR.SHINSA_SKIP_BIKOU AS bikou,
+    NVL(BK_CNT.CNT,0) AS shinsaBukkenCnt,
+    NVL(WR_CNT.SYOKAI_SHINSA_CNT,0) AS syokaiCnt,
+    NVL(WR_CNT.TEIKI_SHINSA_CNT,0) AS teikiCnt,
+    <include refid="returnRate"/> returnRate
+  FROM
+    SHOP_KANRI SK
+  INNER JOIN
+      SHOP_RIREKI SR ON SK.PK_SHOP_RIREKI_LAST=SR.PK_SHOP_RIREKI
+  LEFT OUTER JOIN
+      (
+        SELECT #shopCd# AS SHOPCD, COUNT(DISTINCT CKB.PK_BUKKEN_RIREKI) AS CNT
+          FROM CT_KEISAI_BUKKEN CKB,BUKKEN_RIREKI_SHOP BRS
+         WHERE CKB.PK_BUKKEN_RIREKI = BRS.PK_BUKKEN_RIREKI(+)
+           AND (CKB.SHOPCD = #shopCd# OR  BRS.AGENCY_SHOPCD = #shopCd#)
+
+      )BK_CNT ON SK.SHOPCD = BK_CNT.SHOPCD
+  LEFT OUTER JOIN
+      (
+        SELECT
+          SK1.SHOPCD SHOPCD,
+          SUM(CASE WHEN WR.WARNINGCD='0' THEN 1 ELSE 0 END) SYOKAI_SHINSA_CNT,
+          SUM(CASE WHEN WR.WARNINGCD!='0' THEN 1 ELSE 0 END) TEIKI_SHINSA_CNT
+        FROM
+        SHOP_KANRI SK1
+        INNER JOIN
+          WEB_WARNING_RIREKI WR ON SK1.SHOPCD = WR.SHOPCD
+        WHERE
+          (WR.STATUS_KBN='1' OR WR.STATUS_KBN='0')
+        GROUP BY
+          SK1.SHOPCD
+      ) WR_CNT ON SK.SHOPCD = WR_CNT.SHOPCD
+  WHERE
+    SK.SHOPCD = #shopCd#
+  </select>
+
+  <sql id="commonUpdateShopInfo">
+    SELECT
+      SK.SHOPCD,
+      SR.SHOP_STATUS AS shopStatus,
+      SR.COMPANY,
+      SR.BUMON,
+      SK.CT_KEISAI_FLG AS ctKeisaiFlg,
+      SK.ABL_KEISAI_FLG AS ablKeisaiFlg,
+      SR.CLIENTSYSTEM_TYPE AS clientSystemType,
+      SR.FM_KBN AS fmKbn,
+      TO_CHAR(SK.UPD_DT,'YYYY-MM-DD HH24:MI:SS.ff3') AS updDt,
+      BK_CNT.CNT AS bukkenCnt,
+      NVL(WR_CNT.SYOKAISHINSACNT,0) AS syokaiShinsaCnt,
+      NVL(WR_CNT.TEIKISHINSACNT,0) AS teikiShinsaCnt,
+      CASE WHEN NVL(BK_CNT.CNT,0) = 0 THEN 0
+          ELSE ROUND((NVL(WR_CNT.SYOKAISHINSACNT,0)+NVL(WR_CNT.TEIKISHINSACNT,0))
+          / NVL(BK_CNT.CNT,0)*100,0)END AS returnRate,
+      SR.SYOKAI_SHINSA_SKIP_FLG AS syokaiShinsaSkipFlg,
+      SR.TEIKI_SHINSA_SKIP_FLG AS teikiShinsaSkipFlg,
+      SR.MAIL_SEND_SKIP_FLG AS mailSendSkipFlg,
+      SR.AUTODEL_SKIP_FLG AS autoDelSkipFlg,
+      SR.SHINSA_SKIP_BIKOU AS shinsaSkipBikou,
+      SR.CT_STATUS AS ctStatus,
+      SR.ABL_STATUS AS ablStatus
+    FROM
+      SHOP_KANRI SK
+    INNER JOIN
+      SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+    LEFT OUTER JOIN
+      (
+        SELECT #shopCd# AS SHOPCD, COUNT(DISTINCT CKB.PK_BUKKEN_RIREKI) AS CNT
+          FROM CT_KEISAI_BUKKEN CKB,BUKKEN_RIREKI_SHOP BRS
+         WHERE CKB.PK_BUKKEN_RIREKI = BRS.PK_BUKKEN_RIREKI(+)
+           AND (CKB.SHOPCD = #shopCd# OR  BRS.AGENCY_SHOPCD = #shopCd#)
+
+      )BK_CNT ON SK.SHOPCD = BK_CNT.SHOPCD
+    LEFT JOIN
+      (
+        SELECT
+          SK1.SHOPCD,
+          SUM(CASE WHEN WR.WARNINGCD='0' THEN 1 ELSE 0 END) SYOKAISHINSACNT,
+          SUM(CASE WHEN WR.WARNINGCD!='0' THEN 1 ELSE 0 END) TEIKISHINSACNT
+        FROM
+          SHOP_KANRI SK1
+        INNER JOIN
+          WEB_WARNING_RIREKI WR ON SK1.SHOPCD = WR.SHOPCD
+        WHERE
+          (WR.STATUS_KBN = '0' OR WR.STATUS_KBN = '1')
+        GROUP BY
+          SK1.SHOPCD
+      ) WR_CNT ON SK.SHOPCD = WR_CNT.SHOPCD
+    WHERE
+      SK.SHOPCD = #shopCd#
+  </sql>
+
+  <!-- 店舗対象外設定変更(店舗情報取得) -->
+  <select id="selectUpdateShopInfo"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopStatusUpdatePageParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewShopStatusUpdateDomain">
+    <include refid="commonUpdateShopInfo"/>
+  </select>
+
+  <!-- 店舗対象外設定変更(店舗情報取得) -->
+  <select id="selectUpdateConfirmShopInfo"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopStatusUpdateConfirmParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewShopStatusUpdateDomain">
+    <include refid="commonUpdateShopInfo"/>
+  </select>
+
+  <!-- 店舗対象外設定変更(更新) -->
+  <update id="updateShopStatus"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopStatusUpdateCommitParamBean">
+    UPDATE
+      SHOP_KANRI
+    SET
+      SYOKAI_SHINSA_SKIP_FLG = #syokaiShinsaSkipFlg#,
+      TEIKI_SHINSA_SKIP_FLG  = #teikiShinsaSkipFlg#,
+      MAIL_SEND_SKIP_FLG     = #mailSendSkipFlg#,
+      AUTODEL_SKIP_FLG       = #autoDelSkipFlg#,
+      SHINSA_SKIP_BIKOU      = #shinsaSkipBikou#,
+      UPD_DT                 = SYSTIMESTAMP,
+      UPD_PG                 = #updPg#,
+      UPD_ID                 = #updId#,
+      ADMIN_UPD_DT           = SYSDATE
+    WHERE
+      SHOPCD = #shopCd# AND
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+
+  <!-- 物件検索一覧(連続掲載日数が検索条件として指定された場合使われる) -->
+  <sql id="bukkenSearchSubQuary">
+        Exists (Select 'X'
+                From   $validTableName$
+                Where  SHOPCD = BK.SHOPCD And
+                       BKCD   = BK.BKCD And
+                       ROOMNO = BK.ROOMNO)
+  </sql>
+
+  <sql id="bukkenReviewSearchSelect">
+  	SELECT
+    BK.ROOM_KEY AS roomKey,
+    BK.SHOPCD || '-' || BK.BKCD || '-' || BK.ROOMNO AS kanriCd,
+    CASE WHEN BRS.UKETSUKECD IS NOT NULL THEN BRS.UKETSUKECD ELSE BR.UKETSUKECD END AS uketsukeCd,
+    BK.SHOPCD,
+    SR.SHOP_STATUS AS shopStatus,
+    SR.COMPANY,
+    SR.BUMON,
+    BR.CT_STOP_DT AS ctStopDt,
+    BR.ABL_STOP_DT AS ablStopDt,
+    SK.CT_KEISAI_FLG AS ctKeisaiFlg,
+    SK.ABL_KEISAI_FLG AS ablKeisaiFlg,
+    null AS funcId,
+    SR.CLIENTSYSTEM_TYPE AS clientSystemType,
+    SR.FM_KBN fmKbn,
+    BR.SYOKAI_SHINSA_SKIP_FLG AS syokaiShinsaSkipFlg,
+    BR.TEIKI_SHINSA_SKIP_FLG AS teikiShinsaSkipFlg,
+    SR.CT_STATUS AS ctStatus,
+    SR.ABL_STATUS AS ablStatus,
+    BR.AUTODEL_SKIP_FLG autoDelSkipFlg,
+    CHANGE_SOURCE_KBN AS changeSourceKbn,
+    MR.RENDO_NAME AS rendoName,
+    <![CDATA[
+    CASE WHEN WARNINGCD = '0' THEN 'o' ELSE '--' END syokaiWarningCd,
+    CASE WHEN WARNINGCD = '0' AND WR.STATUS_KBN = '0' THEN '未送信'
+         WHEN WARNINGCD = '0' AND WR.STATUS_KBN = '1' THEN TO_CHAR(WR.AUTODEL_START_DT + #syokaiAutoDel#,'YYYY/MM/DD')||'<br>削除予定'
+         WHEN WARNINGCD = '0' AND WR.STATUS_KBN > '2' THEN 'x'
+         WHEN WARNINGCD = '0' AND WR.STATUS_KBN = '2' AND WR.SYORI_KBN < '3' THEN 'x'
+         WHEN WARNINGCD = '0' AND WR.STATUS_KBN = '2' AND WR.SYORI_KBN = '3' THEN 'o'
+    ELSE '--' END AS syokaiSyoriKbn,
+    CASE WHEN WARNINGCD > '0' THEN 'o' ELSE '--' END AS teikiWarningCd,
+    CASE WHEN WARNINGCD > '0' AND WR.STATUS_KBN = '0' THEN '未送信'
+         WHEN WARNINGCD > '0' AND WR.STATUS_KBN = '1' THEN TO_CHAR(WR.AUTODEL_START_DT + #teikiAutoDel#,'YYYY/MM/DD')||'<br>削除予定'
+         WHEN WARNINGCD > '0' AND WR.STATUS_KBN > '2' THEN 'x'
+         WHEN WARNINGCD > '0' AND WR.STATUS_KBN = '2' AND WR.SYORI_KBN < '3' THEN 'x'
+         WHEN WARNINGCD > '0' AND WR.STATUS_KBN = '2' AND WR.SYORI_KBN = '3' THEN 'o'
+         ELSE '--' END AS teikiSyoriKbn,
+	CASE WHEN CKB.PK_BUKKEN_RIREKI IS NOT NULL THEN TRUNC(SYSDATE-BR.SHINSA_START_DT) ELSE NULL END AS elapsedDays
+    ]]>
+
+    FROM
+      BUKKEN_KANRI BK
+    INNER JOIN BUKKEN_RIREKI BR
+        ON BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST AND
+           BR.NEW_OLD_KBN = '1'
+    INNER JOIN SHOP_KANRI SK
+        ON SK.SHOPCD = BK.SHOPCD
+    INNER JOIN SHOP_RIREKI SR
+        ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+    LEFT OUTER JOIN WEB_WARNING_RIREKI WR
+        ON WR.ROOM_KEY = BK.ROOM_KEY AND
+           WR.WARNING_RIREKI_SEQ IN (SELECT MAX(WARNING_RIREKI_SEQ) FROM WEB_WARNING_RIREKI GROUP BY ROOM_KEY)
+    LEFT OUTER JOIN CT_KEISAI_BUKKEN CKB
+        ON CKB.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+    LEFT OUTER JOIN MST_RENDO MR
+		ON MR.RENDO_CD = SR.RENDO_CD
+	LEFT OUTER JOIN BUKKEN_RIREKI_SHOP BRS
+		ON BRS.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST AND
+		   BRS.AGENCY_SHOPCD = BK.SHOPCD
+  </sql>
+
+  <sql id="bukkenReviewSearchWhere">
+  	<isNotEmpty prepend="AND" property="companyBumon">
+        (SR.COMPANY || SR.BUMON LIKE'%'||#companyBumon#||'%')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="bkKanriShopcd">
+        BK.SHOPCD = #bkKanriShopcd#
+        AND BK.BKCD = #bkKanriBkcd#
+        AND BK.ROOMNO = #bkKanriRoomno#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="bkCd">
+        BK.BKCD = LPAD(#bkCd#, '15', '0')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="roomNo">
+        BK.ROOMNO = LPAD(#roomNo#, '4', '0')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="roomCd">
+		BR.ROOMCD = #roomCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="shopStatus">
+        SR.SHOP_STATUS = #shopStatus#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="bkName">
+        <isEqual compareValue="0" property="searchType">
+			(BR.BKNAME LIKE #bkName#||'%' OR BR.BKKANA LIKE #bkName#||'%')
+		</isEqual>
+		<isEqual compareValue="1" property="searchType">
+			(BR.BKNAME LIKE '%'||#bkName#||'%' OR BR.BKKANA LIKE '%'||#bkName#||'%')
+		</isEqual>
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="prefCd">
+        BR.PREFCD = #prefCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="sendDtFrom">
+        <![CDATA[
+        TRUNC(WR.WARNING_DT) >= #sendDtFrom:DATE#
+        ]]>
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="sendDtTo">
+        <![CDATA[
+        TRUNC(WR.WARNING_DT) <= #sendDtTo:DATE#
+        ]]>
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="shinsaStartDtFrom">
+        <isNotEmpty property="shinsaStartDtTo">
+          CKB.PK_BUKKEN_RIREKI IS NOT NULL AND BR.SHINSA_START_DT Between Trunc(Sysdate) - #shinsaStartDtTo:NUMBER# And Trunc(Sysdate) - #shinsaStartDtFrom:NUMBER#
+        </isNotEmpty>
+        <isEmpty property="shinsaStartDtTo" >
+          <![CDATA[
+          CKB.PK_BUKKEN_RIREKI IS NOT NULL AND BR.SHINSA_START_DT <= Trunc(Sysdate) - #shinsaStartDtFrom:NUMBER#
+	      ]]>
+        </isEmpty>
+      </isNotEmpty>
+      <isEmpty  prepend="AND" property="shinsaStartDtFrom">
+        <isNotEmpty property="shinsaStartDtTo">
+          <![CDATA[
+            CKB.PK_BUKKEN_RIREKI IS NOT NULL AND BR.SHINSA_START_DT >= Trunc(Sysdate) - #shinsaStartDtTo:NUMBER#
+          ]]>
+        </isNotEmpty>
+      </isEmpty>
+  </sql>
+
+  <sql id="bukkenReviewSearchWhereWarning">
+  	<dynamic prepend="AND" open="(" close=")">
+  	  <isEqual property="warningCd01statusKbn01" compareValue="1" prepend="OR">
+        CASE WHEN WARNINGCD = '0' AND (WR.STATUS_KBN = '0' OR WR.STATUS_KBN = '1') THEN '1' ELSE '0' END = '1'
+      </isEqual>
+      <isEqual property="warningCd01statusKbn02" compareValue="1" prepend="OR">
+        <![CDATA[
+        CASE WHEN WARNINGCD = '0' AND WR.STATUS_KBN = '2' AND SYORI_KBN < 3 THEN '1' ELSE '0' END = '1'
+        ]]>
+      </isEqual>
+      <isEqual property="warningCd01statusKbn03" compareValue="1" prepend="OR">
+        CASE WHEN WARNINGCD = '0' AND WR.STATUS_KBN = '2' AND SYORI_KBN = 3 THEN '1' ELSE '0' END = '1'
+      </isEqual>
+      <isEqual property="warningCd01statusKbn04" compareValue="1" prepend="OR">
+        CASE WHEN WARNINGCD = '0' AND WR.STATUS_KBN = '0' THEN '1' ELSE '0' END = '1'
+      </isEqual>
+      <isEqual property="warningCd02statusKbn01" compareValue="1" prepend="OR">
+        CASE WHEN WARNINGCD = '1' AND (WR.STATUS_KBN = '0' OR WR.STATUS_KBN = '1') THEN '1' ELSE '0' END = '1'
+      </isEqual>
+      <isEqual property="warningCd02statusKbn02" compareValue="1" prepend="OR">
+        <![CDATA[
+        CASE WHEN WARNINGCD = '1' AND WR.STATUS_KBN = '2' AND SYORI_KBN < 3 THEN '1' ELSE '0' END = '1'
+        ]]>
+      </isEqual>
+      <isEqual property="warningCd02statusKbn03" compareValue="1" prepend="OR">
+        CASE WHEN WARNINGCD = '1' AND WR.STATUS_KBN = '2' AND SYORI_KBN = 3 THEN '1' ELSE '0' END = '1'
+      </isEqual>
+      <isEqual property="warningCd02statusKbn04" compareValue="1" prepend="OR">
+        CASE WHEN WARNINGCD = '1' AND WR.STATUS_KBN = '0' THEN '1' ELSE '0' END = '1'
+      </isEqual>
+      <isEqual property="warningCd03statusKbn01" compareValue="1" prepend="OR">
+        CASE WHEN WARNINGCD = '2' AND (WR.STATUS_KBN = '0' OR WR.STATUS_KBN = '1') THEN '1' ELSE '0' END = '1'
+      </isEqual>
+      <isEqual property="warningCd03statusKbn02" compareValue="1" prepend="OR">
+        <![CDATA[
+          CASE WHEN WARNINGCD = '2' AND WR.STATUS_KBN = '2' AND SYORI_KBN < 3 THEN '1' ELSE '0' END = '1'
+        ]]>
+      </isEqual>
+      <isEqual property="warningCd03statusKbn03" compareValue="1" prepend="OR">
+        CASE WHEN WARNINGCD = '2' AND WR.STATUS_KBN = '2' AND SYORI_KBN = 3 THEN '1' ELSE '0' END = '1'
+      </isEqual>
+      <isEqual property="warningCd03statusKbn04" compareValue="1" prepend="OR">
+        CASE WHEN WARNINGCD = '2' AND WR.STATUS_KBN = '0' THEN '1' ELSE '0' END = '1'
+      </isEqual>
+    </dynamic>
+  </sql>
+
+  <!-- 物件検索一覧(総件数、一覧取得公用部) -->
+  <sql id="bukkenSearch">
+  		(
+  	<include refid="bukkenReviewSearchSelect"/>
+    <dynamic prepend="WHERE">
+      <isNotEmpty prepend="AND" property="shopCd">
+        BK.SHOPCD = #shopCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="uketsukeCd">
+		BR.UKETSUKECD = #uketsukeCd#
+	  </isNotEmpty>
+      <include refid="bukkenReviewSearchWhere"/>
+    </dynamic>
+    <include refid="bukkenReviewSearchWhereWarning"/>
+		)
+
+	<dynamic prepend="UNION" open="(" close=")">
+		<isNotEmpty property="shopCdorUketukeCd">
+			<include refid="bukkenReviewSearchSelect"/>
+			WHERE
+			EXISTS(SELECT 'X' FROM BUKKEN_RIREKI_SHOP BRS2
+                   WHERE BRS2.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+                   <isNotEmpty property="shopCd" >
+                     AND BRS2.AGENCY_SHOPCD = #shopCd#
+                   </isNotEmpty>
+                   <isNotEmpty property="uketsukeCd" >
+                     AND BRS2.UKETSUKECD = #uketsukeCd#
+                   </isNotEmpty>
+                   )
+            <isNotEmpty property="shopCdorUketukeCd" prepend="AND">
+            	<include refid="bukkenReviewSearchWhere"/>
+            	<include refid="bukkenReviewSearchWhereWarning"/>
+            </isNotEmpty>
+		</isNotEmpty>
+	</dynamic>
+	<!--
+	<dynamic prepend="UNION" open="(" close=")">
+		<isNotEmpty property="shopCd">
+			<include refid="bukkenReviewSearchSelect"/>
+			WHERE
+			EXISTS(SELECT 'X' FROM BUKKEN_RIREKI_SHOP BRS2
+                   WHERE BRS2.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+                     AND BRS2.AGENCY_SHOPCD = #shopCd#
+                   )
+            <isNotEmpty property="shopCd" prepend="AND">
+            	<include refid="bukkenReviewSearchWhere"/>
+            	<include refid="bukkenReviewSearchWhereWarning"/>
+            </isNotEmpty>
+		</isNotEmpty>
+	</dynamic>
+
+	<dynamic prepend="UNION" open="(" close=")">
+		<isNotEmpty property="uketsukeCd">
+			<include refid="bukkenReviewSearchSelect"/>
+			WHERE
+			EXISTS(SELECT 'X' FROM BUKKEN_RIREKI_SHOP BRS2
+                   WHERE BRS2.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+                     AND BRS2.UKETSUKECD = #uketsukeCd#
+                   )
+            <isNotEmpty property="uketsukeCd" prepend="AND">
+            	<include refid="bukkenReviewSearchWhere"/>
+            	<include refid="bukkenReviewSearchWhereWarning"/>
+            </isNotEmpty>
+		</isNotEmpty>
+	</dynamic>
+	 -->
+	ORDER BY kanriCd
+  </sql>
+
+  <!-- 物件検索一覧(総件数取得) -->
+  <select id="selectBukkenTotalCnt"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenSearchParamBean"
+          resultClass="int">
+      SELECT COUNT(*) FROM
+       (<include refid="bukkenSearch"/>)
+  </select>
+
+  <!-- 物件検索一覧取得 -->
+  <select id="selectBukken"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenSearchParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewBukkenSearchDomain">
+
+    <include refid="bukkenSearch"/>
+   </select>
+
+  <!-- 物件詳細取得(審査状況) -->
+  <select id="selectReviewStatus"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenInfoParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewBukkenInfoDomain">
+  SELECT
+    BR.SYOKAI_SHINSA_SKIP_FLG AS SYOKAISKIPFLG,
+    BR.TEIKI_SHINSA_SKIP_FLG AS TEIKISKIPFLG,
+    BR.AUTODEL_SKIP_FLG AS AUTODELSKIPFLG,
+    BR.SHINSA_SKIP_BIKOU AS SHINSASKIPBIKOU,
+    BR.SHINSA_BUKKEN_STATUS_BIKOU AS SHINSABUKKENSTATUSBIKOU,
+    WR.WARNINGCD AS WARNINGCD,
+    WR.STATUS_KBN AS STATUSKBN,
+    WR.SYORI_KBN AS SYORIKBN,
+    TO_CHAR(WR.AUTODEL_START_DT + #syokaiAutoDel#,'YYYY/MM/DD') AS syokaiAutoDelDt,
+    TO_CHAR(WR.AUTODEL_START_DT + #teikiAutoDel#,'YYYY/MM/DD') AS teikiAutoDelDt,
+    TO_CHAR(BR.SHINSA_START_DT,'YYYY/MM/DD') AS shinsaStartDt,
+    CASE WHEN CKB.PK_BUKKEN_RIREKI IS NOT NULL THEN TRUNC(SYSDATE-BR.SHINSA_START_DT) ELSE NULL END AS elapsedDays
+  FROM
+    BUKKEN_KANRI BK
+  INNER JOIN BUKKEN_RIREKI BR
+      ON BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+  LEFT OUTER JOIN WEB_WARNING_RIREKI WR
+        ON WR.ROOM_KEY = BK.ROOM_KEY AND
+           WR.WARNING_RIREKI_SEQ IN (SELECT MAX(WARNING_RIREKI_SEQ) FROM WEB_WARNING_RIREKI GROUP BY ROOM_KEY)
+  LEFT OUTER JOIN CT_KEISAI_BUKKEN CKB
+        ON CKB.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+  WHERE
+    BK.ROOM_KEY = #roomKey#
+  </select>
+
+  <!-- 物件詳細取得(審査履歴) -->
+  <select id="selectReviewHistory"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenInfoParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewBukkenInfoDomain">
+  SELECT
+    TO_CHAR(WR.SEND_DT ,'YYYYMMDD') AS SENDDT,
+    TO_CHAR(SYORI_DT,'YYYYMMDD') AS SYORIDT,
+    MW.WARNING_NAME AS WARNINGNAME,
+    WR.STATUS_KBN AS STATUSKBN,
+    WR.VACANT_YMD AS VACANTYMD,
+    WR.SHINCHIKU_FLG AS SHINCHIKUFLG,
+    WR.LAST_CONFIRM_YMD AS LASTCONFIRMYMD,
+    WR.SYORI_KBN AS SYORIKBN,
+    WR.BIKOU,
+    WR.WARNING_RIREKI_SEQ AS warningRirekiSeq,
+    TO_CHAR(WR.WARNING_DT ,'YYYYMMDD') AS WARNINGDT
+  FROM
+    BUKKEN_KANRI BK
+  INNER JOIN
+    WEB_WARNING_RIREKI WR ON BK.ROOM_KEY=WR.ROOM_KEY
+  INNER JOIN
+    WEB_MST_WARNING MW ON WR.WARNINGCD=MW.WARNINGCD
+  WHERE
+    STATUS_KBN Between '0' AND '6' AND
+    BK.ROOM_KEY = #roomKey#
+  ORDER BY WR.WARNING_RIREKI_SEQ DESC
+  </select>
+
+  <sql id="commonBukkenStatusInfo">
+    SELECT
+      BK.SHOPCD,
+      SR.SHOP_STATUS AS shopStatus,
+      SR.COMPANY,
+      SR.BUMON,
+      SK.CT_KEISAI_FLG AS ctKeisaiFlg,
+      SK.ABL_KEISAI_FLG AS ablKeisaiFlg,
+      SR.CLIENTSYSTEM_TYPE AS clientSystemType,
+      BK.SHOPCD || '-' || BK.BKCD || '-' || BK.ROOMNO AS kanriCd,
+      '' as bkStatus, <!-- BK.BUKKEN_STATUS AS bkStatus, -->
+      BR.BKNAME,
+      '' as bukkenStatusShinsa, <!-- BK.BUKKEN_STATUS_SHINSA AS bukkenStatusShinsa, -->
+      WR.WARNINGCD AS warningCd,
+      WR.STATUS_KBN AS statusKbn,
+      WR.SYORI_KBN AS syoriKbn,
+      TO_CHAR(WR.AUTODEL_START_DT + #syokaiAutoDel#,'YYYY/MM/DD') AS syokaiAutoDelDt,
+      TO_CHAR(WR.AUTODEL_START_DT + #teikiAutoDel#,'YYYY/MM/DD') AS teikiAutoDelDt,
+      BR.SYOKAI_SHINSA_SKIP_FLG AS syokaiShinsaSkipFlg,
+      BR.TEIKI_SHINSA_SKIP_FLG AS teikiShinsaSkipFlg,
+      BR.AUTODEL_SKIP_FLG AS autoDelSkipFlg,
+      BR.SHINSA_SKIP_BIKOU AS shinsaSkipBikou,
+      TO_CHAR(BK.UPD_DT, 'YYYY/MM/DD HH24:MI:SS.FF') AS updDt,
+      BR.CT_STOP_DT AS ctStopDt,
+      BR.ABL_STOP_DT AS ablStopDt,
+      null AS funcId,
+      SR.CT_STATUS AS ctStatus,
+      SR.ABL_STATUS AS ablStatus,
+      BK.ROOM_KEY AS roomKey,
+      CHANGE_SOURCE_KBN AS changeSourceKbn,
+      MR.RENDO_NAME AS rendoName
+    FROM
+      BUKKEN_KANRI BK
+    INNER JOIN
+      SHOP_KANRI SK ON SK.SHOPCD = BK.SHOPCD
+    INNER JOIN
+      BUKKEN_RIREKI BR ON BK.PK_BUKKEN_RIREKI_LAST = BR.PK_BUKKEN_RIREKI
+    INNER JOIN
+      SHOP_RIREKI SR ON SK.PK_SHOP_RIREKI_LAST=SR. PK_SHOP_RIREKI
+    LEFT JOIN
+      WEB_WARNING_RIREKI WR
+          ON WR.ROOM_KEY = BK.ROOM_KEY AND
+             WR.WARNING_RIREKI_SEQ IN (SELECT MAX(WARNING_RIREKI_SEQ) FROM WEB_WARNING_RIREKI GROUP BY ROOM_KEY)
+    LEFT OUTER JOIN
+	  MST_RENDO MR ON MR.RENDO_CD = SR.RENDO_CD
+    WHERE
+      BK.ROOM_KEY = #roomKey#
+  </sql>
+
+  <!-- 物件対象外設定変更(物件情報取得用) -->
+  <select id="selectBukkenStatusInfo"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenStatusUpdatePageParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewBukkenStatusUpdateDomain">
+    <include refid="commonBukkenStatusInfo"/>
+  </select>
+
+  <!-- 物件対象外設定変更確認(物件情報取得用) -->
+  <select id="selectBukkenStatusConfirmInfo"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenStatusUpdateConfirmParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewBukkenStatusUpdateDomain">
+    <include refid="commonBukkenStatusInfo"/>
+  </select>
+
+  <!-- 物件対象外設定変更(更新) -->
+  <!--
+  <update id="updateBukkenStatus"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenStatusUpdateCommitParamBean">
+    UPDATE
+      BUKKEN_KANRI
+    SET
+      SYOKAI_SHINSA_SKIP_FLG = #syokaiShinsaSkipFlg#,
+      TEIKI_SHINSA_SKIP_FLG  = #teikiShinsaSkipFlg#,
+      AUTODEL_SKIP_FLG       = #autoDelSkipFlg#,
+      SHINSA_SKIP_BIKOU      = #shinsaSkipBikou#,
+      UPD_DT                 = SYSTIMESTAMP,
+      UPD_PG                 = #updPg#,
+      UPD_ID                 = #updId#,
+      ADMIN_UPD_DT           = SYSDATE
+    WHERE
+      SHOPCD = #shopCd# AND
+      BKCD   = #bkCd#   AND
+      ROOMNO = #roomNo# AND
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS.FF') = #updDt#
+  </update>
+  -->
+
+  <!-- 2014/06 kashiyama add start -->
+
+  <select id="selectPkShopRireki"
+    resultClass="java.lang.Long">
+    SELECT SEQ_PK_SHOP_RIREKI.nextval as pkShopRireki FROM DUAL
+  </select>
+
+  <!-- 物件履歴登録-->
+  <insert id="shopRirekiAddCommit"
+    parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopRirekiAddParamBean">
+
+    INSERT INTO SHOP_RIREKI_CRE_REQ(
+      PK_SHOP_RIREKI,
+      CRE_REQ_SEQ,
+      SHOPCD,
+      COMMON_NO,
+      SYORI_REQ_KBN,
+      CRE_REQ_TABLE,
+      CRE_REQ_COL,
+      CRE_REQ_VAL,
+      REQ_KBN,
+      INS_DT,
+      INS_PG,
+      INS_ID,
+      UPD_DT,
+      UPD_PG,
+      UPD_ID
+    ) VALUES (
+      #pkShopRireki#,
+      #creReqSeq#,
+      #shopCd#,
+      #commonNo#,
+      '00',
+      #creReqTable#,
+      #creReqCol#,
+      #creReqVal#,
+      '2',
+      SYSTIMESTAMP,
+      #updPg#,
+      #operUserId#,
+      SYSTIMESTAMP,
+      #updPg#,
+      #operUserId#
+    )
+  </insert>
+  <!-- 2014/06 kashiyama add end -->
+
+  <select id="selectBukkenStatusCheck"
+    parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenStatusUpdateCommitParamBean"
+    resultClass="java.lang.String">
+    SELECT CHANGE_SOURCE_KBN
+    FROM
+      BUKKEN_KANRI BK
+    JOIN
+      BUKKEN_RIREKI BR
+    ON
+      BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+    WHERE
+      BR.ROOM_KEY = #roomKey#
+    AND
+      TO_CHAR(BK.UPD_DT, 'YYYY/MM/DD HH24:MI:SS.FF3') = #updDt#
+  </select>
+
+  <select id="selectPkBukkenRireki"
+    resultClass="java.lang.Long">
+    SELECT SEQ_PK_BUKKEN_RIREKI.nextval as pkBukkenRireki FROM DUAL
+  </select>
+
+  <!-- 物件履歴登録-->
+  <insert id="bukkenRirekiAddCommit"
+    parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenRirekiAddParamBean">
+
+    INSERT INTO BUKKEN_RIREKI_CRE_REQ(
+      PK_BUKKEN_RIREKI,
+      CRE_REQ_SEQ,
+      ROOM_KEY,
+      COMMON_NO,
+      SYORI_REQ_KBN,
+      CRE_REQ_TABLE,
+      CRE_REQ_COL,
+      CRE_REQ_VAL,
+      REQ_KBN,
+      INS_DT,
+      INS_PG,
+      INS_ID,
+      UPD_DT,
+      UPD_PG,
+      UPD_ID
+    ) VALUES (
+      #pkBukkenRireki#,
+      #creReqSeq#,
+      #roomKey#,
+      #commonNo#,
+      #syoriReqKbn#,
+      #creReqTable#,
+      #creReqCol#,
+      #creReqVal#,
+      '2',
+      SYSTIMESTAMP,
+      #updPg#,
+      #operUserId#,
+      SYSTIMESTAMP,
+      #updPg#,
+      #operUserId#
+    )
+  </insert>
+
+  <!-- 物件ステータス管理登録-->
+  <insert id="bukkenStatuKanriAddCommit"
+    parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenStatusAddParamBean">
+
+    INSERT INTO BUKKEN_STATUS_KANRI(
+      PK_BUKKEN_RIREKI,
+      NEW_OLD_KBN,
+      ROOM_KEY,
+      REC_SEND_STATUS,
+      CT_FRONT_SEND_RESULT_KBN,
+      ABL_FRONT_SEND_RESULT_KBN,
+      BK_BUKKEN_RIREKI,
+      IMG_ID,
+      IMG_BASE_DT,
+      IMG_CHK_DT,
+      INS_DT,
+      INS_PG,
+      INS_ID,
+      UPD_DT,
+      UPD_PG,
+      UPD_ID
+    ) VALUES (
+      #pkBukkenRireki#,
+      '1',
+      #roomKey#,
+      '11',
+      '0',
+      '0',
+      null,
+      null,
+      null,
+      null,
+      SYSTIMESTAMP,
+      #updPg#,
+      #updId#,
+      SYSTIMESTAMP,
+      #updPg#,
+      #updId#
+    )
+  </insert>
+  <!-- 2014/06 kashiyama add end -->
+
+  <sql id="commonWebStatusInfo">
+    SELECT
+      BK.SHOPCD,
+      SR.SHOP_STATUS AS shopStatus,
+      SR.COMPANY,
+      SR.BUMON,
+      SK.CT_KEISAI_FLG AS ctKeisaiFlg,
+      SK.ABL_KEISAI_FLG AS ablKeisaiFlg,
+      SR.CLIENTSYSTEM_TYPE AS clientSystemType,
+      BK.SHOPCD || '-' || BK.BKCD || '-' || BK.ROOMNO AS kanriCd,
+      '' as bkStatus, <!-- BK.BUKKEN_STATUS AS bkStatus, -->
+      BR.SHINSA_BUKKEN_STATUS_BIKOU AS shinsaBukkenStatusBikou,
+      BR.BKNAME,
+      '' as bukkenStatusShinsa, <!-- BK.BUKKEN_STATUS_SHINSA AS bukkenStatusShinsa, -->
+      WR.WARNINGCD AS warningCd,
+      WR.STATUS_KBN AS statusKbn,
+      WR.SYORI_KBN AS syoriKbn,
+      TO_CHAR(WR.AUTODEL_START_DT + #syokaiAutoDel#,'YYYY/MM/DD') AS syokaiAutoDelDt,
+      TO_CHAR(WR.AUTODEL_START_DT + #teikiAutoDel#,'YYYY/MM/DD') AS teikiAutoDelDt,
+      TO_CHAR(BK.UPD_DT, 'YYYY/MM/DD HH24:MI:SS.FF') AS updDt,
+      BR.CT_STOP_DT AS ctStopDt,
+      BR.ABL_STOP_DT AS ablStopDt,
+      null AS funcId,
+      SR.CT_STATUS AS ctStatus,
+      SR.ABL_STATUS AS ablStatus,
+      BK.ROOM_KEY AS roomKey,
+      CHANGE_SOURCE_KBN AS changeSourceKbn,
+      MR.RENDO_NAME AS rendoName
+    FROM
+      BUKKEN_KANRI BK
+    INNER JOIN
+      SHOP_KANRI SK ON SK.SHOPCD = BK.SHOPCD
+    INNER JOIN
+      BUKKEN_RIREKI BR ON BK.PK_BUKKEN_RIREKI_LAST = BR.PK_BUKKEN_RIREKI
+    INNER JOIN
+      SHOP_RIREKI SR ON SK.PK_SHOP_RIREKI_LAST=SR. PK_SHOP_RIREKI
+    LEFT JOIN
+      WEB_WARNING_RIREKI WR
+          ON WR.ROOM_KEY = BK.ROOM_KEY AND
+             WR.WARNING_RIREKI_SEQ IN (SELECT MAX(WARNING_RIREKI_SEQ) FROM WEB_WARNING_RIREKI GROUP BY ROOM_KEY)
+    LEFT OUTER JOIN
+      MST_RENDO MR ON MR.RENDO_CD = SR.RENDO_CD
+    WHERE
+      BK.ROOM_KEY = #roomKey#
+  </sql>
+
+  <!-- CHINTAI.NET掲載状況(入力画面表示情報) -->
+  <select id="selectBukkenWebStatusInfo"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenWebStatusUpdatePageParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewBukkenWebStatusUpdateDomain">
+    <include refid="commonWebStatusInfo"/>
+  </select>
+
+  <!-- CHINTAI.NET掲載状況(確認画面の物件情報) -->
+  <select id="selectBukkenWebStatusConfirmInfo"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenWebStatusUpdateConfirmParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewBukkenWebStatusUpdateDomain">
+    <include refid="commonWebStatusInfo"/>
+  </select>
+
+  <!-- CHINTAI.NET掲載状況変更(更新) -->
+  <update id="updateBukkenWebStatus"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenWebStatusUpdateCommitParamBean">
+    UPDATE
+      BUKKEN_KANRI
+    SET
+      BUKKEN_STATUS_SHINSA       = #bukkenStatusShinsaInput#,
+      SHINSA_BUKKEN_STATUS_BIKOU = #shinsaBukkenStatusBikou#,
+      UPD_DT       = SYSTIMESTAMP,
+      UPD_PG       = #updPg#,
+      UPD_ID       = #updId#,
+      ADMIN_UPD_DT = SYSDATE
+    WHERE
+      SHOPCD = #shopCd# AND
+      BKCD   = #bkCd#   AND
+      ROOMNO = #roomNo# AND
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS.FF') = #updDt#
+  </update>
+
+  <!-- 2014/06 kashiyama add start -->
+  <!-- CHINTAI.NET掲載状況変更(チェック) -->
+  <select id="selectBukkenWebStatus"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenWebStatusUpdateCommitParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewBukkenWebStatusDomain">
+      SELECT
+        BR.CHANGE_SOURCE_KBN as changeSourceKbn,
+        CT_STOP_DT as ctStopDt
+      FROM
+        BUKKEN_KANRI BK
+      JOIN
+        BUKKEN_RIREKI BR
+      ON
+        BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+      WHERE
+        BR.ROOM_KEY = #roomKey#
+      AND
+        TO_CHAR(BK.UPD_DT, 'YYYY/MM/DD HH24:MI:SS.FF3') = #updDt#
+  </select>
+  <!-- 2014/06 kashiyama end start -->
+
+  <sql id="commonReturnMailInfo">
+    SELECT
+      BK.SHOPCD,
+      BK.BKCD,
+      BK.ROOMNO,
+      BR.BKNAME,
+      BR.BKKANA,
+      BRE.ENSENCD AS ensencd,
+      BRE.OTHER_TRANS_NAME AS otherTransName,
+      BRE.OTHER_TRANS_PLATFORM AS otherTransPlatform,
+     (SELECT MES.ENSENNAME FROM MST_ENSEN MES WHERE MES.ENSENCD = BRE.ENSENCD) AS ensenname,
+     (SELECT MEK.EKINAME FROM MST_EKI MEK WHERE MEK.EKICD = BRE.EKICD AND MEK.ENSENCD = BRE.ENSENCD) AS ekiname,
+      BR.SHOZAICHI,
+
+      BRE.EKI_TOHO AS ekiToho,
+      BRE.BUS AS bus,
+      BRE.BUSTEI AS busTei,
+      BRE.BUS_TEIHO AS busTeiho,
+      BRE.CAR AS car,
+      BRE.CAR_KYORI AS carKyori,
+
+      BR.CHINRYO,
+      BR.KANRI_KIN AS kanriKin,
+      BR.REI_KIN AS reiKin,
+      BR.SHIKI_KIN AS shikiKin,
+      BR.HOSHO_KIN AS hoshoKin,
+      BR.KAIYAKU_KIN AS kaiyakuKin,
+      <!-- 2009/07 単位表示バグ修正　開始 -->
+      BR.SHOUKYAKU_KIN AS shoukyakuKin,
+      BR.REI_TAN AS reiTan,
+      BR.SHIKI_TAN AS shikiTan,
+      BR.HOSHO_TAN AS hoshoTan,
+      BR.KAIYAKU_TAN AS kaiyakuTan,
+      BR.SHOUKYAKU_TAN AS shoukyakuTan,
+      <!-- 2009/07 単位表示バグ修正　終了 -->
+      MMD.MADORI || BR.MADORICD_PLUS AS MADORI,
+      BR.SEN_MENSEKI AS senMenseki,
+      MSB.SHUBETSU,
+      MKZ.KOUZOU,
+      BR.CHIKUNEN,
+      BR.TORIHIKIKEITAI,
+      CASE WHEN BRS.UKETSUKECD IS NOT NULL THEN BRS.UKETSUKECD ELSE BR.UKETSUKECD END AS uketsukeCd,
+      WR.WARNING_RIREKI_SEQ AS warningRirekiSeq,
+      WR.WARNINGCD,
+      TO_CHAR(WR.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS updDt,
+      TO_CHAR(BK.UPD_DT, 'YYYY-MM-DD HH24:MI:SS.FF3') AS kanriUpdDt
+    FROM
+      BUKKEN_KANRI BK
+	INNER JOIN (BUKKEN_RIREKI BR
+				LEFT JOIN MST_MADORI MMD
+						ON MMD.MADORICD = BR.MADORICD
+				LEFT JOIN MST_SHUBETSU MSB
+						ON MSB.SHUBETSUCD = BR.SHUBETSUCD
+				LEFT JOIN MST_KOUZOU MKZ
+						ON MKZ.KOUZOUCD = BR.KOUZOUCD
+				LEFT JOIN (
+						SELECT * FROM (
+							SELECT BRE.* FROM BUKKEN_RIREKI_EKI BRE
+							INNER JOIN BUKKEN_KANRI BK
+							ON BK.PK_BUKKEN_RIREKI_LAST = BRE.PK_BUKKEN_RIREKI
+							INNER JOIN  BUKKEN_RIREKI BR
+							ON BR.PK_BUKKEN_RIREKI = BRE.PK_BUKKEN_RIREKI
+							WHERE
+										BK.ROOM_KEY = #roomKey#
+							ORDER BY BRE.ENTRY_NO
+							)
+							WHERE ROWNUM=1
+				) BRE
+						ON BRE.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+			)
+		ON BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+	INNER JOIN BUKKEN_STATUS_KANRI BSK
+		ON BSK.PK_BUKKEN_RIREKI = BR.PK_BUKKEN_RIREKI
+	INNER JOIN SHOP_KANRI SK
+		ON SK.SHOPCD = BK.SHOPCD
+	INNER JOIN SHOP_RIREKI SR
+		ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+    INNER JOIN WEB_WARNING_RIREKI WR
+        ON WR.ROOM_KEY = BK.ROOM_KEY AND
+           WR.WARNING_RIREKI_SEQ IN (SELECT MAX(WARNING_RIREKI_SEQ) FROM WEB_WARNING_RIREKI GROUP BY ROOM_KEY)
+    LEFT OUTER JOIN BUKKEN_RIREKI_SHOP BRS
+		ON BRS.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST AND
+		BRS.AGENCY_SHOPCD = BK.SHOPCD
+    WHERE
+      WR.ROOM_KEY = #roomKey#
+  </sql>
+
+  <!-- 返信入力画面初期表示情報取得用 -->
+  <select id="selectReturnMailInfo"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewReplayPageParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewReplayDomain">
+    <include refid="commonReturnMailInfo"/>
+  </select>
+  <!-- 返信入力確認画面 -->
+  <select id="selectReturnMailConfirmInfo"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewReplayConfirmParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewReplayDomain">
+    <include refid="commonReturnMailInfo"/>
+  </select>
+
+  <!-- 返信入力変更(更新1-警告履歴テーブル更新) -->
+  <update id="updateWarningRireki"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewReplayCommitParamBean">
+    UPDATE
+      WEB_WARNING_RIREKI
+    SET
+      STATUS_KBN       = '2',
+      SYORI_DT         = SYSDATE,
+      <isNotEmpty property="shinchikuFlg" close=",">
+      SHINCHIKU_FLG    = #shinchikuFlg#
+      </isNotEmpty>
+      <isNotEmpty property="vacantYmd" close=",">
+      VACANT_YMD       = #vacantYmd#
+      </isNotEmpty>
+      <isNotEmpty property="bikou" close=",">
+      BIKOU            = #bikou#
+      </isNotEmpty>
+      LAST_CONFIRM_YMD = #lastConfirmYmd#,
+      SYORI_KBN        = #syoriKbn#,
+      UPD_DT           = SYSTIMESTAMP,
+      UPD_PG           = #updPg#,
+      UPD_ID           = #updId#
+    WHERE
+      SHOPCD = #shopCd# AND
+      BKCD   = #bkCd#   AND
+      ROOMNO = #roomNo# AND
+      WARNING_RIREKI_SEQ = #warningRirekiSeq# AND
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+  </update>
+  <!-- 返信入力変更(更新2-物件管理テーブル更新) -->
+  <update id="review.updateBukkenKanri"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewReplayCommitParamBean">
+    UPDATE
+      BUKKEN_KANRI
+    SET
+      <isEqual property="warningCd" compareValue="0">
+        <isEqual property="syoriKbn" compareValue="1">
+          BUKKEN_STATUS_SHINSA = '0',
+        </isEqual>
+        <isEqual property="syoriKbn" compareValue="2">
+          BUKKEN_STATUS_SHINSA = '0',
+        </isEqual>
+        <isEqual property="syoriKbn" compareValue="3">
+          SYOKAI_SHINSA_SKIP_FLG = '1',
+        </isEqual>
+      </isEqual>
+      <isNotEqual property="warningCd" compareValue="0">
+        <isEqual property="syoriKbn" compareValue="1">
+          BUKKEN_STATUS_SHINSA = '0',
+        </isEqual>
+        <isEqual property="syoriKbn" compareValue="2">
+          BUKKEN_STATUS_SHINSA = '0',
+        </isEqual>
+      </isNotEqual>
+      UPD_DT       = SYSTIMESTAMP,
+      UPD_PG       = #updPg#,
+      UPD_ID       = #updId#,
+      ADMIN_UPD_DT = SYSDATE
+    WHERE
+      SHOPCD = #shopCd# AND
+      BKCD   = #bkCd#   AND
+      ROOMNO = #roomNo# AND
+      TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #kanriUpdDt#
+
+  </update>
+
+  <!-- 2014/06 kashiyama add start -->
+  <select id="selectBukkenReviewReplayStatusCheck"
+    parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewReplayCommitParamBean"
+    resultClass="int">
+    SELECT COUNT(*)
+    FROM
+      BUKKEN_KANRI BK
+    JOIN
+      BUKKEN_RIREKI BR
+    ON
+      BR.PK_BUKKEN_RIREKI = BK.PK_BUKKEN_RIREKI_LAST
+    WHERE
+      BR.ROOM_KEY = #roomKey#
+    AND
+      TO_CHAR(BK.UPD_DT, 'YYYY-MM-DD HH24:MI:SS.FF3') = #updDt#
+  </select>
+
+  <procedure id="procWebShinsaStatusKbnUpd"
+    parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewReplayCommitParamBean">
+<!--      {call PROC_WEB_SHINSA_STATUS_KBN_UPD(#shopCd#,#roomKey#,#shinchikuFlg#,#vacantYmd#,#lastConfirmYmd#,#syoriKbn#,#bikou#,1) }
+-->
+    {call PKG_CRSP_IF.PROC_WEB_SHINSA_STATUS_KBN_UPD (#shopCd#,#roomKey#,#shinchikuFlg#,#vacantYmd#,#lastConfirmYmd#,#syoriKbn#,#bikou#,1,#updId#) }
+  </procedure>
+  <!-- 2014/06 kashiyama add end -->
+
+  <!-- 店舗別出稿状況集計取得(集計時間取得) -->
+  <select id="selectShopCntTime"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewShopMediaCountDomain">
+    SELECT
+      to_char(MAX(UPD_DT), 'YYYY/MM/DD HH24:MI') AS cntTime
+    FROM WEB_BUKKEN_COUNT_SHOP_SUM
+  </select>
+
+  <!-- 店舗別出稿状況集計取得(総件数取得) -->
+  <select id="shopMediaCnt"
+          resultClass="int"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopMediaCountParamBean">
+    SELECT
+      Count(*)
+    FROM
+      (
+        SELECT
+          SK.SHOPCD
+        FROM
+          SHOP_KANRI SK
+        INNER JOIN
+          SHOP_RIREKI SR ON SK.PK_SHOP_RIREKI_LAST = SR.PK_SHOP_RIREKI
+        INNER JOIN
+          WEB_BUKKEN_COUNT_SHOP_SUM CSS ON SK.SHOPCD = CSS.SHOPCD
+        WHERE
+          TO_CHAR(CSS.SUM_YMD, 'YYYYMM') BETWEEN SUBSTR(#sumYmdFrom#,1,6) AND SUBSTR(#sumYmdTo#,1,6)
+          <dynamic>
+            <isNotEmpty property="shopCd" prepend="AND">
+              SK.SHOPCD = #shopCd#
+            </isNotEmpty>
+            <isNotEmpty property="prefCd" prepend="AND">
+              SR.PREFCD = #prefCd#
+            </isNotEmpty>
+            <isNotEmpty property="companyBumon" prepend="AND">
+              (SR.COMPANY || SR.BUMON LIKE'%'||#companyBumon#||'%')
+            </isNotEmpty>
+          </dynamic>
+          <![CDATA[
+            AND (SYOKAI_SHINSA_CNT
+                + SYOKAI_SHINSA_CNT
+                + SYOKAI_SHINSA_SKIP_CNT
+                + SYOKAI_SHINSA_DEL_CNT
+                + TEIKI_SHINSA_CNT
+                + TEIKI_SHINSA_DEL_CNT) >0
+          ]]>
+        GROUP BY
+          SK.SHOPCD
+        )
+  </select>
+
+  <!-- 店舗別出稿状況集計取得(一覧集計、総件数取得で使われるFrom部) -->
+  <sql id="ShopMediaCnt">
+  FROM
+    WEB_BUKKEN_COUNT_SHOP_SUM CSS
+  WHERE
+    TO_CHAR(CSS.SUM_YMD, 'YYYYMM') BETWEEN SUBSTR(#sumYmdFrom#,1,6) AND SUBSTR(#sumYmdTo#,1,6)
+  </sql>
+
+  <!-- 店舗別出稿状況集計取得 -->
+  <select id="selectShopMediaCnt"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewShopMediaCountDomain"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopMediaCountParamBean">
+    SELECT
+      SK.SHOPCD,
+      SR.COMPANY,
+      SR.BUMON,
+      SHINSACD,
+      SUM(CNT1) AS CNT1,
+      SUM(CNT2) AS CNT2,
+      SUM(CNT3) AS CNT3,
+      SUM(CNT4) AS CNT4,
+      SUM(CNT5) AS CNT5,
+      SUM(CNT6) AS CNT6,
+      SUM(CNT7) AS CNT7,
+      SUM(CNT8) AS CNT8,
+      SUM(CNT9) AS CNT9,
+      SUM(CNT10) AS CNT10,
+      SUM(CNT11) AS CNT11,
+      SUM(CNT12) AS CNT12
+    FROM SHOP_KANRI SK
+    INNER JOIN
+      SHOP_RIREKI SR ON SR.PK_SHOP_RIREKI = SK.PK_SHOP_RIREKI_LAST
+    INNER JOIN
+      (
+        SELECT
+          SHOPCD,
+          '1' SHINSACD,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[0]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT1,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[1]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT2,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[2]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT3,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[3]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT4,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[4]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT5,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[5]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT6,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[6]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT7,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[7]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT8,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[8]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT9,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[9]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT10,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[10]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT11,
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[11]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT12
+        FROM
+          WEB_BUKKEN_COUNT_SHOP_SUM CSS
+        WHERE
+          TO_CHAR(CSS.SUM_YMD, 'YYYYMM') BETWEEN SUBSTR(#sumYmdFrom#,1,6) AND SUBSTR(#sumYmdTo#,1,6)
+
+        UNION ALL
+        SELECT
+          SHOPCD,
+          '2' SHINSACD,
+          <iterate property="dates" conjunction=",">
+            CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[]# THEN SYOKAI_SHINSA_SKIP_CNT ELSE 0 END
+          </iterate>
+        <include refid="ShopMediaCnt"/>
+
+        UNION ALL
+        SELECT
+          SHOPCD,
+          '3' SHINSACD,
+        <iterate property="dates" conjunction=",">
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[]# THEN SYOKAI_SHINSA_DEL_CNT ELSE 0 END
+        </iterate>
+        <include refid="ShopMediaCnt"/>
+
+        UNION ALL
+        SELECT
+          SHOPCD,
+          '4' SHINSACD,
+        <iterate property="dates" conjunction=",">
+          CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[]# THEN TEIKI_SHINSA_CNT ELSE 0 END
+        </iterate>
+        <include refid="ShopMediaCnt"/>
+
+        UNION ALL
+        SELECT
+          SHOPCD,
+          '5' SHINSACD,
+          <iterate property="dates" conjunction=",">
+            CASE TO_CHAR(CSS.SUM_YMD, 'YYYYMM') WHEN #dates[]# THEN TEIKI_SHINSA_DEL_CNT ELSE 0 END
+          </iterate>
+        <include refid="ShopMediaCnt"/>
+        ) CSS ON CSS.SHOPCD = SK.SHOPCD
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="shopCd" prepend="AND">
+        SK.SHOPCD = #shopCd#
+      </isNotEmpty>
+      <isNotEmpty property="prefCd" prepend="AND">
+        SR.PREFCD = #prefCd#
+      </isNotEmpty>
+      <isNotEmpty property="companyBumon" prepend="AND">
+        (SR.COMPANY || SR.BUMON LIKE'%'||#companyBumon#||'%')
+      </isNotEmpty>
+    </dynamic>
+    GROUP BY
+      SK.SHOPCD,
+      SR.COMPANY,
+      SR.BUMON,
+      SHINSACD
+    ORDER BY
+      SK.SHOPCD,
+      SHINSACD
+  </select>
+
+  <!-- 店舗別出稿状況集計取得(csv) -->
+  <select id="selectShopMediaCntForCsv"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewShopMediaCountDomain"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewShopMediaCountParamBean">
+    SELECT
+      MB.SHOPCD,
+      SR.COMPANY,
+      SR.BUMON,
+      SUM(MB.SYOKAI_SHINSA_CNT) AS syokaiShinsaCnt,
+      SUM(MB.SYOKAI_SHINSA_SKIP_CNT) AS syokaiShinsaSkipCnt,
+      SUM(MB.SYOKAI_SHINSA_DEL_CNT) AS syokaiShinsaDelCnt,
+      SUM(MB.TEIKI_SHINSA_CNT) AS teikiShinsaCnt,
+      SUM(MB.TEIKI_SHINSA_DEL_CNT) AS teikiShinsaDelCnt,
+      TO_CHAR(MB.SUM_YMD, 'YYYYMM') AS sendDt
+    FROM
+      WEB_BUKKEN_COUNT_SHOP_SUM MB
+    INNER JOIN
+      SHOP_RIREKI SR ON SR.SHOPCD = MB.SHOPCD
+    INNER JOIN
+      SHOP_KANRI SK ON SK.PK_SHOP_RIREKI_LAST = SR.PK_SHOP_RIREKI
+    WHERE
+      TO_CHAR(MB.SUM_YMD, 'YYYYMM') BETWEEN SUBSTR(#sumYmdFrom#,1,6) AND SUBSTR(#sumYmdTo#,1,6)
+      <isNotEmpty property="shopCd" prepend="AND">
+        SK.SHOPCD = #shopCd#
+      </isNotEmpty>
+      <isNotEmpty property="prefCd" prepend="AND">
+        SR.PREFCD = #prefCd#
+      </isNotEmpty>
+      <isNotEmpty property="companyBumon" prepend="AND">
+        (SR.COMPANY || SR.BUMON LIKE'%'||#companyBumon#||'%')
+      </isNotEmpty>
+    GROUP BY
+      MB.SHOPCD,
+      SR.COMPANY,
+      SR.BUMON,
+      TO_CHAR(MB.SUM_YMD, 'YYYYMM')
+    ORDER BY
+      MB.SHOPCD,
+      TO_CHAR(MB.SUM_YMD, 'YYYYMM')
+  </select>
+
+  <!-- 都道府県別出稿状況集計(集計時間取得) -->
+  <select id="selectPrefCntTime"
+      resultClass="net.chintai.backend.sysadmin.review.domain.ReviewTodofukenMediaCountDomain">
+    SELECT
+      to_char(MAX(UPD_DT), 'YYYY/MM/DD HH24:MI') AS cntTime
+    FROM WEB_BUKKEN_COUNT_PREF_SUM
+  </select>
+
+  <!-- 都道府県別出稿状況集計(UNION文に繰り替えて使われる部分)-->
+  <sql id="todofukenMediaCnt">
+    FROM
+      WEB_BUKKEN_COUNT_PREF_SUM CPS
+    WHERE
+        TO_CHAR(CPS.SUM_YMD, 'YYYYMM') BETWEEN SUBSTR(#sumYmdFrom#,1,6) AND SUBSTR(#sumYmdTo#,1,6)
+  </sql>
+
+  <!-- 都道府県別出稿状況集計 -->
+  <select id="selectTodofukenMediaCnt"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewTodofukenMediaCountParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewTodofukenMediaCountDomain">
+    SELECT
+      CPS.PREFCD,
+      MP.PREFNAME,
+      SHINSACD,
+      SUM(CNT1) AS CNT1,
+      SUM(CNT2) AS CNT2,
+      SUM(CNT3) AS CNT3,
+      SUM(CNT4) AS CNT4,
+      SUM(CNT5) AS CNT5,
+      SUM(CNT6) AS CNT6,
+      SUM(CNT7) AS CNT7,
+      SUM(CNT8) AS CNT8,
+      SUM(CNT9) AS CNT9,
+      SUM(CNT10) AS CNT10,
+      SUM(CNT11) AS CNT11,
+      SUM(CNT12) AS CNT12
+  FROM
+    MST_PREF MP
+  INNER JOIN
+      (
+        SELECT
+        PREFCD,
+        '1' SHINSACD,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[0]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT1,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[1]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT2,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[2]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT3,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[3]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT4,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[4]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT5,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[5]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT6,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[6]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT7,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[7]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT8,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[8]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT9,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[9]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT10,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[10]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT11,
+        CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[11]# THEN SYOKAI_SHINSA_CNT ELSE 0 END CNT12
+      <include refid="todofukenMediaCnt"/>
+
+      UNION ALL
+      SELECT
+        PREFCD,
+        '2' SHINSACD,
+        <iterate property="dates" conjunction=",">
+          CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[]# THEN SYOKAI_SHINSA_SKIP_CNT ELSE 0 END
+        </iterate>
+      <include refid="todofukenMediaCnt"/>
+
+      UNION ALL
+      SELECT
+        PREFCD,
+        '3' SHINSACD,
+        <iterate property="dates" conjunction=",">
+          CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[]# THEN SYOKAI_SHINSA_DEL_CNT ELSE 0 END
+        </iterate>
+      <include refid="todofukenMediaCnt"/>
+
+      UNION ALL
+      SELECT
+        PREFCD,
+        '4' SHINSACD,
+        <iterate property="dates" conjunction=",">
+          CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[]# THEN TEIKI_SHINSA_CNT ELSE 0 END
+        </iterate>
+      <include refid="todofukenMediaCnt"/>
+
+      UNION ALL
+      SELECT
+        PREFCD,
+        '5' SHINSACD,
+        <iterate property="dates" conjunction=",">
+          CASE TO_CHAR(CPS.SUM_YMD, 'YYYYMM') WHEN #dates[]# THEN TEIKI_SHINSA_DEL_CNT ELSE 0 END
+        </iterate>
+    <include refid="todofukenMediaCnt"/>
+    ) CPS ON CPS.PREFCD = MP.PREFCD
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="prefCd">
+        MP.PREFCD = #prefCd#
+      </isNotEmpty>
+    </dynamic>
+  GROUP BY
+    CPS.PREFCD,
+    MP.PREFNAME,
+    CPS.SHINSACD
+  ORDER BY
+    CPS.PREFCD,
+    CPS.SHINSACD
+  </select>
+
+  <!-- 都道府県別出稿状況集計 -->
+  <select id="selectTodofukenMediaCntForCsv"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewTodofukenMediaCountParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewTodofukenMediaCountDomain">
+    SELECT
+      MP.PREFNAME,
+      SUM(MB.SYOKAI_SHINSA_CNT) AS syokaiShinsaCnt,
+      SUM(MB.SYOKAI_SHINSA_SKIP_CNT) AS syokaiShinsaSkipCnt,
+      SUM(MB.SYOKAI_SHINSA_DEL_CNT) AS syokaiShinsaDelCnt,
+      SUM(MB.TEIKI_SHINSA_CNT) AS teikiShinsaCnt,
+      SUM(MB.TEIKI_SHINSA_DEL_CNT) AS teikiShinsaDelCnt,
+      TO_CHAR(MB.SUM_YMD, 'YYYYMM') AS sendDt
+    FROM
+      WEB_BUKKEN_COUNT_PREF_SUM MB
+    INNER JOIN
+      MST_PREF MP ON MP.PREFCD = MB.PREFCD
+    WHERE
+      TO_CHAR(MB.SUM_YMD, 'YYYYMM') BETWEEN SUBSTR(#sumYmdFrom#,1,6) AND SUBSTR(#sumYmdTo#,1,6)
+    <dynamic>
+      <isNotEmpty property="prefCd" prepend="AND">
+        MP.PREFCD = #prefCd#
+      </isNotEmpty>
+    </dynamic>
+    GROUP BY
+      MB.PREFCD,
+      MP.PREFNAME,
+      TO_CHAR(MB.SUM_YMD, 'YYYYMM')
+    ORDER BY
+      MB.PREFCD,
+      TO_CHAR(MB.SUM_YMD, 'YYYYMM')
+  </select>
+
+  <!-- 警告対象物件一覧(総件数取得、一覧取得) -->
+  <sql id="bukkenAlertWhere">
+    <dynamic>
+      <isNotEmpty prepend="AND" property="shopCd">
+        SK.SHOPCD = #shopCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="companyBumon">
+        (SR.COMPANY || SR.BUMON LIKE'%'||#companyBumon#||'%')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="prefCd">
+        SR.PREFCD = #prefCd#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="sendDtFrom">
+        <![CDATA[
+        WW.WARNING_DT >= #sendDtFrom:DATE#
+        ]]>
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="sendDtTo">
+        <![CDATA[
+        WW.WARNING_DT <= #sendDtTo:DATE#
+        ]]>
+      </isNotEmpty>
+      <iterate property="warningCd" open="AND WM.WARNINGCD IN ( " close=" ) " conjunction=" , ">
+        #warningCd[]#
+      </iterate>
+    </dynamic>
+  </sql>
+
+  <!-- 警告対象物件一覧(総件数取得) -->
+  <select id="selectTotalCount"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenAlertCountParamBean"
+          resultClass="int">
+    SELECT
+      COUNT(*)
+    FROM
+      SHOP_KANRI SK
+    INNER JOIN
+      SHOP_RIREKI SR ON SK.PK_SHOP_RIREKI_LAST = SR.PK_SHOP_RIREKI
+    INNER JOIN
+      WEB_WARNING_RIREKI WW ON SK.SHOPCD = WW.SHOPCD
+    INNER JOIN
+      WEB_MST_WARNING WM ON WW.WARNINGCD = WM.WARNINGCD
+    WHERE
+      WW.STATUS_KBN BETWEEN 0 AND 6
+    <include refid="bukkenAlertWhere"/>
+  </select>
+
+
+  <resultMap id="bukkenAlertList"
+             class="net.chintai.backend.sysadmin.review.domain.ReviewBukkenAlertCountDomain">
+    <result property="sendDt"           column="SEND_DT"/>
+    <result property="shopCd"           column="SHOPCD"/>
+    <result property="shopStatus"       column="SHOP_STATUS"/>
+    <result property="company"          column="COMPANY"/>
+    <result property="bumon"            column="BUMON"/>
+    <result property="ctKeisaiFlg"      column="CT_KEISAI_FLG"/>
+    <result property="ablKeisaiFlg"     column="ABL_KEISAI_FLG"/>
+    <result property="clientSystemType" column="CLIENTSYSTEM_TYPE"/>
+    <result property="bkCd"             column="BKCD"/>
+    <result property="roomCd"           column="ROOMNO"/>
+    <result property="statusKbn"        column="STATUS_KBN"/>
+    <result property="warningName"      column="WARNING_NAME"/>
+    <result property="ctStatus"         column="CT_STATUS"/>
+    <result property="ablStatus"        column="ABL_STATUS"/>
+    <result property="warningDt"        column="WARNING_DT"/>
+    <result property="rendoCd"        column="RENDO_CD" />
+    <result property="rendoName"        column="RENDO_NAME" />
+  </resultMap>
+  <!-- 警告対象物件一覧取得 -->
+  <select id="selectBukkenAlertCnt"
+      parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewBukkenAlertCountParamBean"
+      resultMap="bukkenAlertList">
+    SELECT
+      WW.SEND_DT,
+      SK.SHOPCD,
+      SR.SHOP_STATUS,
+      SR.COMPANY,
+      SR.BUMON,
+      SK.CT_KEISAI_FLG,
+      SK.ABL_KEISAI_FLG,
+      SR.CLIENTSYSTEM_TYPE,
+      SR.CT_STATUS,
+      SR.ABL_STATUS,
+      WW.BKCD,
+      WW.ROOMNO,
+      WW.STATUS_KBN,
+      WM.WARNING_NAME,
+      WW.WARNING_DT,
+      SR.RENDO_CD,
+      MR.RENDO_NAME
+    FROM
+      SHOP_KANRI SK
+    INNER JOIN
+      SHOP_RIREKI SR ON SK.PK_SHOP_RIREKI_LAST = SR.PK_SHOP_RIREKI
+    INNER JOIN
+      WEB_WARNING_RIREKI WW ON SK.SHOPCD = WW.SHOPCD
+    INNER JOIN
+      WEB_MST_WARNING WM ON WW.WARNINGCD = WM.WARNINGCD
+    LEFT OUTER JOIN
+      MST_RENDO MR ON MR.RENDO_CD = SR.RENDO_CD
+    WHERE
+      WW.STATUS_KBN BETWEEN 0 AND 6
+    <include refid="bukkenAlertWhere"/>
+    <dynamic>
+    ORDER BY
+      <isEqual property="sortKey" compareValue="1">
+        WW.WARNING_DT
+      </isEqual>
+      <isEqual property="sortKey" compareValue="2">
+        SK.SHOPCD
+      </isEqual>
+      <isEqual property="sortKey" compareValue="3">
+        SK.SHOPCD || WW.BKCD || WW.ROOMNO
+      </isEqual>
+      <isEqual property="sortKey" compareValue="4">
+        WM.WARNINGCD
+      </isEqual>
+      <isEqual property="orderBy" compareValue="asc">
+        ASC
+      </isEqual>
+      <isEqual property="orderBy" compareValue="desc">
+        DESC
+      </isEqual>
+    </dynamic>
+  </select>
+
+  <!-- 審査設定内容表示情報取得 -->
+  <select id="selectReviewConfig"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewConfigDomain">
+    SELECT
+      MS.SHINSACD, SJK.WARNINGCD, SJK.JOUKENCD,
+      MS.SHINSA_NAME || MW.WARNING_NAME AS shinsaName,
+      SJK.JOUKEN_NAME || SJK.JOUKEN || SJK.JOKEN_TANNI AS  jouken,
+      SJK.LOW_HIGH_FLG AS joukenFlg,
+      SJG.JOGAI_JOUKEN_NAME || SJG.JOGAI_JOUKEN || SJG.JOGAI_JOUKEN_TANNI AS jogai,
+      SJG.LOW_HIGH_FLG As jogaiFlg
+    FROM
+      WEB_MST_SHINSA MS
+    INNER JOIN
+      WEB_MST_WARNING MW ON MW.SHINSACD = MS.SHINSACD
+    LEFT JOIN
+      WEB_MST_SHINSA_JOGAI_JOUKEN SJG ON MW.WARNINGCD = SJG.WARNINGCD
+    INNER JOIN
+      WEB_MST_SHINSA_JOUKEN SJK ON MW.WARNINGCD = SJK.WARNINGCD
+    where sjk.jouken_column not like 'INQ_%'
+
+    UNION ALL
+
+    SELECT
+      MS.SHINSACD, SJK1.WARNINGCD, SJK1.JOUKENCD,
+      MS.SHINSA_NAME || MW.WARNING_NAME AS shinsaName,
+      SJK1.JOUKEN_NAME || SJK1.JOUKEN || SJK1.JOKEN_TANNI
+        || CASE
+             WHEN SJK1.LOW_HIGH_FLG = '1' THEN '以上'
+             WHEN SJK1.LOW_HIGH_FLG = '0' THEN '以下'
+             ELSE ''
+           END
+        || SJK2.JOUKEN_NAME || SJK2.JOUKEN || SJK2.JOKEN_TANNI AS  jouken,
+      SJK2.LOW_HIGH_FLG AS joukenFlg,
+      SJG.JOGAI_JOUKEN_NAME || SJG.JOGAI_JOUKEN || SJG.JOGAI_JOUKEN_TANNI AS jogai,
+      SJG.LOW_HIGH_FLG As jogaiFlg
+    FROM
+      WEB_MST_SHINSA MS
+    INNER JOIN
+      WEB_MST_WARNING MW ON MW.SHINSACD = MS.SHINSACD
+    LEFT JOIN
+      WEB_MST_SHINSA_JOGAI_JOUKEN SJG ON MW.WARNINGCD = SJG.WARNINGCD
+    INNER JOIN
+      (select * from WEB_MST_SHINSA_JOUKEN where JOUKEN_COLUMN = 'INQ_DATE') SJK1 ON MW.WARNINGCD = SJK1.WARNINGCD
+    INNER JOIN
+      (select * from WEB_MST_SHINSA_JOUKEN where JOUKEN_COLUMN = 'INQ_CNT') SJK2 ON MW.WARNINGCD = SJK2.WARNINGCD
+
+    UNION ALL
+
+    SELECT
+      '9999','9999','9999',
+      '連続掲載日設定' AS shinsaName,
+      MSC.NOTE || MSC.PROP_VALUE || '日' AS jouken,
+      null,
+      null,
+      null
+    FROM
+      MST_SYSTEM_CONTROL MSC
+    WHERE
+      PROP_NAME = 'web_skip_reset_shinsa_start_dt'
+
+    order by 1,2,3
+  </select>
+
+  <!-- 設定内容表示画面-間取りタイプ設定内容取得 -->
+  <select id="selectMadoriConfig"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewMadoriTypeDomain">
+    SELECT
+      MMT.MADORI_TYPE_NAME AS madoriTypeName,
+      MMD.MADORI AS madori,
+      MMT.VALID_MIN_BUKKEN_CNT AS minBukkenCnt,
+      MMT.VALID_MIN_CHINRYO AS minChinryo,
+      MMT.VALID_MAX_CHINRYO AS maxChinryo
+    FROM
+      WEB_MST_MADORI_TYPE MMT
+    LEFT JOIN
+      MST_MADORI MMD ON MMT.WEB_MADORI_TYPECD = MMD.WEB_MADORI_TYPECD
+    ORDER BY MMT.WEB_MADORI_TYPECD, MMD.MADORICD
+  </select>
+
+  <!-- 設定内容表示画面-自動削除設定内容取得 -->
+  <select id="selectAutoDelConfig" resultClass="net.chintai.backend.sysadmin.review.domain.ReviewAutoDelDomain">
+    SELECT
+      SHINSA_NAME AS shinsaName,
+      AUTO_DEL_KIKAN AS autoDelKikan
+    FROM WEB_MST_SHINSA
+    ORDER BY SHINSACD
+  </select>
+
+  <!-- 設定内容表示画面-市区町村別比較対象設定内容取得 -->
+  <select id="selectPrefConfig"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewPrefConfigDomain">
+    SELECT
+      MA.AREANAME,
+      MP.PREFCD,
+      MP.PREFNAME
+    FROM
+      MST_AREA MA
+    LEFT JOIN
+      MST_PREF MP ON MA.AREACD = MP.AREACD
+    ORDER BY MA.SORT_KEY, MP.SORT_KEY
+  </select>
+
+  <!-- 市区町村別比較対象設定内容表示情報取得 -->
+  <select id="selectPrefName"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewConfigCityParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewConfigCityDomain" >
+    SELECT
+      PREFNAME
+    FROM
+      MST_PREF
+    WHERE
+      PREFCD = #prefCd#
+  </select>
+  <select id="selectCityConfig"
+          parameterClass="net.chintai.backend.sysadmin.review.dao.ReviewConfigCityParamBean"
+          resultClass="net.chintai.backend.sysadmin.review.domain.ReviewConfigCityDomain" >
+    SELECT
+      MC.CITYNAME,
+      CASE WHEN MCC.CITYCD IS NULL THEN '0' ELSE '1' END AS COMPKBN
+    FROM
+      MST_CITY MC
+    LEFT OUTER JOIN
+      WEB_MST_COMP_CITY MCC ON MC.CITYCD = MCC.CITYCD
+    WHERE
+  MC.PREFCD = #prefCd#
+    ORDER BY
+      MC.CITYCD
+  </select>
+
+</sqlMap>

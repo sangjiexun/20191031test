@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="shopSearchDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="shopDetailInfoSearchDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopDetailInfoSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="shopRegistrationStautsUpdatePageDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopRegistrationStautsUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="shopRegistrationStatusUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopRegistrationStatusUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspShopContractInfoDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspShopContractInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspShopInfoDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspShopInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspAreaPrefInfoDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspAreaPrefInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspAddCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspAddCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspUpdateDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspUpdateDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="shopImageInfoSearchDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopImageInfoSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="shopImageUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopImageUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="shopImageDeleteCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopImageDeleteCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="bukkenCodeSearchDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.BukkenCodeSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="contractNormalUpdatePageDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractNormalUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="contractInfoDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="contractNormalUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractNormalUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="webLogUpdatePageDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.WebLogUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="webLogUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.WebLogUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="bukkenQueryIdSearchDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.BukkenQueryIdSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="bukkenInfoDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.BukkenInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="bukkenPublishStatusUpdatePageDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.BukkenPublishStatusUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="bukkenPublishStatusUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.BukkenPublishStatusUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupAddConfirmDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspGroupAddConfirmDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupAddCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspGroupAddCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupUpdatePageDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspGroupUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspGroupUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupDeleteConfirmDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspGroupDeleteConfirmDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupDeleteCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.AspGroupDeleteCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 店舗基本情報更新確認 2009/05/22 李昊燮 追加 -->
+	<bean id="shopBasicInfoUpdateConfirmDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopBasicInfoUpdateConfirmDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 店舗基本情報更新完了 2009/05/22 李昊燮 追加 -->
+	<bean id="shopBasicInfoUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopBasicInfoUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 名寄せ処理対象外店舗 2013/01/24 石井 追加 -->
+	<bean id="nayoseSkipShopDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.NayoseSkipShopDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり) -->
+	<bean id="contractAmountInfoDao"
+		 class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractAmountInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)登録確認 -->
+	<bean id="contractAmountAddConfirmDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractAmountAddConfirmDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)登録 -->
+	<bean id="contractAmountAddCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractAmountAddCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)更新ページへ -->
+	<bean id="contractAmountUpdatePageDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractAmountUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)更新 -->
+	<bean id="contractAmountUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractAmountUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)削除確認 -->
+	<bean id="contractAmountDeleteConfirmDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractAmountDeleteConfirmDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)削除 -->
+	<bean id="contractAmountDeleteCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractAmountDeleteCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 共通：物件枠情報を取得 -->
+	<bean id="contractAmountDetailDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ContractAmountDetailDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+
+	<!-- 店舗リスティング -->
+	<bean id="shopListingInfoDao"
+		 class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopListingInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 店舗リスティング登録確認 -->
+	<bean id="shopListingAddConfirmDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopListingAddConfirmDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 店舗リスティング登録 -->
+	<bean id="shopListingAddCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopListingAddCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 店舗リスティング更新ページへ -->
+	<bean id="shopListingUpdatePageDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopListingUpdatePageDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 店舗リスティング更新 -->
+	<bean id="shopListingUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopListingUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 店舗リスティング詳細を取得 -->
+	<bean id="shopListingDetailDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopListingDetailDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+
+	<!-- 店舗リスティング削除確認 -->
+	<bean id="shopListingDeleteConfirmDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopListingDeleteConfirmDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- 店舗リスティング削除 -->
+	<bean id="shopListingDeleteCommitDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.ShopListingDeleteCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<!-- Service Definecions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="shopSearchByShopInfoService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopSearchByShopInfoServiceImpl">
+		<property name="shopSearchDao">
+			<ref local="shopSearchDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopSearchByShopInfoForCsvService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopSearchByShopInfoForCsvServiceImpl">
+		<property name="shopSearchDao">
+			<ref local="shopSearchDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopSearchByAreaService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopSearchByAreaServiceImpl">
+		<property name="shopSearchDao">
+			<ref local="shopSearchDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopSearchByAreaForCsvService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopSearchByAreaForCsvServiceImpl">
+		<property name="shopSearchDao">
+			<ref local="shopSearchDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopSearchByEnsenService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopSearchByEnsenServiceImpl">
+		<property name="shopSearchDao">
+			<ref local="shopSearchDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopSearchByEnsenForCsvService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopSearchByEnsenForCsvServiceImpl">
+		<property name="shopSearchDao">
+			<ref local="shopSearchDao"/>
+		</property>
+	</bean>
+
+	<!-- 検索結果をCSV形式のフォーマットにする -->
+	<bean id="shopListCsvService" class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListCsvServiceImpl">
+		<property name="codeConvertService">
+			<ref bean="codeConvertService" />
+		</property>
+	</bean>
+
+	<bean id="shopDetailInfoSearchService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopDetailInfoSearchServiceImpl">
+		<property name="shopDetailInfoSearchDao">
+			<ref local="shopDetailInfoSearchDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopRegistrationStatusUpdatePageService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopRegistrationStatusUpdatePageServiceImpl">
+		<property name="shopRegistrationStautsUpdatePageDao">
+			<ref local="shopRegistrationStautsUpdatePageDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopRegistrationStatusUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="target"><ref local="shopRegistrationStatusUpdateCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="shopRegistrationStautsUpdateCommit">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="shopRegistrationStatusUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopRegistrationStatusUpdateCommitServiceImpl">
+		<property name="shopRegistrationStatusUpdateCommitDao">
+			<ref local="shopRegistrationStatusUpdateCommitDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopInfoService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopInfoServiceImpl">
+		<property name="aspShopInfoDao">
+			<ref local="aspShopInfoDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspShopInfoService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspShopInfoServiceImpl">
+		<property name="aspShopInfoDao">
+			<ref local="aspShopInfoDao"/>
+		</property>
+	</bean>
+
+	<bean id="imageUrlFromMasterServerService"
+		class="net.chintai.backend.sysadmin.shop_bukken.util.service.impl.ImageUrlFromMasterServerServiceImpl">
+	</bean>
+
+	<bean id="aspAreaPrefInfoService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspAreaPrefInfoServiceImpl">
+		<property name="aspAreaPrefInfoDao">
+			<ref local="aspAreaPrefInfoDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspPrefInfoService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspPrefInfoServiceImpl">
+		<property name="aspAreaPrefInfoDao">
+			<ref local="aspAreaPrefInfoDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspAddConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspAddConfirmServiceImpl">
+	</bean>
+
+	<bean id="aspAddCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspAddCommitServiceImpl">
+		<property name="aspAddCommitDao">
+			<ref local="aspAddCommitDao"/>
+		</property>
+		<property name="aspShopContractInfoDao">
+			<ref bean="aspShopContractInfoDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspAddCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="target"><ref local="aspAddCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="aspUpdateService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspUpdateServiceImpl">
+		<property name="aspUpdateDao">
+			<ref local="aspUpdateDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspUpdateForPrefService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspUpdateForPrefServiceImpl">
+		<property name="aspUpdateDao">
+			<ref local="aspUpdateDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspShopImageService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspShopImageServiceImpl">
+	</bean>
+
+	<bean id="aspUpdateConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspUpdateConfirmServiceImpl">
+	</bean>
+
+	<bean id="imageUploadToFtpServerService"
+		class="net.chintai.backend.sysadmin.shop_bukken.util.service.impl.ImageUploadToFtpServerServiceImpl">
+		<property name="systemControlDao">
+			<ref bean="systemControlDao"/>
+		</property>
+	</bean>
+
+	<bean id="imageCopyToMasterServerService"
+		class="net.chintai.backend.sysadmin.shop_bukken.util.service.impl.ImageCopyToMasterServerServiceImpl">
+		<property name="systemControlDao">
+			<ref bean="systemControlDao"/>
+		</property>
+	</bean>
+
+	<bean id="imageResizeCopyToMasterServerService"
+		class="net.chintai.backend.sysadmin.shop_bukken.util.service.impl.ImageResizeCopyToMasterServerServiceImpl">
+		<property name="systemControlDao">
+			<ref bean="systemControlDao"/>
+		</property>
+	</bean>
+
+	<bean id="imageWidthSizeCheckService"
+		class="net.chintai.backend.sysadmin.shop_bukken.util.service.impl.ImageWidthSizeCheckServiceImpl">
+	</bean>
+
+	<bean id="aspUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspUpdateCommitServiceImpl">
+		<property name="aspUpdateCommitDao">
+			<ref local="aspUpdateCommitDao"/>
+		</property>
+	</bean>
+	<bean id="aspUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="target">
+			<ref local="aspUpdateCommitServiceTarget"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="uploadImageFileService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.UploadImageFileServiceImpl">
+	</bean>
+
+	<bean id="ContractNormalUpdatePageService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractNormalUpdatePageServiceImpl">
+		<property name="contractNormalUpdatePageDao">
+			<ref local="contractNormalUpdatePageDao"/>
+		</property>
+	</bean>
+
+	<bean id="ContractNormalUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="target">
+			<ref local="ContractNormalUpdateCommitServiceTarget"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ContractNormalUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractNormalUpdateCommitServiceImpl">
+		<property name="contractNormalUpdateCommitDao">
+			<ref local="contractNormalUpdateCommitDao"/>
+		</property>
+		<property name="contractInfoDao">
+			<ref local="contractInfoDao"/>
+		</property>
+
+	</bean>
+
+	<bean id="shopImageInfoSearchService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopImageInfoSearchServiceImpl">
+		<property name="shopImageInfoSearchDao">
+			<ref local="shopImageInfoSearchDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopImageUpdateCommitDbService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopImageUpdateCommitDbServiceImpl">
+		<property name="shopImageUpdateCommitDao">
+			<ref local="shopImageUpdateCommitDao"/>
+		</property>
+	</bean>
+
+	<bean id="shopImageDeleteCommitDbService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopImageDeleteCommitDbServiceImpl">
+		<property name="shopImageDeleteCommitDao">
+			<ref local="shopImageDeleteCommitDao"/>
+		</property>
+	</bean>
+
+	<bean id="WebLogUpdatePageService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.WebLogUpdatePageServiceImpl">
+		<property name="webLogUpdatePageDao">
+			<ref local="webLogUpdatePageDao"/>
+		</property>
+	</bean>
+
+	<bean id="WebLogUpdateCommitService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.WebLogUpdateCommitServiceImpl">
+		<property name="webLogUpdateCommitDao">
+			<ref local="webLogUpdateCommitDao"/>
+		</property>
+	</bean>
+
+	<bean id="BukkenCodeSearchService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.BukkenCodeSearchServiceImpl">
+		<property name="bukkenCodeSearchDao">
+			<ref local="bukkenCodeSearchDao"/>
+		</property>
+	</bean>
+
+	<bean id="BukkenQueryIdSearchService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.BukkenQueryIdSearchServiceImpl">
+		<property name="bukkenQueryIdSearchDao">
+			<ref local="bukkenQueryIdSearchDao"/>
+		</property>
+	</bean>
+
+	<bean id="BukkenInfoService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.BukkenInfoServiceImpl">
+		<property name="bukkenInfoDao">
+			<ref local="bukkenInfoDao"/>
+		</property>
+	</bean>
+
+	<bean id="BukkenPublishStatusUpdatePageService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.BukkenPublishStatusUpdatePageServiceImpl">
+		<property name="bukkenPublishStatusUpdatePageDao">
+			<ref local="bukkenPublishStatusUpdatePageDao"/>
+		</property>
+	</bean>
+
+	<bean id="BukkenPublishStatusUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="target">
+			<ref local="BukkenPublishStatusUpdateCommitServiceTarget"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="BukkenPublishStatusUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.BukkenPublishStatusUpdateCommitServiceImpl">
+		<property name="bukkenPublishStatusUpdateCommitDao">
+			<ref local="bukkenPublishStatusUpdateCommitDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupAddConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspGroupAddConfirmServiceImpl">
+		<property name="aspGroupAddConfirmDao">
+			<ref local="aspGroupAddConfirmDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupAddCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="target">
+			<ref local="aspGroupAddCommitServiceTarget"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="aspGroupAddCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspGroupAddCommitServiceImpl">
+		<property name="aspGroupAddCommitDao">
+			<ref local="aspGroupAddCommitDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupUpdatePageService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspGroupUpdatePageServiceImpl">
+		<property name="aspGroupUpdatePageDao">
+			<ref local="aspGroupUpdatePageDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="target">
+			<ref local="aspGroupUpdateCommitServiceTarget"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="aspGroupUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspGroupUpdateCommitServiceImpl">
+		<property name="aspGroupUpdateCommitDao">
+			<ref local="aspGroupUpdateCommitDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupDeleteConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspGroupDeleteConfirmServiceImpl">
+		<property name="aspGroupDeleteConfirmDao">
+			<ref local="aspGroupDeleteConfirmDao"/>
+		</property>
+	</bean>
+
+	<bean id="aspGroupDeleteCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="target">
+			<ref local="aspGroupDeleteCommitServiceTarget"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="aspGroupDeleteCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.AspGroupDeleteCommitServiceImpl">
+		<property name="aspGroupDeleteCommitDao">
+			<ref local="aspGroupDeleteCommitDao"/>
+		</property>
+	</bean>
+
+	<!-- 免許有効期限切れ一覧 -->
+	<bean id="licenseExpiredShopDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.LicenseExpiredShopDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+
+	<bean id="LicenseExpiredShopService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.LicenseExpiredShopServiceImpl">
+		<property name="licenseExpiredShopDao">
+			<ref local="licenseExpiredShopDao"/>
+		</property>
+	</bean>
+
+	<!-- 入稿履歴一覧検索 2008/05/19 Lee Hosup追加 -->
+	<bean id="bukkenRirekiInfoDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.BukkenRirekiInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+	<bean id="bukkenRirekiInfoService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.BukkenRirekiInfoServiceImpl">
+		<property name="bukkenRirekiInfoDao">
+			<ref bean="bukkenRirekiInfoDao"/>
+		</property>
+	</bean>
+
+	<bean id="bukkenRirekiInfoCsvDownloadDao"
+		class="net.chintai.backend.sysadmin.shop_bukken.dao.impl.BukkenRirekiInfoCsvDownloadDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient"/>
+		</property>
+	</bean>
+	<bean id="bukkenRirekiInfoCsvDownloadService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.BukkenRirekiInfoCsvDownloadServiceImpl">
+		<property name="bukkenRirekiInfoCsvDownloadDao">
+			<ref bean="bukkenRirekiInfoCsvDownloadDao"/>
+		</property>
+	</bean>
+
+	<!-- 店舗基本情報更新確認サービス 2009/05/22 李昊燮 追加 -->
+	<bean id="shopBasicInfoUpdateConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopBasicInfoUpdateConfirmServiceImpl">
+		<property name="shopBasicInfoUpdateConfirmDao">
+			<ref bean="shopBasicInfoUpdateConfirmDao"/>
+		</property>
+	</bean>
+
+	<!-- 店舗基本情報更新完了サービス 2009/05/22 李昊燮 追加 -->
+	<bean id="shopBasicInfoUpdateCommitService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopBasicInfoUpdateCommitServiceImpl">
+		<property name="shopBasicInfoUpdateCommitDao">
+			<ref bean="shopBasicInfoUpdateCommitDao"/>
+		</property>
+	</bean>
+
+	<!-- 名寄せ処理対象外店舗サービス 2013/01/24 石井 追加 -->
+	<bean id="nayoseSkipShopService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.NayoseSkipShopServiceImpl">
+		<property name="nayoseSkipShopDao">
+			<ref local="nayoseSkipShopDao"/>
+		</property>
+	</bean>
+
+	<!-- 名寄せ処理対象外店舗サービス 2013/01/28 石井 追加 -->
+	<bean id="nayoseSkipShopCsvDownloadService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.NayoseSkipShopCsvDownloadServiceImpl">
+		<property name="nayoseSkipShopDao">
+			<ref local="nayoseSkipShopDao"/>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり) -->
+	<bean id="contractAmountInfoService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractAmountInfoServiceImpl">
+		<property name="contractAmountInfoDao"><ref local="contractAmountInfoDao"/></property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)登録確認 -->
+	<bean id="contractAmountAddConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractAmountAddConfirmServiceImpl">
+		<property name="contractAmountAddConfirmDao"><ref local="contractAmountAddConfirmDao"/></property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)登録 -->
+	<bean id="contractAmountAddCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractAmountAddCommitServiceImpl">
+		<property name="contractAmountAddCommitDao"><ref local="contractAmountAddCommitDao"/></property>
+		<property name="contractInfoDao"><ref local="contractInfoDao"/></property>
+	</bean>
+	<bean id="contractAmountAddCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="contractAmountAddCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)更新ページへ -->
+	<bean id="contractAmountUpdatePageService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractAmountUpdatePageServiceImpl">
+		<property name="contractAmountUpdatePageDao"><ref local="contractAmountUpdatePageDao"/></property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)更新 -->
+	<bean id="contractAmountUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractAmountUpdateCommitServiceImpl">
+		<property name="contractAmountUpdateCommitDao"><ref local="contractAmountUpdateCommitDao"/></property>
+	</bean>
+
+	<bean id="contractAmountUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="contractAmountUpdateCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)削除確認 -->
+	<bean id="contractAmountDeleteConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractAmountDeleteConfirmServiceImpl">
+		<property name="contractAmountDeleteConfirmDao"><ref local="contractAmountDeleteConfirmDao"/></property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)削除処理 -->
+	<bean id="contractAmountDeleteCommitServiceTarget"
+				class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractAmountDeleteCommitServiceImpl">
+		<property name="contractAmountDeleteCommitDao"><ref local="contractAmountDeleteCommitDao"/></property>
+	</bean>
+
+	<bean id="contractAmountDeleteCommitService"
+				class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="contractAmountDeleteCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 契約明細(契約数量あり)詳細情報取得 -->
+	<bean id="contractAmountDetailService"
+				class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ContractAmountDetailServiceImpl">
+		<property name="contractAmountDetailDao"><ref local="contractAmountDetailDao"/></property>
+	</bean>
+
+
+	<!-- 店舗リスティング -->
+	<bean id="shopListingInfoService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListingInfoServiceImpl">
+		<property name="shopListingInfoDao"><ref local="shopListingInfoDao"/></property>
+	</bean>
+
+	<!-- 店舗リスティング登録確認 -->
+	<bean id="shopListingAddConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListingAddConfirmServiceImpl">
+		<property name="shopListingAddConfirmDao"><ref local="shopListingAddConfirmDao"/></property>
+	</bean>
+
+	<!-- 店舗リスティング登録 -->
+	<bean id="shopListingAddCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListingAddCommitServiceImpl">
+		<property name="shopListingAddCommitDao"><ref local="shopListingAddCommitDao"/></property>
+	</bean>
+	<bean id="shopListingAddCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="shopListingAddCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 店舗リスティング更新ページへ -->
+	<bean id="shopListingUpdatePageService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListingUpdatePageServiceImpl">
+		<property name="shopListingUpdatePageDao"><ref local="shopListingUpdatePageDao"/></property>
+	</bean>
+
+	<!-- 店舗リスティング更新 -->
+	<bean id="shopListingUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListingUpdateCommitServiceImpl">
+		<property name="shopListingUpdateCommitDao"><ref local="shopListingUpdateCommitDao"/></property>
+	</bean>
+
+	<!-- 店舗リスティング更新確認 -->
+	<bean id="shopListingUpdateConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListingUpdateConfirmServiceImpl">
+		<property name="shopListingAddConfirmDao"><ref local="shopListingAddConfirmDao"/></property>
+	</bean>
+
+	<bean id="shopListingUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="shopListingUpdateCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 店舗リスティング詳細情報取得 -->
+	<bean id="shopListingDetailService"
+				class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListingDetailServiceImpl">
+		<property name="shopListingDetailDao"><ref local="shopListingDetailDao"/></property>
+	</bean>
+
+	<!-- 店舗リスティング削除確認 -->
+	<bean id="shopListingDeleteConfirmService"
+		class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListingDeleteConfirmServiceImpl">
+		<property name="shopListingDeleteConfirmDao"><ref local="shopListingDeleteConfirmDao"/></property>
+	</bean>
+
+	<!-- 店舗リスティング削除処理 -->
+	<bean id="shopListingDeleteCommitServiceTarget"
+				class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopListingDeleteCommitServiceImpl">
+		<property name="shopListingDeleteCommitDao"><ref local="shopListingDeleteCommitDao"/></property>
+	</bean>
+
+	<bean id="shopListingDeleteCommitService"
+				class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref local="shopListingDeleteCommitServiceTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 店舗予約アップロード -->
+  <bean id="ShopBukkenUploadService"
+      class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager">
+      <ref bean="transactionManager" />
+    </property>
+    <property name="target">
+      <ref local="ShopBukkenUploadServiceTarget" />
+    </property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+  <bean id="ShopBukkenUploadServiceTarget"
+        class="net.chintai.backend.sysadmin.shop_bukken.service.impl.ShopBukkenUploadServiceImpl">
+    <!-- <property name="shopDetailInfoSearchDao"><ref local="shopDetailInfoSearchDao"/></property> -->
+  </bean>
+
+</beans>

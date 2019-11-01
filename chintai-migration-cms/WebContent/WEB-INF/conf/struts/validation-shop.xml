@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+	<global>
+		<constant>
+			<constant-name>halfSizeAlnum</constant-name>
+			<constant-value>^[0-9a-zA-Z]*$</constant-value>
+		</constant>
+		<constant>
+			<constant-name>figure</constant-name>
+			<constant-value>^[0-9]*$</constant-value>
+		</constant>
+		<constant>
+			<constant-name>telFax</constant-name>
+			<constant-value>^[0-9/-]*$</constant-value>
+		</constant>
+	</global>
+	<formset>
+		<!-- 適用するアクション・フォームBeanを論理名で指定 -->
+
+		<!-- 店舗検索画面(店舗情報から検索) -->
+		<form name="shopSearchByShopInfoForm">
+
+			<!-- 店舗コード -->
+			<field property="shopCd" depends="maxlength, mask">
+				<msg name="maxlength" key="WARN.MSG.0007" />
+				<arg name="maxlength" key="shop.code" position="0" />
+				<arg name="maxlength" key="${var:maxlength}"
+					resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>9</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0013" />
+				<arg name="mask" key="shop.code" position="0" />
+				<arg name="mask" key="${var:maxlength}" resource="false"
+					position="1" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z0-9]*$</var-value>
+				</var>
+			</field>
+
+			<!-- 店舗メール -->
+			<field property="shopEmail" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.shopEmail" position="0" />
+			</field>
+
+			<!-- 代表者名 -->
+			<field property="licTrustName" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.licTrustName"
+					position="0" />
+			</field>
+
+			<!-- 代表TEL/FAX -->
+			<field property="shopTelFax" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.shopTelFax"
+					position="0" />
+			</field>
+
+			<!-- 会社名・事務所名 -->
+			<field property="companyBumonName" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.companyBumonName"
+					position="0" />
+			</field>
+
+			<!-- 最終更新日時  -->
+			<field property="updateFrom" depends="date">
+				<msg name="date" key="WARN.MSG.0027" />
+				<arg name="date" key="shop.updDtFrom" position="0" />
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHH</var-value>
+				</var>
+			</field>
+
+			<field property="updateTo" depends="date">
+				<msg name="date" key="WARN.MSG.0027" />
+				<arg name="date" key="shop.updDtTo" position="0" />
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHH</var-value>
+				</var>
+			</field>
+
+			<field property="dateCheck" depends="dateCompare">
+				<msg name="dateCompare" key="WARN.MSG.0009" />
+				<arg name="dateCompare" key="shop.updDateTime"
+					position="0" />
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>updateFrom</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>updateTo</var-value>
+				</var>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHH</var-value>
+				</var>
+			</field>
+
+		</form>
+
+		<!-- 登録状況を更新 2009/06 李昊燮 追加(エイブルリニューアル対応) -->
+		<form name="ShopBasicInfoUpdateForm">
+			<field property="zipCd" depends="required,mask">
+				<msg name="required" key="WARN.MSG.0001"/>
+				<arg name="required" key="shop.zipCd" />
+				<msg name="mask"     key="WARN.MSG.0020"/>
+				<arg name="mask"     key="shop.zipCd" position="0"/>
+				<arg name="mask"     key="shop.zipCdMaxLength" position="1"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9]{7}$</var-value>
+				</var>
+			</field>
+
+			<field property="address1" depends="required,scripting">
+				<msg name="required"  key="WARN.MSG.0001"/>
+				<arg name="required"  key="shop.address1" />
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.address1" />
+			</field>
+
+			<field property="address2" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.address2" />
+			</field>
+
+			<field property="tel" depends="required,mask">
+				<msg name="required"  key="WARN.MSG.0001"/>
+				<arg name="required"  key="shop.tel" />
+				<msg name="mask"      key="WARN.MSG.0036"/>
+				<arg name="mask"      key="shop.tel" position="0"/>
+				<arg name="mask"      key="shop.tel" position="1"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${telFax}</var-value>
+				</var>
+			</field>
+
+			<!-- 2013/08/02 店舗電話番号変更対応２次リリース分 ３項目追加 -->
+			<field property="shopTelFree" depends="validwhen,mask">
+				<msg name="validwhen" key="WARN.MSG.0001"/>
+				<arg name="validwhen" key="shop.shopTelFree"/>
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						(((*this* != null) and (shopTelKbn == '1')) or (shopTelKbn == '0'))
+					</var-value>
+				</var>
+				<msg name="mask"      key="WARN.MSG.0036"/>
+				<arg name="mask"      key="shop.shopTelFree" position="0"/>
+				<arg name="mask"      key="shop.shopTelFree" position="1"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${telFax}</var-value>
+				</var>
+			</field>
+
+			<field property="shopTelKbn" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="shop.shopTelKbn" position="0" />
+			</field>
+
+			<field property="shopTelMagazine" depends="mask">
+				<msg name="mask"      key="WARN.MSG.0036"/>
+				<arg name="mask"      key="shop.shopTelMagazine" position="0"/>
+				<arg name="mask"      key="shop.shopTelMagazine" position="1"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${telFax}</var-value>
+				</var>
+			</field>
+			<!-- 2013/8/02 end -->
+
+			<field property="fax" depends="required,mask">
+				<msg name="required"  key="WARN.MSG.0001"/>
+				<arg name="required"  key="shop.fax" />
+				<msg name="mask"      key="WARN.MSG.0036"/>
+				<arg name="mask"      key="shop.fax" position="0"/>
+				<arg name="mask"      key="shop.fax" position="1"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${telFax}</var-value>
+				</var>
+			</field>
+
+			<field property="ensenCd" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0010"/>
+				<arg name="validwhen" key="shop.ensen"/>
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						((*this* != null) and (*this* != 'undefined'))
+					</var-value>
+				</var>
+			</field>
+
+			<field property="ekiCd" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0010"/>
+				<arg name="validwhen" key="shop.eki"/>
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						((*this* != null) and (*this* != 'undefined'))
+					</var-value>
+				</var>
+			</field>
+
+			<field property="licNum" depends="required,scripting">
+				<msg name="required" key="WARN.MSG.0010"/>
+				<arg name="required" key="shop.licNum"/>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.licNum" />
+			</field>
+
+			<field property="hpName" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.hpName" />
+			</field>
+
+			<field property="hpUrl" depends="url">
+				<msg name="url" key="WARN.MSG.0005" />
+				<arg name="url" key="shop.hpUrl"/>
+			</field>
+
+			<field property="email" depends="email">
+				<msg name="email" key="WARN.MSG.0005" />
+				<arg name="email" key="shop.email"/>
+			</field>
+
+			<field property="fromHour" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0010" />
+				<arg name="validwhen" key="shop.fromHour" />
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						(((businessHoursType != 0) or (*this* != null)) or (((fromMin == null) and (toHour == null)) and (toMin == null)))
+					</var-value>
+				</var>
+			</field>
+
+			<field property="fromMin" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0010" />
+				<arg name="validwhen" key="shop.fromMin" />
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						(((businessHoursType != 0) or (*this* != null)) or (((fromHour == null) and (toHour == null)) and (toMin == null)))
+					</var-value>
+				</var>
+			</field>
+
+			<field property="toHour" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0010" />
+				<arg name="validwhen" key="shop.toHour" />
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						(((businessHoursType != 0) or (*this* != null)) or (((fromHour == null) and (fromMin == null)) and (toMin == null)))
+					</var-value>
+				</var>
+			</field>
+
+			<field property="toMin" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0010" />
+				<arg name="validwhen" key="shop.toMin" />
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						(((businessHoursType != 0) or (*this* != null)) or (((fromHour == null) and (fromMin == null)) and (toHour == null)))
+					</var-value>
+				</var>
+			</field>
+
+			<field property="fromTime" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0041" />
+				<arg name="validwhen" key="shop.toTime" position="0" />
+				<arg name="validwhen" key="shop.fromTime" position="1" />
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+					<![CDATA[
+						(((*this* == null) or (toTime == null)) or (*this* < toTime))
+					]]>
+					</var-value>
+				</var>
+			</field>
+
+			<field property="businessHoursCustom" depends="scripting,byteMaxLength">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.businessHoursCustom" />
+				<msg name="byteMaxLength" key="WARN.MSG.0054" />
+				<arg name="byteMaxLength" key="shop.businessHoursCustom" position="0" />
+				<arg name="byteMaxLength" key="${var:maxLength}" resource="false" position="1" />
+				<var>
+					<var-name>maxLength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="holidayCustom" depends="scripting,byteMaxLength">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.holidayCustom" />
+				<msg name="byteMaxLength" key="WARN.MSG.0054" />
+				<arg name="byteMaxLength" key="shop.holidayCustom" position="0" />
+				<arg name="byteMaxLength" key="${var:maxLength}" resource="false" position="1" />
+				<var>
+					<var-name>maxLength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="busyComment" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.busyComment" />
+			</field>
+
+		</form>
+
+		<!-- 登録状況を更新 -->
+		<form name="shopRegistrationStautsUpdateConfirmForm">
+
+			<!-- 取引先
+			<field property="torihikisakiCd" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0010" />
+				<arg name="validwhen" key="shop.torihikisaki"
+					position="0" />
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						((*this* != null) and (torihikisakiName !=
+						null))
+					</var-value>
+				</var>
+			</field>
+-->
+			<!-- 承認状態
+			<field property="certifyFlg" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="shop.certifyFlg" position="0" />
+			</field>
+-->
+			<!-- システム利用状態 -->
+			<field property="shopStatus" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="shop.shopStatus" position="0" />
+			</field>
+
+			<!-- CHINTAIに掲載 -->
+			<field property="ctFlg" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="shop.ctFlg" position="0" />
+			</field>
+
+			<!-- エイブルに掲載 -->
+			<field property="ablFlg" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="shop.ablFlg" position="0" />
+			</field>
+
+			<!-- 店舗サイト権限
+			<field property="shopSiteRole" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="shop.shopSiteRole" position="0" />
+			</field>
+-->
+			<!-- 店舗名かな
+			<field property="bumonKana" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="shop.bumonKana" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" position="1" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.bumonKana" position="0" />
+			</field>
+-->
+			<!-- 地図上の店舗アイコン表示状態 -->
+			<!-- 2009/03/23 李昊燮 「地図上の店舗アイコン表示状態」コメント処理
+			<field property="shopIconDelFlg" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="shop.shopIconDelFlg" position="0" />
+			</field>
+			-->
+
+			<!-- 備考 -->
+			<field property="adminNote" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="shop.adminNote" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" position="1" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1300</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.adminNote" position="0" />
+			</field>
+		</form>
+	</formset>
+
+	<!-- 枠設定情報登録 -->
+	<formset>
+		<form name="ContractAmountAddForm">
+			<!--
+			<field property="applyYear" depends="required">
+				<msg name="required"	key="WARN.MSG.0010"/>
+				<arg key="shop_bukken.applyYear"/>
+			</field>
+			<field property="applyMonth" depends="required">
+				<msg name="required"	key="WARN.MSG.0010"/>
+				<arg key="shop_bukken.applyMonth"/>
+			</field>
+			<field property="applyDay" depends="required">
+				<msg name="required"	key="WARN.MSG.0010"/>
+				<arg key="shop_bukken.applyDay"/>
+			</field>
+			<field property="applyHour" depends="required">
+				<msg name="required"	key="WARN.MSG.0010"/>
+				<arg key="shop_bukken.applyHour"/>
+			</field>
+			-->
+
+			<field property="inputDateFrom" depends="date,required,dateCompare">
+				<msg name="date" key="WARN.MSG.0027"/>
+				<arg key="shop_bukken.keiyakuStartYm"/>
+				<msg name="required" key="WARN.MSG.0010"/>
+				<arg key="shop_bukken.keiyakuStartYm"/>
+				<msg name="dateCompare" key="WARN.MSG.0041"/>
+				<arg key="shop_bukken.keiyakuStartYm"/>
+				<arg1 key="shop_bukken.nowDate"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmm</var-value>
+				</var>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>nowDate</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>inputDateFrom</var-value>
+				</var>
+			</field>
+			<field property="inputDateTo" depends="date,dateCompare">
+				<msg name="date" key="WARN.MSG.0027"/>
+				<arg key="shop_bukken.keiyakuEndYm"/>
+				<msg name="dateCompare" key="WARN.MSG.0009"/>
+				<arg key="shop_bukken.keiyakuYm"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmm</var-value>
+				</var>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>inputDateFrom</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>inputDateTo</var-value>
+				</var>
+			</field>
+			<field property="keiyakuNote" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="shop.adminNote" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" position="1" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1300</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.adminNote" position="0" />
+			</field>
+			<field property="wakuCnt" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0001"/>
+				<arg key="shop_bukken.wakuCnt"/>
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+					 ((wakuCnt != null) or (wakuCntNote != null))
+					</var-value>
+				</var>
+			</field>
+			<field property="wakuCntNote" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0001"/>
+				<arg key="shop_bukken.cnt"/>
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+					((wakuCnt != '-1') or (*this* != null))
+					</var-value>
+				</var>
+			</field>
+			<!--
+			<field property="inputDate" depends="dateCompare,date">
+				<msg name="dateCompare" key="WARN.MSG.0041"/>
+				<arg name="dateCompare" key="shop_bukken.applyYm"/>
+				<arg1 name="dateCompare" key="shop_bukken.nowMonth"/>
+				<msg name="date" key="WARN.MSG.0027"/>
+				<arg name="date" key="demand.applyYm"/>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>nowDate</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>inputDate</var-value>
+				</var>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmm</var-value>
+				</var>
+			</field>
+			 -->
+		</form>
+	</formset>
+
+	<!-- 枠設定情報更新-->
+	<formset>
+		<form name="ContractAmountUpdateForm">
+			<field property="updateAppStartDt" depends="dateCompare,date">
+				<msg name="dateCompare" key="WARN.MSG.0041"/>
+				<arg name="dateCompare" key="shop_bukken.applyYm"/>
+				<arg1 name="dateCompare" key="shop_bukken.nowMonth"/>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>updateAppStartDt</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>appStartDt</var-value>
+				</var>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmmss</var-value>
+				</var>
+			</field>
+			<field property="wakuCntNote" depends="validwhen">
+				<msg name="validwhen" key="WARN.MSG.0001"/>
+				<arg key="shop_bukken.cnt"/>
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+					 ((wakuCnt != '-1') or (*this* != null))
+					</var-value>
+				</var>
+			</field>
+		</form>
+	</formset>
+
+
+	<!-- 店舗リスティング設定情報登録 -->
+	<formset>
+		<form name="ShopListingAddForm">
+			<field property="inputDateFrom" depends="date,required,dateCompare">
+				<msg name="date" key="WARN.MSG.0027"/>
+				<arg key="shop_bukken.keiyakuStartYm"/>
+				<msg name="required" key="WARN.MSG.0010"/>
+				<arg key="shop_bukken.keiyakuStartYm"/>
+				<msg name="dateCompare" key="WARN.MSG.0041"/>
+				<arg key="shop_bukken.keiyakuStartYm"/>
+				<arg1 key="shop_bukken.nowDate"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmmss</var-value>
+				</var>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>nowDate</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>inputDateFrom</var-value>
+				</var>
+			</field>
+			<field property="inputDateTo" depends="date,dateCompare">
+				<msg name="date" key="WARN.MSG.0027"/>
+				<arg key="shop_bukken.keiyakuEndYm"/>
+				<msg name="dateCompare" key="WARN.MSG.0009"/>
+				<arg key="shop_bukken.keiyakuYm"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmmss</var-value>
+				</var>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>inputDateFrom</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>inputDateTo</var-value>
+				</var>
+			</field>
+			<field property="keiyakuNote" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="shop.adminNote" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" position="1" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1300</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.adminNote" position="0" />
+			</field>
+		</form>
+	</formset>
+	<!-- 店舗リスティング設定情報登録 -->
+	<formset>
+		<form name="ShopListingUpdateForm">
+			<field property="inputDateFrom" depends="date,required,dateCompare">
+				<msg name="date" key="WARN.MSG.0027"/>
+				<arg key="shop_bukken.keiyakuStartYm"/>
+				<msg name="required" key="WARN.MSG.0010"/>
+				<arg key="shop_bukken.keiyakuStartYm"/>
+				<msg name="dateCompare" key="WARN.MSG.0041"/>
+				<arg key="shop_bukken.keiyakuStartYm"/>
+				<arg1 key="shop_bukken.nowDate"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmmss</var-value>
+				</var>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>nowDate</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>inputDateFrom</var-value>
+				</var>
+			</field>
+			<field property="inputDateTo" depends="date,dateCompare">
+				<msg name="date" key="WARN.MSG.0027"/>
+				<arg key="shop_bukken.keiyakuEndYm"/>
+				<msg name="dateCompare" key="WARN.MSG.0009"/>
+				<arg key="shop_bukken.keiyakuEndYm"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmmss</var-value>
+				</var>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>inputDateFrom</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>inputDateTo</var-value>
+				</var>
+			</field>
+			<field property="keiyakuNote" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="shop.adminNote" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" position="1" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1300</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="shop.adminNote" position="0" />
+			</field>
+		</form>
+	</formset>
+
+</form-validation>

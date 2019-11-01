@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<!--
+	$Id: SystemControl.xml 2871 2007-11-27 00:52:45Z t-kojima $
+ -->
+<sqlMap namespace="systemControl">
+
+	<!-- query cache -->
+	<cacheModel type="memory" readOnly="true" id="queryCache">
+		<property name="reference-type" value="WEAK" />
+		<flushInterval minutes="3" />
+	</cacheModel>
+
+	<select id="selectSystemControlValue"
+			parameterClass="java.lang.String"
+			resultClass="java.lang.String"
+			cacheModel="queryCache">
+		SELECT
+			PROP_VALUE
+		FROM
+			MST_SYSTEM_CONTROL
+		WHERE
+			PROP_NAME = #value#
+	</select>
+
+</sqlMap>

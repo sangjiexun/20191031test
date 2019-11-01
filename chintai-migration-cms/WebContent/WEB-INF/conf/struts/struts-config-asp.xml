@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+    PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions ================================== -->
+  <form-beans>
+
+    <!-- 不動産ASP設定情報画面用フォーム -->
+    <form-bean name="aspShopInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP設定情報登録画面用フォーム -->
+    <form-bean name="aspAddPageForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP設定情報登録画面の戻るフォーム -->
+    <form-bean name="aspAddPageBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP設定情報登録確認用フォーム -->
+    <form-bean name="aspAddConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="title" type="java.lang.String"/>
+      <form-property name="layout" type="java.lang.String"/>
+      <form-property name="selectBoxType" type="java.lang.String"/>
+      <form-property name="templateColor" type="java.lang.String"/>
+      <form-property name="searchItem" type="java.lang.String"/>
+      <form-property name="logoFlg" type="java.lang.String"/>
+      <form-property name="logoFlgImage" type="org.apache.struts.upload.FormFile"/>
+      <form-property name="imgRealPath" type="java.lang.String"/>
+      <form-property name="imgUrlPath" type="java.lang.String"/>
+      <form-property name="imgFileNm" type="java.lang.String"/>
+      <form-property name="imgKbn" type="java.lang.String"/>
+      <form-property name="imgFileType" type="java.lang.String"/>
+      <form-property name="policyFlg" type="java.lang.String"/>
+      <form-property name="policyUrl" type="java.lang.String"/>
+      <form-property name="pref01" type="java.lang.String"/>
+      <form-property name="pref02" type="java.lang.String"/>
+      <form-property name="pref03" type="java.lang.String"/>
+      <form-property name="pref04" type="java.lang.String"/>
+      <form-property name="pref05" type="java.lang.String"/>
+      <form-property name="pref06" type="java.lang.String"/>
+      <form-property name="pref07" type="java.lang.String"/>
+      <form-property name="pref15" type="java.lang.String"/>
+      <form-property name="pref20" type="java.lang.String"/>
+      <form-property name="pref19" type="java.lang.String"/>
+      <form-property name="pref13" type="java.lang.String"/>
+      <form-property name="pref14" type="java.lang.String"/>
+      <form-property name="pref11" type="java.lang.String"/>
+      <form-property name="pref12" type="java.lang.String"/>
+      <form-property name="pref08" type="java.lang.String"/>
+      <form-property name="pref09" type="java.lang.String"/>
+      <form-property name="pref10" type="java.lang.String"/>
+      <form-property name="pref16" type="java.lang.String"/>
+      <form-property name="pref17" type="java.lang.String"/>
+      <form-property name="pref18" type="java.lang.String"/>
+      <form-property name="pref23" type="java.lang.String"/>
+      <form-property name="pref21" type="java.lang.String"/>
+      <form-property name="pref22" type="java.lang.String"/>
+      <form-property name="pref24" type="java.lang.String"/>
+      <form-property name="pref27" type="java.lang.String"/>
+      <form-property name="pref28" type="java.lang.String"/>
+      <form-property name="pref26" type="java.lang.String"/>
+      <form-property name="pref25" type="java.lang.String"/>
+      <form-property name="pref29" type="java.lang.String"/>
+      <form-property name="pref30" type="java.lang.String"/>
+      <form-property name="pref31" type="java.lang.String"/>
+      <form-property name="pref32" type="java.lang.String"/>
+      <form-property name="pref33" type="java.lang.String"/>
+      <form-property name="pref34" type="java.lang.String"/>
+      <form-property name="pref35" type="java.lang.String"/>
+      <form-property name="pref36" type="java.lang.String"/>
+      <form-property name="pref37" type="java.lang.String"/>
+      <form-property name="pref38" type="java.lang.String"/>
+      <form-property name="pref39" type="java.lang.String"/>
+      <form-property name="pref40" type="java.lang.String"/>
+      <form-property name="pref41" type="java.lang.String"/>
+      <form-property name="pref42" type="java.lang.String"/>
+      <form-property name="pref43" type="java.lang.String"/>
+      <form-property name="pref44" type="java.lang.String"/>
+      <form-property name="pref45" type="java.lang.String"/>
+      <form-property name="pref46" type="java.lang.String"/>
+      <form-property name="pref47" type="java.lang.String"/>
+      <form-property name="prefs" type="java.lang.String"/>
+      <form-property name="ensenCd1" type="java.lang.String"/>
+      <form-property name="ensenCd2" type="java.lang.String"/>
+      <form-property name="ensenCd3" type="java.lang.String"/>
+      <form-property name="ensenCd4" type="java.lang.String"/>
+      <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+      <form-property name="imgId" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP設定情報登録確認戻る用フォーム -->
+    <form-bean name="aspAddConfirmBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="title" type="java.lang.String"/>
+      <form-property name="layout" type="java.lang.String"/>
+      <form-property name="selectBoxType" type="java.lang.String"/>
+      <form-property name="templateColor" type="java.lang.String"/>
+      <form-property name="searchItem" type="java.lang.String"/>
+      <form-property name="logoFlg" type="java.lang.String"/>
+      <form-property name="imgRealPath" type="java.lang.String"/>
+      <form-property name="imgUrlPath" type="java.lang.String"/>
+      <form-property name="imgFileNm" type="java.lang.String"/>
+      <form-property name="imgKbn" type="java.lang.String"/>
+      <form-property name="imgFileType" type="java.lang.String"/>
+      <form-property name="policyFlg" type="java.lang.String"/>
+      <form-property name="policyUrl" type="java.lang.String"/>
+      <form-property name="pref01" type="java.lang.String"/>
+      <form-property name="pref02" type="java.lang.String"/>
+      <form-property name="pref03" type="java.lang.String"/>
+      <form-property name="pref04" type="java.lang.String"/>
+      <form-property name="pref05" type="java.lang.String"/>
+      <form-property name="pref06" type="java.lang.String"/>
+      <form-property name="pref07" type="java.lang.String"/>
+      <form-property name="pref15" type="java.lang.String"/>
+      <form-property name="pref20" type="java.lang.String"/>
+      <form-property name="pref19" type="java.lang.String"/>
+      <form-property name="pref13" type="java.lang.String"/>
+      <form-property name="pref14" type="java.lang.String"/>
+      <form-property name="pref11" type="java.lang.String"/>
+      <form-property name="pref12" type="java.lang.String"/>
+      <form-property name="pref08" type="java.lang.String"/>
+      <form-property name="pref09" type="java.lang.String"/>
+      <form-property name="pref10" type="java.lang.String"/>
+      <form-property name="pref16" type="java.lang.String"/>
+      <form-property name="pref17" type="java.lang.String"/>
+      <form-property name="pref18" type="java.lang.String"/>
+      <form-property name="pref23" type="java.lang.String"/>
+      <form-property name="pref21" type="java.lang.String"/>
+      <form-property name="pref22" type="java.lang.String"/>
+      <form-property name="pref24" type="java.lang.String"/>
+      <form-property name="pref27" type="java.lang.String"/>
+      <form-property name="pref28" type="java.lang.String"/>
+      <form-property name="pref26" type="java.lang.String"/>
+      <form-property name="pref25" type="java.lang.String"/>
+      <form-property name="pref29" type="java.lang.String"/>
+      <form-property name="pref30" type="java.lang.String"/>
+      <form-property name="pref31" type="java.lang.String"/>
+      <form-property name="pref32" type="java.lang.String"/>
+      <form-property name="pref33" type="java.lang.String"/>
+      <form-property name="pref34" type="java.lang.String"/>
+      <form-property name="pref35" type="java.lang.String"/>
+      <form-property name="pref36" type="java.lang.String"/>
+      <form-property name="pref37" type="java.lang.String"/>
+      <form-property name="pref38" type="java.lang.String"/>
+      <form-property name="pref39" type="java.lang.String"/>
+      <form-property name="pref40" type="java.lang.String"/>
+      <form-property name="pref41" type="java.lang.String"/>
+      <form-property name="pref42" type="java.lang.String"/>
+      <form-property name="pref43" type="java.lang.String"/>
+      <form-property name="pref44" type="java.lang.String"/>
+      <form-property name="pref45" type="java.lang.String"/>
+      <form-property name="pref46" type="java.lang.String"/>
+      <form-property name="pref47" type="java.lang.String"/>
+      <form-property name="prefs" type="java.lang.String"/>
+      <form-property name="ensenCd1" type="java.lang.String"/>
+      <form-property name="ensenCd2" type="java.lang.String"/>
+      <form-property name="ensenCd3" type="java.lang.String"/>
+      <form-property name="ensenCd4" type="java.lang.String"/>
+      <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+      <form-property name="imgId" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP設定情報登録完了用フォーム -->
+    <form-bean name="aspAddCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="title" type="java.lang.String"/>
+      <form-property name="layout" type="java.lang.String"/>
+      <form-property name="selectBoxType" type="java.lang.String"/>
+      <form-property name="templateColor" type="java.lang.String"/>
+      <form-property name="searchItem" type="java.lang.String"/>
+      <form-property name="logoFlg" type="java.lang.String"/>
+      <form-property name="imgRealPath" type="java.lang.String"/>
+      <form-property name="imgUrlPath" type="java.lang.String"/>
+      <form-property name="imgFileNm" type="java.lang.String"/>
+      <form-property name="imgKbn" type="java.lang.String"/>
+      <form-property name="imgFileType" type="java.lang.String"/>
+      <form-property name="policyFlg" type="java.lang.String"/>
+      <form-property name="policyUrl" type="java.lang.String"/>
+      <form-property name="aspShopStatus" type="java.lang.String"/>
+      <form-property name="pref01" type="java.lang.String"/>
+      <form-property name="pref02" type="java.lang.String"/>
+      <form-property name="pref03" type="java.lang.String"/>
+      <form-property name="pref04" type="java.lang.String"/>
+      <form-property name="pref05" type="java.lang.String"/>
+      <form-property name="pref06" type="java.lang.String"/>
+      <form-property name="pref07" type="java.lang.String"/>
+      <form-property name="pref15" type="java.lang.String"/>
+      <form-property name="pref20" type="java.lang.String"/>
+      <form-property name="pref19" type="java.lang.String"/>
+      <form-property name="pref13" type="java.lang.String"/>
+      <form-property name="pref14" type="java.lang.String"/>
+      <form-property name="pref11" type="java.lang.String"/>
+      <form-property name="pref12" type="java.lang.String"/>
+      <form-property name="pref08" type="java.lang.String"/>
+      <form-property name="pref09" type="java.lang.String"/>
+      <form-property name="pref10" type="java.lang.String"/>
+      <form-property name="pref16" type="java.lang.String"/>
+      <form-property name="pref17" type="java.lang.String"/>
+      <form-property name="pref18" type="java.lang.String"/>
+      <form-property name="pref23" type="java.lang.String"/>
+      <form-property name="pref21" type="java.lang.String"/>
+      <form-property name="pref22" type="java.lang.String"/>
+      <form-property name="pref24" type="java.lang.String"/>
+      <form-property name="pref27" type="java.lang.String"/>
+      <form-property name="pref28" type="java.lang.String"/>
+      <form-property name="pref26" type="java.lang.String"/>
+      <form-property name="pref25" type="java.lang.String"/>
+      <form-property name="pref29" type="java.lang.String"/>
+      <form-property name="pref30" type="java.lang.String"/>
+      <form-property name="pref31" type="java.lang.String"/>
+      <form-property name="pref32" type="java.lang.String"/>
+      <form-property name="pref33" type="java.lang.String"/>
+      <form-property name="pref34" type="java.lang.String"/>
+      <form-property name="pref35" type="java.lang.String"/>
+      <form-property name="pref36" type="java.lang.String"/>
+      <form-property name="pref37" type="java.lang.String"/>
+      <form-property name="pref38" type="java.lang.String"/>
+      <form-property name="pref39" type="java.lang.String"/>
+      <form-property name="pref40" type="java.lang.String"/>
+      <form-property name="pref41" type="java.lang.String"/>
+      <form-property name="pref42" type="java.lang.String"/>
+      <form-property name="pref43" type="java.lang.String"/>
+      <form-property name="pref44" type="java.lang.String"/>
+      <form-property name="pref45" type="java.lang.String"/>
+      <form-property name="pref46" type="java.lang.String"/>
+      <form-property name="pref47" type="java.lang.String"/>
+      <form-property name="ensenType1" type="java.lang.String"/>
+      <form-property name="ensenType2" type="java.lang.String"/>
+      <form-property name="ensenType3" type="java.lang.String"/>
+      <form-property name="ensenType4" type="java.lang.String"/>
+      <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+      <form-property name="imgId" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP更新ページ用フォーム -->
+    <form-bean name="aspUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP設定情報登録画面の戻るフォーム -->
+    <form-bean name="aspUpdateBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP設定情報更新確認用フォーム -->
+    <form-bean name="aspUpdateConfirmForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="title" type="java.lang.String"/>
+      <form-property name="layout" type="java.lang.String"/>
+      <form-property name="selectBoxType" type="java.lang.String"/>
+      <form-property name="templateColor" type="java.lang.String"/>
+      <form-property name="searchItem" type="java.lang.String"/>
+      <form-property name="logoFlg" type="java.lang.String"/>
+      <form-property name="logoFlgImage" type="org.apache.struts.upload.FormFile"/>
+      <form-property name="imgRealPath" type="java.lang.String"/>
+      <form-property name="imgUrlPath" type="java.lang.String"/>
+      <form-property name="imgFileNm" type="java.lang.String"/>
+      <form-property name="imgKbn" type="java.lang.String"/>
+      <form-property name="imgFileType" type="java.lang.String"/>
+      <form-property name="policyFlg" type="java.lang.String"/>
+      <form-property name="policyUrl" type="java.lang.String"/>
+      <form-property name="aspShopStatus" type="java.lang.String"/>
+      <form-property name="pref01" type="java.lang.String"/>
+      <form-property name="pref02" type="java.lang.String"/>
+      <form-property name="pref03" type="java.lang.String"/>
+      <form-property name="pref04" type="java.lang.String"/>
+      <form-property name="pref05" type="java.lang.String"/>
+      <form-property name="pref06" type="java.lang.String"/>
+      <form-property name="pref07" type="java.lang.String"/>
+      <form-property name="pref15" type="java.lang.String"/>
+      <form-property name="pref20" type="java.lang.String"/>
+      <form-property name="pref19" type="java.lang.String"/>
+      <form-property name="pref13" type="java.lang.String"/>
+      <form-property name="pref14" type="java.lang.String"/>
+      <form-property name="pref11" type="java.lang.String"/>
+      <form-property name="pref12" type="java.lang.String"/>
+      <form-property name="pref08" type="java.lang.String"/>
+      <form-property name="pref09" type="java.lang.String"/>
+      <form-property name="pref10" type="java.lang.String"/>
+      <form-property name="pref16" type="java.lang.String"/>
+      <form-property name="pref17" type="java.lang.String"/>
+      <form-property name="pref18" type="java.lang.String"/>
+      <form-property name="pref23" type="java.lang.String"/>
+      <form-property name="pref21" type="java.lang.String"/>
+      <form-property name="pref22" type="java.lang.String"/>
+      <form-property name="pref24" type="java.lang.String"/>
+      <form-property name="pref27" type="java.lang.String"/>
+      <form-property name="pref28" type="java.lang.String"/>
+      <form-property name="pref26" type="java.lang.String"/>
+      <form-property name="pref25" type="java.lang.String"/>
+      <form-property name="pref29" type="java.lang.String"/>
+      <form-property name="pref30" type="java.lang.String"/>
+      <form-property name="pref31" type="java.lang.String"/>
+      <form-property name="pref32" type="java.lang.String"/>
+      <form-property name="pref33" type="java.lang.String"/>
+      <form-property name="pref34" type="java.lang.String"/>
+      <form-property name="pref35" type="java.lang.String"/>
+      <form-property name="pref36" type="java.lang.String"/>
+      <form-property name="pref37" type="java.lang.String"/>
+      <form-property name="pref38" type="java.lang.String"/>
+      <form-property name="pref39" type="java.lang.String"/>
+      <form-property name="pref40" type="java.lang.String"/>
+      <form-property name="pref41" type="java.lang.String"/>
+      <form-property name="pref42" type="java.lang.String"/>
+      <form-property name="pref43" type="java.lang.String"/>
+      <form-property name="pref44" type="java.lang.String"/>
+      <form-property name="pref45" type="java.lang.String"/>
+      <form-property name="pref46" type="java.lang.String"/>
+      <form-property name="pref47" type="java.lang.String"/>
+      <form-property name="prefs" type="java.lang.String"/>
+      <form-property name="ensenCd1" type="java.lang.String"/>
+      <form-property name="ensenCd2" type="java.lang.String"/>
+      <form-property name="ensenCd3" type="java.lang.String"/>
+      <form-property name="ensenCd4" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+      <form-property name="shopImage" type="java.lang.String"/>
+      <form-property name="imgId" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP設定情報更新完了用フォーム -->
+    <form-bean name="aspUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="title" type="java.lang.String"/>
+      <form-property name="layout" type="java.lang.String"/>
+      <form-property name="selectBoxType" type="java.lang.String"/>
+      <form-property name="templateColor" type="java.lang.String"/>
+      <form-property name="searchItem" type="java.lang.String"/>
+      <form-property name="logoFlg" type="java.lang.String"/>
+      <form-property name="imgRealPath" type="java.lang.String"/>
+      <form-property name="imgUrlPath" type="java.lang.String"/>
+      <form-property name="imgFileNm" type="java.lang.String"/>
+      <form-property name="imgKbn" type="java.lang.String"/>
+      <form-property name="imgFileType" type="java.lang.String"/>
+      <form-property name="policyFlg" type="java.lang.String"/>
+      <form-property name="policyUrl" type="java.lang.String"/>
+      <form-property name="aspShopStatus" type="java.lang.String"/>
+      <form-property name="pref01" type="java.lang.String"/>
+      <form-property name="pref02" type="java.lang.String"/>
+      <form-property name="pref03" type="java.lang.String"/>
+      <form-property name="pref04" type="java.lang.String"/>
+      <form-property name="pref05" type="java.lang.String"/>
+      <form-property name="pref06" type="java.lang.String"/>
+      <form-property name="pref07" type="java.lang.String"/>
+      <form-property name="pref15" type="java.lang.String"/>
+      <form-property name="pref20" type="java.lang.String"/>
+      <form-property name="pref19" type="java.lang.String"/>
+      <form-property name="pref13" type="java.lang.String"/>
+      <form-property name="pref14" type="java.lang.String"/>
+      <form-property name="pref11" type="java.lang.String"/>
+      <form-property name="pref12" type="java.lang.String"/>
+      <form-property name="pref08" type="java.lang.String"/>
+      <form-property name="pref09" type="java.lang.String"/>
+      <form-property name="pref10" type="java.lang.String"/>
+      <form-property name="pref16" type="java.lang.String"/>
+      <form-property name="pref17" type="java.lang.String"/>
+      <form-property name="pref18" type="java.lang.String"/>
+      <form-property name="pref23" type="java.lang.String"/>
+      <form-property name="pref21" type="java.lang.String"/>
+      <form-property name="pref22" type="java.lang.String"/>
+      <form-property name="pref24" type="java.lang.String"/>
+      <form-property name="pref27" type="java.lang.String"/>
+      <form-property name="pref28" type="java.lang.String"/>
+      <form-property name="pref26" type="java.lang.String"/>
+      <form-property name="pref25" type="java.lang.String"/>
+      <form-property name="pref29" type="java.lang.String"/>
+      <form-property name="pref30" type="java.lang.String"/>
+      <form-property name="pref31" type="java.lang.String"/>
+      <form-property name="pref32" type="java.lang.String"/>
+      <form-property name="pref33" type="java.lang.String"/>
+      <form-property name="pref34" type="java.lang.String"/>
+      <form-property name="pref35" type="java.lang.String"/>
+      <form-property name="pref36" type="java.lang.String"/>
+      <form-property name="pref37" type="java.lang.String"/>
+      <form-property name="pref38" type="java.lang.String"/>
+      <form-property name="pref39" type="java.lang.String"/>
+      <form-property name="pref40" type="java.lang.String"/>
+      <form-property name="pref41" type="java.lang.String"/>
+      <form-property name="pref42" type="java.lang.String"/>
+      <form-property name="pref43" type="java.lang.String"/>
+      <form-property name="pref44" type="java.lang.String"/>
+      <form-property name="pref45" type="java.lang.String"/>
+      <form-property name="pref46" type="java.lang.String"/>
+      <form-property name="pref47" type="java.lang.String"/>
+      <form-property name="ensenType1" type="java.lang.String"/>
+      <form-property name="ensenType2" type="java.lang.String"/>
+      <form-property name="ensenType3" type="java.lang.String"/>
+      <form-property name="ensenType4" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+       <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+      <form-property name="imgId" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASP設定情報更新確認の戻る用フォーム -->
+    <form-bean name="aspUpdateConfirmBackForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+      <form-property name="title" type="java.lang.String"/>
+      <form-property name="layout" type="java.lang.String"/>
+      <form-property name="selectBoxType" type="java.lang.String"/>
+      <form-property name="templateColor" type="java.lang.String"/>
+      <form-property name="searchItem" type="java.lang.String"/>
+      <form-property name="logoFlg" type="java.lang.String"/>
+      <form-property name="imgRealPath" type="java.lang.String"/>
+      <form-property name="imgUrlPath" type="java.lang.String"/>
+      <form-property name="imgFileNm" type="java.lang.String"/>
+      <form-property name="imgKbn" type="java.lang.String"/>
+      <form-property name="imgFileType" type="java.lang.String"/>
+      <form-property name="policyFlg" type="java.lang.String"/>
+      <form-property name="policyUrl" type="java.lang.String"/>
+      <form-property name="aspShopStatus" type="java.lang.String"/>
+      <form-property name="pref01" type="java.lang.String"/>
+      <form-property name="pref02" type="java.lang.String"/>
+      <form-property name="pref03" type="java.lang.String"/>
+      <form-property name="pref04" type="java.lang.String"/>
+      <form-property name="pref05" type="java.lang.String"/>
+      <form-property name="pref06" type="java.lang.String"/>
+      <form-property name="pref07" type="java.lang.String"/>
+      <form-property name="pref15" type="java.lang.String"/>
+      <form-property name="pref20" type="java.lang.String"/>
+      <form-property name="pref19" type="java.lang.String"/>
+      <form-property name="pref13" type="java.lang.String"/>
+      <form-property name="pref14" type="java.lang.String"/>
+      <form-property name="pref11" type="java.lang.String"/>
+      <form-property name="pref12" type="java.lang.String"/>
+      <form-property name="pref08" type="java.lang.String"/>
+      <form-property name="pref09" type="java.lang.String"/>
+      <form-property name="pref10" type="java.lang.String"/>
+      <form-property name="pref16" type="java.lang.String"/>
+      <form-property name="pref17" type="java.lang.String"/>
+      <form-property name="pref18" type="java.lang.String"/>
+      <form-property name="pref23" type="java.lang.String"/>
+      <form-property name="pref21" type="java.lang.String"/>
+      <form-property name="pref22" type="java.lang.String"/>
+      <form-property name="pref24" type="java.lang.String"/>
+      <form-property name="pref27" type="java.lang.String"/>
+      <form-property name="pref28" type="java.lang.String"/>
+      <form-property name="pref26" type="java.lang.String"/>
+      <form-property name="pref25" type="java.lang.String"/>
+      <form-property name="pref29" type="java.lang.String"/>
+      <form-property name="pref30" type="java.lang.String"/>
+      <form-property name="pref31" type="java.lang.String"/>
+      <form-property name="pref32" type="java.lang.String"/>
+      <form-property name="pref33" type="java.lang.String"/>
+      <form-property name="pref34" type="java.lang.String"/>
+      <form-property name="pref35" type="java.lang.String"/>
+      <form-property name="pref36" type="java.lang.String"/>
+      <form-property name="pref37" type="java.lang.String"/>
+      <form-property name="pref38" type="java.lang.String"/>
+      <form-property name="pref39" type="java.lang.String"/>
+      <form-property name="pref40" type="java.lang.String"/>
+      <form-property name="pref41" type="java.lang.String"/>
+      <form-property name="pref42" type="java.lang.String"/>
+      <form-property name="pref43" type="java.lang.String"/>
+      <form-property name="pref44" type="java.lang.String"/>
+      <form-property name="pref45" type="java.lang.String"/>
+      <form-property name="pref46" type="java.lang.String"/>
+      <form-property name="pref47" type="java.lang.String"/>
+      <form-property name="ensenCd1" type="java.lang.String"/>
+      <form-property name="ensenCd2" type="java.lang.String"/>
+      <form-property name="ensenCd3" type="java.lang.String"/>
+      <form-property name="ensenCd4" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+       <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+      <form-property name="imgId" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASPグループ登録画面情報フォーム -->
+    <form-bean name="AspGroupAddInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="groupshopCd" type="java.lang.String" />
+      <form-property name="shopCd" type="java.lang.String" />
+      <form-property name="company" type="java.lang.String" />
+      <form-property name="bumon" type="java.lang.String" />
+      <form-property name="password" type="java.lang.String" />
+      <form-property name="title" type="java.lang.String" />
+      <form-property name="layout" type="java.lang.String" />
+      <form-property name="selectBoxType" type="java.lang.String" />
+      <form-property name="templateColor" type="java.lang.String" />
+      <form-property name="searchItem" type="java.lang.String" />
+      <form-property name="logoFlg" type="java.lang.String" />
+      <form-property name="policyFlg" type="java.lang.String" />
+      <form-property name="policyUrl" type="java.lang.String" />
+      <form-property name="aspShopStatus" type="java.lang.String" />
+      <form-property name="insDt" type="java.lang.String" />
+      <form-property name="updDt" type="java.lang.String" />
+       <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASPグループ登録フォーム -->
+    <form-bean name="AspGroupAddForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String" />
+      <form-property name="groupshopCd" type="java.lang.String" />
+      <form-property name="shopStatus" type="java.lang.String"/>
+      <form-property name="aspShopSeq" type="java.lang.Long" />
+       <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASPグループ編集フォーム -->
+    <form-bean name="AspGroupUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="groupshopCd" type="java.lang.String" />
+      <form-property name="company" type="java.lang.String"/>
+      <form-property name="bumon" type="java.lang.String"/>
+      <form-property name="shopStatus" type="java.lang.String"/>
+      <form-property name="aspFlg" type="java.lang.String"/>
+      <form-property name="updDt" type="java.lang.String"/>
+      <form-property name="aspShopSeq" type="java.lang.Long" />
+       <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+    </form-bean>
+
+    <!-- 不動産ASPグループ外す確認フォーム -->
+    <form-bean name="AspGroupDeleteForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String"/>
+      <form-property name="groupshopCd" type="java.lang.String[]" />
+      <form-property name="delFlg" type="java.lang.String"/>
+      <form-property name="aspShopSeq" type="java.lang.Long" />
+       <form-property name="shopKanriUpdDt" type="java.lang.String"/>
+    </form-bean>
+  </form-beans>
+
+  <!-- ========== Action Mapping Definitions ============================= -->
+  <action-mappings>
+
+    <!-- 不動産ASP設定情報画面へ -->
+    <action path="/shop_bukken/AspShopInfo"
+        name="aspShopInfoForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspShopInfoAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspShopInfo.jsp" />
+    </action>
+
+    <!-- 不動産ASP設定情報登録 -->
+    <action path="/shop_bukken/AspAddPage"
+        name="aspAddPageForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspAddPageAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspAdd.jsp" />
+    </action>
+
+    <!-- 不動産ASP設定情報登録の戻るアクション -->
+    <action path="/shop_bukken/AspAddPageBack"
+        name="aspAddPageBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspAddPageBackAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspShopInfo.jsp" />
+    </action>
+
+    <!-- 不動産ASP設定情報登録確認 -->
+    <action path="/shop_bukken/AspAddConfirm"
+        name="aspAddConfirmForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspAddConfirmAction"
+        scope="request"
+        validate="true"
+        input="/shop_bukken/AspAddConfirmBack.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspAddConfirm.jsp" />
+      <forward name="fail" path="/shop_bukken/AspAddConfirmBack.do" />
+    </action>
+
+    <!-- 不動産ASP設定情報登録確認の戻るアクション -->
+    <action path="/shop_bukken/AspAddConfirmBack"
+        name="aspAddConfirmBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspAddConfirmBackAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspAdd.jsp" />
+    </action>
+
+    <!-- 不動産ASP設定情報登録完了 -->
+    <action path="/shop_bukken/AspAddCommit"
+        name="aspAddCommitForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspAddCommitAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/shop_bukken/AspShopInfo.do" />
+      <forward name="fail" path="/WEB-INF/jsp/shop_bukken/AspAddConfirm.jsp" />
+    </action>
+
+    <!-- 不動産ASP設定更新画面へ -->
+    <action path="/shop_bukken/AspUpdate"
+        name="aspUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspUpdateAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspUpdate.jsp" />
+    </action>
+
+    <!-- 不動産ASP設定更新確認 -->
+    <action path="/shop_bukken/AspUpdateConfirm"
+        name="aspUpdateConfirmForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspUpdateConfirmAction"
+        scope="request"
+        validate="true"
+        input="/shop_bukken/AspUpdateConfirmBack.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspUpdateConfirm.jsp" />
+      <forward name="fail" path="/shop_bukken/AspUpdateConfirmBack.do"></forward>
+    </action>
+
+    <!-- 不動産ASP設定更新の戻るアクション -->
+    <action path="/shop_bukken/AspUpdateBack"
+        name="aspUpdateBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspUpdateBackAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspShopInfo.jsp" />
+    </action>
+
+    <!-- 不動産ASP設定更新確認の戻るアクション -->
+    <action path="/shop_bukken/AspUpdateConfirmBack"
+        name="aspUpdateConfirmBackForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspUpdateConfirmBackAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspUpdate.jsp" />
+    </action>
+
+    <!-- 不動産ASP設定更新完了 -->
+    <action path="/shop_bukken/AspUpdateCommit"
+        name="aspUpdateCommitForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspUpdateCommitAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/shop_bukken/AspShopInfo.do" />
+      <forward name="fail" path="/shop_bukken/AspShopInfo.do" />
+    </action>
+
+    <!-- 不動産ASPグループ設定画面アクション -->
+    <action path="/shop_bukken/AspGroupAddPage"
+        name="AspGroupAddForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspGroupAddPageAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspGroupAdd.jsp" />
+    </action>
+
+    <!-- 不動産ASPグループ設定確認アクション -->
+    <action path="/shop_bukken/AspGroupAddConfirm"
+        name="AspGroupAddInfoForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspGroupAddConfirmAction"
+        scope="request"
+        validate="true"
+        input="/shop_bukken/AspGroupAddPage.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspGroupAddConfirm.jsp" />
+      <forward name="failure" path="/WEB-INF/jsp/shop_bukken/AspGroupAdd.jsp" />
+    </action>
+
+    <!-- 不動産ASPグループ設定登録アクション -->
+    <action path="/shop_bukken/AspGroupAddCommit"
+        name="AspGroupAddForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspGroupAddCommitAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/shop_bukken/AspShopInfo.do" />
+    </action>
+
+    <!-- 不動産ASPグループ編集ページアクション -->
+    <action path="/shop_bukken/AspGroupUpdatePage"
+        name="AspGroupUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspGroupUpdatePageAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspGroupUpdate.jsp" />
+    </action>
+
+    <!-- 不動産ASPグループ編集確認アクション -->
+    <action path="/shop_bukken/AspGroupUpdateConfirm"
+        name="AspGroupUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspGroupUpdateConfirmAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspGroupUpdateConfirm.jsp" />
+    </action>
+
+    <!-- 不動産ASPグループ編集更新アクション -->
+    <action path="/shop_bukken/AspGroupUpdateCommit"
+        name="AspGroupUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspGroupUpdateCommitAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/shop_bukken/AspShopInfo.do" />
+    </action>
+
+    <!-- 不動産ASPグループ編集Backアクション -->
+    <action path="/shop_bukken/AspGroupUpdatePageBack"
+        name="AspGroupUpdateForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspGroupUpdatePageBackAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspGroupUpdate.jsp" />
+    </action>
+
+    <!-- 不動産ASPグループから外す確認アクション -->
+    <action path="/shop_bukken/AspGroupDeleteConfirm"
+        name="AspGroupDeleteForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspGroupDeleteConfirmAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/WEB-INF/jsp/shop_bukken/AspGroupDeleteConfirm.jsp" />
+      <forward name="failure" path="/shop_bukken/AspShopInfo.do" />
+    </action>
+
+    <!-- 不動産ASPグループから外すアクション -->
+    <action path="/shop_bukken/AspGroupDeleteCommit"
+        name="AspGroupDeleteForm"
+        type="net.chintai.backend.sysadmin.shop_bukken.action.AspGroupDeleteCommitAction"
+        scope="request"
+        validate="false">
+      <forward name="success" path="/shop_bukken/AspShopInfo.do" />
+    </action>
+  </action-mappings>
+
+</struts-config>

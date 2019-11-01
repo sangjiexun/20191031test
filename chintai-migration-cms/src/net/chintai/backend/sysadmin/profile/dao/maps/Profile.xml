@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="profile">
+
+	<resultMap id="profileInfoMap"
+		class="net.chintai.backend.sysadmin.profile.domain.Profile">
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="userNote" column="USER_NOTE" />
+	</resultMap>
+
+	<resultMap id="profileUpdatePageMap"
+		class="net.chintai.backend.sysadmin.profile.domain.Profile">
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="groupId" column="GROUP_ID" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="userNote" column="USER_NOTE" />
+		<result property="updDt" column="UPD_DT" />
+	</resultMap>
+
+	<resultMap id="profilePasswordChangePageMap"
+		class="net.chintai.backend.sysadmin.profile.domain.Profile">
+		<result property="updDt" column="UPD_DT" />
+	</resultMap>
+
+	<select id="profileInfo"
+		parameterClass="net.chintai.backend.sysadmin.profile.dao.ProfileInfoParamBean"
+		resultMap="profileInfoMap">
+		SELECT
+			MU.USER_ID,
+			MU.USER_NAME,
+			MMG.GROUP_NAME,
+			MU.USER_NOTE
+		FROM
+			MNG_USERS MU
+		INNER JOIN
+			MNG_MST_GROUP MMG
+		ON
+			MU.GROUP_ID = MMG.GROUP_ID
+		WHERE
+			MU.DEL_KBN = '0'
+			AND
+			MU.USER_ID = #userId#
+	</select>
+
+	<select id="profileUpdatePage"
+		parameterClass="net.chintai.backend.sysadmin.profile.dao.ProfileUpdatePageParamBean"
+		resultMap="profileUpdatePageMap">
+		SELECT
+			MU.USER_ID,
+			MU.USER_NAME,
+			MU.GROUP_ID,
+			MMG.GROUP_NAME,
+			MU.USER_NOTE,
+			to_char(MU.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS UPD_DT
+		FROM
+			MNG_USERS MU
+		INNER JOIN
+			MNG_MST_GROUP MMG
+		ON
+			MU.GROUP_ID = MMG.GROUP_ID
+		WHERE
+			MU.DEL_KBN = '0'
+			AND
+			MU.USER_ID = #userId#
+	</select>
+
+	<update id="profileUpdateCommit"
+		parameterClass="net.chintai.backend.sysadmin.profile.dao.ProfileUpdateCommitParamBean">
+		UPDATE
+			MNG_USERS
+		SET
+			USER_NAME = #userName#,
+			GROUP_ID = #groupId#,
+			USER_NOTE = #userNote#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #pgName#,
+			UPD_ID = #userId#
+		WHERE
+			USER_ID = #userId#
+			AND
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+	</update>
+
+	<select id="profilePasswordChangePage"
+		parameterClass="net.chintai.backend.sysadmin.profile.dao.ProfilePasswordChangePageParamBean"
+		resultMap="profilePasswordChangePageMap">
+		SELECT
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS UPD_DT
+		FROM
+			MNG_USERS
+		WHERE
+			DEL_KBN = '0'
+			AND
+			USER_ID = #userId#
+	</select>
+
+	<select id="profilePasswdCheck"
+		parameterClass="net.chintai.backend.sysadmin.profile.dao.ProfilePasswordCheckParamBean"
+		resultClass="int">
+		SELECT
+			COUNT(*)
+		FROM
+			MNG_USERS
+		WHERE
+			USER_ID = #userId#
+			AND
+			PASSWORD = #oldPasswd#
+	</select>
+
+	<update id="profilePasswordChangeCommit"
+		parameterClass="net.chintai.backend.sysadmin.profile.dao.ProfilePasswordChangeCommitParamBean">
+		UPDATE
+			MNG_USERS
+		SET
+			PASSWORD = #passwd#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_PG = #pgName#,
+			UPD_ID = #userId#
+		WHERE
+			USER_ID = #userId#
+			AND
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+	</update>
+
+</sqlMap>

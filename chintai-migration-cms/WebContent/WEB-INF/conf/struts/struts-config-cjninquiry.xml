@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+		PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<!-- $Id: struts-config-cjninquiry.xml 4006 2008-07-18 07:35:29Z s-sugimoto $ -->
+<struts-config>
+
+	<!-- ========== Form Bean Definitions ================================== -->
+	<form-beans>
+
+		<!-- 問い合せ種別登録 -->
+		<form-bean name="CjnInquiryTypeAddForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="inqTitle" type="java.lang.String" />
+			<form-property name="inqComment" type="java.lang.String" />
+			<form-property name="inqUrl" type="java.lang.String" />
+			<form-property name="dispTitle" type="java.lang.String" />
+			<form-property name="dispSortKey" type="java.lang.String" />
+			<form-property name="inqGroupType" type="java.lang.String" />
+			<form-property name="adminNote" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 問い合せ種別詳細画面表示 -->
+		<form-bean name="CjnInquiryTypeInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer" />
+		</form-bean>
+
+		<!-- 問い合せ種別更新 -->
+		<form-bean name="CjnInquiryTypeUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer" />
+			<form-property name="inqTitle" type="java.lang.String" />
+			<form-property name="inqComment" type="java.lang.String" />
+			<form-property name="inqUrl" type="java.lang.String" />
+			<form-property name="dispTitle" type="java.lang.String" />
+			<form-property name="dispSortKey" type="java.lang.String" />
+			<form-property name="inqGroupType" type="java.lang.String" />
+			<form-property name="adminNote" type="java.lang.String" />
+			<form-property name="updDt" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 閲覧可能ユーザ更新 -->
+		<form-bean name="CjnUserAvailabilityUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer" />
+			<form-property name="inqTitle" type="java.lang.String" />
+			<form-property name="inqComment" type="java.lang.String" />
+			<form-property name="cjnAccountSeq" type="java.lang.Integer[]" />
+			<form-property name="checkedCjnAccountSeq" type="java.lang.Integer[]" />
+			<form-property name="userName" type="java.lang.String[]" />
+			<form-property name="exists" type="java.lang.Boolean[]" />
+			<form-property name="lastUpdateTime" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 問い合せ検索・初期画面表示 -->
+		<form-bean name="CjnInquirySearchPageForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer" />
+			<form-property name="cjnInqId" type="java.lang.String" />
+			<form-property name="keywords" type="java.lang.String" />
+			<form-property name="modeAndOr" type="java.lang.String" />
+			<form-property name="refFlg" type="java.lang.String" />
+			<form-property name="inquiryStatus" type="java.lang.String" />
+			<form-property name="insDateFromSearch" type="java.lang.String" />
+			<form-property name="insDateToSearch" type="java.lang.String" />
+			<form-property name="insDtFromYear" type="java.lang.String"/>
+			<form-property name="insDtFromMonth" type="java.lang.String" />
+			<form-property name="insDtFromDay" type="java.lang.String" />
+			<form-property name="insDtFromTime" type="java.lang.String" />
+			<form-property name="insDtToYear" type="java.lang.String" />
+			<form-property name="insDtToMonth" type="java.lang.String" />
+			<form-property name="insDtToDay" type="java.lang.String" />
+			<form-property name="insDtToTime" type="java.lang.String" />
+			<form-property name="sortKey" type="java.lang.String" />
+			<form-property name="orderBy" type="java.lang.String" />
+			<form-property name="displayNum" type="java.lang.Integer" />
+			<form-property name="searchFlg" type="java.lang.String" />
+			<!-- 2008.07.18 検索時のvalidateエラー発生時に、入力内容を維持するために追加 start -->
+			<form-property name="pcMobileStatus" type="java.lang.String" />
+			<form-property name="dealNumber" type="java.lang.String" />
+			<form-property name="slipNumber" type="java.lang.String" />
+			<!-- 2008.07.18 検索時のvalidateエラー発生時に、入力内容を維持するために追加 end -->
+		</form-bean>
+
+		<!-- 問い合せ検索 -->
+		<form-bean name="CjnInquirySearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer" />
+			<form-property name="cjnInqId" type="java.lang.String" />
+			<form-property name="keywords" type="java.lang.String" />
+			<form-property name="modeAndOr" type="java.lang.String" />
+			<form-property name="refFlg" type="java.lang.String" />
+			<form-property name="inquiryStatus" type="java.lang.String" />
+			<form-property name="insDateFromSearch" type="java.lang.String" />
+			<form-property name="insDateToSearch" type="java.lang.String" />
+			<form-property name="insDtFromYear" type="java.lang.String"/>
+			<form-property name="insDtFromMonth" type="java.lang.String" />
+			<form-property name="insDtFromDay" type="java.lang.String" />
+			<form-property name="insDtFromTime" type="java.lang.String" />
+			<form-property name="insDtToYear" type="java.lang.String" />
+			<form-property name="insDtToMonth" type="java.lang.String" />
+			<form-property name="insDtToDay" type="java.lang.String" />
+			<form-property name="insDtToTime" type="java.lang.String" />
+			<form-property name="sortKey" type="java.lang.String" />
+			<form-property name="orderBy" type="java.lang.String" />
+			<form-property name="displayNum" type="java.lang.Integer" />
+			<form-property name="totalCount" type="java.lang.String" />
+			<form-property name="noReadCount" type="java.lang.String" />
+			<form-property name="noShoriCount" type="java.lang.String" />
+			<form-property name="offSet" type="java.lang.Integer" />
+			<form-property name="totalCnt" type="java.lang.Integer" />
+			<form-property name="searchFlg" type="java.lang.String" />
+			<form-property name="pcMobileStatus" type="java.lang.String" />
+			<form-property name="dealNumber" type="java.lang.String" />
+			<form-property name="slipNumber" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 問い合せ検索(ページング) -->
+		<form-bean name="CjnInquirySearchPagingForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="offSet" type="java.lang.Integer" />
+		</form-bean>
+
+		<!-- 問い合せ検索詳細画面表示 -->
+		<form-bean name="CjnInquiryInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnInqId" type="java.lang.String" />
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer" />
+			<form-property name="cjnAccountSeq" type="java.lang.String" />
+			<form-property name="sessionStatus" type="java.lang.String" />
+			<form-property name="logFlg" type="java.lang.String" />
+			<form-property name="offSet" type="java.lang.Integer" />
+		</form-bean>
+
+		<!-- 問い合せ状況変更ページ -->
+		<form-bean name="CjnInquiryStatusUpdatePageForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnInqId" type="java.lang.String" />
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer" />
+			<form-property name="offSet" type="java.lang.Integer" />
+		</form-bean>
+
+		<!-- 問い合せ状況変更確認 -->
+		<form-bean name="CjnInquiryStatusUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer" />
+			<form-property name="cjnInqId" type="java.lang.String" />
+			<form-property name="inquiryStatus" type="java.lang.String" />
+			<form-property name="updDt" type="java.lang.String" />
+			<form-property name="insDt" type="java.lang.String" />
+			<form-property name="lastOpeUser" type="java.lang.String" />
+			<form-property name="lastRefUser" type="java.lang.String" />
+			<form-property name="lastRefDt" type="java.lang.String" />
+			<form-property name="lastOpeDt" type="java.lang.String" />
+			<form-property name="inqContents" type="java.lang.String" />
+			<form-property name="offSet" type="java.lang.Integer" />
+			<form-property name="carrierType" type="java.lang.String" />
+			<form-property name="fregiDenpyoNo" type="java.lang.String" />
+			<form-property name="fregiTorihikiNo" type="java.lang.String" />
+			<form-property name="carrierTypeName" type="java.lang.String" />
+			<form-property name="inquiryStatusName" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 問い合せユーザ詳細 -->
+		<form-bean name="CjnUserInfoForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnAccountSeq" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 問い合せユーザ更新確認 -->
+		<form-bean name="CjnUserUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnAccountSeq" type="java.lang.String" />
+			<form-property name="userId" type="java.lang.String" />
+			<form-property name="userName" type="java.lang.String" />
+			<form-property name="updDt" type="java.lang.String" />
+			<form-property name="insDt" type="java.lang.String" />
+			<form-property name="email1" type="java.lang.String" />
+			<form-property name="emailStatus1" type="java.lang.String" />
+			<form-property name="email2" type="java.lang.String" />
+			<form-property name="emailStatus2" type="java.lang.String" />
+			<form-property name="email3" type="java.lang.String" />
+			<form-property name="emailStatus3" type="java.lang.String" />
+			<form-property name="adminNote" type="java.lang.String" />
+			<form-property name="accountLevel" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 問い合せ閲覧権限更新確認 -->
+		<form-bean name="CjnUserAuthorityUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnAccountSeq" type="java.lang.String" />
+			<form-property name="userId" type="java.lang.String" />
+			<form-property name="userName" type="java.lang.String" />
+			<form-property name="inqTitle" type="java.lang.String[]" />
+			<form-property name="inqComment" type="java.lang.String[]" />
+			<form-property name="cnt" type="java.lang.Integer[]" />
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer[]" />
+			<form-property name="checkedCjnInqKindSeq" type="java.lang.Integer[]" />
+			<form-property name="updDt" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 問い合せ閲覧権限更新 -->
+		<form-bean name="CjnUserAuthorityUpdateCommitForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="cjnAccountSeq" type="java.lang.String"/>
+			<form-property name="cjnInqKindSeq" type="java.lang.Integer[]"/>
+			<form-property name="updDt" type="java.lang.String" />
+			<form-property name="userId" type="java.lang.String" />
+		</form-bean>
+
+		<!-- システム操作履歴検索 -->
+		<form-bean name="CjnLogOperationSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId" type="java.lang.String" />
+			<form-property name="userName" type="java.lang.String" />
+			<form-property name="processStatus" type="java.lang.String" />
+			<form-property name="cjnInqKindSeq" type="java.lang.String" />
+			<form-property name="cjnInqId" type="java.lang.String" />
+			<form-property name="updDtFromYear" type="java.lang.String" />
+			<form-property name="updDtFromMonth" type="java.lang.String" />
+			<form-property name="updDtFromDay" type="java.lang.String" />
+			<form-property name="updDtFromTime" type="java.lang.String" />
+			<form-property name="updDtToYear" type="java.lang.String" />
+			<form-property name="updDtToMonth" type="java.lang.String" />
+			<form-property name="updDtToDay" type="java.lang.String" />
+			<form-property name="updDtToTime" type="java.lang.String" />
+			<form-property name="updDtFrom" type="java.lang.String" />
+			<form-property name="updDtTo" type="java.lang.String" />
+			<form-property name="offSet" type="java.lang.Integer" />
+		</form-bean>
+
+		<!-- システム操作履歴検索(ページング) -->
+		<form-bean name="CjnLogOperationSearchPagingForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="offSet" type="java.lang.Integer" />
+		</form-bean>
+
+	</form-beans>
+
+	<!-- ========== Action Mapping Definitions ============================= -->
+	<action-mappings>
+		<!-- 問い合せ種別一覧 -->
+		<action path="/cjn_inquiry/CjnInquiryTypeList"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeListAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryTypeList.jsp" />
+		</action>
+
+		<!-- 問い合せ種別登録 -->
+		<action path="/cjn_inquiry/CjnInquiryTypeAddPage"
+				name="CjnInquiryTypeAddForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeAddPageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryTypeAdd.jsp" />
+		</action>
+
+		<!-- 問い合せ種別登録ページに戻る -->
+		<action path="/cjn_inquiry/CjnInquiryTypeAddPageBack"
+				name="CjnInquiryTypeAddForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeAddPageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryTypeAdd.jsp" />
+		</action>
+
+		<!-- 問い合せ種別登録確認 -->
+		<action path="/cjn_inquiry/CjnInquiryTypeAddConfirm"
+				name="CjnInquiryTypeAddForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeAddConfirmAction"
+				scope="request"
+				validate="true"
+				input="/cjn_inquiry/CjnInquiryTypeAddPageBack.do">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryTypeAddConfirm.jsp" />
+		</action>
+
+		<!-- 問い合せ種別登録実行 -->
+		<action path="/cjn_inquiry/CjnInquiryTypeAddCommit"
+				name="CjnInquiryTypeAddForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeAddCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/cjn_inquiry/CjnInquiryTypeList.do" />
+		</action>
+
+		<!-- 問い合せ種別詳細 -->
+		<action path="/cjn_inquiry/CjnInquiryTypeInfo"
+				name="CjnInquiryTypeInfoForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeInfoAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryTypeInfo.jsp" />
+		</action>
+
+		<!-- 問い合せ種別編集 -->
+		<action path="/cjn_inquiry/CjnInquiryTypeUpdatePage"
+				name="CjnInquiryTypeUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeUpdatePageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryTypeUpdate.jsp" />
+		</action>
+
+		<!-- 問い合せ種別編集ページに戻る -->
+		<action path="/cjn_inquiry/CjnInquiryTypeUpdatePageBack"
+				name="CjnInquiryTypeUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeUpdatePageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryTypeUpdate.jsp" />
+		</action>
+
+		<!-- 問い合せ種別編集確認 -->
+		<action path="/cjn_inquiry/CjnInquiryTypeUpdateConfirm"
+				name="CjnInquiryTypeUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeUpdateConfirmAction"
+				scope="request"
+				validate="true"
+				input="/cjn_inquiry/CjnInquiryTypeUpdatePageBack.do">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryTypeUpdateConfirm.jsp" />
+		</action>
+
+		<!-- 問い合せ種別編集実行 -->
+		<action path="/cjn_inquiry/CjnInquiryTypeUpdateCommit"
+				name="CjnInquiryTypeUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryTypeUpdateCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/cjn_inquiry/CjnInquiryTypeInfo.do" />
+		</action>
+
+		<!-- 閲覧可能ユーザ編集 -->
+		<action path="/cjn_inquiry/CjnUserAvailabilityUpdatePage"
+				name="CjnUserAvailabilityUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserAvailabilityUpdatePageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserAvailabilityUpdate.jsp" />
+		</action>
+
+		<!-- 閲覧可能ユーザ編集画面に戻る -->
+		<action path="/cjn_inquiry/CjnUserAvailabilityUpdatePageBack"
+				name="CjnUserAvailabilityUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserAvailabilityUpdatePageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserAvailabilityUpdate.jsp" />
+		</action>
+
+		<!-- 閲覧可能ユーザ編集確認 -->
+		<action path="/cjn_inquiry/CjnUserAvailabilityUpdateConfirm"
+				name="CjnUserAvailabilityUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserAvailabilityUpdateConfirmAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserAvailabilityUpdateConfirm.jsp" />
+		</action>
+
+		<!-- 閲覧可能ユーザ編集実行 -->
+		<action path="/cjn_inquiry/CjnUserAvailabilityUpdateCommit"
+				name="CjnUserAvailabilityUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserAvailabilityUpdateCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/cjn_inquiry/CjnInquiryTypeInfo.do" />
+		</action>
+
+		<!-- 問い合せ検索・初期画面 -->
+		<action path="/cjn_inquiry/CjnInquirySearchPage"
+				name="CjnInquirySearchPageForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquirySearchPageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquirySearch.jsp" />
+		</action>
+
+		<!-- 問い合せ検索 -->
+		<action path="/cjn_inquiry/CjnInquirySearch"
+				name="CjnInquirySearchForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquirySearchAction"
+				scope="request"
+				input="/cjn_inquiry/CjnInquirySearchPage.do"
+				validate="true">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquirySearch.jsp" />
+		</action>
+
+		<!-- 問い合せ検索(ページング) -->
+		<action path="/cjn_inquiry/CjnInquirySearchPaging"
+				name="CjnInquirySearchForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquirySearchAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquirySearch.jsp" />
+		</action>
+
+		<!-- 問い合せ詳細 -->
+		<action path="/cjn_inquiry/CjnInquiryInfo"
+				name="CjnInquiryInfoForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryInfoAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryInfo.jsp" />
+		</action>
+
+		<!-- 問い合せ状況変更画面 -->
+		<action path="/cjn_inquiry/CjnInquiryStatusUpdatePage"
+				name="CjnInquiryStatusUpdatePageForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryStatusUpdatePageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryStatusUpdate.jsp" />
+		</action>
+
+		<!-- 問い合せ状況変更確認 -->
+		<action path="/cjn_inquiry/CjnInquiryStatusUpdateConfirm"
+				name="CjnInquiryStatusUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryStatusUpdateConfirmAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryStatusUpdateConfirm.jsp" />
+		</action>
+
+		<!-- 問い合せ状況変更Back -->
+		<action path="/cjn_inquiry/CjnInquiryStatusUpdatePageBack"
+				name="CjnInquiryStatusUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryStatusUpdatePageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryStatusUpdate.jsp" />
+		</action>
+
+		<!-- 問い合せ状況変更更新 -->
+		<action path="/cjn_inquiry/CjnInquiryStatusUpdateCommit"
+				name="CjnInquiryStatusUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnInquiryStatusUpdateCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/cjn_inquiry/CjnInquiryInfo.do" />
+		</action>
+
+		<!-- 問い合せユーザ一覧 -->
+		<action path="/cjn_inquiry/CjnUserList"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserListAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserList.jsp" />
+		</action>
+
+		<!-- 問い合せユーザ詳細 -->
+		<action path="/cjn_inquiry/CjnUserInfo"
+				name="CjnUserInfoForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserInfoAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserInfo.jsp" />
+		</action>
+
+		<!-- 問い合せユーザ更新ページ -->
+		<action path="/cjn_inquiry/CjnUserUpdatePage"
+				name="CjnUserInfoForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserUpdatePageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserUpdate.jsp" />
+		</action>
+
+		<!-- 問い合せユーザ更新確認Back -->
+		<action path="/cjn_inquiry/CjnUserUpdatePageBack"
+				name="CjnUserUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserUpdatePageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserUpdate.jsp" />
+		</action>
+
+		<!-- 問い合せユーザ更新確認 -->
+		<action path="/cjn_inquiry/CjnUserUpdateConfirm"
+				name="CjnUserUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserUpdateConfirmAction"
+				scope="request"
+				validate="true"
+				input="/cjn_inquiry/CjnUserUpdatePageBack.do">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserUpdateConfirm.jsp" />
+		</action>
+
+		<!-- 問い合せユーザ更新 -->
+		<action path="/cjn_inquiry/CjnUserUpdateCommit"
+				name="CjnUserUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserUpdateCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/cjn_inquiry/CjnUserInfo.do" />
+		</action>
+
+		<!-- 問い合せユーザ印刷 -->
+		<action path="/cjn_inquiry/CjnUserPrint"
+				name="CjnUserInfoForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserPrintAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserPrint.jsp" />
+		</action>
+
+		<!-- 問い合せ閲覧可能権限更新ページ -->
+		<action path="/cjn_inquiry/CjnUserAuthorityUpdatePage"
+				name="CjnUserAuthorityUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserAuthorityUpdatePageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserAuthorityUpdate.jsp" />
+		</action>
+
+		<!-- 問い合せ閲覧可能権限更新Back -->
+		<action path="/cjn_inquiry/CjnUserAuthorityUpdatePageBack"
+				name="CjnUserAuthorityUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserAuthorityUpdatePageBackAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserAuthorityUpdate.jsp" />
+		</action>
+
+		<!-- 問い合せ閲覧可能権限更新確認 -->
+		<action path="/cjn_inquiry/CjnUserAuthorityUpdateConfirm"
+				name="CjnUserAuthorityUpdateForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserAuthorityUpdateConfirmAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnUserAuthorityUpdateConfirm.jsp" />
+		</action>
+
+		<!-- 問い合せ閲覧可能権限更新 -->
+		<action path="/cjn_inquiry/CjnUserAuthorityUpdateCommit"
+				name="CjnUserAuthorityUpdateCommitForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnUserAuthorityUpdateCommitAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/cjn_inquiry/CjnUserInfo.do" />
+		</action>
+
+		<!-- システム操作履歴検索初期画面 -->
+		<!--
+		<action path="/cjn_inquiry/CjnLogOperationSearchPage"
+				name="CjnLogOperationSearchForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnLogOperationSearchPageAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryLogOperationSearch.jsp" />
+		</action>
+		-->
+
+		<!-- システム操作履歴検索 -->
+		<!--
+		<action path="/cjn_inquiry/CjnLogOperationSearch"
+				name="CjnLogOperationSearchForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnLogOperationSearchAction"
+				scope="request"
+				validate="true"
+				input="/cjn_inquiry/CjnLogOperationSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryLogOperationSearch.jsp" />
+		</action>
+		 -->
+
+		<!-- システム操作履歴検索(ページング) -->
+		<!--
+		<action path="/cjn_inquiry/CjnLogOperationSearchPaging"
+				name="CjnLogOperationSearchPagingForm"
+				type="net.chintai.backend.sysadmin.cjn_inquiry.action.CjnLogOperationSearchPagingAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/cjn_inquiry/CjnInquiryLogOperationSearch.jsp" />
+		</action>
+		 -->
+	</action-mappings>
+</struts-config>

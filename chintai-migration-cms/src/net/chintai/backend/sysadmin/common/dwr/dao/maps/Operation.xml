@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="operation">
+	<!-- 操作内容 -->
+	<resultMap id="operationMap" class="net.chintai.backend.sysadmin.common.dwr.domain.Operation">
+		<result property="operationId" column="OPERATION_ID"/>
+		<result property="operationName" column="OPERATION_NAME"/>
+	</resultMap>
+	
+	<!-- 操作内容リスト取得 -->
+	<select id="operationList" resultMap="operationMap" parameterClass="java.lang.String">
+		SELECT
+			OPERATION_ID,
+			OPERATION_NAME
+		FROM
+			MNG_MST_OPERATION
+		WHERE
+			OPERATION_ID LIKE #value#||'%'
+		ORDER BY
+			OPERATION_ID
+	</select>
+</sqlMap>

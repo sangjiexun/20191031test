@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+	<formset>
+		<!-- 適用するアクション・フォームBeanを論理名で指定 -->
+
+		<!-- 問い合せ種別登録画面 -->
+		<form name="CjnInquiryTypeAddForm">
+
+			<!-- タイトル -->
+			<field property="inqTitle" depends="required, maxlength,scripting">
+				<msg name="required" key="WARN.MSG.0001" />
+				<arg name="required" key="cjn_inquiry.inqTitle" position="0" />
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.inqTitle" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.inqTitle" position="0" />
+			</field>
+
+			<!-- 説明文 -->
+			<field property="inqComment"
+				depends="required, maxlength,scripting">
+				<msg name="required" key="WARN.MSG.0001" />
+				<arg name="required" key="cjn_inquiry.inqComment" position="0" />
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.inqComment" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.inqComment" position="0" />
+			</field>
+
+			<!-- 問い合せURL -->
+			<field property="inqUrl" depends="required, maxlength,mask">
+				<msg name="required" key="WARN.MSG.0001" />
+				<arg name="required" key="cjn_inquiry.inqUrl" position="0" />
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.inqUrl" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>500</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0005" />
+				<arg name="mask" key="cjn_inquiry.inqUrl" position="0" />
+				<arg name="mask" key="${var:mask}" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^(https?)://[0-9a-zA-Z,;:-?#@!$'()*+=~%].+([.][a-zA-z])+[a-zA-Z/-]+$</var-value>
+				</var>
+			</field>
+
+			<!-- 表示用タイトル -->
+			<field property="dispTitle" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.dispTitle" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>35</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.dispTitle" position="0" />
+			</field>
+
+			<!-- 表示用ソートキー -->
+			<field property="dispSortKey" depends="integer, maxlength">
+				<msg name="integer" key="WARN.MSG.0008" />
+				<arg name="integer" key="cjn_inquiry.dispSortKey" position="0" />
+				<arg name="integer" key="${var:maxlength}" resource="false" position="1" />
+				<msg name="maxlength" key="WARN.MSG.0008" />
+				<arg name="maxlength" key="cjn_inquiry.dispSortKey" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2</var-value>
+				</var>
+			</field>
+
+			<!-- 問い合せグループ -->
+			<field property="inqGroupType" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="cjn_inquiry.inqGroupType" position="0" />
+			</field>
+
+			<!-- 管理メモ -->
+			<field property="adminNote" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.adminNote" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1300</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.adminNote" position="0" />
+			</field>
+
+		</form>
+
+		<!-- 問い合せ種別更新画面 -->
+		<form name="CjnInquiryTypeUpdateForm">
+
+			<!-- タイトル -->
+			<field property="inqTitle" depends="required, maxlength,scripting">
+				<msg name="required" key="WARN.MSG.0001" />
+				<arg name="required" key="cjn_inquiry.inqTitle" position="0" />
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.inqTitle" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.inqTitle" position="0" />
+			</field>
+
+			<!-- 説明文 -->
+			<field property="inqComment" depends="required, maxlength,scripting">
+				<msg name="required" key="WARN.MSG.0001" />
+				<arg name="required" key="cjn_inquiry.inqComment" position="0" />
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.inqComment" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.inqComment" position="0" />
+			</field>
+
+			<!-- 問い合せURL -->
+			<field property="inqUrl" depends="required, maxlength,mask">
+				<msg name="required" key="WARN.MSG.0001" />
+				<arg name="required" key="cjn_inquiry.inqUrl" position="0" />
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.inqUrl" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>500</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0005" />
+				<arg name="mask" key="cjn_inquiry.inqUrl" position="0" />
+				<arg name="mask" key="${var:mask}" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^(https?)://[0-9a-zA-Z,;:-?#@!$'()*+=~%].+([.][a-zA-z])+[a-zA-Z/-]+$</var-value>
+				</var>
+			</field>
+
+			<!-- 表示用タイトル -->
+			<field property="dispTitle" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.dispTitle"
+					position="0" />
+				<arg name="maxlength" key="${var:maxlength}"
+					resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>35</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.dispTitle" position="0" />
+			</field>
+
+			<!-- 表示用ソートキー -->
+			<field property="dispSortKey"
+				depends="integer, maxlength">
+				<msg name="integer" key="WARN.MSG.0008" />
+				<arg name="integer" key="cjn_inquiry.dispSortKey" position="0" />
+				<arg name="integer" key="${var:maxlength}" resource="false" position="1" />
+				<msg name="maxlength" key="WARN.MSG.0008" />
+				<arg name="maxlength" key="cjn_inquiry.dispSortKey" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2</var-value>
+				</var>
+			</field>
+
+			<!-- 問い合せグループ -->
+			<field property="inqGroupType" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="cjn_inquiry.inqGroupType" position="0" />
+			</field>
+
+			<!-- 管理メモ -->
+			<field property="adminNote" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.adminNote" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1300</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.adminNote" position="0" />
+			</field>
+
+		</form>
+
+		<!-- 問い合せ検索 -->
+		<form name="CjnInquirySearchForm">
+			<!-- 問い合せID -->
+			<field property="cjnInqId" depends="maxlength,mask">
+				<msg name="maxlength" key="WARN.MSG.0007" />
+				<arg name="maxlength" key="cjn_inquiry.cjnInqId" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>16</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0007" />
+				<arg name="mask" key="cjn_inquiry.cjnInqId" position="0" />
+				<arg name="mask" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9a-zA-Z]*$</var-value>
+				</var>
+			</field>
+
+			<!-- キーワード -->
+			<field property="keywords" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004"/>
+				<arg name="maxlength" key="cjn_inquiry.keywords" position="0" />
+				<arg name="maxlength" key="${var:maxlength}"  resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.keywords" position="0" />
+			</field>
+
+			<!-- 問い合せ日時From -->
+			<field property="insDateFromSearch" depends="date">
+				<msg name="date" key="WARN.MSG.0027" />
+				<arg name="date" key="cjn_inquiry.insDateFrom"  position="0" />
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHH</var-value>
+				</var>
+			</field>
+
+			<!-- 問い合せ日時To -->
+			<field property="insDateToSearch" depends="date">
+				<msg name="date" key="WARN.MSG.0027" />
+				<arg name="date" key="cjn_inquiry.insDateTo" position="0" />
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHH</var-value>
+				</var>
+			</field>
+
+			<!-- DATE比較チェック -->
+			<field property="dateCheck" depends="dateCompare">
+				<msg name="dateCompare" key="WARN.MSG.0009" />
+				<arg name="dateCompare" key="cjn_inquiry.insDate" position="0"/>
+					<var>
+						<var-name>startDate</var-name>
+						<var-value>insDateFromSearch</var-value>
+					</var>
+					<var>
+						<var-name>endDate</var-name>
+						<var-value>insDateToSearch</var-value>
+					</var>
+					<var>
+						<var-name>datePattern</var-name>
+						<var-value>yyyyMMddHH</var-value>
+					</var>
+			</field>
+
+			<!-- 取引番号dealNumber since 2008.07.18 -->
+			<field property="dealNumber" depends="mask">
+				<msg name="mask" key="WARN.MSG.0008" />
+				<arg name="mask" key="cjn_inquiry.dealNumber" position="0" />
+				<arg name="mask" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9]{0,20}$</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>20</var-value>
+				</var>
+			</field>
+			<!-- 伝票番号slipNumber since 2008.07.18 -->
+			<field property="slipNumber" depends="mask">
+				<msg name="mask" key="WARN.MSG.0008" />
+				<arg name="mask" key="cjn_inquiry.slipNumber" position="0" />
+				<arg name="mask" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9]{0,20}$</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>20</var-value>
+				</var>
+
+			</field>
+		</form>
+
+		<!-- 問い合せユーザ情報更新 -->
+		<form name="CjnUserUpdateForm">
+			<!-- 送信・未送信チェック/ アドレスチェック -->
+			<field property="email1" depends="validwhen,maxlength,email">
+				<msg name="validwhen" key="WARN.MSG.0001" />
+				<arg name="validwhen" key="cjn_inquiry.Email" position="0" />
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						(((emailStatus1=='0')and((*this*==null)or(*this*!=null)))or((emailStatus1=='1')and(*this*!=null)))
+					</var-value>
+				</var>
+				<msg name="maxlength" key="WARN.MSG.0003" />
+				<arg name="maxlength" key="cjn_inquiry.Email" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+				<msg name="email" key="WARN.MSG.0003" />
+				<arg name="email" key="cjn_inquiry.Email" position="0" />
+			</field>
+
+			<field property="email2" depends="validwhen,maxlength,email">
+				<msg name="validwhen" key="WARN.MSG.0001" />
+				<arg name="validwhen" key="cjn_inquiry.Email" position="0" />
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						(((emailStatus2=='0')and((*this*==null)or(*this*!=null)))or((emailStatus2=='1')and(*this*!=null)))
+					</var-value>
+				</var>
+				<msg name="maxlength" key="WARN.MSG.0007" />
+				<arg name="maxlength" key="cjn_inquiry.Email" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+				<msg name="email" key="WARN.MSG.0003" />
+				<arg name="email" key="cjn_inquiry.Email" position="0" />
+			</field>
+
+			<field property="email3" depends="validwhen,maxlength,email">
+				<msg name="validwhen" key="WARN.MSG.0001" />
+				<arg name="validwhen" key="cjn_inquiry.Email" position="0" />
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						(((emailStatus3=='0')and((*this*==null)or(*this*!=null)))or((emailStatus3=='1')and(*this*!=null)))
+					</var-value>
+				</var>
+				<msg name="maxlength" key="WARN.MSG.0007" />
+				<arg name="maxlength" key="cjn_inquiry.Email" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>255</var-value>
+				</var>
+				<msg name="email" key="WARN.MSG.0003" />
+				<arg name="email" key="cjn_inquiry.Email" position="0" />
+			</field>
+
+			<!-- アカウントレベルチェック -->
+			<field property="accountLevel" depends="required">
+				<msg name="required" key="WARN.MSG.0010" />
+				<arg name="required" key="cjn_inquiry.AccountLevel" position="0" />
+			</field>
+
+			<!-- 管理メモ -->
+			<field property="adminNote" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.adminNote" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1300</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.adminNote" position="0" />
+			</field>
+		</form>
+
+		<!-- システム操作履歴検索（CHINTAIへの問い合せ管理） -->
+		<form name="CjnLogOperationSearchForm">
+			<!-- ユーザID -->
+			<field property="userId"  depends="maxlength,mask">
+				<msg name="maxlength" key="WARN.MSG.0007" />
+				<arg name="maxlength" key="cjn_inquiry.userId" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>12</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0007" />
+				<arg name="mask" key="cjn_inquiry.userId" position="0" />
+				<arg name="mask" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z0-9]*$</var-value>
+				</var>
+			</field>
+
+			<!-- ユーザ名 -->
+			<field property="userName"  depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="cjn_inquiry.userName" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>20</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="cjn_inquiry.userName" position="0" />
+			</field>
+
+			<!-- 問い合せID -->
+			<field property="cjnInqId"  depends="maxlength,mask">
+				<msg name="maxlength" key="WARN.MSG.0007" />
+				<arg name="maxlength" key="cjn_inquiry.cjnInqId" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>16</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0007" />
+				<arg name="mask" key="cjn_inquiry.cjnInqId" position="0" />
+				<arg name="mask" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z0-9]*$</var-value>
+				</var>
+			</field>
+
+			<!-- 処理日時 -->
+			<field property="updDtFrom" depends="date">
+				<msg name="date" key="WARN.MSG.0027" />
+				<arg name="date" key="cjn_inquiry.updateDateTimeFrom" position="0" />
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHH</var-value>
+				</var>
+			</field>
+
+			<field property="updDtTo" depends="date">
+				<msg name="date" key="WARN.MSG.0027" />
+				<arg name="date" key="cjn_inquiry.updateDateTimeTo" position="0" />
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHH</var-value>
+				</var>
+			</field>
+
+			<field property="dateCheck" depends="dateCompare">
+				<msg name="dateCompare" key="WARN.MSG.0009" />
+				<arg name="dateCompare" key="cjn_inquiry.updateDateTime" position="0"/>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>updDtFrom</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>updDtTo</var-value>
+				</var>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHH</var-value>
+				</var>
+			</field>
+		</form>
+
+	</formset>
+
+</form-validation>

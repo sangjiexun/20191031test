@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+    PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions ================================== -->
+
+	<form-beans>
+
+		<!-- ADデータアップロード -->
+		<form-bean name="addataUploadForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="displayFlg" type="java.lang.String"/>
+			<form-property name="uploadYear" type="java.lang.String"/>
+			<form-property name="uploadMonth" type="java.lang.String"/>
+			<form-property name="fileUp" type="org.apache.struts.upload.FormFile"/>
+		</form-bean>
+
+		<!-- 照合データ一覧-->
+    	<form-bean name="matchingDataListForm" type="org.apache.struts.validator.DynaValidatorForm">
+      		<form-property name="offSet"           type="java.lang.Integer" />
+    	</form-bean>
+
+    	<!-- 照合データダウンロード -->
+    	<form-bean name="matchingDataDownloadForm" type="org.apache.struts.validator.DynaValidatorForm">
+      		<form-property name="taisyoYm"           type="java.lang.String" />
+    	</form-bean>
+
+	</form-beans>
+
+
+
+
+  <!-- ========== Action Mapping Definitions ============================= -->
+    <action-mappings>
+
+    <!-- ADデータアップロード画面へ -->
+    <action path="/addata_matching/AdDataUploadPage"
+			type="net.chintai.backend.sysadmin.addata_matching.action.AdDataUploadPageAction"
+			name="addataUploadForm"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/addata_matching/AdDataUpload.jsp" />
+	</action>
+
+	<!-- ADデータアップロードアクション -->
+	<action path="/addata_matching/AdDataUpload"
+			type="net.chintai.backend.sysadmin.addata_matching.action.AdDataUploadAction"
+			name="addataUploadForm"
+			scope="request"
+			validate="true"
+			input="/addata_matching/AdDataUploadPage.do">
+			<forward name="success" path="/addata_matching/AdDataUploadPage.do" />
+			<forward name="failure" path="/addata_matching/AdDataUploadPage.do" />
+	</action>
+
+
+	<!-- 照合結果ダウンロード画面へ -->
+	<action path="/addata_matching/MatchingDataDownloadPage"
+			type="net.chintai.backend.sysadmin.addata_matching.action.MatchingDataDownloadPageAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/addata_matching/MatchingDataDownload.jsp" />
+	</action>
+
+	<!-- 照合結果ダウンロード画面(ページング) -->
+	<action path="/addata_matching/MatchingDataDownloadPaging"
+			name="matchingDataListForm"
+			type="net.chintai.backend.sysadmin.addata_matching.action.MatchingDataDownloadPagingAction"
+			scope="request"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/addata_matching/MatchingDataDownload.jsp"/>
+	</action>
+
+	<!-- 照合結果ダウンロード -->
+	<action path="/addata_matching/MatchingDataDownload"
+				name="matchingDataDownloadForm"
+				type="net.chintai.backend.sysadmin.addata_matching.action.MatchingDataDownloadAction"
+				scope="request">
+			<forward name="failure" path="/WEB-INF/jsp/addata_matching/MatchingDataDownload.jsp" />
+	</action>
+
+
+
+
+  </action-mappings>
+
+</struts-config>

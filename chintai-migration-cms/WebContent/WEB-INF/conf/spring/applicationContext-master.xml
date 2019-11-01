@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+
+	<!-- 沿線・駅検索 -->
+	<bean id="rosenSearchDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.RosenSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 沿線・駅 名称から検索 -->
+	<bean id="rosenNameSearchDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.RosenNameSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 沿線・駅詳細検索 -->
+	<bean id="rosenInfoSearchDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.RosenInfoSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!--沿線・駅 CSV ファイルのダウンロード -->
+	<bean id="rosenEkiSearchForCsvDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.RosenEkiSearchForCsvDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 沿線・駅の登録/変更/削除 -->
+	<bean id="rosenUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.RosenUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 統一駅登録 -->
+	<bean id="nodeUpdateCommitDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.NodeUpdateCommitDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 鉄道会社検索 -->
+	<bean id="tetudoGaishaSearchDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.TetudoGaishaSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 配布用沿線・駅CSVダウンロード -->
+	<bean id="rosenEkiSearchForDistributeCsvDao" class="net.chintai.backend.sysadmin.master.dao.impl.RosenEkiSearchForDistributeCsvDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 市区町村郵便番号から検索 -->
+	<bean id="shikutyosonPostSearchDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.ShikutyosonPostSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 市区町村住所から検索 -->
+	<bean id="shikutyosonAddressSearchDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.ShikutyosonAddressSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 市区町村登録 -->
+	<bean id="shikutyosonAddDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.ShikutyosonAddDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 携帯ゲーム対応機種メンテナンス -->
+	<bean id="mobileMaintenanceDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.MobileMaintenanceDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 大学マスタメンテナンス -->
+	<bean id="schoolMaintenanceDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.SchoolMaintenanceDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- メールマガジン用メールアドレス CSV ファイルのダウンロード -->
+	<bean id="mailMagazineSearchForCsvDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.MailMagazineSearchForCsvDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 不動産会社メールアドレス CSV ファイルのダウンロード -->
+	<bean id="shopMailSearchForCsvDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.ShopMailSearchForCsvDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- 連動元出稿情報取得 -->
+	<bean id="rendoSendDao"
+		class="net.chintai.backend.sysadmin.master.dao.impl.RendoSendDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+
+	<!-- Service Definitions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+
+	<!-- 沿線・駅検索 -->
+	<bean id="rosenSearchByAreaCdRosenTypeService"
+		class="net.chintai.backend.sysadmin.master.service.impl.RosenSearchByAreaCdRosenTypeServiceImpl">
+		<property name="rosenSearchDao">
+			<ref bean="rosenSearchDao" />
+		</property>
+	</bean>
+
+	<!-- 沿線・駅 名称から検索 -->
+	<bean id="rosenSearchByEnsenEkiNameService"
+		class="net.chintai.backend.sysadmin.master.service.impl.RosenSearchByEnsenEkiNameServiceImpl">
+		<property name="rosenNameSearchDao">
+			<ref bean="rosenNameSearchDao" />
+		</property>
+	</bean>
+
+	<!-- 沿線・駅詳細検索 -->
+	<bean id="rosenInfoSearchByEnsenCdService"
+		class="net.chintai.backend.sysadmin.master.service.impl.RosenInfoSearchByEnsenCdServiceImpl">
+		<property name="rosenInfoSearchDao">
+			<ref bean="rosenInfoSearchDao" />
+		</property>
+	</bean>
+
+	<!--沿線・駅 CSV ファイルのダウンロード -->
+	<bean id="rosenEkiSearchForCsvService"
+		class="net.chintai.backend.sysadmin.master.service.impl.RosenEkiSearchForCsvServiceImpl">
+		<property name="rosenEkiSearchForCsvDao">
+			<ref bean="rosenEkiSearchForCsvDao" />
+		</property>
+	</bean>
+
+	<!-- 沿線・駅の登録/変更/削除 -->
+	<bean id="rosenUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="rosenUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="rosenUpdateCommit">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException, -org.springframework.dao.DataAccessException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="rosenUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.master.service.impl.RosenUpdateCommitServiceImpl">
+		<property name="rosenUpdateCommitDao">
+			<ref bean="rosenUpdateCommitDao" />
+		</property>
+	</bean>
+
+	<!-- 配布用CSVダウンロード -->
+	<bean id="rosenDistributeCsvDownloadService"
+		class="net.chintai.backend.sysadmin.master.service.impl.RosenDistributeCsvDownloadServiceImpl">
+		<property name="rosenEkiSearchForDistributeCsvDao">
+			<ref bean="rosenEkiSearchForDistributeCsvDao" />
+		</property>
+	</bean>
+
+	<!-- 統一駅登録 -->
+	<bean id="nodeUpdateCommitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="nodeUpdateCommitServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="rosenUpdateCommit">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException, -org.springframework.dao.DataAccessException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="nodeUpdateCommitServiceTarget"
+		class="net.chintai.backend.sysadmin.master.service.impl.NodeUpdateCommitServiceImpl">
+		<property name="nodeUpdateCommitDao">
+			<ref bean="nodeUpdateCommitDao" />
+		</property>
+	</bean>
+
+	<!-- 鉄道会社検索 -->
+	<bean id="tetudoGaishaSearchService"
+		class="net.chintai.backend.sysadmin.master.service.impl.TetudoGaishaSearchServiceImpl">
+		<property name="tetudoGaishaSearchDao">
+			<ref bean="tetudoGaishaSearchDao" />
+		</property>
+	</bean>
+
+	<!-- 鉄道会社検索(CSV) -->
+	<bean id="tetudoGaishaSearchForCsvService"
+		class="net.chintai.backend.sysadmin.master.service.impl.TetudoGaishaSearchForCsvServiceImpl">
+		<property name="tetudoGaishaSearchDao">
+			<ref bean="tetudoGaishaSearchDao" />
+		</property>
+	</bean>
+
+	<!-- 鉄道会社データCSV変換 -->
+	<bean id="tetudoGaishaListCsvService"
+		class="net.chintai.backend.sysadmin.master.service.impl.TetudoGaishaListCsvServiceImpl">
+	</bean>
+
+	<!-- 市区町村郵便番号から検索 -->
+	<bean id="shikutyosonPostSearchService"
+		class="net.chintai.backend.sysadmin.master.service.impl.ShikutyosonPostSearchServiceImpl">
+		<property name="shikutyosonPostSearchDao">
+			<ref bean="shikutyosonPostSearchDao" />
+		</property>
+	</bean>
+
+	<!-- 市区町村住所から検索 -->
+	<bean id="shikutyosonAddressSearchService"
+		class="net.chintai.backend.sysadmin.master.service.impl.ShikutyosonAddressSearchServiceImpl">
+		<property name="shikutyosonAddressSearchDao">
+			<ref bean="shikutyosonAddressSearchDao" />
+		</property>
+	</bean>
+
+	<!-- 市区町村登録 -->
+	<bean id="shikutyosonAddService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="shikutyosonAddServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException, -org.springframework.dao.DataAccessException</prop>
+				<prop key="update*">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException, -org.springframework.dao.DataAccessException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="shikutyosonAddServiceTarget"
+		class="net.chintai.backend.sysadmin.master.service.impl.ShikutyosonAddServiceImpl">
+		<property name="shikutyosonAddDao">
+			<ref bean="shikutyosonAddDao" />
+		</property>
+	</bean>
+
+	<!-- 国土地理協会住所データアップロード -->
+	<bean id="jgdcShikutyosonAddService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="jgdcShikutyosonAddServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+			</props>
+		</property>
+	</bean>
+	<bean id="jgdcShikutyosonAddServiceTarget"
+		class="net.chintai.backend.sysadmin.master.service.impl.JgdcShikutyosonAddServiceImpl">
+		<property name="systemControlDao">
+			<ref bean="systemControlDao"/>
+		</property>
+	</bean>
+
+	<!-- 携帯ゲーム対応機種メンテナンス -->
+	<bean id="mobileMaintenanceService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="mobileMaintenanceServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="mobileCsvUpload">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException, -org.springframework.dao.DataAccessException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="mobileMaintenanceServiceTarget"
+		class="net.chintai.backend.sysadmin.master.service.impl.MobileMaintenanceServiceImpl">
+		<property name="mobileMaintenanceDao">
+			<ref bean="mobileMaintenanceDao" />
+		</property>
+	</bean>
+
+	<!-- 大学マスタメンテナンス -->
+	<bean id="schoolMaintenanceService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager" /></property>
+		<property name="target">
+			<ref local="schoolMaintenanceServiceTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="schoolCsvUpload">PROPAGATION_REQUIRED, -net.chintai.backend.sysadmin.common.exception.ApplicationException, -org.springframework.dao.DataAccessException</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="schoolMaintenanceServiceTarget"
+		class="net.chintai.backend.sysadmin.master.service.impl.SchoolMaintenanceServiceImpl">
+		<property name="schoolMaintenanceDao">
+			<ref bean="schoolMaintenanceDao" />
+		</property>
+	</bean>
+
+
+	<!-- メールマガジン用メールアドレス CSV ファイルのダウンロード -->
+	<bean id="mailMagazineSearchForCsvService"
+		class="net.chintai.backend.sysadmin.master.service.impl.MailMagazineSearchForCsvServiceImpl">
+		<property name="mailMagazineSearchForCsvDao">
+			<ref bean="mailMagazineSearchForCsvDao" />
+		</property>
+	</bean>
+
+	<!-- 不動産会社メールアドレス CSV ファイルのダウンロード -->
+	<bean id="shopMailSearchForCsvService"
+		class="net.chintai.backend.sysadmin.master.service.impl.ShopMailSearchForCsvServiceImpl">
+		<property name="shopMailSearchForCsvDao">
+			<ref bean="shopMailSearchForCsvDao" />
+		</property>
+	</bean>
+
+	<!-- 連動元出稿管理取得 -->
+	<bean id="rendoSendService"
+		class="net.chintai.backend.sysadmin.master.service.impl.RendoSendServiceImpl">
+		<property name="rendoSendDao">
+			<ref bean="rendoSendDao" />
+		</property>
+	</bean>
+
+</beans>

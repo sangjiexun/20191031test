@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+    PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions ================================== -->
+  <form-beans>
+    <!-- JavaScriptSideBar -->
+    <form-bean name="MenuForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="u" type="java.lang.String" />
+      <form-property name="t" type="java.lang.String" />
+      <form-property name="type" type="java.lang.String" />
+    </form-bean>
+  </form-beans>
+
+
+  <!-- ========== Global Exception Definitions =========================== -->
+  <global-exceptions>
+    <exception key="APPLICATION.ERROR.KEY"
+        type="net.chintai.backend.sysadmin.common.exception.ApplicationException"
+        path="/WEB-INF/jsp/error/ApplicationException.jsp"
+        handler="net.chintai.backend.sysadmin.common.exception.ApplicationExceptionHandler" />
+    <exception key="SYSTEM.ERROR.KEY"
+        type="net.chintai.backend.sysadmin.common.exception.SystemException"
+        path="/WEB-INF/jsp/error/SystemException.jsp"
+        handler="net.chintai.backend.sysadmin.common.exception.SystemExceptionHandler" />
+  </global-exceptions>
+
+  <!-- ========== Global Forward Definitions ============================= -->
+
+
+  <!-- ========== Action Mappings Definitions ============================ -->
+  <action-mappings>
+    <action path="/menu"
+        name="MenuForm"
+        type="net.chintai.backend.sysadmin.common.action.MenuAction"
+        scope="request"
+        validate="false" />
+  </action-mappings>
+
+  <!-- ========== Action Mappings Definitions ============================ -->
+  <controller memFileSize="512K" bufferSize="8192"  multipartClass="net.chintai.backend.sysadmin.common.upload.CustomMultipartRequestHandler"/>
+
+
+  <!-- ========== Message Resources Definitions ========================== -->
+  <message-resources parameter="resources/ApplicationResources" />
+
+
+  <!-- ========== Plug-in Definitions ==================================== -->
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property property="pathnames"
+        value="
+          /WEB-INF/conf/struts/validator-rules.xml,
+          /WEB-INF/conf/struts/validator-constants.xml,
+          /WEB-INF/conf/struts/validation-login.xml,
+          /WEB-INF/conf/struts/validation-profile.xml,
+          /WEB-INF/conf/struts/validation-shop.xml,
+          /WEB-INF/conf/struts/validation-bukken.xml,
+          /WEB-INF/conf/struts/validation-asp.xml,
+          /WEB-INF/conf/struts/validation-review.xml,
+          /WEB-INF/conf/struts/validation-shopinquiry.xml,
+          /WEB-INF/conf/struts/validation-cjninquiry.xml,
+          /WEB-INF/conf/struts/validation-user.xml,
+          /WEB-INF/conf/struts/validation-demand.xml,
+          /WEB-INF/conf/struts/validation-master.xml,
+          /WEB-INF/conf/struts/validation-shopListing.xml,
+          /WEB-INF/conf/struts/validation-addataMatching.xml,
+          /WEB-INF/conf/struts/validation-dataoutput.xml,
+          /WEB-INF/conf/struts/crnwl/validation-shop.xml"/>
+  </plug-in>
+</struts-config>

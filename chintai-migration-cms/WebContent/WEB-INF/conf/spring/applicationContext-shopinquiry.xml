@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="inquiryRecentSearchDao"
+		class="net.chintai.backend.sysadmin.shop_inquiry.dao.impl.InquiryRecentSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="inquiryRecentInfoDao"
+		class="net.chintai.backend.sysadmin.shop_inquiry.dao.impl.InquiryRecentInfoDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<bean id="inquiryLogOperationSearchDao"
+		class="net.chintai.backend.sysadmin.shop_inquiry.dao.impl.InquiryLogOperationSearchDaoImpl">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+
+	<!-- Service Definitions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="InquiryRecentSearchService"
+		class="net.chintai.backend.sysadmin.shop_inquiry.service.impl.InquiryRecentSearchServiceImpl">
+		<property name="inquiryRecentSearchDao">
+			<ref bean="inquiryRecentSearchDao" />
+		</property>
+	</bean>
+
+	<bean id="InquiryRecentInfoService"
+		class="net.chintai.backend.sysadmin.shop_inquiry.service.impl.InquiryRecentInfoServiceImpl">
+		<property name="inquiryRecentInfoDao">
+			<ref bean="inquiryRecentInfoDao" />
+		</property>
+	</bean>
+
+	<bean id="InquiryLogOperationSearchService"
+		class="net.chintai.backend.sysadmin.shop_inquiry.service.impl.InquiryLogOperationSearchServiceImpl">
+		<property name="inquiryLogOperationSearchDao">
+			<ref bean="inquiryLogOperationSearchDao" />
+		</property>
+	</bean>
+
+	<bean id="inquiryRecentListCsvService"
+		class="net.chintai.backend.sysadmin.shop_inquiry.service.impl.InquiryRecentListCsvServiceImpl">
+		<property name="inquiryRecentSearchDao">
+			<ref bean="inquiryRecentSearchDao" />
+		</property>
+	</bean>
+
+
+
+
+
+
+
+</beans>

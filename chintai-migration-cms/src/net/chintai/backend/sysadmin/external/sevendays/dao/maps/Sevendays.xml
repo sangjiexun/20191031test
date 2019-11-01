@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="sevendays">
+
+	<!-- CHINTAI物件リスティング利用可否判定 -->
+	<select id="selectChintaiBukkenListingEnabled"
+			parameterClass="java.lang.String" resultClass="java.lang.Integer">
+		<![CDATA[
+		SELECT
+			TOKUSEN_COUNT
+		FROM
+			USK_TORIHIKISAKI_RYOUKIN UTR
+			INNER JOIN
+				USK_TORIHIKISAKI UT
+				ON UTR.TORIHIKISAKI_SEQ = UT.TORIHIKISAKI_SEQ AND UT.DEL_KBN = '0'
+			INNER JOIN
+				SHOP_KANRI SKN
+				ON
+					UT.SHOPCD = SKN.SHOPCD AND
+					SKN.SHOPCD = #value# AND
+					SKN.CERTIFY_FLG = '1' AND
+					SKN.SHOP_STATUS = '1' AND
+					CT_STATUS = '1'
+		WHERE
+			START_YM = (
+				SELECT
+					MAX(START_YM) MAX_START_YM
+				FROM
+					USK_TORIHIKISAKI_RYOUKIN UTR
+					INNER JOIN
+						USK_TORIHIKISAKI UT
+						ON UTR.TORIHIKISAKI_SEQ = UT.TORIHIKISAKI_SEQ AND UT.DEL_KBN = '0'
+					INNER JOIN
+						SHOP_KANRI SKN
+						ON
+							UT.SHOPCD = SKN.SHOPCD AND
+							SKN.SHOPCD = #value# AND
+							SKN.CERTIFY_FLG = '1' AND
+							SKN.SHOP_STATUS = '1' AND
+							CT_STATUS = '1'
+				WHERE
+					TO_DATE(UTR.START_YM, 'YYYYMM') < SYSDATE
+			)
+		]]>
+	</select>
+
+	<!-- 物件詳細ログ分析(CHINTAI)利用可否判定 -->
+	<select id="selectChintaiLogAnalysisEnabled"
+			parameterClass="java.lang.String" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			SHOP_KANRI
+		WHERE
+			SHOPCD = #value#
+			AND CERTIFY_FLG = '1'
+			AND SHOP_STATUS = '1'
+			AND CT_STATUS = '1'
+			AND WEB_LOG_FLG = '1'
+	</select>
+
+	<!-- 検索条件ログレポート利用可否判定 -->
+	<select id="selectLogReportEnabled"
+			parameterClass="java.lang.String" resultClass="java.lang.String">
+		SELECT
+			WEB_LOG_FLG
+		FROM
+			SHOP_KANRI
+		WHERE
+			SHOPCD = #value#
+	</select>
+
+
+</sqlMap>

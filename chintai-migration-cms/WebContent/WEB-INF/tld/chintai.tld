@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib version="2.0">
+  <description>Chintai Tags</description>
+  <display-name>Chintai custom Tag</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>chintai</short-name>
+  <uri>http://www.chintai.net/</uri>
+
+  <tag>
+    <description>日時関連プルダウンを生成</description>
+    <name>DateTag</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.DateTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>year,month,day,timeを指定可能</description>
+        <name>type</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>"true"の場合現在日時を初期値にする</description>
+        <name>todayFix</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定、todayFixより優先的に適用される</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>必須フラグ、trueに指定すると空白選択不可</description>
+        <name>required</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>タイプが年度の場合、年度の最終年の補正値</description>
+        <name>addYear</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>タイプが年度の場合、開始年度を指定。未指定の場合システム設定値を使用</description>
+        <name>startYear</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <description>都道府県プルダウンの生成</description>
+    <name>Todofuken</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.TodofukenTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>OptionタグのonChangeイベントを指定</description>
+        <name>onChange</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <description>プロパティファイルからSelectBox生成</description>
+    <name>PropertyOptions</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.PropertyOptions</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>Optionタグに表示する値のPropertyファイルのキー</description>
+        <name>nameKey</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>OptionタグのValueになる表示する値のPropertyファイルのキー</description>
+        <name>valueKey</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>OptionタグのStyleを指定</description>
+        <name>style</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>OptionタグのonChangeイベントを指定</description>
+        <name>onChange</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <!--2009/03/04 Lee Hospu 追加-->
+        <description>プロパティーファイルの区切り文字列を設定します。</description>
+        <name>delimiter</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <!--2009/03/04 Lee Hospu 追加-->
+        <description>Optionタグのidを指定</description>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <description>ユーザグループSelectBox生成</description>
+    <name>UserGroup</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.UserGroupTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <description>操作内容SelectBox生成</description>
+    <name>Authority</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.AuthorityTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>onChangeイベントを指定</description>
+        <name>onChange</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <description>エリアSelectBox生成</description>
+    <name>Area</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.AreaTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>OptionタグのonChangeイベントを指定</description>
+        <name>onChange</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>連動元マスタSelectBox生成</description>
+    <name>MstRendo</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.MstRendoTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>OptionタグのonChangeイベントを指定</description>
+        <name>onChange</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>問合せ用区分値マスタSelectBox生成</description>
+    <name>MstInquiryKbn</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.MstInquiryKbnTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>OptionタグのonChangeイベントを指定</description>
+        <name>onChange</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>問合せ区分カラム名</description>
+        <name>inqKbnColName</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>コード値を文字列に変換して出力</description>
+    <name>CodePrint</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.CodePrintTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>コード値</description>
+        <name>code</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>NameKey</description>
+        <name>nameKey</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>ValueKey</description>
+        <name>valueKey</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+   <tag>
+    <description>QAカテゴリSelectBox生成</description>
+    <name>QaCategory</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.QaCategoryTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>OptionタグのonChangeイベントを指定</description>
+        <name>onChange</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>お問合せ種別SelectBox生成</description>
+    <name>InquiryInfo</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.InquiryInfoTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>OptionタグのonChangeイベントを指定</description>
+        <name>onChange</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>担当支社SelectBox生成</description>
+    <name>ShisyaInfo</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.ShisyaTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>引数で渡されるListを利用してSelectBox生成</description>
+    <name>SelectBox</name>
+    <tag-class>net.chintai.backend.sysadmin.common.tags.SelectBoxTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>生成されるプルダウンの名前</description>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>初期値を指定</description>
+        <name>fixValue</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>必須フラグ、trueに指定すると空白選択不可</description>
+        <name>required</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <description>中身作成に使うデータ</description>
+        <name>valuesList</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+		<name>filter</name>
+		<tag-class>net.chintai.backend.sysadmin.common.tags.FilterTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>
+			Body に org.apache.struts.util.ResponseUtils#filter を適用します
+		</description>
+		<attribute>
+			<name>filter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>changeNL2BR</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+  </tag>
+
+
+	<tag>
+		<description>Renders an HTML 'select' element. Supports databinding to the selected option.</description>
+		<name>springSelect</name>
+		<tag-class>net.chintai.backend.sysadmin.crnwl.web.tags.SpringSelectTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Path to property for data binding</description>
+			<name>path</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>path type </description>
+			<name>pathType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Enable/disable HTML escaping of rendered values.</description>
+			<name>htmlEscape</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute. Used when the bound field has errors.</description>
+			<name>cssErrorClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "style" - HTML Optional Attribute</description>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>lang</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>dir</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute. Setting the value of this attribute to 'true' (without the quotes) will disable the HTML element.</description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The Collection, Map or array of objects used to generate the inner 'option' tags</description>
+			<name>items</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Name of the property mapped to 'value' attribute of the 'option' tag</description>
+			<name>itemValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Name of the property mapped to the inner text of the 'option' tag</description>
+			<name>itemLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>multiple</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+
+	<tag>
+		<description>Renders an HTML 'input' tag with type 'text' using the bound value.</description>
+		<name>inputResolveMaxLength</name>
+		<tag-class>net.chintai.backend.sysadmin.crnwl.web.tags.InputResolveMaxLengthTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>Path to property for data binding</description>
+			<name>path</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Enable/disable HTML escaping of rendered values.</description>
+			<name>htmlEscape</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute. Used when the bound field has errors.</description>
+			<name>cssErrorClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "style" - HTML Optional Attribute</description>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>lang</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>dir</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute. Setting the value of this attribute to 'true' (without the quotes) will disable the HTML element.</description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>maxlength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>alt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onselect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute. Setting the value of this attribute to 'true' (without the quotes) will make the HTML element readonly.</description>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Common Optional Attribute</description>
+			<name>autocomplete</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>sizeとmaxlengthを同じにする</description>
+			<name>sameSizeMaxlength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+
+	<tag>
+		<description>Renders an HTML 'textarea'.</description>
+		<name>textareaResolveMaxLength</name>
+		<tag-class>net.chintai.backend.sysadmin.crnwl.web.tags.TextareaResovleMaxLengthTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>maxlength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Path to property for data binding</description>
+			<name>path</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Enable/disable HTML escaping of rendered values.</description>
+			<name>htmlEscape</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute. Used when the bound field has errors.</description>
+			<name>cssErrorClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "style" - HTML Optional Attribute</description>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>lang</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>dir</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute. Setting the value of this attribute to 'true' (without the quotes) will disable the HTML element.</description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Required Attribute</description>
+			<name>rows</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Required Attribute</description>
+			<name>cols</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onselect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute. Setting the value of this attribute to 'true' (without the quotes) will make the HTML element readonly.</description>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+
+	<tag>
+		<name>copyBodyContent</name>
+		<tag-class>net.chintai.backend.sysadmin.common.tags.CopyBodyContentTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>
+			Bodyをコピーします
+		</description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>outputThis</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

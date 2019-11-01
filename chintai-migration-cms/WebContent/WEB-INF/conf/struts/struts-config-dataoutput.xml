@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+		PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+
+
+	<form-beans>
+
+		<form-bean name="prefClientUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="clientsystemTypeArray" type="java.lang.String[]"/>
+			<form-property name="prefcdArray" type="java.lang.String[]"/>
+			<form-property name="prefnameArray" type="java.lang.String[]"/>
+			<form-property name="dcoType" type="java.lang.String"/>
+			<form-property name="dcoName" type="java.lang.String"/>
+		</form-bean>
+
+
+		<!-- エイブル担当店/取扱店出力情報設定 -->
+		<form-bean name="ablSettingUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="dcoTypeArray" type="java.lang.String[]"/>
+			<form-property name="bukkenOutKbnArray" type="java.lang.String[]"/>
+			<form-property name="updDtArray" type="java.lang.String[]"/>
+			<form-property name="dcoNameArray" type="java.lang.String[]"/>
+		</form-bean>
+
+
+		<!-- 市区町村データ元出力設定 -->
+		<form-bean name="shikutyosonSettingUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="pref" type="java.lang.String" />
+			<form-property name="city" type="java.lang.String" />
+			<form-property name="prefName" type="java.lang.String" />
+			<form-property name="clientsystemTypeArray" type="java.lang.String[]"/>
+			<form-property name="cityCdArray" type="java.lang.String[]"/>
+			<form-property name="cityNameArray" type="java.lang.String[]"/>
+			<form-property name="dcoType" type="java.lang.String"/>
+			<form-property name="dcoName" type="java.lang.String"/>
+			<form-property name="parentalType" type="java.lang.String" />
+		</form-bean>
+
+		<!-- 沿線データ元出力設定 -->
+		<form-bean name="rosenSettingUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="areaCd" type="java.lang.String" />
+			<form-property name="ensenType" type="java.lang.String" />
+			<form-property name="dcoType" type="java.lang.String"/>
+			<form-property name="dcoName" type="java.lang.String"/>
+			<form-property name="clientsystemTypeArray" type="java.lang.String[]"/>
+			<form-property name="ensenCdArray" type="java.lang.String[]"/>
+			<form-property name="ensenNameArray" type="java.lang.String[]"/>
+			<form-property name="areaName" type="java.lang.String"/>
+			<form-property name="ensenCd" type="java.lang.String"/>
+			<form-property name="ensenKanaArray" type="java.lang.String[]"/>
+		</form-bean>
+
+
+		<!-- 駅データ元出力設定 -->
+		<form-bean name="ekiSettingUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="areaCd" type="java.lang.String" />
+			<form-property name="ensenType" type="java.lang.String" />
+			<form-property name="ensenName" type="java.lang.String" />
+			<form-property name="parentalType" type="java.lang.String" />
+			<form-property name="dcoType" type="java.lang.String"/>
+			<form-property name="dcoName" type="java.lang.String"/>
+			<form-property name="clientsystemTypeArray" type="java.lang.String[]"/>
+			<form-property name="ekiCdArray" type="java.lang.String[]"/>
+			<form-property name="ekiNameArray" type="java.lang.String[]"/>
+			<form-property name="ensenCd" type="java.lang.String"/>
+
+		</form-bean>
+
+		<!-- 店舗出力設定 -->
+		<form-bean name="shopSkipSettingDownloadForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="dcoType" type="java.lang.String"/>
+			<form-property name="dcoName" type="java.lang.String"/>
+			<form-property name="procName" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="shopSkipSettingUploadForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="dcoType" type="java.lang.String"/>
+			<form-property name="dcoName" type="java.lang.String"/>
+			<form-property name="procName" type="java.lang.String"/>
+			<form-property name="acceptFlg" type="java.lang.String"/>
+			<form-property name="uploadFile" type="org.apache.struts.upload.FormFile" />
+		</form-bean>
+
+
+	</form-beans>
+
+	<!-- ========== Action Mapping Definitions ============================= -->
+	<action-mappings>
+
+
+		<action path="/dataoutput/DataoutputIndex"
+			type="net.chintai.backend.sysadmin.dataoutput.action.DataoutputIndexAction"
+			scope="request"
+			name="prefClientUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/DataoutputIndex.jsp" />
+		</action>
+
+
+		<action path="/dataoutput/PrefClientSettingInfoPage"
+			type="net.chintai.backend.sysadmin.dataoutput.action.PrefClientSettingInfoPageAction"
+			scope="request"
+			name="prefClientUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/PrefClientSettingInfo.jsp" />
+		</action>
+
+		<action path="/dataoutput/PrefClientSettingInfo"
+			type="net.chintai.backend.sysadmin.dataoutput.action.PrefClientSettingInfoAction"
+			scope="request"
+			name="prefClientUpdateForm"
+			validate="true"
+			input="/dataoutput/PrefClientSettingInfoPage.do">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/PrefClientSettingInfo.jsp" />
+		</action>
+
+
+		<action path="/dataoutput/PrefClientUpdatePage"
+			type="net.chintai.backend.sysadmin.dataoutput.action.PrefClientUpdatePageAction"
+			scope="request"
+			name="prefClientUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/PrefClientUpdate.jsp" />
+		</action>
+
+		<action path="/dataoutput/PrefClientUpdateConfirm"
+			type="net.chintai.backend.sysadmin.dataoutput.action.PrefClientUpdateConfirmAction"
+			scope="request"
+			name="prefClientUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/PrefClientUpdateConfirm.jsp" />
+		</action>
+
+		<action path="/dataoutput/PrefClientUpdateBack"
+			type="net.chintai.backend.sysadmin.dataoutput.action.PrefClientUpdateConfirmAction"
+			scope="request"
+			name="prefClientUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/PrefClientUpdate.jsp" />
+		</action>
+
+		<action path="/dataoutput/PrefClientupdateCommit"
+			type="net.chintai.backend.sysadmin.dataoutput.action.PrefClientupdateCommitAction"
+			scope="request"
+			name="prefClientUpdateForm"
+			validate="false">
+			<forward name="success" path="/dataoutput/PrefClientSettingInfo.do" />
+		</action>
+
+
+
+		<!-- エイブル担当店/取扱店出力情報設定 -->
+		<action path="/dataoutput/AblOutSettingInfo"
+			type="net.chintai.backend.sysadmin.dataoutput.action.AblOutSettingInfoAction"
+			scope="request"
+			name="ablSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/AblOutSettingInfo.jsp" />
+		</action>
+
+		<action path="/dataoutput/AblOutUpdatePage"
+			type="net.chintai.backend.sysadmin.dataoutput.action.AblOutUpdatePageAction"
+			scope="request"
+			name="ablSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/AblOutUpdatePage.jsp" />
+		</action>
+
+		<action path="/dataoutput/AblOutUpdateConfirm"
+			type="net.chintai.backend.sysadmin.dataoutput.action.AblOutUpdateConfirmAction"
+			scope="request"
+			name="ablSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/AblOutUpdateConfirm.jsp" />
+		</action>
+
+		<action path="/dataoutput/AblOutUpdateBack"
+			type="net.chintai.backend.sysadmin.dataoutput.action.AblOutUpdateConfirmAction"
+			scope="request"
+			name="ablSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/AblOutUpdatePage.jsp" />
+		</action>
+
+		<action path="/dataoutput/AblOutupdateCommit"
+			type="net.chintai.backend.sysadmin.dataoutput.action.AblOutUpdateCommitAction"
+			scope="request"
+			name="ablSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/dataoutput/AblOutSettingInfo.do" />
+			<forward name="failure" path="/dataoutput/AblOutSettingInfo.do" />
+		</action>
+
+
+		<!-- 市区町村データ元出力設定 -->
+		<action path="/dataoutput/ShikutyosonClientSettingSearchPage"
+			type="net.chintai.backend.sysadmin.dataoutput.action.ShikutyosonClientSettingSearchPageAction"
+			scope="request"
+			name="prefClientUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/ShikutyosonClientSettingSearch.jsp" />
+		</action>
+
+		<action path="/dataoutput/ShikutyosonClientSettingSearch"
+			type="net.chintai.backend.sysadmin.dataoutput.action.ShikutyosonClientSettingSearchAction"
+			scope="request"
+			name="shikutyosonSettingUpdateForm"
+			validate="true"
+			input="/dataoutput/ShikutyosonClientSettingSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/ShikutyosonClientSettingSearch.jsp" />
+		</action>
+
+		<action path="/dataoutput/ShikutyosonClientSettingUpdate"
+			type="net.chintai.backend.sysadmin.dataoutput.action.ShikutyosonClientSettingUpdateAction"
+			scope="request"
+			name="shikutyosonSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/ShikutyosonClientSettingUpdate.jsp" />
+		</action>
+
+		<action path="/dataoutput/ShikutyosonClientSettingUpdateConfirm"
+			type="net.chintai.backend.sysadmin.dataoutput.action.ShikutyosonClientSettingUpdateConfirmAction"
+			scope="request"
+			name="shikutyosonSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/ShikutyosonClientSettingUpdateConfirm.jsp" />
+		</action>
+
+		<action path="/dataoutput/ShikutyosonClientSettingUpdateBack"
+			type="net.chintai.backend.sysadmin.dataoutput.action.ShikutyosonClientSettingUpdateConfirmAction"
+			scope="request"
+			name="shikutyosonSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/ShikutyosonClientSettingUpdate.jsp" />
+		</action>
+
+		<action path="/dataoutput/ShikutyosonClientSettingUpdateCommit"
+			type="net.chintai.backend.sysadmin.dataoutput.action.ShikutyosonClientSettingUpdateCommitAction"
+			scope="request"
+			name="shikutyosonSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/dataoutput/ShikutyosonClientSettingSearch.do" />
+			<forward name="failure" path="/dataoutput/ShikutyosonClientSettingSearch.do" />
+		</action>
+
+
+		<!-- 沿線・駅データ元出力設定 -->
+		<action path="/dataoutput/RosenClientSettingSearchPage"
+			type="net.chintai.backend.sysadmin.dataoutput.action.RosenClientSettingSearchPageAction"
+			scope="request"
+			name="rosenSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/RosenClientSettingSearch.jsp" />
+		</action>
+
+		<action path="/dataoutput/RosenClientSettingSearch"
+			type="net.chintai.backend.sysadmin.dataoutput.action.RosenClientSettingSearchAction"
+			scope="request"
+			name="rosenSettingUpdateForm"
+			validate="true"
+			input="/dataoutput/RosenClientSettingSearchPage.do">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/RosenClientSettingSearch.jsp" />
+		</action>
+
+		<action path="/dataoutput/RosenClientSettingUpdate"
+			type="net.chintai.backend.sysadmin.dataoutput.action.RosenClientSettingUpdateAction"
+			scope="request"
+			name="rosenSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/RosenClientSettingUpdate.jsp" />
+		</action>
+
+		<action path="/dataoutput/RosenClientSettingUpdateConfirm"
+			type="net.chintai.backend.sysadmin.dataoutput.action.RosenClientSettingUpdateConfirmAction"
+			scope="request"
+			name="rosenSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/RosenClientSettingUpdateConfirm.jsp" />
+		</action>
+
+		<action path="/dataoutput/RosenClientSettingUpdateBack"
+			type="net.chintai.backend.sysadmin.dataoutput.action.RosenClientSettingUpdateConfirmAction"
+			scope="request"
+			name="rosenSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/RosenClientSettingUpdate.jsp" />
+		</action>
+
+		<action path="/dataoutput/RosenClientSettingUpdateCommit"
+			type="net.chintai.backend.sysadmin.dataoutput.action.RosenClientSettingUpdateCommitAction"
+			scope="request"
+			name="rosenSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/dataoutput/RosenClientSettingSearch.do" />
+			<forward name="failure" path="/dataoutput/RosenClientSettingSearch.do" />
+		</action>
+
+
+		<!-- 駅データ元出力設定 -->
+		<action path="/dataoutput/EkiClientSettingInfo"
+			type="net.chintai.backend.sysadmin.dataoutput.action.EkiClientSettingInfoAction"
+			scope="request"
+			name="ekiSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/EkiClientSettingInfo.jsp" />
+		</action>
+
+		<action path="/dataoutput/EkiClientSettingUpdate"
+			type="net.chintai.backend.sysadmin.dataoutput.action.EkiClientSettingUpdateAction"
+			scope="request"
+			name="ekiSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/EkiClientSettingUpdate.jsp" />
+		</action>
+
+		<action path="/dataoutput/EkiClientSettingUpdateConfirm"
+			type="net.chintai.backend.sysadmin.dataoutput.action.EkiClientSettingUpdateConfirmAction"
+			scope="request"
+			name="ekiSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/EkiClientSettingUpdateConfirm.jsp" />
+		</action>
+
+		<action path="/dataoutput/EkiClientSettingUpdateBack"
+			type="net.chintai.backend.sysadmin.dataoutput.action.EkiClientSettingUpdateConfirmAction"
+			scope="request"
+			name="ekiSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/EkiClientSettingUpdate.jsp" />
+		</action>
+
+		<action path="/dataoutput/EkiClientSettingUpdateCommit"
+			type="net.chintai.backend.sysadmin.dataoutput.action.EkiClientSettingUpdateCommitAction"
+			scope="request"
+			name="ekiSettingUpdateForm"
+			validate="false">
+			<forward name="success" path="/dataoutput/EkiClientSettingInfo.do" />
+			<forward name="failure" path="/dataoutput/EkiClientSettingInfo.do" />
+		</action>
+		
+		<!-- 店舗出力設定 -->
+		<action path="/dataoutput/ShopSkipSettingInfo"
+			type="net.chintai.backend.sysadmin.dataoutput.action.ShopSkipSettingInfoAction"
+			scope="request"
+			name="shopSkipSettingUploadForm"
+			validate="false">
+			<forward name="success" path="/WEB-INF/jsp/dataoutput/ShopSkipSettingInfo.jsp" />
+		</action>
+		
+		<action path="/dataoutput/ShopSkipSettingDownload"
+			type="net.chintai.backend.sysadmin.dataoutput.action.ShopSkipSettingDownloadAction"
+			scope="request"
+			name="shopSkipSettingDownloadForm"
+			validate="true"
+			input="/dataoutput/ShopSkipSettingInfo.do">
+			<forward name="success" path="/dataoutput/ShopSkipSettingInfo.do" />
+			<forward name="failure" path="/dataoutput/ShopSkipSettingInfo.do" />
+		</action>
+		
+		<action path="/dataoutput/ShopSkipSettingUpload"
+			type="net.chintai.backend.sysadmin.dataoutput.action.ShopSkipSettingUploadAction"
+			scope="request"
+			name="shopSkipSettingUploadForm"
+			validate="true"
+			input="/dataoutput/ShopSkipSettingInfo.do">
+			<forward name="success" path="/dataoutput/ShopSkipSettingInfo.do" />
+			<forward name="failure" path="/dataoutput/ShopSkipSettingInfo.do" />
+		</action>
+	</action-mappings>
+</struts-config>

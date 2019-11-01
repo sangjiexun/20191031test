@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<!-- 
+ $Id: Auth.xml 2871 2007-11-27 00:52:45Z t-kojima $
+ -->
+<sqlMap namespace="auth">
+	
+	<select id="selectAuthorityCount"
+			parameterClass="net.chintai.backend.sysadmin.common.dao.AuthParamBean"
+			resultClass="java.lang.Integer">
+		<![CDATA[
+		SELECT
+			COUNT(*) COUNT
+		FROM
+			MNG_GROUP_AUTHORITY
+		WHERE
+			GROUP_ID = (
+				SELECT
+					GROUP_ID
+				FROM
+					MNG_USERS
+				WHERE
+					USER_ID = #userId#
+					AND DEL_KBN = '0'
+			)
+			AND
+			AUTHORITY_ID = #authorityId#
+		]]>
+	</select>
+
+	<select id="selectAuthorityList"
+			parameterClass="net.chintai.backend.sysadmin.common.dao.AuthParamBean"
+			resultClass="java.lang.String">
+		<![CDATA[
+		SELECT
+			AUTHORITY_ID
+		FROM
+			MNG_GROUP_AUTHORITY
+		WHERE
+			GROUP_ID = (
+				SELECT
+					GROUP_ID
+				FROM
+					MNG_USERS
+				WHERE
+					USER_ID = #userId#
+					AND DEL_KBN = '0'
+			)
+		]]>
+	</select>
+	
+	<select id="selectCjnAccountType"
+			parameterClass="java.lang.String"
+			resultClass="java.lang.String">
+		SELECT
+			CJN_ACCOUNT_TYPE
+		FROM
+			MNG_USERS
+		WHERE
+			USER_ID = #value#
+			AND DEL_KBN = '0'
+			AND CJN_ACCOUNT_SEQ IS NOT NULL
+	</select>
+	
+</sqlMap>

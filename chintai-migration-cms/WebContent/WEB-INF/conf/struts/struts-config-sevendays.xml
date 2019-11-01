@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+		PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+	<!-- ========== Form Bean Definitions ================================== -->
+	<form-beans>
+		<!-- 7days メニュー返却・リクエストパラメータ -->
+		<form-bean name="7daysForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="shopcd" type="java.lang.String"/>
+		</form-bean>
+	</form-beans>
+
+	<!-- ========== Action Mapping Definitions ============================= -->
+	<action-mappings>
+		<!-- 7days メニュー返却 -->
+
+		<action path="/7daysmenu"
+				type="net.chintai.backend.sysadmin.external.sevendays.action.SevendaysMenuAction"
+				name="7daysForm"
+				scope="request"
+				validate="false" />
+
+	</action-mappings>
+</struts-config>

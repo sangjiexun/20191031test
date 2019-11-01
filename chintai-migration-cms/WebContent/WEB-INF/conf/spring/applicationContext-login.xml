@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- DAO Definitions -->
+	<!-- DAO クラスのマッピング情報を記述します -->
+	<bean id="loginDao" class="net.chintai.backend.sysadmin.login.dao.impl.LoginDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient" /></property>
+	</bean>
+
+	<bean id="mngSessionDao" class="net.chintai.backend.sysadmin.login.dao.impl.MngSessionDaoImpl">
+		<property name="sqlMapClient"><ref bean="sqlMapClient" /></property>
+	</bean>
+
+	<!-- Service Definitions -->
+	<!-- Service クラスのマッピング情報を記述します -->
+	<bean id="loginService" class="net.chintai.backend.sysadmin.login.service.impl.LoginServiceImpl">
+		<property name="loginDao"><ref bean="loginDao" /></property>
+	</bean>
+
+	<bean id="mngSessionService" class="net.chintai.backend.sysadmin.login.service.impl.MngSessionServiceImpl">
+		<property name="mngSessionDao"><ref bean="mngSessionDao" /></property>
+	</bean>
+
+</beans>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+  <!-- DAO Definitions -->
+  <bean id="reviewShopSearchDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewShopSearchDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewShopInfoDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewShopInfoDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewShopStatusUpdatePageDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewShopStatusUpdatePageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewShopStatusUpdateConfirmDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewShopStatusUpdateConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewShopStatusUpdateCommitDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewShopStatusUpdateCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenSearchDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenSearchDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenInfoDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenInfoDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenStatusUpdatePageDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenStatusUpdatePageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenStatusUpdateConfirmDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenStatusUpdateConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenStatusUpdateCommitDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenStatusUpdateCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenWebStatusUpdatePageDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenWebStatusUpdatePageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenWebStatusUpdateConfirmDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenWebStatusUpdateConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenWebStatusUpdateCommitDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenWebStatusUpdateCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewReplayPageDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewReplayPageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewReplayConfirmDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewReplayConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewReplayCommitDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewReplayCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewShopMediaCountDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewShopMediaCountDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewTodofukenMediaCountDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewTodofukenMediaCountDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenAlertCountDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenAlertCountDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewConfigDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewConfigDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewConfigCityDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewConfigCityDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+  <bean id="reviewBukkenRirekiAddCommitDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewBukkenRirekiAddCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+ <bean id="reviewShopRirekiAddCommitDao"
+        class="net.chintai.backend.sysadmin.review.dao.impl.ReviewShopRirekiAddCommitDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- Service Definecions -->
+  <!-- Service クラスのマッピング情報を記述します -->
+  <bean id="reviewShopSearchService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewShopSearchServiceImpl">
+    <property name="reviewShopSearchDao"><ref local="reviewShopSearchDao"/></property>
+  </bean>
+  <bean id="reviewShopInfoService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewShopInfoServiceImpl">
+    <property name="reviewShopInfoDao"><ref local="reviewShopInfoDao"/></property>
+  </bean>
+  <bean id="reviewShopStatusUpdatePageService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewShopStatusUpdatePageServiceImpl">
+    <property name="reviewShopStatusUpdatePageDao"><ref local="reviewShopStatusUpdatePageDao"/></property>
+  </bean>
+  <bean id="reviewShopStatusUpdateConfirmService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewShopStatusUpdateConfirmServiceImpl">
+    <property name="reviewShopStatusUpdateConfirmDao"><ref local="reviewShopStatusUpdateConfirmDao"/></property>
+  </bean>
+  <bean id="reviewShopStatusUpdateCommitService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewShopStatusUpdateCommitServiceImpl">
+    <property name="reviewShopStatusUpdateCommitDao"><ref local="reviewShopStatusUpdateCommitDao"/></property>
+    <property name="reviewShopRirekiAddCommitDao"><ref local="reviewShopRirekiAddCommitDao"/></property>
+  </bean>
+  <bean id="reviewBukkenSearchService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewBukkenSearchServiceImpl">
+    <property name="reviewBukkenSearchDao"><ref local="reviewBukkenSearchDao"/></property>
+  </bean>
+  <bean id="reviewBukkenInfoService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewBukkenInfoServiceImpl">
+    <property name="reviewBukkenInfoDao"><ref local="reviewBukkenInfoDao"/></property>
+  </bean>
+  <bean id="reviewBukkenStatusUpdatePageService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewBukkenStatusUpdatePageServiceImpl">
+    <property name="reviewBukkenStatusUpdatePageDao"><ref local="reviewBukkenStatusUpdatePageDao"/></property>
+  </bean>
+  <bean id="reviewBukkenStatusUpdateConfirmService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewBukkenStatusUpdateConfirmServiceImpl">
+    <property name="reviewBukkenStatusUpdateConfirmDao"><ref local="reviewBukkenStatusUpdateConfirmDao"/></property>
+  </bean>
+  <bean id="reviewBukkenStatusUpdateCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewBukkenStatusUpdateCommitServiceImpl">
+    <property name="reviewBukkenStatusUpdateCommitDao"><ref local="reviewBukkenStatusUpdateCommitDao"/></property>
+    <property name="reviewBukkenRirekiAddCommitDao"><ref local="reviewBukkenRirekiAddCommitDao"/></property>
+  </bean>
+
+  <bean id="reviewBukkenStatusUpdateCommitService"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager">
+      <ref bean="transactionManager"/>
+    </property>
+    <property name="target">
+      <ref local="reviewBukkenStatusUpdateCommitServiceTarget"/>
+    </property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="reviewBukkenWebStatusUpdatePageService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewBukkenWebStatusUpdatePageServiceImpl">
+    <property name="reviewBukkenWebStatusUpdatePageDao"><ref local="reviewBukkenWebStatusUpdatePageDao"/></property>
+  </bean>
+  <bean id="reviewBukkenWebStatusUpdateConfirmService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewBukkenWebStatusUpdateConfirmServiceImpl">
+    <property name="reviewBukkenWebStatusUpdateConfirmDao"><ref local="reviewBukkenWebStatusUpdateConfirmDao"/></property>
+  </bean>
+
+  <bean id="reviewBukkenWebStatusUpdateCommitService"
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager">
+      <ref bean="transactionManager"/>
+    </property>
+    <property name="target">
+      <ref local="reviewBukkenWebStatusUpdateCommitServiceTarget"/>
+    </property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="reviewBukkenWebStatusUpdateCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewBukkenWebStatusUpdateCommitServiceImpl">
+    <property name="reviewBukkenWebStatusUpdateCommitDao"><ref local="reviewBukkenWebStatusUpdateCommitDao"/></property>
+    <property name="reviewBukkenRirekiAddCommitDao"><ref local="reviewBukkenRirekiAddCommitDao"/></property>
+  </bean>
+  <bean id="reviewReplayPageService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewReplayPageServiceImpl">
+    <property name="reviewReplayPageDao"><ref local="reviewReplayPageDao"/></property>
+  </bean>
+  <bean id="reviewReplayConfirmService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewReplayConfirmServiceImpl">
+    <property name="reviewReplayConfirmDao"><ref local="reviewReplayConfirmDao"/></property>
+  </bean>
+  <bean id="reviewReplayCommitServiceTarget"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewReplayCommitServiceImpl">
+    <property name="reviewReplayCommitDao"><ref local="reviewReplayCommitDao"/></property>
+  </bean>
+  <bean id="reviewReplayCommitService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="reviewReplayCommitServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+  <bean id="reviewShopMediaCountService"
+          class="net.chintai.backend.sysadmin.review.service.impl.ReviewShopMediaCountServiceImpl">
+    <property name="reviewShopMediaCountDao"><ref local="reviewShopMediaCountDao"/></property>
+  </bean>
+  <bean id="reviewTodofukenMediaCountService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewTodofukenMediaCountServiceImpl">
+    <property name="reviewTodofukenMediaCountDao"><ref local="reviewTodofukenMediaCountDao"/></property>
+  </bean>
+  <bean id="reviewBukkenAlertCountService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewBukkenAlertCountServiceImpl">
+    <property name="reviewBukkenAlertCountDao"><ref local="reviewBukkenAlertCountDao"/></property>
+  </bean>
+  <bean id="reviewConfigService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewConfigServiceImpl">
+    <property name="reviewConfigDao"><ref local="reviewConfigDao"/></property>
+  </bean>
+  <bean id="reviewConfigCityService"
+        class="net.chintai.backend.sysadmin.review.service.impl.ReviewConfigCityServiceImpl">
+    <property name="reviewConfigCityDao"><ref local="reviewConfigCityDao"/></property>
+  </bean>
+</beans>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
+		">
+
+
+	<bean id="messageSource" p:cacheSeconds="0"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource" p:defaultEncoding="utf-8" p:useCodeAsDefaultMessage="false">
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/i18n/messages</value>
+				<value>classpath:ValidationMessages</value>
+				<value>classpath:resources/ApplicationResources</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<mybatis:scan base-package="net.chintai.batch.common.persistence.mapper"
+		template-ref="sqlSession" />
+
+	<context:annotation-config />
+	<context:component-scan base-package="net.chintai.backend.sysadmin.crnwl">
+	</context:component-scan>
+
+	<!-- for dao -->
+	<tx:advice id="mandatoryAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="MANDATORY" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:advisor advice-ref="mandatoryAdvice"
+			pointcut="execution(* net.chintai.batch.common.persistence.mapper..*(..))" />
+	</aop:config>
+
+	<aop:aspectj-autoproxy/>
+	<context:component-scan base-package="net.chintai.batch.common.aop.mapper">
+		<context:include-filter type="assignable" expression="net.chintai.batch.common.aop.mapper.SetInsDt"/>
+		<context:include-filter type="assignable" expression="net.chintai.batch.common.aop.mapper.SetUpdDt"/>
+		<context:include-filter type="assignable" expression="net.chintai.batch.common.aop.mapper.SetInsPg"/>
+		<context:include-filter type="assignable" expression="net.chintai.batch.common.aop.mapper.SetUpdPg"/>
+	</context:component-scan>
+	<context:component-scan base-package="net.chintai.backend.sysadmin.crnwl.aop.mapper">
+		<context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect" />
+	</context:component-scan>
+
+
+	<tx:annotation-driven order="0"	transaction-manager="transactionManager" />
+
+	<import resource="classpath:mail.xml" />
+	<import resource="classpath:proxy.xml" />
+	<import resource="classpath:support-ppc.xml"/>
+	<context:component-scan base-package="net.chintai.batch.common.geo"/>
+
+	<bean id="ppcSupportService" class="net.chintai.batch.support.ppc.PpcSupportService" scope="singleton">
+		<aop:scoped-proxy/>
+	</bean>
+
+	<bean class="net.chintai.batch.common.service.MailService" scope="singleton">
+		<aop:scoped-proxy/>
+	</bean>
+	<bean class="net.chintai.batch.common.service.VelocityTemplateService" scope="singleton">
+		<aop:scoped-proxy/>
+	</bean>
+
+	<bean id="batch.cacheMasterService" class="net.chintai.batch.common.service.CacheMasterService" scope="singleton">
+		<aop:scoped-proxy/>
+	</bean>
+	<bean id="batch.MasterService" class="net.chintai.batch.common.service.MasterService" scope="singleton">
+		<aop:scoped-proxy/>
+	</bean>
+
+	<!-- for batch-dist -->
+	<context:component-scan base-package="net.chintai.batch.dist.master.shop.impl"/>
+	<bean id="cmsDistributionProcessService" class="net.chintai.batch.dist.master.shop.service.impl.CmsDistributionProcessServiceImpl"/>
+
+	<!-- crs+ -->
+	<bean id="crsplusShopService" class="net.chintai.receive.crsplus.service.ShopService" scope="singleton">
+		<aop:scoped-proxy/>
+	</bean>
+	<mybatis:scan base-package="net.chintai.receive.crsplus.persistence.mapper" template-ref="sqlSession" name-generator="net.chintai.backend.sysadmin.crnwl.crsplus.BeanNameGenerator"/>
+
+	<bean id="tika" class="org.apache.tika.Tika"/>
+
+	<bean id="parser" class="org.springframework.expression.spel.standard.SpelExpressionParser"/>
+	<bean id="validator" class="net.chintai.backend.sysadmin.crnwl.validation.beanvalidation.CustomLocalValidatorFactoryBean" p:validationMessageSource-ref="messageSource"/>
+
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
+	<!-- EhCache library setup -->
+	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache-cms.xml"/>
+	<cache:annotation-driven />
+
+	<context:property-placeholder ignore-unresolvable="true" location="classpath:resources/datasource.properties,classpath:resources/velocity-template.properties"/>
+	<beans profile="stg">
+		<context:property-placeholder location="classpath:gazohaisin_stg.properties,classpath:Theta_stg.properties,classpath:resources/datasource.properties,classpath:resources/velocity-template.properties" order="0"/>
+	</beans>
+	<beans profile="prd">
+		<context:property-placeholder location="classpath:gazohaisin_prd.properties,classpath:Theta_prd.properties,classpath:resources/datasource.properties,classpath:resources/velocity-template.properties" order="0"/>
+	</beans>
+
+</beans>

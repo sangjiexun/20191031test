@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+	<formset>
+		<!-- 沿線検索 -->
+		<form name="rosenSearchForm">
+			<!-- エリア -->
+			<field property="areaCd" depends="required">
+				<msg name="required" key="WARN.MSG.0010"/>
+				<arg name="required" key="master.area" position="0"/>
+			</field>
+			<field property="ensenType" depends="required">
+				<msg name="required" key="WARN.MSG.0010"/>
+				<arg name="required" key="master.ensenType" position="0"/>
+			</field>
+		</form>
+
+		<!-- 沿線・駅を名称から検索 -->
+		<form name="rosenNameSearchForm">
+			<field property="ensenNameParam" depends="validwhen,scripting">
+				<msg name="validwhen" key="WARN.MSG.0001" />
+				<arg name="validwhen" key="master.izureka" position="0"/>
+				<var>
+					<var-name>test</var-name>
+					<var-value>
+						((ensenNameParam != null) or (ekiNameParam != null))
+					</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="master.ensen" position="0" />
+			</field>
+			<field property="ekiNameParam" depends="scripting">
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="master.eki" position="0" />
+			</field>
+		</form>
+
+		<!-- 沿線・駅の登録 / 変更 / 削除 -->
+		<form name="rosenUpdateCommitForm">
+			<field property="uploadFile" depends="required">
+				<msg name="required" key="WARN.MSG.0011" />
+				<arg name="required" key="master.upload" position="0" />
+			</field>
+		</form>
+
+		<!-- 統一駅登録 -->
+		<form name="nodeUpdateCommitForm">
+			<field property="uploadFile" depends="required">
+				<msg name="required" key="WARN.MSG.0011" />
+				<arg name="required" key="master.upload" position="0" />
+			</field>
+		</form>
+
+		<!-- 鉄道会社検索 -->
+		<form name="tetudoGaishaSearchForm">
+			<!-- 鉄道会社コードチェック -->
+			<field property="railwaycoNo" depends="maxlength, mask">
+				<msg name="maxlength" key="WARN.MSG.0008" />
+				<arg name="maxlength" key="master.railwaycoNo" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>5</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0008" />
+				<arg name="mask" key="master.railwaycoNo" />
+				<arg name="mask" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9]*$</var-value>
+				</var>
+			</field>
+			<!-- 鉄道会社名称チェック -->
+			<field property="railwaycoName" depends="maxlength, scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="master.railwaycoName" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>32</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="master.railwaycoName" position="0" />
+			</field>
+		</form>
+
+		<!-- 市区町村郵便番号から検索 -->
+		<form name="shikutyosonPostSearchForm">
+			<!-- 郵便番号チェック -->
+			<field property="zipCd" depends="required, maxlength, minlength, mask">
+				<msg name="required" key="WARN.MSG.0001"/>
+				<arg name="required" key="master.zipCd" position="0"/>
+				<msg name="maxlength" key="WARN.MSG.0020" />
+				<arg name="maxlength" key="master.zipCd" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>7</var-value>
+				</var>
+				<msg name="minlength" key="WARN.MSG.0020" />
+				<arg name="minlength" key="master.zipCd" />
+				<arg name="minlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>7</var-value>
+				</var>
+				<msg name="mask" key="WARN.MSG.0020" />
+				<arg name="mask" key="master.zipCd" />
+				<arg name="mask" key="${var:minlength}" resource="false" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9]*$</var-value>
+				</var>
+			</field>
+
+		</form>
+
+		<!-- 市区町村住所から検索 -->
+		<form name="shikutyosonAddressSearchForm">
+			<!-- 都道府県チェック -->
+			<field property="pref" depends="required">
+				<msg name="required" key="WARN.MSG.0010"/>
+				<arg name="required" key="master.pref" position="0"/>
+			</field>
+			<!-- 市区町村チェック -->
+			<field property="city" depends="required">
+				<msg name="required" key="WARN.MSG.0010"/>
+				<arg name="required" key="master.city" position="0"/>
+			</field>
+		</form>
+
+		<!-- 市区町村登録 -->
+		<form name="shikutyosonAddressUploadForm">
+			<field property="fileUp" depends="required">
+				<msg name="required" key="WARN.MSG.0011" />
+				<arg name="required" key="master.upload" position="0" />
+			</field>
+		</form>
+
+		<!-- 国土地理協会住所データアップロード -->
+		<form name="jgdcShikutyosonAddressUploadForm">
+			<field property="fileUp" depends="required">
+				<msg name="required" key="WARN.MSG.0011" />
+				<arg name="required" key="master.upload" position="0" />
+			</field>
+		</form>
+
+		<!-- 携帯ゲーム対応機種メンテナンス -->
+		<form name="mobileMaintenanceUploadForm">
+			<!-- アップロード -->
+			<field property="fileUp" depends="required">
+				<msg name="required" key="WARN.MSG.0011" />
+				<arg name="required" key="master.upload" position="0" />
+			</field>
+		</form>
+
+		<!-- 大学マスタメンテナンス -->
+		<form name="schoolMaintenanceUploadForm">
+			<!-- アップロード -->
+			<field property="fileUp" depends="required">
+				<msg name="required" key="WARN.MSG.0011" />
+				<arg name="required" key="master.upload" position="0" />
+			</field>
+		</form>
+
+		<form name="rendoSendUpdateForm">
+			<field property="permitStartDt" depends="date,required,dateCompare">
+				<msg name="date" key="WARN.MSG.0027"/>
+				<arg key="master.permitStartDt"/>
+				<msg name="required" key="WARN.MSG.0010"/>
+				<arg key="master.permitStartDt"/>
+				<msg name="dateCompare" key="WARN.MSG.0041"/>
+				<arg key="master.permitStartDt"/>
+				<arg1 key="master.nowDate"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmmss</var-value>
+				</var>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>nowDate</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>permitStartDt</var-value>
+				</var>
+			</field>
+			<field property="permitEndDt" depends="date,dateCompare">
+				<msg name="date" key="WARN.MSG.0027"/>
+				<arg key="master.permitEndDt"/>
+				<msg name="dateCompare" key="WARN.MSG.0009"/>
+				<arg key="master.permitEndDt"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>yyyyMMddHHmmss</var-value>
+				</var>
+				<var>
+					<var-name>startDate</var-name>
+					<var-value>permitStartDt</var-value>
+				</var>
+				<var>
+					<var-name>endDate</var-name>
+					<var-value>permitEndDt</var-value>
+				</var>
+			</field>
+			<field property="note" depends="maxlength,scripting">
+				<msg name="maxlength" key="WARN.MSG.0004" />
+				<arg name="maxlength" key="master.adminNote" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" position="1" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1300</var-value>
+				</var>
+				<msg name="scripting" key="WARN.MSG.0030" />
+				<arg name="scripting" key="master.adminNote" position="0" />
+			</field>
+		</form>
+	</formset>
+</form-validation>

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+  <formset>
+    <!-- 適用するアクション・フォームBeanを論理名で指定  -->
+
+    <!-- ユーザ登録画面 -->
+    <form name="userAddConfirmForm">
+
+      <!-- ユーザID -->
+      <field property="userId" depends="required, minlength, maxlength, mask">
+        <msg name="required" key="WARN.MSG.0001" />
+        <arg name="required" key="user.userId" position="0" />
+        <msg name="minlength" key="WARN.MSG.0002" />
+        <arg name="minlength" key="user.userId" position="0" />
+        <arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="minlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>minlength</var-name>
+          <var-value>5</var-value>
+        </var>
+        <msg name="maxlength" key="WARN.MSG.0002" />
+        <arg name="maxlength" key="user.userId" position="0" />
+        <arg name="maxlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>12</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0002" />
+        <arg name="mask" key="user.userId" position="0" />
+        <arg name="mask" key="${var:minlength}" resource="false" position="1" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+
+      <!-- パスワード -->
+      <field property="passwd" depends="required, minlength, maxlength, validwhen, mask">
+        <msg name="required" key="WARN.MSG.0001" />
+        <arg name="required" key="user.userPassword" position="0" />
+        <msg name="minlength" key="WARN.MSG.0002" />
+        <arg name="minlength" key="user.userPassword" position="0" />
+        <arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="minlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>minlength</var-name>
+          <var-value>5</var-value>
+        </var>
+        <msg name="maxlength" key="WARN.MSG.0002" />
+        <arg name="maxlength" key="user.userPassword" position="0" />
+        <arg name="maxlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>12</var-value>
+        </var>
+        <msg name="validwhen" key="WARN.MSG.0006" />
+        <arg name="validwhen" key="user.userPassword" position="0" />
+        <var>
+          <var-name>test</var-name>
+          <var-value>((passwdConfirm == null)or(passwdConfirm == *this*))</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0002" />
+        <arg name="mask" key="user.userPassword" position="0" />
+        <arg name="mask" key="${var:minlength}" resource="false" position="1" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+
+      <!-- パスワード(確認) -->
+      <field property="passwdConfirm" depends="required, minlength, maxlength, mask">
+        <msg name="required" key="WARN.MSG.0001" />
+        <arg name="required" key="user.userPasswordConfirm" position="0" />
+        <msg name="minlength" key="WARN.MSG.0002" />
+        <arg name="minlength" key="user.userPasswordConfirm" position="0" />
+        <arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="minlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>minlength</var-name>
+          <var-value>5</var-value>
+        </var>
+        <msg name="maxlength" key="WARN.MSG.0002" />
+        <arg name="maxlength" key="user.userPasswordConfirm" position="0" />
+        <arg name="maxlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>12</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0002" />
+        <arg name="mask" key="user.userPasswordConfirm" position="0" />
+        <arg name="mask" key="${var:minlength}" resource="false" position="1" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+
+      <!-- 名前 -->
+      <field property="userName" depends="required, maxlength, scripting">
+        <msg name="required" key="WARN.MSG.0001" />
+        <arg name="required" key="user.userName" position="0" />
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="user.userName" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>20</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="user.userName" position="0" />
+      </field>
+
+      <!-- グループ -->
+      <field property="groupId" depends="required">
+        <msg name="required" key="WARN.MSG.0010" />
+        <arg name="required" key="user.groupId" position="0" />
+      </field>
+
+      <!-- 説明 -->
+      <field property="userNote" depends="maxlength, scripting">
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="user.userNote" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>127</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="user.userNote" position="0" />
+      </field>
+    </form>
+
+    <!-- ユーザ編集画面  -->
+    <form name="userUpdateConfirmForm">
+
+      <!-- 名前 -->
+      <field property="userName" depends="required, maxlength, scripting">
+        <msg name="required" key="WARN.MSG.0001" />
+        <arg name="required" key="user.userName" position="0" />
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="user.userName" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>20</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="user.userName" position="0" />
+      </field>
+
+      <!-- グループ -->
+      <field property="groupId" depends="required">
+        <msg name="required" key="WARN.MSG.0010" />
+        <arg name="required" key="user.groupId" position="0" />
+      </field>
+
+      <!-- 説明 -->
+      <field property="userNote" depends="maxlength, scripting">
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="user.userNote" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>127</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="user.userNote" position="0" />
+      </field>
+    </form>
+
+    <!-- パスワード変更 -->
+    <form name="userPasswordChangeForm">
+
+      <!-- 新しいパスワード -->
+      <field property="passwd" depends="required, minlength, maxlength, validwhen, mask">
+        <msg name="required" key="WARN.MSG.0001" />
+        <arg name="required" key="user.userNewPassword" position="0" />
+        <msg name="minlength" key="WARN.MSG.0002" />
+        <arg name="minlength" key="user.userNewPassword" position="0" />
+        <arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="minlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>minlength</var-name>
+          <var-value>5</var-value>
+        </var>
+        <msg name="maxlength" key="WARN.MSG.0002" />
+        <arg name="maxlength" key="user.userNewPassword" position="0" />
+        <arg name="maxlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>12</var-value>
+        </var>
+        <msg name="validwhen" key="WARN.MSG.0006" />
+        <arg name="validwhen" key="user.userPassword" position="0" />
+        <var>
+          <var-name>test</var-name>
+          <var-value>((passwdConfirm == null)or(passwdConfirm == *this*))</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0002" />
+        <arg name="mask" key="user.userNewPassword" position="0" />
+        <arg name="mask" key="${var:minlength}" resource="false" position="1" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+
+      <!--  新しいパスワード(確認) -->
+      <field property="passwdConfirm" depends="required, minlength, maxlength, mask">
+        <msg name="required" key="WARN.MSG.0001" />
+        <arg name="required" key="user.userNewPasswordConfirm" position="0" />
+        <msg name="minlength" key="WARN.MSG.0002" />
+        <arg name="minlength" key="user.userNewPasswordConfirm" position="0" />
+        <arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="minlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>minlength</var-name>
+          <var-value>5</var-value>
+        </var>
+        <msg name="maxlength" key="WARN.MSG.0002" />
+        <arg name="maxlength" key="user.userNewPasswordConfirm" position="0" />
+        <arg name="maxlength" key="${var:minlength}" resource="false" position="1" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>12</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0002" />
+        <arg name="mask" key="user.userNewPasswordConfirm" position="0" />
+        <arg name="mask" key="${var:minlength}" resource="false" position="1" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="2" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+    </form>
+
+    <!-- ユーザ一覧画面 -->
+    <form name="userDeleteConfirmForm">
+
+      <!-- ユーザ削除チェック  -->
+      <field property="userCheckId" depends="required">
+        <msg name="required" key="WARN.MSG.0010" />
+        <arg name="required" key="user.user" position="0" />
+      </field>
+    </form>
+
+    <form name="groupAddConfirmPageForm">
+      <!-- グループ名 -->
+      <field property="groupName" depends="required, maxlength, scripting">
+        <msg name="required" key="WARN.MSG.0001" />
+        <arg name="required" key="user.groupName" position="0" />
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="user.groupName" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>20</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="user.groupName" position="0" />
+      </field>
+      <!-- 利用可能な機能 -->
+      <field property="authorityId" depends="required">
+        <msg name="required" key="WARN.MSG.0010" />
+        <arg name="required" key="user.groupAuthority" position="0" />
+      </field>
+    </form>
+
+    <form name="groupUpdateConfirmForm">
+      <!-- グループ名 -->
+      <field property="groupName" depends="required, maxlength, scripting">
+        <msg name="required" key="WARN.MSG.0001" />
+        <arg name="required" key="user.groupName" position="0" />
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="user.groupName" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>20</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="user.groupName" position="0" />
+      </field>
+      <!-- 利用可能な機能 -->
+      <field property="authorityId" depends="required">
+        <msg name="required" key="WARN.MSG.0010" />
+        <arg name="required" key="user.groupAuthority" position="0" />
+      </field>
+    </form>
+
+    <form name="groupDeleteConfirmForm">
+      <!-- グループ削除 -->
+      <field property="groupId" depends="required">
+        <msg name="required" key="WARN.MSG.0010" />
+        <arg name="required" key="user.delGroupId" position="0" />
+      </field>
+    </form>
+
+    <form name="logOperationSearchForm">
+
+      <!-- ユーザID -->
+      <field property="userIdSearch" depends="maxlength, mask">
+        <msg name="maxlength" key="WARN.MSG.0007" />
+        <arg name="maxlength" key="user.userId" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>12</var-value>
+        </var>
+        <msg name="mask" key="WARN.MSG.0007" />
+        <arg name="mask" key="user.userId" position="0" />
+        <arg name="mask" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>mask</var-name>
+          <var-value>^[a-zA-Z0-9]*$</var-value>
+        </var>
+      </field>
+
+      <!-- 名前 -->
+      <field property="userNameSearch" depends="maxlength, scripting">
+        <msg name="maxlength" key="WARN.MSG.0004" />
+        <arg name="maxlength" key="user.userName" position="0" />
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>20</var-value>
+        </var>
+        <msg name="scripting" key="WARN.MSG.0030" />
+        <arg name="scripting" key="user.userName" position="0" />
+      </field>
+
+      <!-- 処理日時（上限） -->
+      <field property="insDtFrom" depends="date">
+        <msg name="date" key="WARN.MSG.0027" />
+        <arg name="date" key="user.logInsDtFrom" position="0" />
+        <var>
+          <var-name>datePattern</var-name>
+          <var-value>yyyyMMddHH</var-value>
+        </var>
+      </field>
+
+      <!-- 処理日時（下限） -->
+      <field property="insDtTo" depends="date">
+        <msg name="date" key="WARN.MSG.0027" />
+        <arg name="date" key="user.logInsDtTo" position="0" />
+        <var>
+          <var-name>datePattern</var-name>
+          <var-value>yyyyMMddHH</var-value>
+        </var>
+      </field>
+
+      <field property="dateCheck" depends="dateCompare">
+        <msg name="dateCompare" key="WARN.MSG.0009"/>
+        <arg name="dateCompare" key="user.logInsDt"/>
+        <var>
+          <var-name>startDate</var-name>
+          <var-value>insDtFrom</var-value>
+        </var>
+        <var>
+          <var-name>endDate</var-name>
+          <var-value>insDtTo</var-value>
+        </var>
+        <var>
+          <var-name>datePattern</var-name>
+          <var-value>yyyyMMddHH</var-value>
+        </var>
+      </field>
+    </form>
+  </formset>
+</form-validation>

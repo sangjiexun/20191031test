@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+		PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+	<!-- ========== Form Bean Definitions ================================== -->
+	<form-beans>
+		<form-bean name="LoginForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="userId"   type="java.lang.String" />
+			<form-property name="password" type="java.lang.String" />
+		</form-bean>
+	</form-beans>
+
+	<!-- ========== Action Mapping Definitions ============================= -->
+	<action-mappings>
+		<action path="/Login"
+				name="LoginForm"
+				validate="true"
+				type="net.chintai.backend.sysadmin.login.action.LoginAction"
+				scope="request"
+				input="/WEB-INF/jsp/login/Login.jsp">
+			<forward name="success" path="/Index.do" />
+			<forward name="failure" path="/WEB-INF/jsp/login/Login.jsp" />
+		</action>
+
+		<action path="/Logout"
+				type="net.chintai.backend.sysadmin.login.action.LogoutAction"
+				scope="request">
+			<forward name="success" path="/WEB-INF/jsp/login/Logout.jsp" />
+		</action>
+
+		<action path="/Index"
+				type="net.chintai.backend.sysadmin.login.action.IndexAction"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/WEB-INF/jsp/Index.jsp" />
+		</action>
+	</action-mappings>
+
+</struts-config>

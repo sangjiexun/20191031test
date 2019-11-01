@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config
+    PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions ================================== -->
+  <form-beans>
+
+    <!-- ■契約店舗検索 -->
+    <form-bean name="KeiyakuShopSearchForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"            type="java.lang.String" />
+      <form-property name="companyBumon"      type="java.lang.String" />
+      <form-property name="prefCd"            type="java.lang.String" />
+      <form-property name="clientSystemType"  type="java.lang.String" />
+      <form-property name="shopStatus"        type="java.lang.String" />
+      <form-property name="keiyaku"           type="java.lang.String" />
+      <form-property name="mikeiyaku"         type="java.lang.String" />
+      <form-property name="kigengire"         type="java.lang.String" />
+      <form-property name="sortKey"           type="java.lang.String" />
+      <form-property name="orderBy"           type="java.lang.String" />
+      <form-property name="displayNum"        type="java.lang.Integer" />
+      <form-property name="offSet"            type="java.lang.Integer" />
+      <form-property name="output"            type="java.lang.String" />
+    </form-bean>
+
+    <!-- ■契約情報登録 -->
+    <form-bean name="KeiyakuInfoRegisterForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"            type="java.lang.String" />
+      <form-property name="keiyakuShubetsu"   type="java.lang.String" />
+      <form-property name="kihonKeiyakuFlg"   type="java.lang.String" />
+      <form-property name="keiyakuStartYear"  type="java.lang.String" />
+      <form-property name="keiyakuStartMonth" type="java.lang.String" />
+      <form-property name="keiyakuStartYm"    type="java.lang.String" />
+      <form-property name="keiyakuEndYear"    type="java.lang.String" />
+      <form-property name="keiyakuEndMonth"   type="java.lang.String" />
+      <form-property name="keiyakuEndYm"      type="java.lang.String" />
+      <form-property name="couponKeiyakuFlg"  type="java.lang.String" />
+      <form-property name="couponStartYear"   type="java.lang.String" />
+      <form-property name="couponStartMonth"  type="java.lang.String" />
+      <form-property name="couponStartYm"     type="java.lang.String" />
+      <form-property name="couponEndYear"     type="java.lang.String" />
+      <form-property name="couponEndMonth"    type="java.lang.String" />
+      <form-property name="couponEndYm"       type="java.lang.String" />
+      <form-property name="linkKeiyakuFlg"    type="java.lang.String" />
+      <form-property name="linkStartYear"     type="java.lang.String" />
+      <form-property name="linkStartMonth"    type="java.lang.String" />
+      <form-property name="linkStartYm"       type="java.lang.String" />
+      <form-property name="linkEndYear"       type="java.lang.String" />
+      <form-property name="linkEndMonth"      type="java.lang.String" />
+      <form-property name="linkEndYm"         type="java.lang.String" />
+      <form-property name="today"             type="java.lang.String" />
+      <form-property name="note"              type="java.lang.String" />
+      <form-property name="ekiCnt"            type="java.lang.String" />
+      <form-property name="cityCnt"           type="java.lang.String" />
+      <form-property name="updDt"             type="java.lang.String" />
+    </form-bean>
+
+    <!-- ■契約情報更新 -->
+    <form-bean name="KeiyakuInfoUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="pkShopListingSeq"        type="java.lang.String" />
+      <form-property name="shopCd"                  type="java.lang.String" />
+      <form-property name="keiyakuShubetsu"         type="java.lang.String" />
+      <form-property name="kihonKeiyakuFlg"         type="java.lang.String" />
+      <form-property name="keiyakuStartYear"        type="java.lang.String" />
+      <form-property name="keiyakuStartMonth"       type="java.lang.String" />
+      <form-property name="keiyakuStartYm"          type="java.lang.String" />
+      <form-property name="keiyakuEndYear"          type="java.lang.String" />
+      <form-property name="keiyakuEndMonth"         type="java.lang.String" />
+      <form-property name="keiyakuEndYm"            type="java.lang.String" />
+      <form-property name="couponKeiyakuFlg"        type="java.lang.String" />
+      <form-property name="couponStartYear"         type="java.lang.String" />
+      <form-property name="couponStartMonth"        type="java.lang.String" />
+      <form-property name="couponStartYm"           type="java.lang.String" />
+      <form-property name="couponEndYear"           type="java.lang.String" />
+      <form-property name="couponEndMonth"          type="java.lang.String" />
+      <form-property name="couponEndYm"             type="java.lang.String" />
+      <form-property name="linkKeiyakuFlg"          type="java.lang.String" />
+      <form-property name="linkStartYear"           type="java.lang.String" />
+      <form-property name="linkStartMonth"          type="java.lang.String" />
+      <form-property name="linkStartYm"             type="java.lang.String" />
+      <form-property name="linkEndYear"             type="java.lang.String" />
+      <form-property name="linkEndMonth"            type="java.lang.String" />
+      <form-property name="linkEndYm"               type="java.lang.String" />
+      <form-property name="today"                   type="java.lang.String" />
+      <form-property name="note"                    type="java.lang.String" />
+      <form-property name="ekiCnt"                  type="java.lang.String" />
+      <form-property name="cityCnt"                 type="java.lang.String" />
+      <form-property name="shopListingKeiyakuUpdDt" type="java.lang.String" />
+      <form-property name="keiyakuShubetsuBefore"   type="java.lang.String" />
+      <form-property name="updDt"                   type="java.lang.String" />
+    </form-bean>
+
+    <!-- ■出稿情報登録 -->
+    <form-bean name="MediaInfoRegisterForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"            type="java.lang.String" />
+      <form-property name="selectEki"         type="java.lang.String[]" />
+      <form-property name="selectEkiValue"    type="java.lang.String" />
+      <form-property name="selectCity"        type="java.lang.String[]" />
+      <form-property name="selectCityValue"   type="java.lang.String" />
+      <form-property name="catchPhrase"       type="java.lang.String" />
+      <form-property name="chkCatchphrase"    type="java.lang.String" />
+      <form-property name="appealComment"     type="java.lang.String" />
+      <form-property name="chkAppealComment"  type="java.lang.String" />
+      <form-property name="shopImgRight"      type="java.lang.String" />
+      <form-property name="shopImgLeft"       type="java.lang.String" />
+      <form-property name="clientSystemType"  type="java.lang.String" />
+      <form-property name="picFlg"            type="java.lang.String" />
+      <form-property name="chkAppeal"         type="java.lang.String[]" />
+      <form-property name="chkListing"        type="java.lang.String[]" />
+      <form-property name="chkListingCnt"     type="java.lang.Integer" />
+      <form-property name="couponComment1"    type="java.lang.String" />
+      <form-property name="couponComment2"    type="java.lang.String" />
+      <form-property name="couponComment3"    type="java.lang.String" />
+      <form-property name="note"              type="java.lang.String" />
+      <form-property name="updDt"             type="java.lang.String" />
+    </form-bean>
+
+    <!-- ■出稿情報更新 -->
+    <form-bean name="MediaInfoUpdateForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"            type="java.lang.String" />
+      <form-property name="selectEki"         type="java.lang.String[]" />
+      <form-property name="selectEkiValue"    type="java.lang.String" />
+      <form-property name="selectCity"        type="java.lang.String[]" />
+      <form-property name="selectCityValue"   type="java.lang.String" />
+      <form-property name="catchPhrase"       type="java.lang.String" />
+      <form-property name="chkCatchphrase"    type="java.lang.String" />
+      <form-property name="appealComment"     type="java.lang.String" />
+      <form-property name="chkAppealComment"  type="java.lang.String" />
+      <form-property name="shopImgRight"      type="java.lang.String" />
+      <form-property name="shopImgLeft"       type="java.lang.String" />
+      <form-property name="clientSystemType"  type="java.lang.String" />
+      <form-property name="picFlg"            type="java.lang.String" />
+      <form-property name="chkAppeal"         type="java.lang.String[]" />
+      <form-property name="chkListing"        type="java.lang.String[]" />
+      <form-property name="chkListingCnt"     type="java.lang.Integer" />
+      <form-property name="couponComment1"    type="java.lang.String" />
+      <form-property name="couponComment2"    type="java.lang.String" />
+      <form-property name="couponComment3"    type="java.lang.String" />
+      <form-property name="note"              type="java.lang.String" />
+      <form-property name="updDt"             type="java.lang.String" />
+    </form-bean>
+
+    <!-- ■クーポン情報編集 -->
+    <form-bean name="CouponEditForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd"             type="java.lang.String" />
+      <form-property name="couponSeqs"         type="java.lang.String[]" />
+      <form-property name="startYears"         type="java.lang.String[]" />
+      <form-property name="startMonths"        type="java.lang.String[]" />
+      <form-property name="startDays"          type="java.lang.String[]" />
+      <form-property name="endYears"           type="java.lang.String[]" />
+      <form-property name="endMonths"          type="java.lang.String[]" />
+      <form-property name="endDays"            type="java.lang.String[]" />
+      <form-property name="riyouTaisyo"        type="java.lang.String[]" />
+      <form-property name="riyouTaisyoCustom"  type="java.lang.String[]" />
+      <form-property name="riyouTaisyoType"    type="java.lang.String[]" />
+      <form-property name="tokuten"            type="java.lang.String[]" />
+      <form-property name="tokutenCustom"      type="java.lang.String[]" />
+      <form-property name="tokutenType"        type="java.lang.String[]" />
+      <form-property name="jouken"             type="java.lang.String[]" />
+      <form-property name="joukenCustom"       type="java.lang.String[]" />
+      <form-property name="joukenType"         type="java.lang.String[]" />
+      <form-property name="sortKeys"           type="java.lang.String[]" />
+      <form-property name="delFlgs"            type="java.lang.String[]" />
+      <form-property name="updDt"              type="java.lang.String[]" />
+    </form-bean>
+
+    <form-bean name="MediaInfoWebRegisterForm" type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="shopCd" type="java.lang.String" />
+      <form-property name="updDt"  type="java.lang.String" />
+    </form-bean>
+  </form-beans>
+
+  <!-- ========== Action Mapping Definitions ============================= -->
+  <action-mappings>
+
+    <!-- ■契約店舗検索画面 -->
+    <!-- 契約店舗検索画面表示アクション -->
+    <action path="/shop_listing/KeiyakuShopSearchPage"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuShopSearchPageAction"
+            name="KeiyakuShopSearchForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuShopSearch.jsp" />
+    </action>
+
+    <!-- 契約店舗検索アクション -->
+    <action path="/shop_listing/KeiyakuShopSearch"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuShopSearchAction"
+            name="KeiyakuShopSearchForm"
+            validate="true"
+            scope="request"
+            input="/shop_listing/KeiyakuShopSearchPage.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuShopSearch.jsp" />
+    </action>
+
+    <!-- 契約店舗検索ページングアクション -->
+    <action path="/shop_listing/KeiyakuShopSearchPaging"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuShopSearchPagingAction"
+            name="KeiyakuShopSearchForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuShopSearch.jsp" />
+    </action>
+
+    <!-- 契約店舗詳細表示アクション -->
+    <action path="/shop_listing/KeiyakuShopInfo"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuShopInfoAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuShopInfo.jsp" />
+    </action>
+
+    <!-- ■契約店舗詳細画面 -->
+    <!-- 契約情報登録画面表示アクション -->
+    <action path="/shop_listing/KeiyakuRegisterPage"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuRegisterPageAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuRegister.jsp" />
+    </action>
+
+    <!-- 契約情報登録確認画面アクション -->
+    <action path="/shop_listing/KeiyakuRegisterConfirm"
+            name="KeiyakuInfoRegisterForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuRegisterConfirmAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuRegisterConfirm.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/shop_listing/KeiyakuRegister.jsp" />
+    </action>
+
+    <!-- 契約情報登録画面に戻るアクション -->
+    <action path="/shop_listing/KeiyakuRegisterPageBack"
+            name="KeiyakuInfoRegisterForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuRegisterPageBackAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuRegister.jsp" />
+    </action>
+
+    <!-- 契約情報登録完了アクション -->
+    <action path="/shop_listing/KeiyakuRegisterComplete"
+            name="KeiyakuInfoRegisterForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuRegisterCompleteAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/shop_listing/KeiyakuShopInfo.do" />
+    </action>
+
+    <!-- 契約情報更新画面表示アクション -->
+    <action path="/shop_listing/KeiyakuUpdatePage"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuUpdatePageAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuUpdate.jsp" />
+    </action>
+
+    <!-- 契約情報更新確認画面アクション -->
+    <action path="/shop_listing/KeiyakuUpdateConfirm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuUpdateConfirmAction"
+            name="KeiyakuInfoUpdateForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuUpdateConfirm.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/shop_listing/KeiyakuUpdate.jsp" />
+    </action>
+
+    <!-- 契約情報更新画面に戻るアクション -->
+    <action path="/shop_listing/KeiyakuUpdatePageBack"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuUpdatePageBackAction"
+            name="KeiyakuInfoUpdateForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/KeiyakuUpdate.jsp" />
+    </action>
+
+    <!-- 契約情報更新完了画面アクション -->
+    <action path="/shop_listing/KeiyakuUpdateComplete"
+            type="net.chintai.backend.sysadmin.shop_listing.action.KeiyakuUpdateCompleteAction"
+            name="KeiyakuInfoUpdateForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/shop_listing/KeiyakuShopInfo.do" />
+    </action>
+
+    <!-- 出稿情報（仮保存）WEBへ反映確認アクション -->
+    <action path="/shop_listing/MediaInfoWebRegisterConfirm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoWebRegisterConfirmAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/MediaInfoWebRegisterConfirm.jsp" />
+    </action>
+
+    <!-- 出稿情報（仮保存）WEBへ反映アクション -->
+    <action path="/shop_listing/MediaInfoWebRegisterComplete"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoWebRegisterCompleteAction"
+            name="MediaInfoWebRegisterForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/shop_listing/KeiyakuShopInfo.do" />
+    </action>
+
+    <!-- 出稿情報（仮保存）登録画面表示アクション -->
+    <action path="/shop_listing/MediaInfoRegisterPage"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoRegisterPageAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/MediaInfoRegister.jsp" />
+    </action>
+
+    <!-- 出稿情報（仮保存）登録確認アクション -->
+    <action path="/shop_listing/MediaInfoRegisterConfirm"
+            name="MediaInfoRegisterForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoRegisterConfirmAction"
+            validate="true"
+            input="/shop_listing/MediaInfoRegisterPageBack.do"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/MediaInfoRegisterConfirm.jsp" />
+    </action>
+
+    <!-- 出稿情報（仮保存）登録画面：本番データをコピーする -->
+    <action path="/shop_listing/MediaInfoRegisterWebInfoCopy"
+            name="MediaInfoRegisterForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoRegisterWebInfoCopyAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/MediaInfoRegister.jsp" />
+    </action>
+
+    <!-- 出稿情報（仮保存）登録画面に戻る -->
+    <action path="/shop_listing/MediaInfoRegisterPageBack"
+            name="MediaInfoRegisterForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoRegisterPageBackAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/MediaInfoRegister.jsp" />
+    </action>
+
+    <!-- 出稿情報（仮保存）登録完了 -->
+    <action path="/shop_listing/MediaRegisterComplete"
+            name="MediaInfoRegisterForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoRegisterCompleteAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/shop_listing/KeiyakuShopInfo.do" />
+    </action>
+
+    <!-- 出稿情報（仮保存）編集画面表示アクション -->
+    <action path="/shop_listing/MediaInfoUpdatePage"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoUpdatePageAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/MediaInfoUpdate.jsp" />
+    </action>
+
+    <!-- 出稿情報（仮保存）編集確認アクション -->
+    <action path="/shop_listing/MediaInfoUpdateConfirm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoUpdateConfirmAction"
+            name="MediaInfoUpdateForm"
+            validate="true"
+            scope="request"
+            input="/shop_listing/MediaInfoUpdatePageBack.do">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/MediaInfoUpdateConfirm.jsp" />
+    </action>
+
+    <!-- 出稿情報（仮保存）編集画面：本番データをコピーする -->
+    <action path="/shop_listing/MediaInfoUpdateWebInfoCopy"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoUpdateWebInfoCopyAction"
+            name="MediaInfoUpdateForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/MediaInfoUpdate.jsp" />
+    </action>
+
+    <!-- 出稿情報（仮保存）編集画面に戻る -->
+    <action path="/shop_listing/MediaInfoUpdatePageBack"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoUpdatePageBackAction"
+            name="MediaInfoUpdateForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/MediaInfoUpdate.jsp" />
+    </action>
+
+    <!-- 出稿情報（仮保存）編集完了アクション -->
+    <action path="/shop_listing/MediaInfoUpdateComplete"
+            type="net.chintai.backend.sysadmin.shop_listing.action.MediaInfoUpdateCompleteAction"
+            name="MediaInfoUpdateForm"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/shop_listing/KeiyakuShopInfo.do" />
+    </action>
+
+    <!-- クーポン情報編集画面表示アクション -->
+    <action path="/shop_listing/CouponEditPage"
+            type="net.chintai.backend.sysadmin.shop_listing.action.CouponEditPageAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/CouponEdit.jsp" />
+    </action>
+
+    <!-- クーポン情報編集確認アクション -->
+    <action path="/shop_listing/CouponEditConfirm"
+            name="CouponEditForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.CouponEditConfirmAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/CouponEditConfirm.jsp" />
+      <forward name="fail" path="/WEB-INF/jsp/shop_listing/CouponEdit.jsp" />
+    </action>
+
+    <!-- クーポン情報編集画面に戻る -->
+    <action path="/shop_listing/CouponEditPageBack"
+            name="CouponEditForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.CouponEditPageBackAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/WEB-INF/jsp/shop_listing/CouponEdit.jsp" />
+    </action>
+
+    <!-- クーポン情報編集完了アクション -->
+    <action path="/shop_listing/CouponEditComplete"
+            name="CouponEditForm"
+            type="net.chintai.backend.sysadmin.shop_listing.action.CouponEditCompleteAction"
+            validate="false"
+            scope="request">
+      <forward name="success" path="/shop_listing/KeiyakuShopInfo.do" />
+    </action>
+
+  </action-mappings>
+</struts-config>

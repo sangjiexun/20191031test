@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+  <!-- DAO Definitions -->
+  <!-- 契約店舗取得DAO -->
+  <bean id="keiyakuShopSearchDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.KeiyakuShopSearchDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 店舗基本情報取得DAO -->
+  <bean id="shopBasicInfoDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.ShopBasicInfoDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 店舗詳細情報取得DAO -->
+  <bean id="keiyakuShopInfoDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.KeiyakuShopInfoDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 契約情報登録画面用情報取得DAO -->
+  <bean id="keiyakuRegisterPageDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.KeiyakuRegisterPageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 契約情報登録DAO -->
+  <bean id="keiyakuRegisterCompleteDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.KeiyakuRegisterCompleteDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 契約情報取得DAO -->
+  <bean id="keiyakuUpdatePageDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.KeiyakuUpdatePageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 契約情報更新DAO -->
+  <bean id="keiyakuUpdateCompleteDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.KeiyakuUpdateCompleteDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 店舗リスティングデータDAO -->
+  <bean id="shopListingDataDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.ShopListingDataDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 出稿情報確認DAO -->
+  <bean id="mediaInfoConfirmDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.MediaInfoConfirmDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 出稿情報登録完了DAO -->
+  <bean id="mediaInfoRegisterCompleteDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.MediaInfoRegisterCompleteDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 出稿情報編集画面DAO -->
+  <bean id="mediaInfoUpdatePageDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.MediaInfoUpdatePageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 出稿情報編集完了DAO -->
+  <bean id="mediaInfoUpdateCompleteDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.MediaInfoUpdateCompleteDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- アイコンマスタDAO -->
+  <bean id="shopListingIconDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.ShopListingIconDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- クーポン情報編集画面表示DAO -->
+  <bean id="couponEditPageDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.CouponEditPageDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- クーポン情報編集完了DAO -->
+  <bean id="couponEditCompleteDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.CouponEditCompleteDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 出稿情報本番反映DAO -->
+  <bean id="mediaInfoWebRegisterCompleteDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.MediaInfoWebRegisterCompleteDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- 共通プロシージャDAO -->
+  <bean id="callProcedureDao"
+        class="net.chintai.backend.sysadmin.shop_listing.dao.impl.CallProcedureDaoImpl">
+    <property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+  </bean>
+
+  <!-- Service Definecions -->
+  <!-- Service クラスのマッピング情報を記述します -->
+  <!-- 契約店舗検索サービス -->
+  <bean id="keiyakuShopSearchService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.KeiyakuShopSearchServiceImpl">
+    <property name="keiyakuShopSearchDao"><ref local="keiyakuShopSearchDao"/></property>
+  </bean>
+
+  <!-- 店舗基本情報取得サービス -->
+  <bean id="shopBasicInfoService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.ShopBasicInfoServiceImpl">
+    <property name="shopBasicInfoDao"><ref local="shopBasicInfoDao"/></property>
+  </bean>
+
+  <!-- 店舗詳細取得サービス -->
+  <bean id="keiyakuShopInfoService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.KeiyakuShopInfoServiceImpl">
+    <property name="keiyakuShopInfoDao"><ref local="keiyakuShopInfoDao"/></property>
+    <property name="mediaInfoUpdatePageDao"><ref local="mediaInfoUpdatePageDao"/></property>
+  </bean>
+
+  <!-- 契約情報登録画面サービス -->
+  <bean id="keiyakuRegisterPageService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.KeiyakuRegisterPageServiceImpl">
+    <property name="keiyakuRegisterPageDao"><ref local="keiyakuRegisterPageDao"/></property>
+  </bean>
+
+  <!-- 契約情報登録完了サービス -->
+  <bean id="keiyakuRegisterCompleteService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.KeiyakuRegisterCompleteServiceImpl">
+    <property name="keiyakuRegisterCompleteDao"><ref local="keiyakuRegisterCompleteDao"/></property>
+    <property name="callProcedureDao"><ref local="callProcedureDao"/></property>
+  </bean>
+
+  <!-- 契約情報更新画面サービス -->
+  <bean id="keiyakuUpdatePageService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.KeiyakuUpdatePageServiceImpl">
+    <property name="keiyakuUpdatePageDao"><ref local="keiyakuUpdatePageDao"/></property>
+  </bean>
+
+  <!-- 契約情報更新完了サービス -->
+  <bean id="keiyakuUpdateCompleteServiceTarget"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.KeiyakuUpdateCompleteServiceImpl">
+    <property name="keiyakuRegisterCompleteDao"><ref local="keiyakuRegisterCompleteDao"/></property>
+    <property name="keiyakuUpdateCompleteDao"><ref local="keiyakuUpdateCompleteDao"/></property>
+    <property name="callProcedureDao"><ref local="callProcedureDao"/></property>
+  </bean>
+  <bean id="keiyakuUpdateCompleteService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="keiyakuUpdateCompleteServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="update*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+
+  <!-- 出稿情報：本番データコピーサービス -->
+  <bean id="mediaInfoWebDataCopyService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.MediaInfoWebDataCopyServiceImpl">
+    <property name="mediaInfoUpdatePageDao"><ref local="mediaInfoUpdatePageDao"/></property>
+    <property name="shopListingDataDao"><ref local="shopListingDataDao"/></property>
+    <property name="shopListingIconDao"><ref local="shopListingIconDao"/></property>
+    <property name="keiyakuShopInfoDao"><ref local="keiyakuShopInfoDao"/></property>
+    <property name="mediaInfoConfirmDao"><ref local="mediaInfoConfirmDao"/></property>
+  </bean>
+
+  <!-- 出稿情報登録画面表示サービス -->
+  <bean id="mediaInfoRegisterPageService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.MediaInfoRegisterPageServiceImpl">
+    <property name="shopListingDataDao"><ref local="shopListingDataDao"/></property>
+	<property name="shopListingIconDao"><ref local="shopListingIconDao"/></property>
+    <property name="keiyakuShopInfoDao"><ref local="keiyakuShopInfoDao"/></property>
+    <property name="mediaInfoConfirmDao"><ref local="mediaInfoConfirmDao"/></property>
+  </bean>
+
+  <!-- 出稿情報登録確認サービス -->
+  <bean id="mediaInfoConfirmService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.MediaInfoConfirmServiceImpl">
+    <property name="mediaInfoConfirmDao"><ref local="mediaInfoConfirmDao"/></property>
+	<property name="shopListingIconDao"><ref local="shopListingIconDao"/></property>
+  </bean>
+
+  <!-- 出稿情報登録完了サービス -->
+  <bean id="mediaInfoRegisterCompleteServiceTarget"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.MediaInfoRegisterCompleteServiceImpl">
+    <property name="mediaInfoRegisterCompleteDao"><ref local="mediaInfoRegisterCompleteDao"/></property>
+    <property name="keiyakuShopInfoDao"><ref local="keiyakuShopInfoDao"/></property>
+  </bean>
+  <bean id="mediaInfoRegisterCompleteService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="mediaInfoRegisterCompleteServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="registerMediaInfo">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- 出稿情報編集画面表示データ取得サービス -->
+  <bean id="mediaInfoUpdatePageService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.MediaInfoUpdatePageServiceImpl">
+    <property name="mediaInfoUpdatePageDao"><ref local="mediaInfoUpdatePageDao"/></property>
+    <property name="shopListingDataDao"><ref local="shopListingDataDao"/></property>
+    <property name="shopListingIconDao"><ref local="shopListingIconDao"/></property>
+    <property name="keiyakuShopInfoDao"><ref local="keiyakuShopInfoDao"/></property>
+    <property name="mediaInfoConfirmDao"><ref local="mediaInfoConfirmDao"/></property>
+  </bean>
+
+  <!-- 出稿情報編集完了サービス -->
+  <bean id="mediaInfoUpdateCompleteServiceTarget"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.MediaInfoUpdateCompleteServiceImpl">
+    <property name="mediaInfoUpdateCompleteDao"><ref local="mediaInfoUpdateCompleteDao"/></property>
+    <property name="mediaInfoRegisterCompleteDao"><ref local="mediaInfoRegisterCompleteDao"/></property>
+    <property name="keiyakuShopInfoDao"><ref local="keiyakuShopInfoDao"/></property>
+  </bean>
+  <bean id="mediaInfoUpdateCompleteService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="mediaInfoUpdateCompleteServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="update*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- クーポン情報編集画面表示サービス -->
+  <bean id="couponEditPageService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.CouponEditPageServiceImpl">
+    <property name="couponEditPageDao"><ref local="couponEditPageDao"/></property>
+  </bean>
+
+  <!-- クーポン情報編集完了サービス -->
+  <bean id="couponEditCompleteServiceTarget"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.CouponEditCompleteServiceImpl">
+    <property name="couponEditCompleteDao"><ref local="couponEditCompleteDao"/></property>
+    <property name="callProcedureDao"><ref local="callProcedureDao"/></property>
+  </bean>
+  <bean id="couponEditCompleteService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="couponEditCompleteServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="update*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+
+  <!-- 本番反映確認サービス -->
+  <bean id="mediaInfoWebRegisterConfirmService"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.MediaInfoWebRegisterConfirmServiceImpl">
+    <property name="mediaInfoUpdatePageDao"><ref local="mediaInfoUpdatePageDao"/></property>
+    <property name="keiyakuShopInfoDao"><ref local="keiyakuShopInfoDao"/></property>
+  </bean>
+
+  <!-- 本番反映完了サービス -->
+  <bean id="mediaInfoWebRegisterCompleteServiceTarget"
+        class="net.chintai.backend.sysadmin.shop_listing.service.impl.MediaInfoWebRegisterCompleteServiceImpl">
+    <property name="mediaInfoWebRegisterCompleteDao"><ref local="mediaInfoWebRegisterCompleteDao"/></property>
+    <property name="callProcedureDao"><ref local="callProcedureDao"/></property>
+  </bean>
+  <bean id="mediaInfoWebRegisterCompleteService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="target"><ref local="mediaInfoWebRegisterCompleteServiceTarget"/></property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="update*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+      </props>
+    </property>
+  </bean>
+</beans>

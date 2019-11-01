@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="user">
+
+	<resultMap id="userList"
+		class="net.chintai.backend.sysadmin.user.domain.UserDomain">
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="groupId" column="GROUP_ID" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="userNote" column="USER_NOTE" />
+	</resultMap>
+
+	<resultMap id="idCount"
+		class="net.chintai.backend.sysadmin.user.domain.UserDomain" >
+		<result property="idCount" column="IDCOUNT" />
+	</resultMap>
+
+	<resultMap id="userInfo"
+		class="net.chintai.backend.sysadmin.user.domain.UserDomain">
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="userNote" column="USER_NOTE" />
+	</resultMap>
+
+	<resultMap id="userUpdatePage"
+		class="net.chintai.backend.sysadmin.user.domain.UserDomain">
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="groupId" column="GROUP_ID" />
+		<result property="userNote" column="USER_NOTE" />
+		<result property="updDt" column="UPD_DT" />
+		<result property="cjnAccountSeq" column="CJN_ACCOUNT_SEQ" />
+	</resultMap>
+
+	<resultMap id="userPasswordChangePageMap"
+		class="net.chintai.backend.sysadmin.user.domain.UserDomain">
+		<result property="updDt" column="UPD_DT" />
+	</resultMap>
+
+	<resultMap id="userDeleteConfirmList"
+		class="net.chintai.backend.sysadmin.user.domain.UserDomain">
+		<result property="userId" column="USER_ID" />
+		<result property="updDt" column="UPD_DT" />
+	</resultMap>
+
+	<resultMap id="groupName"
+		class="net.chintai.backend.sysadmin.user.domain.UserDomain">
+		<result property="groupName" column="GROUP_NAME" />
+	</resultMap>
+
+	<resultMap id="group"
+		class="net.chintai.backend.sysadmin.user.domain.Group">
+		<result property="groupId"     column="GROUP_ID"/>
+		<result property="groupName"   column="GROUP_NAME"/>
+		<result property="authorityId" column="AUTHORITY_ID"/>
+		<result property="updID"       column="UPD_ID"/>
+		<result property="updDt"       column="UPD_DT"/>
+	</resultMap>
+
+	<resultMap id="groupByGroupId"
+		class="net.chintai.backend.sysadmin.user.domain.Group">
+		<result property="groupId"     column="GROUP_ID"/>
+		<result property="groupName"   column="GROUP_NAME"/>
+		<result property="updDt"   column="UPD_DT"/>
+	</resultMap>
+
+	<resultMap id="authority"
+		class="net.chintai.backend.sysadmin.user.domain.Authority">
+		<result property="authorityId"   column="AUTHORITY_ID"/>
+		<result property="authorityName" column="AUTHORITY_NAME"/>
+		<result property="updID"         column="UPD_ID"/>
+		<result property="updDt"         column="UPD_DT"/>
+	</resultMap>
+
+	<resultMap id="groupAuthority"
+	class="net.chintai.backend.sysadmin.user.domain.GroupAuthority">
+		<result property="groupId"        column="GROUP_ID"/>
+		<result property="groupName"      column="GROUP_NAME"/>
+		<result property="groupUpdDt"     column="GROUP_UPD_DT"/>
+		<result property="authorityId"    column="AUTHORITY_ID"/>
+		<result property="authorityName"  column="AUTHORITY_NAME"/>
+		<result property="authorityUpdDt" column="AUTH_UPD_DT"/>
+		<result property="authorityUpdId" column="AUTH_UPD_ID"/>
+		<result property="authorityExist" column="AUTHORITY_EXIST"/>
+	</resultMap>
+
+	<resultMap id="usedGroupCount" class="java.lang.Integer">
+		<result property="usedGroupCount" column="USED_GROUP_COUNT"/>
+	</resultMap>
+
+	<resultMap id="seqGroupId"
+		class="java.lang.Integer">
+		<result property="seqGroupId" column="GROUP_ID"/>
+	</resultMap>
+
+	<resultMap id="logOperationListMap"
+		class="net.chintai.backend.sysadmin.user.domain.LogOperation">
+		<result property="userId" column="INS_ID"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="operationName" column="OPERATION_NAME"/>
+		<result property="sessionStatus" column="SESSION_STATUS"/>
+		<result property="target" column="TARGET"/>
+		<result property="insDt" column="INS_DT"/>
+	</resultMap>
+
+
+	<sql id="logOperationSearchWhere">
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="userIdSearch">
+				MSH.INS_ID LIKE'%'||#userIdSearch#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="userNameSearch">
+				MU.USER_NAME LIKE'%'||#userNameSearch#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="operationIdSearch">
+				MSH.OPERATION_ID LIKE #operationIdSearch#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="insDtFrom">
+			<![CDATA[
+				MSH.INS_DT >= TO_DATE(#insDtFrom#, 'YYYYMMDDHH24')
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="insDtTo">
+			<![CDATA[
+				MSH.INS_DT <= TO_DATE(#insDtTo#, 'YYYYMMDDHH24')
+			]]>
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<!-- ユーザリスト -->
+	<select id="userList" resultMap="userList">
+		<![CDATA[
+		SELECT
+			MU.USER_ID,
+			MU.USER_NAME,
+			MU.GROUP_ID,
+			MMG.GROUP_NAME,
+			MU.USER_NOTE
+		FROM
+			MNG_USERS MU
+		INNER JOIN
+			MNG_MST_GROUP MMG
+		ON
+			MU.GROUP_ID = MMG.GROUP_ID
+		WHERE
+			MU.DEL_KBN = '0'
+		ORDER BY
+			MU.USER_ID
+		]]>
+	</select>
+
+	<!-- ユーザIDの存在有無チェック -->
+	<select id="userIdCheck"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserAddConfirmParamBean" resultMap="idCount">
+		<![CDATA[
+		SELECT
+			COUNT(USER_ID) as IDCOUNT
+		FROM
+			MNG_USERS
+		WHERE
+			USER_ID = #userId#
+		]]>
+	</select>
+
+	<!-- ユーザ登録完了のCHINTAI問い合せ管理 アカウントシーケンスチェック -->
+	<select id="addCjnAccountCheck"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserAddCommitParamBean"
+			resultClass="int">
+		SELECT
+			COUNT(*)
+		FROM MNG_MST_GROUP MMG
+			INNER JOIN
+				MNG_GROUP_AUTHORITY MGA
+			ON MMG.GROUP_ID = MGA.GROUP_ID AND MGA.AUTHORITY_ID = '07'
+		WHERE
+			MMG.GROUP_ID = #groupId#
+	</select>
+
+	<!-- ユーザ登録完了 -->
+	<insert id="userAddCommit"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserAddCommitParamBean">
+		INSERT INTO MNG_USERS(
+			USER_ID,
+			PASSWORD,
+			USER_NAME,
+			GROUP_ID,
+			USER_NOTE,
+			CJN_ACCOUNT_SEQ,
+			CJN_ACCOUNT_TYPE,
+			DEL_KBN,
+			INS_DT,
+			INS_ID,
+			UPD_DT,
+			UPD_ID,
+			CJN_EMAIL_STATUS_1,
+			CJN_EMAIL_STATUS_2,
+			CJN_EMAIL_STATUS_3,
+			INS_PG,
+			UPD_PG
+		) VALUES (
+			#userId#,
+			#passwd#,
+			#userName#,
+			#groupId#,
+			#userNote#,
+			<dynamic>
+				<isNotEmpty property="cjnAccountSeq">
+					SEQ_CJN_ACCOUNT_SEQ.NEXTVAL,
+				</isNotEmpty>
+				<isEmpty property="cjnAccountSeq">
+					NULL,
+				</isEmpty>
+			</dynamic>
+			#cjnAccountType#,
+			'0',
+			SYSTIMESTAMP,
+			#operUserId#,
+			SYSTIMESTAMP,
+			#operUserId#,
+			'0',
+			'0',
+			'0',
+			#pgName#,
+			#pgName#
+		)
+	</insert>
+
+	<!-- ユーザ削除確認 -->
+	<select id="userDeleteConfirm"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserDeleteConfirmParamBean"
+			resultMap="userDeleteConfirmList">
+		SELECT
+			USER_ID,
+			TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS UPD_DT
+		FROM
+			MNG_USERS
+		WHERE
+			DEL_KBN = '0'
+			AND
+		<iterate property="userCheckId" open=" USER_ID IN ( " close=" ) " conjunction=" , ">
+			#userCheckId[]#
+		</iterate>
+		ORDER BY
+			USER_ID
+	</select>
+
+	<!-- ユーザ削除完了 -->
+	<update id="userDeleteCommit"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserDeleteCommitParamBean">
+		UPDATE
+			MNG_USERS
+		SET
+			DEL_KBN = '1',
+			UPD_DT = SYSTIMESTAMP,
+			UPD_ID = #operUserId#,
+			UPD_PG = #pgName#
+		WHERE
+			USER_ID = #userCheckId#
+			AND
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+	</update>
+
+	<!-- ユーザ詳細 -->
+	<select id="userInfo"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserInfoParamBean"
+			resultMap="userInfo">
+		SELECT
+			MU.USER_ID,
+			MU.USER_NAME,
+			MMG.GROUP_NAME,
+			MU.USER_NOTE
+		FROM
+			MNG_USERS MU
+		INNER JOIN
+			MNG_MST_GROUP MMG
+		ON
+			MU.GROUP_ID = MMG.GROUP_ID
+		WHERE
+			MU.DEL_KBN = '0'
+			AND
+			MU.USER_ID = #userId#
+	</select>
+
+	<!-- ユーザ更新画面に遷移 -->
+	<select id="userUpdatePage"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserUpdatePageParamBean"
+			resultMap="userUpdatePage">
+		SELECT
+			USER_ID,
+			USER_NAME,
+			GROUP_ID,
+			USER_NOTE,
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') as UPD_DT,
+			CJN_ACCOUNT_SEQ
+		FROM
+			MNG_USERS
+		WHERE
+			DEL_KBN = '0'
+			AND
+			USER_ID = #userId#
+	</select>
+
+	<!-- ユーザ更新完了のCHINTAI問い合せ管理アカウントシーケンスチェック -->
+	<select id="updateCjnAccountCheck"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserUpdateCommitParamBean"
+			resultClass="int">
+		SELECT
+			COUNT(*)
+		FROM MNG_MST_GROUP MMG
+			INNER JOIN
+				MNG_GROUP_AUTHORITY MGA
+			ON MMG.GROUP_ID = MGA.GROUP_ID AND MGA.AUTHORITY_ID = '07'
+		WHERE
+			MMG.GROUP_ID = #groupId#
+	</select>
+
+	<!-- ユーザ更新完了 -->
+	<update id="userUpdateCommit"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserUpdateCommitParamBean">
+		UPDATE
+			MNG_USERS
+		SET
+			USER_NAME = #userName#,
+			GROUP_ID = #groupId#,
+			<dynamic>
+				<isNotEmpty property="isCjnAccount">
+						CJN_ACCOUNT_SEQ = SEQ_CJN_ACCOUNT_SEQ.NEXTVAL,
+				</isNotEmpty>
+				<isEmpty property="isCjnAccount">
+						CJN_ACCOUNT_SEQ = NULL,
+				</isEmpty>
+			</dynamic>
+			USER_NOTE = #userNote#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_ID = #operUserId#,
+			UPD_PG = #pgName#
+		WHERE
+			USER_ID = #userId#
+			AND
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+	</update>
+
+	<delete id="deleteCjnAccountLevel"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserUpdateCommitParamBean">
+		DELETE FROM
+			CJN_ACCOUNT_LEVEL
+		WHERE
+			CJN_ACCOUNT_SEQ = #cjnAccountSeq#
+	</delete>
+
+	<!-- ユーザパスワード変更画面に遷移 -->
+	<select id="userPasswordChangePage"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserPasswordChangePageParamBean"
+			resultMap="userPasswordChangePageMap">
+		SELECT
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS UPD_DT
+		FROM
+			MNG_USERS
+		WHERE
+			DEL_KBN = '0'
+			AND
+			USER_ID = #userId#
+	</select>
+
+	<!-- ユーザパスワード変更完了 -->
+	<update id="userPasswordChangeCommit"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.UserPasswordChangeCommitParamBean">
+		UPDATE
+			MNG_USERS
+		SET
+			PASSWORD = #passwd#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_ID = #operUserId#,
+			UPD_PG = #pgName#
+		WHERE
+			USER_ID = #userId#
+			AND
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+	</update>
+
+	<select id="selectGroupName"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.GroupNameParamBean"
+			resultMap="groupName">
+		SELECT
+			GROUP_NAME
+		FROM
+			MNG_MST_GROUP
+		WHERE
+			GROUP_ID = #groupId#
+	</select>
+
+	<select id="selectGroupList" resultMap="group">
+		SELECT
+			MMG.GROUP_ID AS GROUP_ID,
+			MMG.GROUP_NAME AS GROUP_NAME,
+			MGA.AUTHORITY_ID AS AUTHORITY_ID,
+			MMG.UPD_DT AS UPD_DT,
+			MMG.UPD_ID AS UPD_ID
+		FROM
+			MNG_MST_GROUP MMG
+				INNER JOIN MNG_GROUP_AUTHORITY MGA
+				ON MMG.GROUP_ID = MGA.GROUP_ID
+		ORDER BY
+			MMG.GROUP_ID, MGA.AUTHORITY_ID
+	</select>
+
+	<select id="selectAuthorityList" resultMap="authority">
+		SELECT
+			AUTHORITY_ID,
+			AUTHORITY_NAME,
+			UPD_DT,
+			UPD_ID
+		FROM
+			MNG_MST_AUTHORITY
+		ORDER BY
+			SORT_KEY
+	</select>
+
+	<select id="selectGroupUpdatePage"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.GroupUpdatePageParamBean"
+			resultMap="groupAuthority">
+		SELECT
+			MMG_MGA.GROUP_ID AS GROUP_ID,
+			MMG_MGA.GROUP_NAME AS GROUP_NAME,
+			MMG_MGA.GROUP_UPD_DT AS GROUP_UPD_DT,
+			MMA.AUTHORITY_ID AS AUTHORITY_ID,
+			MMA.AUTHORITY_NAME AS AUTHORITY_NAME,
+			MMG_MGA.AUTH_UPD_DT AS AUTH_UPD_DT,
+			MMG_MGA.AUTH_UPD_ID AS AUTH_UPD_ID,
+			DECODE(NVL(MMG_MGA.AUTHORITY_ID, '0'), 0, null, '1') AS AUTHORITY_EXIST,
+			MMA.SORT_KEY AS SORT_KEY
+		FROM
+			MNG_MST_AUTHORITY MMA
+		LEFT OUTER JOIN (
+			SELECT
+				MMG.GROUP_ID AS GROUP_ID,
+				MMG.GROUP_NAME AS GROUP_NAME,
+				to_char(MMG.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS GROUP_UPD_DT,
+				MGA.AUTHORITY_ID AS AUTHORITY_ID,
+				to_char(MGA.UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS AUTH_UPD_DT,
+				MGA.UPD_ID AS AUTH_UPD_ID
+			FROM
+				MNG_MST_GROUP MMG
+			INNER JOIN
+				MNG_GROUP_AUTHORITY MGA
+			ON
+				MMG.GROUP_ID = MGA.GROUP_ID
+			WHERE MMG.GROUP_ID = #groupId#
+		) MMG_MGA
+		ON
+			MMA.AUTHORITY_ID = MMG_MGA.AUTHORITY_ID
+		ORDER BY
+			MMA.SORT_KEY, MMA.AUTHORITY_ID
+	</select>
+
+	<select id="selectUpdatable"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.GroupUpdateCommitParamBean"
+			resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			MNG_MST_GROUP
+		WHERE
+			GROUP_ID = #groupId# AND
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #groupUpdDt#
+	</select>
+
+	<insert id="insertGroupByAuthority"
+			parameterClass="net.chintai.backend.sysadmin.user.domain.Authority">
+		INSERT INTO
+			MNG_GROUP_AUTHORITY (
+				GROUP_ID,
+				AUTHORITY_ID,
+				INS_DT,
+				INS_ID,
+				UPD_DT,
+				UPD_ID,
+				INS_PG,
+				UPD_PG
+			) VALUES (
+				#groupId#,
+				#authorityId#,
+				SYSTIMESTAMP,
+				#insID#,
+				SYSTIMESTAMP,
+				#updID#,
+				#pgName#,
+				#pgName#
+			)
+	</insert>
+
+	<update id="updateGroupName"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.GroupUpdateCommitParamBean">
+		UPDATE
+			MNG_MST_GROUP
+		SET
+			GROUP_NAME = #groupName#,
+			UPD_DT = SYSTIMESTAMP,
+			UPD_ID = #updId#,
+			UPD_PG = #pgName#
+		WHERE
+			GROUP_ID = #groupId#
+		AND
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #groupUpdDt#
+	</update>
+
+	<delete id="deleteGroupByAuthority"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.GroupUpdateCommitParamBean">
+		DELETE FROM
+			MNG_GROUP_AUTHORITY
+		WHERE
+			GROUP_ID = #groupId#
+	</delete>
+
+	<select id="selectSeqGroupId" resultMap="seqGroupId">
+		SELECT
+			SEQ_GROUP_ID.nextval AS GROUP_ID
+		FROM
+			DUAL
+	</select>
+
+	<insert id="insertGroup"
+			parameterClass="net.chintai.backend.sysadmin.user.domain.Group">
+		INSERT INTO MNG_MST_GROUP (
+			GROUP_ID,
+			GROUP_NAME,
+			INS_DT,
+			INS_ID,
+			UPD_DT,
+			UPD_ID,
+			INS_PG,
+			UPD_PG
+		) VALUES (
+			#groupId#,
+			#groupName#,
+			SYSTIMESTAMP,
+			#insID#,
+			SYSTIMESTAMP,
+			#updID#,
+			#pgName#,
+			#pgName#
+		)
+	</insert>
+
+	<select id="selectGroupByGroupId"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.GroupDeleteConfirmParamBean"
+			resultMap="groupByGroupId">
+		SELECT
+			GROUP_ID,
+			GROUP_NAME,
+			TO_CHAR(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') AS UPD_DT
+		FROM
+			MNG_MST_GROUP
+		WHERE
+		<iterate property="groupId" open=" GROUP_ID IN ( " close=" ) " conjunction=", ">
+			#groupId[]#
+		</iterate>
+		ORDER BY
+			GROUP_ID
+	</select>
+
+	<select id="selectUsedGroupCount"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.GroupDeleteConfirmParamBean"
+			resultMap="usedGroupCount">
+		SELECT
+			COUNT(*) AS USED_GROUP_COUNT
+		FROM
+			MNG_USERS
+		WHERE
+			DEL_KBN = '0'
+		<iterate property="groupId" open="AND GROUP_ID IN (" close=")" conjunction=", ">
+			#groupId[]#
+		</iterate>
+	</select>
+
+	<delete id="deleteGroupByGroupId"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.GroupDeleteCommitParamBean">
+		DELETE FROM
+			MNG_MST_GROUP
+		WHERE
+			GROUP_ID = #groupId#
+			AND
+			to_char(UPD_DT, 'YYYY/MM/DD HH24:MI:SS') = #updDt#
+	</delete>
+
+	<delete id="deleteAuthorityByGroupId"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.GroupDeleteCommitParamBean">
+		DELETE FROM
+			MNG_GROUP_AUTHORITY
+		WHERE
+		<iterate property="groupId" open=" GROUP_ID IN ( " close=" ) " conjunction=", ">
+			#groupId[]#
+		</iterate>
+	</delete>
+
+	<!-- 操作ログ総件数 -->
+	<select id="logOperationTotalCount"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.LogOperationSearchParamBean"
+			resultClass="int">
+		SELECT
+			COUNT(MSH.INS_ID)
+		FROM
+			MNG_SESSION_HISTORY MSH
+				INNER JOIN MNG_USERS MU
+					ON MSH.INS_ID = MU.USER_ID
+				INNER JOIN MNG_MST_OPERATION MO
+					ON MSH.OPERATION_ID = MO.OPERATION_ID
+		<include refid="logOperationSearchWhere"/>
+	</select>
+
+	<!-- 操作ログ検索結果リスト -->
+	<select id="logOperationSearch"
+			parameterClass="net.chintai.backend.sysadmin.user.dao.LogOperationSearchParamBean"
+			resultMap="logOperationListMap">
+		SELECT
+			MSH.INS_ID,
+			MU.USER_NAME,
+			MO.OPERATION_NAME,
+			MSH.SESSION_STATUS,
+			MSH.TARGET,
+			TO_CHAR(MSH.INS_DT, 'YYYY/MM/DD HH24:MI:SS') INS_DT
+		FROM
+			MNG_SESSION_HISTORY MSH
+				INNER JOIN MNG_USERS MU
+					ON MSH.INS_ID = MU.USER_ID
+				INNER JOIN MNG_MST_OPERATION MO
+					ON MSH.OPERATION_ID = MO.OPERATION_ID
+		<include refid="logOperationSearchWhere"/>
+		<dynamic>
+			ORDER BY
+			<isEqual property="sortKey" compareValue="0">
+			MSH.INS_ID
+			</isEqual>
+			<isEqual property="sortKey" compareValue="1">
+			MU.USER_NAME
+			</isEqual>
+			<isEqual property="sortKey" compareValue="2">
+			MO.OPERATION_NAME
+			</isEqual>
+			<isEqual property="sortKey" compareValue="3">
+			MSH.INS_DT
+			</isEqual>
+			<isEqual property="orderBy" compareValue="asc">
+				ASC
+			</isEqual>
+			<isEqual property="orderBy" compareValue="desc">
+				DESC
+			</isEqual>
+		</dynamic>
+	</select>
+
+</sqlMap>

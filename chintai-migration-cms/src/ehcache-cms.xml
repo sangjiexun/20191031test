@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+
+
+    <diskStore path="java.io.tmpdir" />
+
+ 	<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory" properties="file=jgroups_tcp.xml"/>
+
+    <defaultCache
+            maxElementsInMemory="0"
+            eternal="false"
+            timeToIdleSeconds="5"
+            timeToLiveSeconds="10"
+            overflowToDisk="true"
+            maxElementsOnDisk="1000"
+            />
+
+    <!-- Page and Page Fragment Caches -->
+<!--
+Can I use Ehcache as a disk cache only?
+
+As of Ehcache 2.0 this is not possible. You can set the maxElementsInMemory to 1, but setting the max size to 0 now gives an infinite capacity.
+ -->
+	<!-- from batch -->
+	<cache name="anyCache"
+			maxElementsInMemory="10000"
+			eternal="false"
+	      	timeToIdleSeconds="3600"
+	      	timeToLiveSeconds="3600"
+			overflowToDisk="false"
+			memoryStoreEvictionPolicy="LRU">
+		   <cacheEventListenerFactory
+		   		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+				properties="replicateAsynchronously=true,
+							replicatePuts=false,
+							replicateUpdates=false,
+							replicateUpdatesViaCopy=false,
+							replicateRemovals=true" />
+    </cache>
+
+	<cache name="mstSystemControl"
+	      maxElementsInMemory="10"
+	      eternal="false"
+	      timeToIdleSeconds="3600"
+	      timeToLiveSeconds="3600"
+	      overflowToDisk="false"
+	      memoryStoreEvictionPolicy="LRU">
+		   <cacheEventListenerFactory
+		   		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+				properties="replicateAsynchronously=true,
+							replicatePuts=false,
+							replicateUpdates=false,
+							replicateUpdatesViaCopy=false,
+							replicateRemovals=true" />
+    </cache>
+	<!-- end from batch -->
+
+    <cache name="MstCache"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="43200"
+           timeToLiveSeconds="43200"
+           overflowToDisk="false"
+           >
+		   <cacheEventListenerFactory
+		   		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+				properties="replicateAsynchronously=true,
+							replicatePuts=false,
+							replicateUpdates=false,
+							replicateUpdatesViaCopy=false,
+							replicateRemovals=true" />
+    </cache>
+
+</ehcache>
